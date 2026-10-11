@@ -1,0 +1,15 @@
+{header}
+using System;
+unsafe class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static {type} A({bits} bits) { return *({type}*)&bits; }
+    static int Kind(bool value) { return 1; }
+    static int Kind(object value) { return 2; }
+    static void Main()
+    {
+{cases}
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

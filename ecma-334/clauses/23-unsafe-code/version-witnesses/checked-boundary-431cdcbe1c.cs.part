@@ -1,0 +1,18 @@
+// Positive compilation witness for E23-6-6-decrement-overflow-result.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static unsafe void Main()
+    {
+        byte* pointer = (byte*)0;
+        // The integer mapping and resulting pointer are unrestricted; boundary inputs wrap on the configured target.
+        bool completed = false;
+        try { checked { throw new ArgumentException(); } completed = true; }
+        catch (Exception e) { Console.WriteLine("EXCEPTION " + e.GetType().FullName); }
+        Check(completed, "checked-pointer-decrement-completes");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

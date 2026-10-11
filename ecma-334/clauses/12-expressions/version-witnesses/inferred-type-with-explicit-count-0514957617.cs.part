@@ -1,0 +1,15 @@
+// Positive compilation witness for E12-8-21-initialized-form.
+// An explicit element type removes the unsupported inferred-count form while retaining a stack allocation initializer.
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        Span<int> values = stackalloc int[2] { 17, 23 };
+        Check(values.Length == 2, "explicit-count-with-inferred-item-type");
+        Check(values.Length == 2 && values[0] == 17 && values[1] == 23, "inferred-int-values");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

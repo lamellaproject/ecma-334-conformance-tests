@@ -1,0 +1,428 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "result schema v1",
+  "type": "object",
+  "properties": {
+    "suite_id": {
+      "type": "string"
+    },
+    "test_id": {
+      "type": "string"
+    },
+    "path": {
+      "type": "string"
+    },
+    "rule_ids": {
+      "type": "string"
+    },
+    "authority": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "expected": {
+      "type": "string"
+    },
+    "stdout_json": {
+      "type": "string"
+    },
+    "origin": {
+      "type": "string"
+    },
+    "mutation_old": {
+      "type": "string"
+    },
+    "mutation_new": {
+      "type": "string"
+    },
+    "csc_codes": {
+      "type": "string"
+    },
+    "generator": {
+      "type": "string"
+    },
+    "source_sha256": {
+      "type": "string"
+    },
+    "diagnostic": {
+      "type": "string"
+    },
+    "requirements_json": {
+      "type": "string"
+    },
+    "fixture_json": {
+      "type": "string"
+    },
+    "source_diagnostic_json": {
+      "type": "string"
+    },
+    "version_witness": {
+      "type": "string"
+    },
+    "fixture_sha256": {
+      "type": "string"
+    },
+    "version_status": {
+      "type": "string"
+    },
+    "since": {
+      "type": "string"
+    },
+    "until": {
+      "type": "string"
+    },
+    "versions_row_sha256": {
+      "type": "string"
+    },
+    "schema_version": {
+      "const": 1
+    },
+    "level": {
+      "type": "string"
+    },
+    "level_argument": {
+      "type": "string"
+    },
+    "mode": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "unsupported",
+        "unexpected-reject",
+        "unexpected-accept",
+        "runtime-fail",
+        "diagnostic-fail",
+        "compiler-error",
+        "infrastructure",
+        "not-applicable"
+      ]
+    },
+    "reason": {
+      "type": "string"
+    },
+    "unsupported_reason": {
+      "enum": [
+        "",
+        "feature-refusal",
+        "level",
+        "requirement",
+        "target-capability"
+      ]
+    },
+    "missing_capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "compile_exit": {
+      "type": [
+        "integer",
+        "string"
+      ]
+    },
+    "diagnostic_codes": {
+      "type": "string"
+    },
+    "error_diagnostic_codes": {
+      "type": "string"
+    },
+    "uncoded_error_diagnostics": {
+      "type": "boolean"
+    },
+    "run_exit": {
+      "type": [
+        "integer",
+        "string"
+      ]
+    },
+    "compile_command_json": {
+      "type": "string"
+    },
+    "run_command_json": {
+      "type": "string"
+    },
+    "expected_stdout_json": {
+      "type": "string"
+    },
+    "stderr_json": {
+      "type": "string"
+    },
+    "failed_cases_json": {
+      "type": "string"
+    },
+    "failed_checks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "stage": {
+            "type": "string"
+          },
+          "stream": {
+            "enum": [
+              "stdout",
+              "stderr"
+            ]
+          },
+          "severity": {
+            "enum": [
+              "error",
+              "warning"
+            ]
+          },
+          "code": {
+            "type": "string"
+          },
+          "file": {
+            "type": "string"
+          },
+          "line": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "column": {
+            "anyOf": [
+              {
+                "type": "integer",
+                "minimum": 1
+              },
+              {
+                "type": "null"
+              }
+            ]
+          },
+          "message": {
+            "type": "string"
+          },
+          "text": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "stage",
+          "stream",
+          "severity",
+          "code",
+          "file",
+          "line",
+          "column",
+          "message",
+          "text"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "stages": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "command": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "minItems": 1
+          },
+          "exit": {
+            "type": [
+              "string",
+              "integer"
+            ]
+          },
+          "verdict": {
+            "type": "string"
+          },
+          "reason": {
+            "type": "string"
+          },
+          "seconds": {
+            "type": "number",
+            "minimum": 0
+          },
+          "artifact": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ]
+          }
+        },
+        "required": [
+          "name",
+          "command",
+          "exit",
+          "verdict",
+          "reason",
+          "seconds",
+          "artifact"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "compile_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "run_seconds": {
+      "type": "number",
+      "minimum": 0
+    },
+    "compiler_id": {
+      "type": "string"
+    },
+    "compiler_commit": {
+      "type": "string"
+    },
+    "target": {
+      "type": "string"
+    },
+    "execution_target": {
+      "type": "string"
+    },
+    "identity_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "fingerprint": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "executed_source_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "evidence_sha256": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "artifacts": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      }
+    },
+    "artifact_sha256": {
+      "anyOf": [
+        {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "artifact_directory": {
+      "type": "string"
+    },
+    "result_path": {
+      "type": "string"
+    },
+    "departure": {
+      "type": "boolean"
+    },
+    "departure_kind": {
+      "enum": [
+        "",
+        "compiler",
+        "hosted-runtime"
+      ]
+    },
+    "completed_utc": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "suite_id",
+    "test_id",
+    "path",
+    "rule_ids",
+    "authority",
+    "version",
+    "expected",
+    "stdout_json",
+    "origin",
+    "mutation_old",
+    "mutation_new",
+    "csc_codes",
+    "generator",
+    "source_sha256",
+    "diagnostic",
+    "requirements_json",
+    "fixture_json",
+    "source_diagnostic_json",
+    "version_witness",
+    "fixture_sha256",
+    "version_status",
+    "since",
+    "until",
+    "versions_row_sha256",
+    "schema_version",
+    "level",
+    "level_argument",
+    "mode",
+    "status",
+    "reason",
+    "unsupported_reason",
+    "missing_capabilities",
+    "compile_exit",
+    "diagnostic_codes",
+    "error_diagnostic_codes",
+    "uncoded_error_diagnostics",
+    "run_exit",
+    "compile_command_json",
+    "run_command_json",
+    "expected_stdout_json",
+    "stderr_json",
+    "failed_cases_json",
+    "failed_checks",
+    "diagnostics",
+    "stages",
+    "compile_seconds",
+    "run_seconds",
+    "compiler_id",
+    "compiler_commit",
+    "target",
+    "execution_target",
+    "identity_sha256",
+    "fingerprint",
+    "executed_source_sha256",
+    "evidence_sha256",
+    "artifacts",
+    "artifact_sha256",
+    "artifact_directory",
+    "result_path",
+    "departure",
+    "departure_kind",
+    "completed_utc"
+  ],
+  "additionalProperties": false
+}

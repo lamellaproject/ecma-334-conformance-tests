@@ -1,0 +1,9 @@
+rule_id	reason
+E7-1-domain-type-identity	Raw type identities cannot be compared across isolated application domains without direct sharing; marshaling a type rebinds it in the receiving domain, so the stated distinction has no standalone C# comparison.
+E7-4-1-finalizer-not-inherited	A C# finalizer cannot be named or called; its exclusion from inherited membership has no standalone observation distinct from the base-finalizer execution required by 15.13.
+E7-4-8-delegate-extra-members	Optional delegate extensions have no required existence, name, signature, or behavior, so no standalone source can distinguish allowed presence from allowed absence.
+E7-9-finalizer-override-api	Optional implementation-specific finalization overrides have no required existence or API, so a standalone program cannot distinguish their permitted absence from their presence.
+E7-9-object-inaccessible-state	Once no possible continuation including finalizers can access the instance, its internal inaccessible classification has no C# observer; weak-reference extension APIs add privileged reachability outside this definition.
+E7-9-object-collection-eligibility	Collection eligibility is an internal state of an inaccessible instance, and the standard specifies no observable flag or collection deadline by which a standalone program could distinguish it.
+E7-9-object-memory-reclamation	Reclamation leaves no reachable instance to inspect, and the standard provides no heap-accounting API or bound on collection time or retained heap capacity from which a finite program could infer freed memory.
+E7-9-collector-usage-information	The collector's internal usage information and decision process have no C# observer; externally preserved reachability and values cannot distinguish maintained bookkeeping from information reconstructed on demand.

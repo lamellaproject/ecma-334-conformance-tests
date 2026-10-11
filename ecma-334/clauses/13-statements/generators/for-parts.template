@@ -1,0 +1,21 @@
+/*
+Rules: E13-9-4-form-for; E13-9-4-for-absent-condition-body; E13-9-4-for-condition-evaluation
+Authority: ECMA-334 7th ed 13.9.4
+Version: 7.3
+Expected: run
+Stdout: OK 8
+Generated: clauses/13-statements/generators/for-parts.py
+*/
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Tick(ref int value) { value++; }
+    static bool Gate(ref int value) { value++; return value <= 2; }
+    static void Main()
+    {
+@@CASES@@
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

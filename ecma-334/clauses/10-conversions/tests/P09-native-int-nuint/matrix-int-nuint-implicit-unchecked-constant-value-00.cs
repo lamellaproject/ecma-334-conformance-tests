@@ -1,0 +1,33 @@
+/*
+Rules: P09-native-int-nuint
+Authority: csc 5.11.0-1.26425.128 (C# 9.0)
+Version: 9.0
+Expected: run
+Stdout: OK 3
+Generated: clauses/10-conversions/generators/native-matrices.py
+*/
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        {
+            const int input = 2147483647;
+            nuint result = unchecked(input);
+            Check((ulong)result==2147483647UL, "int-nuint-implicit-unchecked-True-1");
+        }
+        {
+            const int input = 0;
+            nuint result = unchecked(input);
+            Check((ulong)result==0UL, "int-nuint-implicit-unchecked-True-2");
+        }
+        {
+            const int input = 1;
+            nuint result = unchecked(input);
+            Check((ulong)result==1UL, "int-nuint-implicit-unchecked-True-3");
+        }
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

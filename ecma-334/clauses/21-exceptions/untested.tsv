@@ -1,0 +1,4 @@
+rule_id	reason
+E21-4-unhandled-finalizer	The standard allows any outcome for an uncaught finalizer exception, including ending the process, and supplies no portable result oracle for a standalone program.
+E21-4-unhandled-thread-termination	A standalone program cannot report the post-termination state of its initial thread when the explicitly permitted termination impact may end the entire process; an external lifecycle observer is required.
+E21-4-termination-impact	All termination impacts are allowed subject to implementation documentation, so a standalone program cannot check the documentation obligation or exclude any particular process outcome.

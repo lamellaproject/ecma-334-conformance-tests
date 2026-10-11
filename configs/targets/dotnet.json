@@ -1,0 +1,128 @@
+{
+  "schema_version": 1,
+  "id": "dotnet",
+  "description": "Windows x64; .NET 11.0.0-rc.1.26425.128; pinned net11.0 reference subset",
+  "adapter": "dotnet",
+  "platforms": [
+    "win32"
+  ],
+  "discovery": {
+    "dotnet": {
+      "kind": "dotnet",
+      "environment": [
+        "CONFORMANCE_DOTNET_ROOT",
+        "DOTNET_ROOT"
+      ]
+    }
+  },
+  "files": {
+    "dotnet": {
+      "root": "dotnet",
+      "path": "dotnet.exe",
+      "sha256": "6682d18e2d6dd860f20bc762ad8deed58487e7522a05fa61281b1f3dad8f5c9d"
+    },
+    "coreclr": {
+      "root": "dotnet",
+      "path": "shared/Microsoft.NETCore.App/11.0.0-rc.1.26425.128/coreclr.dll",
+      "sha256": "7931d7062e229d89e34685e295848bd4c0cf8d6b2b88058f5f18829c10f05dee"
+    },
+    "corelib": {
+      "root": "dotnet",
+      "path": "shared/Microsoft.NETCore.App/11.0.0-rc.1.26425.128/System.Private.CoreLib.dll",
+      "sha256": "f167553e1196cda38bfb0bf242c69739cb5f97955a5f7171587f82a89b8d5e0e"
+    },
+    "reference-0": {
+      "root": "dotnet",
+      "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/Microsoft.CSharp.dll",
+      "sha256": "c44cd91b9e8762866df940365f035ffb49a53ae28a3d4350c955c1003e7cdb7f"
+    },
+    "reference-1": {
+      "root": "dotnet",
+      "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Collections.dll",
+      "sha256": "c56b75fc29f9b8c81668810476aa1520bcd926cb3922146018bdb8a4611497f1"
+    },
+    "reference-2": {
+      "root": "dotnet",
+      "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.ComponentModel.Primitives.dll",
+      "sha256": "895cdb887d7bd1ffaa14b8f9cf8aebf45e79ec36b2b3bfa4fe4ebfa36f46d455"
+    },
+    "reference-3": {
+      "root": "dotnet",
+      "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Console.dll",
+      "sha256": "7e2a951cb8727d0b680755d5f4f3e3923598708dbcff946577d2ff1007a19234"
+    },
+    "reference-4": {
+      "root": "dotnet",
+      "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Diagnostics.Process.dll",
+      "sha256": "009c25888dde4a084474ebcf3cfa242cd387f58b3e4810adfbba76de3ac26b9d"
+    },
+    "reference-5": {
+      "root": "dotnet",
+      "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Dynamic.Runtime.dll",
+      "sha256": "dda14b24ce2b9851e00c3c1bd400b3c45998e995f3e27eb13a5d3bac80486078"
+    },
+    "reference-6": {
+      "root": "dotnet",
+      "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Linq.Expressions.dll",
+      "sha256": "4e243ec75f24de4c8cfcced762bbf1ed39703098500efbe4dc7880e36dad8680"
+    },
+    "reference-7": {
+      "root": "dotnet",
+      "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Memory.dll",
+      "sha256": "843dfad3fde291b6128aee4310907ea5378299f6e8f1f62d686c73a9aada486d"
+    },
+    "reference-8": {
+      "root": "dotnet",
+      "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Reflection.dll",
+      "sha256": "16b86c6cd260dcb4cd63a04131826a1e90857ea17cb07f1856a32b19a4c806bd"
+    },
+    "reference-9": {
+      "root": "dotnet",
+      "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Runtime.dll",
+      "sha256": "7c72297ba5fc4977fc0ea42cdec506571f68d7ff3d298029e0fdcad3eb3fae3a"
+    },
+    "reference-10": {
+      "root": "dotnet",
+      "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Threading.Thread.dll",
+      "sha256": "a5280d27408f3e4031d59877e4fa093e7f7b85b90e010ea18a542b6c55b52772"
+    },
+    "reference-11": {
+      "root": "dotnet",
+      "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Threading.dll",
+      "sha256": "344bafce6a5ca4f5c5a74c45d84bfd8217bf73a3848a91e4114a74d1ed89c305"
+    }
+  },
+  "references": {
+    "Microsoft.CSharp.dll": "reference-0",
+    "System.Collections.dll": "reference-1",
+    "System.ComponentModel.Primitives.dll": "reference-2",
+    "System.Console.dll": "reference-3",
+    "System.Diagnostics.Process.dll": "reference-4",
+    "System.Dynamic.Runtime.dll": "reference-5",
+    "System.Linq.Expressions.dll": "reference-6",
+    "System.Memory.dll": "reference-7",
+    "System.Reflection.dll": "reference-8",
+    "System.Runtime.dll": "reference-9",
+    "System.Threading.Thread.dll": "reference-10",
+    "System.Threading.dll": "reference-11"
+  },
+  "capabilities": [
+    "process-launch"
+  ],
+  "build": {
+    "kinds": [
+      "exe",
+      "library"
+    ],
+    "framework": "Microsoft.NETCore.App",
+    "runtime_version": "11.0.0-rc.1.26425.128",
+    "tfm": "net11.0",
+    "runtimeconfig": true
+  },
+  "command": [
+    "{dotnet}",
+    "{entry}",
+    "{arguments}"
+  ],
+  "batch_size": 12
+}

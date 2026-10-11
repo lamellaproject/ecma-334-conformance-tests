@@ -1,0 +1,23 @@
+/*
+Rules: E12-8-16-7-name-projection-form; E12-8-16-7-projection-name; E12-8-16-7-projection-value
+Authority: ECMA-334 7th ed 12.8.16.7
+Version: 7.3
+Expected: run
+Stdout: OK 1
+Mutate: new { Count }
+Into: new { Number = Count }
+*/
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        int Count = 23;
+        var value = new { Count };
+        Count = 31;
+        Check(value.Count == 23, "simple-projection-name-and-stored-value");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

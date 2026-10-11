@@ -1,0 +1,14 @@
+// Positive compilation witness for E16-2-3-no-iterator-use.
+// The ref struct declaration and ordinary-method parameter remain; its use inside the iterator is removed.
+using System.Collections.Generic;
+ref struct Entry { public int Value; }
+class Program
+{
+    static int Read(Entry item) { return item.Value; }
+    static IEnumerable<int> Values()
+    {
+        
+        yield return 3;
+    }
+    static void Main() { }
+}

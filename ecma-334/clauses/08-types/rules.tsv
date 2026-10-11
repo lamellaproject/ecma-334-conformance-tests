@@ -1,0 +1,417 @@
+rule_id	source_id	locator	quote_json	kind	requirement	version	notes
+E8-3-7-forced-precision	ecma-334-ed7	8.3.7, p. 79 (PDF p. 107)	"""the exact precision of its type"""	behavior	An explicit floating-point cast forces the value to its type's exact precision.		Reuses the pilot ID; see 12.9.7 and identity conversions in 10.2.2.
+E8-3-8-capabilities	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""does not necessarily support signed zeros, infinities, or NaN\u2019s"""	implementation-defined	Decimal support for signed zero, infinity, and NaN depends on implementation representation.		Reuses the pilot ID and kind; the text does not explicitly impose a documentation requirement for these capabilities.
+E8-3-8-no-floating-implicit	ecma-334-ed7	8.3.8, p. 80 (PDF p. 108)	"""no implicit conversions exist between the floating-point types and decimal"""	forbids	No implicit conversion exists in either direction between decimal and floating-point types.		Reuses the pilot ID.
+E8-3-12-unwrap-null	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""System.InvalidOperationException"""	behavior	Reading Value from a null nullable instance throws InvalidOperationException.		Reuses the pilot ID; conversion use is described in 10, not copied here.
+E8-3-12-unwrap-value	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""Value returns that value"""	behavior	Reading Value from a non-null nullable instance returns its underlying value.		Reuses the pilot ID.
+E8-3-12-wrap	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""creates a non-null instance of T? for which the Value property is x"""	behavior	Constructing T? from x creates a non-null nullable instance whose Value is x.		Reuses the pilot ID; this creation is termed wrapping.
+E8-1-type-categories	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""reference types and value types"""	permits	Types are divided into reference types and value types.		
+E8-1-generic-reference-type	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""Both value types and reference types may be generic types"""	permits	Reference types may be generic and take one or more type parameters.		
+E8-1-generic-value-type	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""Both value types and reference types may be generic types"""	permits	Value types may be generic and take one or more type parameters.		
+E8-1-type-parameter-designation	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""Type parameters can designate both value types and reference types."""	permits	Type parameters may designate either value or reference types.		
+E8-1-type-form-reference	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""reference_type"""	permits	A reference_type is a type.		
+E8-1-type-form-value	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""value_type"""	permits	A value_type is a type.		
+E8-1-type-form-parameter	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""type_parameter"""	permits	A type_parameter is a type.		
+E8-1-type-form-pointer	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""pointer_type"""	permits	A pointer_type is a type in unsafe code.		See 23.3.
+E8-1-pointer-unsafe-only	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""available only in unsafe code"""	forbids	Pointer types are unavailable outside unsafe code.		See 23 and 23.3.
+E8-1-value-variable-storage	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""directly contain their data"""	behavior	A value-type variable directly contains its data.		
+E8-1-reference-variable-storage	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""store references to their data"""	behavior	A reference-type variable stores a reference to its object's data.		
+E8-1-reference-aliasing	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""two variables to reference the same object"""	behavior	Two reference-type variables may refer to the same object so mutation through one affects the object visible through the other.		
+E8-1-value-copy-independence	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""the variables each have their own copy of the data"""	behavior	Value-type variables hold independent copies so operations on one copy do not change another copy.		
+E8-1-unified-object-treatment	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""a value of any type can be treated as an object"""	permits	A value of any type can be treated as an object through the specified type-system operations.		
+E8-1-object-ultimate-base	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""directly or indirectly derives from the object class type"""	permits	Every type directly or indirectly derives from object.		
+E8-1-reference-object-view	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""viewing the values as type object"""	permits	Reference-type values are treated as objects by viewing them as object.		
+E8-1-value-object-bridge	ecma-334-ed7	8.1, p. 71 (PDF p. 99)	"""performing boxing and unboxing operations"""	permits	Value types bridge to the object view through boxing and unboxing.		See 8.3.13.
+E8-2-1-reference-type-categories	ecma-334-ed7	8.2.1, p. 71 (PDF p. 99)	"""class type, an interface type, an array type, a delegate type, or the dynamic type"""	permits	Reference types comprise class, interface, array, delegate, and dynamic types.		
+E8-2-1-reference-form-class	ecma-334-ed7	8.2.1, p. 71 (PDF p. 99)	"""class_type"""	permits	A class_type is a reference_type.		
+E8-2-1-reference-form-interface	ecma-334-ed7	8.2.1, p. 71 (PDF p. 99)	"""interface_type"""	permits	An interface_type is a reference_type.		
+E8-2-1-reference-form-array	ecma-334-ed7	8.2.1, p. 71 (PDF p. 99)	"""array_type"""	permits	An array_type is a reference_type.		
+E8-2-1-reference-form-delegate	ecma-334-ed7	8.2.1, p. 71 (PDF p. 99)	"""delegate_type"""	permits	A delegate_type is a reference_type.		
+E8-2-1-reference-form-dynamic	ecma-334-ed7	8.2.1, p. 71 (PDF p. 99)	"""'dynamic'"""	permits	The dynamic keyword denotes a reference_type.		
+E8-2-1-class-form-name	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""type_name"""	permits	A type_name is a class_type grammar form.		
+E8-2-1-class-form-object	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""'object'"""	permits	The object keyword is a class_type grammar form.		
+E8-2-1-class-form-string	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""'string'"""	permits	The string keyword is a class_type grammar form.		
+E8-2-1-interface-form-name	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""type_name"""	permits	A type_name is the interface_type grammar form.		
+E8-2-1-array-form	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""non_array_type rank_specifier+"""	permits	An array_type is a non_array_type followed by one or more rank specifiers.		
+E8-2-1-nonarray-form-value	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""value_type"""	permits	A value_type is a non_array_type.		
+E8-2-1-nonarray-form-class	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""class_type"""	permits	A class_type is a non_array_type.		
+E8-2-1-nonarray-form-interface	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""interface_type"""	permits	An interface_type is a non_array_type.		
+E8-2-1-nonarray-form-delegate	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""delegate_type"""	permits	A delegate_type is a non_array_type.		
+E8-2-1-nonarray-form-dynamic	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""'dynamic'"""	permits	The dynamic keyword is a non_array_type.		
+E8-2-1-nonarray-form-parameter	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""type_parameter"""	permits	A type_parameter is a non_array_type.		
+E8-2-1-nonarray-form-pointer	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""pointer_type"""	permits	A pointer_type is a non_array_type in unsafe code.		See 23.3.
+E8-2-1-array-rank-form	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""'[' ','* ']'"""	permits	A rank specifier consists of square brackets enclosing zero or more commas.		
+E8-2-1-delegate-form-name	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""type_name"""	permits	A type_name is the delegate_type grammar form.		
+E8-2-1-array-pointer-unsafe-only	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""available only in unsafe code"""	forbids	A pointer_type in the non_array_type grammar is unavailable outside unsafe code.		See 23.3.
+E8-2-1-reference-value-instance	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""a reference to an instance of the type"""	behavior	A reference-type value references an object instance of that type.		
+E8-2-1-null-reference-compatible	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""null is compatible with all reference types"""	permits	The null value is compatible with every reference type.		
+E8-2-1-null-reference-absence	ecma-334-ed7	8.2.1, p. 72 (PDF p. 100)	"""indicates the absence of an instance"""	behavior	A null reference denotes the absence of an object instance.		
+E8-2-2-class-constant-members	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""constants and fields"""	permits	A class data structure may contain constants.		See 15.4.
+E8-2-2-class-field-members	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""constants and fields"""	permits	A class data structure may contain fields.		See 15.5.
+E8-2-2-class-method-members	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""methods"""	permits	A class data structure may contain methods.		See 15.6.
+E8-2-2-class-property-members	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""properties"""	permits	A class data structure may contain properties.		See 15.7.
+E8-2-2-class-event-members	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""events"""	permits	A class data structure may contain events.		See 15.8.
+E8-2-2-class-indexer-members	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""indexers"""	permits	A class data structure may contain indexers.		See 15.9.
+E8-2-2-class-operator-members	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""operators"""	permits	A class data structure may contain operators.		See 15.10.
+E8-2-2-class-instance-constructor-members	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""instance constructors"""	permits	A class data structure may contain instance constructors.		See 15.11.
+E8-2-2-class-finalizer-members	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""finalizers"""	permits	A class data structure may contain finalizers.		See 15.13.
+E8-2-2-class-static-constructor-members	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""static constructors"""	permits	A class data structure may contain static constructors.		See 15.12.
+E8-2-2-class-nested-types	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""and nested types"""	permits	A class data structure may contain nested types.		
+E8-2-2-class-inheritance	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""Class types support inheritance"""	permits	Class types support inheritance that extends and specializes base classes.		
+E8-2-2-class-instance-creation	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""object_creation_expressions (\u00a712.8.16.2)"""	permits	Class instances are created by object creation expressions.		See 12.8.16.2.
+E8-2-2-predefined-object-base	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""The ultimate base class of all other types."""	permits	System.Object is the ultimate base class of all other types.		Table columns visually paired on PDF printed page 72; see 8.2.3.
+E8-2-2-predefined-string	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""The string type of the C# language."""	permits	System.String is the C# string type.		Table visually checked; PDF text places descriptions before their associated class names; see 8.2.5.
+E8-2-2-predefined-valuetype-base	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""The base class of all value types."""	permits	System.ValueType is the base class of value types.		Table visually checked; see 8.3.2.
+E8-2-2-predefined-enum-base	ecma-334-ed7	8.2.2, p. 72 (PDF p. 100)	"""The base class of all enum types."""	permits	System.Enum is the base class of enum types.		Table visually checked; see 19.5.
+E8-2-2-predefined-array-base	ecma-334-ed7	8.2.2, p. 73 (PDF p. 101)	"""The base class of all array types."""	permits	System.Array is the base class of array types.		Table visually checked; see 17.2.2.
+E8-2-2-predefined-delegate-base	ecma-334-ed7	8.2.2, p. 73 (PDF p. 101)	"""The base class of all delegate types."""	permits	System.Delegate is the base class of delegate types.		Table visually checked; see 20.1.
+E8-2-2-predefined-exception-base	ecma-334-ed7	8.2.2, p. 73 (PDF p. 101)	"""The base class of all exception types."""	permits	System.Exception is the base class of exception types.		Table visually checked; see 21.3.
+E8-2-3-object-base-type	ecma-334-ed7	8.2.3, p. 73 (PDF p. 101)	"""Every type in C# directly or indirectly derives"""	permits	Every C# type directly or indirectly derives from object.		
+E8-2-3-object-alias	ecma-334-ed7	8.2.3, p. 73 (PDF p. 101)	"""alias for the predefined class System.Object"""	permits	The object keyword aliases System.Object.		
+E8-2-4-dynamic-any-object	ecma-334-ed7	8.2.4, p. 73 (PDF p. 101)	"""can reference any object"""	permits	A dynamic value may reference any object.		
+E8-2-4-dynamic-runtime-resolution	ecma-334-ed7	8.2.4, p. 73 (PDF p. 101)	"""their resolution is deferred until the program is run"""	behavior	Operations on dynamic expressions are resolved at runtime.		See 8.7 and 12.3.1.
+E8-2-4-dynamic-invalid-operation-compiles	ecma-334-ed7	8.2.4, p. 73 (PDF p. 101)	"""no error is given during compilation"""	permits	The inability to apply an operation to the actual dynamic receiver is not itself a compile-time error.		
+E8-2-4-dynamic-runtime-resolution-failure	ecma-334-ed7	8.2.4, p. 73 (PDF p. 101)	"""an exception will be thrown"""	behavior	Failure to resolve a dynamic operation at runtime throws an exception.		
+E8-2-5-string-sealed	ecma-334-ed7	8.2.5, p. 73 (PDF p. 101)	"""a sealed class type"""	permits	The string type is sealed.		
+E8-2-5-string-direct-base	ecma-334-ed7	8.2.5, p. 73 (PDF p. 101)	"""inherits directly from object"""	permits	The string type directly inherits object.		
+E8-2-5-string-unicode-values	ecma-334-ed7	8.2.5, p. 73 (PDF p. 101)	"""represent Unicode character strings"""	behavior	String instances represent Unicode character strings.		
+E8-2-5-string-literals	ecma-334-ed7	8.2.5, p. 73 (PDF p. 101)	"""can be written as string literals"""	permits	String values may be written as string literals.		See 6.4.5.6.
+E8-2-5-string-alias	ecma-334-ed7	8.2.5, p. 73 (PDF p. 101)	"""alias for the predefined class System.String"""	permits	The string keyword aliases System.String.		
+E8-2-6-interface-contract	ecma-334-ed7	8.2.6, p. 73 (PDF p. 101)	"""An interface defines a contract."""	permits	An interface defines a contract.		
+E8-2-6-interface-contract-obligation	ecma-334-ed7	8.2.6, p. 73 (PDF p. 101)	"""shall adhere to its contract"""	forbids	A class or struct implementing an interface must adhere to its contract.		See 18.
+E8-2-6-multiple-base-interfaces	ecma-334-ed7	8.2.6, p. 73 (PDF p. 101)	"""may inherit from multiple base interfaces"""	permits	An interface may inherit multiple interfaces.		
+E8-2-6-multiple-interface-implementation	ecma-334-ed7	8.2.6, p. 73 (PDF p. 101)	"""may implement multiple interfaces"""	permits	A class or struct may implement multiple interfaces.		
+E8-2-7-array-variable-sequence	ecma-334-ed7	8.2.7, p. 73 (PDF p. 101)	"""contains zero or more variables"""	behavior	An array contains zero or more element variables.		
+E8-2-7-array-index-access	ecma-334-ed7	8.2.7, p. 73 (PDF p. 101)	"""accessed through computed indices"""	permits	Array elements are accessed through computed indices.		
+E8-2-7-array-uniform-element-type	ecma-334-ed7	8.2.7, p. 73 (PDF p. 101)	"""all of the same type"""	permits	All elements of an array share its element type.		Detailed array rules belong to 17.
+E8-2-8-delegate-method-sequence	ecma-334-ed7	8.2.8, p. 73 (PDF p. 101)	"""refers to one or more methods"""	behavior	A delegate data structure refers to one or more methods.		
+E8-2-8-delegate-instance-receiver	ecma-334-ed7	8.2.8, p. 73 (PDF p. 101)	"""their corresponding object instances"""	behavior	A delegate referencing instance methods also references the corresponding receiver objects.		
+E8-3-1-value-type-categories	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""either a struct type or an enumeration type"""	permits	A value type is a struct or enumeration type.		
+E8-3-1-simple-types-keywords	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""The simple types are identified through keywords."""	permits	Predefined simple struct types are identified by keywords.		
+E8-3-1-value-form-nonnullable	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""non_nullable_value_type"""	permits	A non_nullable_value_type is a value_type.		
+E8-3-1-value-form-nullable	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""nullable_value_type"""	permits	A nullable_value_type is a value_type.		
+E8-3-1-nonnullable-form-struct	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""struct_type"""	permits	A struct_type is a non_nullable_value_type grammar alternative.		
+E8-3-1-nonnullable-form-enum	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""enum_type"""	permits	An enum_type is a non_nullable_value_type grammar alternative.		
+E8-3-1-struct-form-name	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""type_name"""	permits	A type_name is a struct_type grammar form.		
+E8-3-1-struct-form-simple	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""simple_type"""	permits	A simple_type is a struct_type grammar form.		
+E8-3-1-struct-form-tuple	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""tuple_type"""	permits	A tuple_type is a struct_type grammar form.		
+E8-3-1-simple-form-numeric	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""numeric_type"""	permits	A numeric_type is a simple_type.		
+E8-3-1-simple-form-bool	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'bool'"""	permits	The bool keyword is a simple_type.		
+E8-3-1-numeric-form-integral	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""integral_type"""	permits	An integral_type is a numeric_type.		
+E8-3-1-numeric-form-floating	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""floating_point_type"""	permits	A floating_point_type is a numeric_type.		
+E8-3-1-numeric-form-decimal	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'decimal'"""	permits	The decimal keyword is a numeric_type.		
+E8-3-1-integral-form-sbyte	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'sbyte'"""	permits	The sbyte keyword is an integral_type.		
+E8-3-1-integral-form-byte	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'byte'"""	permits	The byte keyword is an integral_type.		
+E8-3-1-integral-form-short	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'short'"""	permits	The short keyword is an integral_type.		
+E8-3-1-integral-form-ushort	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'ushort'"""	permits	The ushort keyword is an integral_type.		
+E8-3-1-integral-form-int	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'int'"""	permits	The int keyword is an integral_type.		
+E8-3-1-integral-form-uint	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'uint'"""	permits	The uint keyword is an integral_type.		
+E8-3-1-integral-form-long	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'long'"""	permits	The long keyword is an integral_type.		
+E8-3-1-integral-form-ulong	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'ulong'"""	permits	The ulong keyword is an integral_type.		
+E8-3-1-integral-form-char	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'char'"""	permits	The char keyword is an integral_type.		
+E8-3-1-floating-form-float	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'float'"""	permits	The float keyword is a floating_point_type.		
+E8-3-1-floating-form-double	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'double'"""	permits	The double keyword is a floating_point_type.		
+E8-3-1-tuple-form	ecma-334-ed7	8.3.1, p. 74 (PDF p. 102)	"""'(' tuple_type_element (',' tuple_type_element)+ ')'"""	permits	Tuple type grammar requires at least two comma-separated tuple elements inside parentheses.		
+E8-3-1-tuple-element-form	ecma-334-ed7	8.3.1, p. 75 (PDF p. 103)	"""type identifier?"""	permits	A tuple type element comprises a type and an optional identifier.		
+E8-3-1-enum-form-name	ecma-334-ed7	8.3.1, p. 75 (PDF p. 103)	"""type_name"""	permits	A type_name is the enum_type grammar form.		
+E8-3-1-nullable-form	ecma-334-ed7	8.3.1, p. 75 (PDF p. 103)	"""non_nullable_value_type '?'"""	permits	Nullable value type syntax appends a question mark to a nonnullable value type.		
+E8-3-1-value-null-only-nullable	ecma-334-ed7	8.3.1, p. 75 (PDF p. 103)	"""only if the value type is a nullable value type"""	forbids	A nonnullable value-type variable cannot contain null.		
+E8-3-1-nullable-correspondence	ecma-334-ed7	8.3.1, p. 75 (PDF p. 103)	"""the same set of values plus the value null"""	permits	Every nonnullable value type has a nullable counterpart representing its values plus null.		
+E8-3-1-value-assignment-copy	ecma-334-ed7	8.3.1, p. 75 (PDF p. 103)	"""creates a copy of the value being assigned"""	behavior	Assignment to a value-type variable copies the value.		
+E8-3-1-reference-assignment-copy	ecma-334-ed7	8.3.1, p. 75 (PDF p. 103)	"""copies the reference but not the object"""	behavior	Assignment to a reference-type variable copies the reference and preserves object identity.		
+E8-3-2-value-type-base	ecma-334-ed7	8.3.2, p. 75 (PDF p. 103)	"""implicitly inherit from the class System.ValueType"""	permits	All value types implicitly inherit System.ValueType.		
+E8-3-2-valuetype-object-base	ecma-334-ed7	8.3.2, p. 75 (PDF p. 103)	"""in turn, inherits from class object"""	permits	System.ValueType inherits object.		
+E8-3-2-derive-value-type-forbidden	ecma-334-ed7	8.3.2, p. 75 (PDF p. 103)	"""not possible for any type to derive from a value type"""	forbids	A type must not derive from a value type.		
+E8-3-2-value-types-sealed	ecma-334-ed7	8.3.2, p. 75 (PDF p. 103)	"""value types are thus implicitly sealed"""	permits	Value types are implicitly sealed.		
+E8-3-2-valuetype-is-class	ecma-334-ed7	8.3.2, p. 75 (PDF p. 103)	"""System.ValueType is not itself a value_type"""	permits	System.ValueType is a class type rather than a value type.		This sentence starts 'Note that' but is not an explicitly marked Note: block.
+E8-3-3-default-constructor-declaration	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""a public parameterless instance constructor"""	permits	Every value type implicitly declares a public parameterless default instance constructor.		
+E8-3-3-default-constructor-zero-initialization	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""returns a zero-initialized instance"""	behavior	A value type's default constructor yields its zero-initialized default value.		
+E8-3-3-simple-default-bits	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""a bit pattern of all zeros"""	behavior	A simple type's default value has an all-zero bit pattern.		
+E8-3-3-integral-default	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""the default value is 0"""	behavior	The default value of sbyte, byte, short, ushort, int, uint, long, or ulong is zero.		
+E8-3-3-char-default	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""the default value is '\\x0000'"""	behavior	The default char value is the zero character.		
+E8-3-3-float-default	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""the default value is 0.0f"""	behavior	The default float value is zero.		
+E8-3-3-double-default	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""the default value is 0.0d"""	behavior	The default double value is zero.		
+E8-3-3-decimal-default	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""value zero with scale 0"""	behavior	The default decimal value is zero with scale zero.		
+E8-3-3-bool-default	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""the default value is false"""	behavior	The default bool value is false.		
+E8-3-3-enum-default	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""0, converted to the type E"""	behavior	An enum's default value is zero converted to that enum type.		
+E8-3-3-struct-value-field-default	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""all value type fields to their default value"""	behavior	A struct's default value initializes every value-type field to its default value.		
+E8-3-3-struct-reference-field-default	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""all reference type fields to null"""	behavior	A struct's default value initializes every reference-type field to null.		
+E8-3-3-nullable-default-hasvalue	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""HasValue property is false"""	behavior	A nullable value type's default value has HasValue false and is its null value.		
+E8-3-3-nullable-default-value-throws	ecma-334-ed7	8.3.3, p. 75 (PDF p. 103)	"""System.InvalidOperationException"""	behavior	Reading Value on the default nullable value throws InvalidOperationException.		See 8.3.12.
+E8-3-3-default-constructor-new	ecma-334-ed7	8.3.3, p. 76 (PDF p. 104)	"""invoked using the new operator"""	permits	A value-type default constructor may be invoked with new.		
+E8-3-3-struct-explicit-parameterless-forbidden	ecma-334-ed7	8.3.3, p. 76 (PDF p. 104)	"""not possible for a struct type to contain an explicit declaration of a parameterless constructor"""	forbids	A struct must not explicitly declare a parameterless instance constructor in this edition.		
+E8-3-3-struct-parameterized-constructor	ecma-334-ed7	8.3.3, p. 76 (PDF p. 104)	"""permitted to declare parameterized instance constructors"""	permits	A struct may declare parameterized instance constructors.		See 16.4.9.
+E8-3-4-struct-value-type	ecma-334-ed7	8.3.4, p. 76 (PDF p. 104)	"""A struct type is a value type"""	permits	A struct is a value type.		
+E8-3-4-struct-constant-members	ecma-334-ed7	8.3.4, p. 76 (PDF p. 104)	"""constants"""	permits	A struct may declare constants.		See 16 for declaration details.
+E8-3-4-struct-field-members	ecma-334-ed7	8.3.4, p. 76 (PDF p. 104)	"""fields"""	permits	A struct may declare fields.		See 16.
+E8-3-4-struct-method-members	ecma-334-ed7	8.3.4, p. 76 (PDF p. 104)	"""methods"""	permits	A struct may declare methods.		See 16.
+E8-3-4-struct-property-members	ecma-334-ed7	8.3.4, p. 76 (PDF p. 104)	"""properties"""	permits	A struct may declare properties.		See 16.
+E8-3-4-struct-event-members	ecma-334-ed7	8.3.4, p. 76 (PDF p. 104)	"""events"""	permits	A struct may declare events.		See 16.
+E8-3-4-struct-indexer-members	ecma-334-ed7	8.3.4, p. 76 (PDF p. 104)	"""indexers"""	permits	A struct may declare indexers.		See 16.
+E8-3-4-struct-operator-members	ecma-334-ed7	8.3.4, p. 76 (PDF p. 104)	"""operators"""	permits	A struct may declare operators.		See 16.
+E8-3-4-struct-instance-constructor-members	ecma-334-ed7	8.3.4, p. 76 (PDF p. 104)	"""instance constructors"""	permits	A struct may declare instance constructors.		See 16.
+E8-3-4-struct-static-constructor-members	ecma-334-ed7	8.3.4, p. 76 (PDF p. 104)	"""static constructors"""	permits	A struct may declare static constructors.		See 16.
+E8-3-4-struct-nested-type-members	ecma-334-ed7	8.3.4, p. 76 (PDF p. 104)	"""nested types"""	permits	A struct may declare nested types.		See 16.
+E8-3-5-simple-system-aliases	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""aliases for predefined struct types in the System namespace"""	permits	Simple-type keywords alias predefined System struct types.		
+E8-3-5-alias-sbyte	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""sbyte System.SByte"""	permits	The sbyte keyword aliases System.SByte.		
+E8-3-5-alias-byte	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""byte System.Byte"""	permits	The byte keyword aliases System.Byte.		
+E8-3-5-alias-short	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""short System.Int16"""	permits	The short keyword aliases System.Int16.		
+E8-3-5-alias-ushort	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""ushort System.UInt16"""	permits	The ushort keyword aliases System.UInt16.		
+E8-3-5-alias-int	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""int System.Int32"""	permits	The int keyword aliases System.Int32.		
+E8-3-5-alias-uint	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""uint System.UInt32"""	permits	The uint keyword aliases System.UInt32.		
+E8-3-5-alias-long	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""long System.Int64"""	permits	The long keyword aliases System.Int64.		
+E8-3-5-alias-ulong	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""ulong System.UInt64"""	permits	The ulong keyword aliases System.UInt64.		
+E8-3-5-alias-char	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""char System.Char"""	permits	The char keyword aliases System.Char.		
+E8-3-5-alias-float	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""float System.Single"""	permits	The float keyword aliases System.Single.		
+E8-3-5-alias-double	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""double System.Double"""	permits	The double keyword aliases System.Double.		
+E8-3-5-alias-bool	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""bool System.Boolean"""	permits	The bool keyword aliases System.Boolean.		
+E8-3-5-alias-decimal	ecma-334-ed7	8.3.5, p. 76 (PDF p. 104)	"""decimal System.Decimal"""	permits	The decimal keyword aliases System.Decimal.		
+E8-3-5-simple-type-members	ecma-334-ed7	8.3.5, p. 77 (PDF p. 105)	"""every simple type has members"""	permits	Every simple type has the members of its aliased struct type.		
+E8-3-6-integral-types	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""nine integral types"""	permits	The integral types are sbyte, byte, short, ushort, int, uint, long, ulong, and char.		
+E8-3-6-sbyte-format	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""signed 8-bit integers"""	behavior	The sbyte representation is a signed eight-bit integer.		
+E8-3-6-sbyte-range	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""from -128 to 127, inclusive"""	behavior	The sbyte value range is -128 through 127 inclusive.		
+E8-3-6-byte-format	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""unsigned 8-bit integers"""	behavior	The byte representation is an unsigned eight-bit integer.		
+E8-3-6-byte-range	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""from 0 to 255, inclusive"""	behavior	The byte value range is zero through 255 inclusive.		
+E8-3-6-short-format	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""signed 16-bit integers"""	behavior	The short representation is a signed sixteen-bit integer.		
+E8-3-6-short-range	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""from -32768 to 32767, inclusive"""	behavior	The short value range is -32768 through 32767 inclusive.		
+E8-3-6-ushort-format	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""unsigned 16-bit integers"""	behavior	The ushort representation is an unsigned sixteen-bit integer.		
+E8-3-6-ushort-range	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""from 0 to 65535, inclusive"""	behavior	The ushort value range is zero through 65535 inclusive.		
+E8-3-6-int-format	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""signed 32-bit integers"""	behavior	The int representation is a signed thirty-two-bit integer.		
+E8-3-6-int-range	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""from -2147483648 to 2147483647, inclusive"""	behavior	The int value range is -2147483648 through 2147483647 inclusive.		
+E8-3-6-uint-format	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""unsigned 32-bit integers"""	behavior	The uint representation is an unsigned thirty-two-bit integer.		
+E8-3-6-uint-range	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""from 0 to 4294967295, inclusive"""	behavior	The uint value range is zero through 4294967295 inclusive.		
+E8-3-6-long-format	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""signed 64-bit integers"""	behavior	The long representation is a signed sixty-four-bit integer.		
+E8-3-6-long-range	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""from -9223372036854775808 to 9223372036854775807, inclusive"""	behavior	The long value range is -9223372036854775808 through 9223372036854775807 inclusive.		
+E8-3-6-ulong-format	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""unsigned 64-bit integers"""	behavior	The ulong representation is an unsigned sixty-four-bit integer.		
+E8-3-6-ulong-range	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""from 0 to 18446744073709551615, inclusive"""	behavior	The ulong value range is zero through 18446744073709551615 inclusive.		
+E8-3-6-char-format	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""unsigned 16-bit integers"""	behavior	The char representation is an unsigned sixteen-bit integer.		
+E8-3-6-char-range	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""from 0 to 65535, inclusive"""	behavior	The char value range is zero through 65535 inclusive.		
+E8-3-6-char-unicode	ecma-334-ed7	8.3.6, p. 77 (PDF p. 105)	"""corresponds to the Unicode character set"""	behavior	The char value set corresponds to the Unicode character set.		
+E8-3-6-signed-twos-complement	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""two\u2019s complement format"""	behavior	Signed integral types use two's-complement representation.		
+E8-3-6-integral-operator-precision	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""signed 32-bit precision"""	behavior	Integral unary and binary operators use signed or unsigned thirty-two- or sixty-four-bit precision as specified by numeric promotion.		See 12.4.7.
+E8-3-6-char-integral-classification	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""classified as an integral type"""	permits	The char type is an integral type.		
+E8-3-6-no-implicit-to-char	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""There are no predefined implicit conversions from other types to the char type."""	forbids	No predefined implicit conversion from another type to char exists.		
+E8-3-6-char-constant-spelling	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""character_literals or as integer_literals in combination with a cast"""	permits	A char constant may be written as a character literal or an integer literal cast to char.		
+E8-3-6-char-constant-spelling-restriction	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""Constants of the char type shall be written"""	forbids	A char constant shall be written as a character literal or an integer literal cast to char.		Open question: the sentence describes constants broadly; determine whether it intends literal spelling rather than all constant-expression forms allowed by 12.23 and constant declarations in 15.4.
+E8-3-6-checked-operator-overflow-control	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""checked and unchecked operators and statements"""	permits	A checked operator controls overflow checking for integral arithmetic operations and conversions.		See 12.8.19 for context selection details.
+E8-3-6-unchecked-operator-overflow-control	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""checked and unchecked operators and statements"""	permits	An unchecked operator controls overflow checking for integral arithmetic operations and conversions.		See 12.8.19 for context selection details.
+E8-3-6-checked-statement-overflow-control	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""checked and unchecked operators and statements"""	permits	A checked statement controls overflow checking for integral arithmetic operations and conversions.		See 12.8.19 for context selection details.
+E8-3-6-unchecked-statement-overflow-control	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""checked and unchecked operators and statements"""	permits	An unchecked statement controls overflow checking for integral arithmetic operations and conversions.		See 12.8.19 for context selection details.
+E8-3-6-checked-overflow-compile	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""an overflow produces a compile-time error"""	forbids	Integral overflow in a checked constant context is a compile-time error.		Constant versus runtime division follows 12.8.19.
+E8-3-6-checked-overflow-runtime	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""System.OverflowException"""	behavior	Integral overflow at runtime in a checked context throws OverflowException.		See 12.8.19.
+E8-3-6-unchecked-overflow-truncation	ecma-334-ed7	8.3.6, p. 78 (PDF p. 106)	"""high-order bits that do not fit in the destination type are discarded"""	behavior	Unchecked integral overflow discards high-order bits that do not fit the destination type.		
+E8-3-7-float-format	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""32-bit single-precision"""	behavior	The float type uses the IEC 60559 thirty-two-bit single-precision format.		
+E8-3-7-double-format	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""64-bit double-precision IEC 60559 formats"""	behavior	The double type uses the IEC 60559 sixty-four-bit double-precision format.		
+E8-3-7-signed-zero-values	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""Positive zero and negative zero."""	behavior	Floating-point types include positive and negative zero.		
+E8-3-7-signed-zero-usual-equivalence	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""behave identically as the simple value zero"""	behavior	Positive and negative zero usually behave as zero, with the specified distinguishing operations.		See 12.10.3.
+E8-3-7-infinity-values	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""Positive infinity and negative infinity."""	behavior	Floating-point types include positive and negative infinity.		
+E8-3-7-infinity-production	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""dividing a non- zero number by zero"""	behavior	Floating-point division of a nonzero number by zero produces infinity.		The PDF hyphenates non-zero across a line break.
+E8-3-7-nan-value	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""The Not-a-Number value"""	behavior	Floating-point types include NaN.		
+E8-3-7-nan-invalid-operation	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""NaNs are produced by invalid floating-point operations"""	behavior	Invalid floating-point operations such as zero divided by zero produce NaN.		
+E8-3-7-finite-floating-form	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""s \u00d7 m \u00d7 2\u1d49"""	behavior	Finite nonzero floating values have the form s*m*2^e with s equal to positive or negative one.		
+E8-3-7-float-finite-bounds	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""For float, 0 < m < 2\u00b2\u2074 and \u2212149 \u2264 e \u2264 104"""	behavior	For finite float values the standard bounds m by 0<m<2^24 and e by -149<=e<=104.		Formula visually verified on printed page 78.
+E8-3-7-double-finite-bounds	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""for double, 0 < m < 2\u2075\u00b3 and \u22121075 \u2264 e \u2264 970"""	behavior	For finite double values the standard bounds m by 0<m<2^53 and e by -1075<=e<=970.		PDF really prints -1075; possible inconsistency with the specified IEC format, requiring review rather than silent correction.
+E8-3-7-denormalized-valid-values	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""considered valid non-zero values"""	behavior	Denormalized floating-point numbers are valid nonzero values when supported.		
+E8-3-7-denormalized-support-choice	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""neither requires nor forbids"""	unspecified	Support for denormalized floating-point numbers is optional without a specified documentation obligation.		
+E8-3-7-float-approximate-range	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""approximately 1.5 \u00d7 10\u207b\u2074\u2075 to 3.4 \u00d7 10\u00b3\u2078"""	behavior	The float type represents nonzero magnitudes approximately from 1.5e-45 through 3.4e38.		
+E8-3-7-float-decimal-precision	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""a precision of 7 digits"""	behavior	The specified float precision is seven decimal digits.		
+E8-3-7-double-approximate-range	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""approximately 5.0 \u00d7 10\u207b\u00b3\u00b2\u2074 to 1.7 \u00d7 10\u00b3\u2070\u2078"""	behavior	The double type represents nonzero magnitudes approximately from 5.0e-324 through 1.7e308.		
+E8-3-7-double-decimal-precision	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""a precision of 15-16 digits"""	behavior	The specified double precision is fifteen to sixteen decimal digits.		
+E8-3-7-floating-binary-promotion	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""standard numeric promotions are applied"""	permits	A binary operation with a floating operand uses standard numeric promotion.		See 12.4.7.
+E8-3-7-floating-binary-precision	ecma-334-ed7	8.3.7, p. 78 (PDF p. 106)	"""performed with float or double precision"""	behavior	A binary operation with a floating operand is performed with float or double precision after promotion.		
+E8-3-7-floating-no-exceptions	ecma-334-ed7	8.3.7, p. 79 (PDF p. 107)	"""including the assignment operators, never produce exceptions"""	behavior	Floating-point operators including assignment operators do not throw exceptions for floating-point exceptional results.		
+E8-3-7-floating-exceptional-results	ecma-334-ed7	8.3.7, p. 79 (PDF p. 107)	"""produce zero, infinity, or NaN"""	behavior	Exceptional floating-point operations yield zero, infinity, or NaN as specified by the following rules.		
+E8-3-7-floating-nearest-rounding	ecma-334-ed7	8.3.7, p. 79 (PDF p. 107)	"""rounded to the nearest representable value"""	behavior	A floating-point operation rounds its result to the nearest value representable in the destination format.		
+E8-3-7-floating-underflow-zero	ecma-334-ed7	8.3.7, p. 79 (PDF p. 107)	"""positive zero or negative zero"""	behavior	A floating-point result too small for the destination format becomes positive or negative zero.		
+E8-3-7-floating-overflow-infinity	ecma-334-ed7	8.3.7, p. 79 (PDF p. 107)	"""positive infinity or negative infinity"""	behavior	A floating-point result too large for the destination format becomes positive or negative infinity.		
+E8-3-7-floating-invalid-nan	ecma-334-ed7	8.3.7, p. 79 (PDF p. 107)	"""becomes NaN"""	behavior	An invalid floating-point operation yields NaN.		
+E8-3-7-floating-nan-propagation	ecma-334-ed7	8.3.7, p. 79 (PDF p. 107)	"""one or both operands"""	behavior	A floating-point operation with a NaN operand yields NaN.		
+E8-3-7-floating-excess-precision	ecma-334-ed7	8.3.7, p. 79 (PDF p. 107)	"""may be performed with higher precision"""	unspecified	Floating-point operations may use greater precision than their result type.		
+E8-3-8-decimal-width	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""a 128-bit data type"""	behavior	The decimal type is a 128-bit data type.		
+E8-3-8-decimal-minimum-range	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""at least -7.9 \u00d7 10\u207b\u00b2\u2078 to 7.9 \u00d7 10\u00b2\u2078"""	behavior	The decimal type must include at least the stated range from -7.9e-28 through 7.9e28.		PDF confirms the negative bound has exponent -28; possible editorial asymmetry, not silently repaired.
+E8-3-8-decimal-minimum-precision	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""at least 28-digit precision"""	behavior	The decimal type provides at least twenty-eight-digit precision.		
+E8-3-8-decimal-finite-form	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""(\u20131)\u1d5b \u00d7 c \u00d7 10\u207b\u1d49"""	behavior	Finite decimal values have the form (-1)^v*c*10^(-e).		
+E8-3-8-decimal-sign	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""the sign v is 0 or 1"""	behavior	The decimal sign coefficient v is zero or one.		
+E8-3-8-decimal-coefficient	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""0 \u2264 c < Cmax"""	behavior	The decimal coefficient c is bounded by 0<=c<Cmax.		
+E8-3-8-decimal-scale	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""Emin \u2264 e \u2264 Emax"""	behavior	The decimal scale e is bounded by Emin<=e<=Emax.		
+E8-3-8-decimal-cmax-minimum	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""Cmax is at least 1 \u00d7 10\u00b2\u2078"""	behavior	The decimal coefficient bound Cmax is at least 10^28.		
+E8-3-8-decimal-emin-bound	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""Emin \u2264 0"""	behavior	The minimum supported decimal scale Emin is at most zero.		
+E8-3-8-decimal-emax-bound	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""Emax \u2265 28"""	behavior	The maximum supported decimal scale Emax is at least twenty-eight.		
+E8-3-8-decimal-scaled-integer	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""an integer scaled by a power of ten"""	behavior	Decimal values use an integer scaled by a power of ten.		
+E8-3-8-decimal-fractional-exactness	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""less than 1.0m"""	behavior	Decimal values with magnitude below one are exact to at least the twenty-eighth decimal place.		
+E8-3-8-decimal-large-exactness	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""greater than or equal to 1.0m"""	behavior	Decimal values with magnitude at least one are exact to at least twenty-eight digits.		
+E8-3-8-decimal-tenth-exact	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""decimal fractional numbers such as 0.1 can be represented exactly"""	behavior	Decimal representation can represent decimal fractions such as one tenth exactly.		
+E8-3-8-decimal-binary-promotion	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""standard numeric promotions are applied"""	permits	A binary operation with a decimal operand uses standard numeric promotion.		See 12.4.7.
+E8-3-8-decimal-binary-double-precision-text	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""performed with double precision"""	behavior	The paragraph says that a binary operation with a decimal operand is performed with double precision.		Apparent editorial inconsistency with the decimal result rules; wording verified in PDF, not silently corrected.
+E8-3-8-decimal-exact-then-round	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""calculating an exact result"""	behavior	A decimal operation behaves as if it calculated an exact result before rounding to the representation.		
+E8-3-8-decimal-preserve-scale	ecma-334-ed7	8.3.8, p. 79 (PDF p. 107)	"""preserving scale, as defined for each operator"""	behavior	A decimal operation preserves scale as specified for its operator before final rounding.		
+E8-3-8-decimal-nearest-rounding	ecma-334-ed7	8.3.8, p. 80 (PDF p. 108)	"""rounded to the nearest representable value"""	behavior	Decimal results round to the nearest representable value.		
+E8-3-8-decimal-tie-even	ecma-334-ed7	8.3.8, p. 80 (PDF p. 108)	"""an even number in the least significant digit position"""	behavior	A decimal rounding tie selects the result whose least significant digit is even.		
+E8-3-8-decimal-result-exactness	ecma-334-ed7	8.3.8, p. 80 (PDF p. 108)	"""exact to at least the 28th decimal place"""	behavior	The paragraph states that decimal operation results are exact to at least the twenty-eighth decimal place.		Read with magnitude-dependent precision in 8.3.8; potential wording issue for large values requires review.
+E8-3-8-decimal-round-to-zero	ecma-334-ed7	8.3.8, p. 80 (PDF p. 108)	"""rounding may produce a zero value from a non-zero value"""	behavior	Decimal rounding may yield zero from a nonzero result.		
+E8-3-8-decimal-overflow	ecma-334-ed7	8.3.8, p. 80 (PDF p. 108)	"""a System.OverflowException is thrown"""	behavior	A decimal arithmetic result whose magnitude exceeds its format throws OverflowException.		
+E8-3-8-decimal-greater-precision	ecma-334-ed7	8.3.8, p. 80 (PDF p. 108)	"""greater precision"""	behavior	The decimal type has greater precision than the floating-point types.		
+E8-3-8-decimal-possibly-smaller-range	ecma-334-ed7	8.3.8, p. 80 (PDF p. 108)	"""may have a smaller range"""	behavior	The decimal type may have a smaller range than the floating-point types.		
+E8-3-8-floating-to-decimal-overflow	ecma-334-ed7	8.3.8, p. 80 (PDF p. 108)	"""conversions from the floating-point types to decimal might produce overflow exceptions"""	behavior	A floating-point-to-decimal conversion may overflow.		Detailed conversion predicates belong to 10.
+E8-3-8-decimal-to-floating-precision-loss	ecma-334-ed7	8.3.8, p. 80 (PDF p. 108)	"""might cause loss of precision"""	behavior	A decimal-to-floating-point conversion may lose precision.		See 10.
+E8-3-8-decimal-to-floating-overflow	ecma-334-ed7	8.3.8, p. 80 (PDF p. 108)	"""or overflow exceptions"""	behavior	A decimal-to-floating-point conversion may overflow as stated in this paragraph.		Potential tension with numeric conversion details in 10; retain the stated possibility for review.
+E8-3-8-mixed-decimal-floating-operands	ecma-334-ed7	8.3.8, p. 80 (PDF p. 108)	"""a compile-time error occurs"""	forbids	An expression directly mixing decimal and floating-point operands without explicit casts is a compile-time error.		
+E8-3-9-bool-values	ecma-334-ed7	8.3.9, p. 80 (PDF p. 108)	"""true and false"""	behavior	The bool type represents the logical values true and false.		
+E8-3-9-bool-true-representation	ecma-334-ed7	8.3.9, p. 80 (PDF p. 108)	"""the representation of true is unspecified"""	unspecified	The representation of true is unspecified.		
+E8-3-9-bool-distinct-representation	ecma-334-ed7	8.3.9, p. 80 (PDF p. 108)	"""different from that of false"""	behavior	The representation of true must differ from false's representation.		False representation is specified in 8.3.3.
+E8-3-9-bool-no-standard-value-conversion	ecma-334-ed7	8.3.9, p. 80 (PDF p. 108)	"""No standard conversions exist between bool and other value types."""	forbids	No standard conversion exists between bool and another value type.		Open question: the blanket wording includes nullable bool, but 8.3.12 and 10.2.6 provide T-to-T? implicit conversions; clarify whether other value types here means other underlying nonnullable types.
+E8-3-9-bool-integral-not-interchangeable	ecma-334-ed7	8.3.9, p. 80 (PDF p. 108)	"""cannot be used in place of an integral value, and vice versa"""	forbids	Boolean and integral values cannot substitute for one another.		
+E8-3-10-enum-distinct-type	ecma-334-ed7	8.3.10, p. 80 (PDF p. 108)	"""a distinct type with named constants"""	permits	An enumeration is a distinct type with named constants.		
+E8-3-10-enum-underlying-type-required	ecma-334-ed7	8.3.10, p. 80 (PDF p. 108)	"""Every enumeration type has an underlying type"""	permits	Every enum has an underlying type.		
+E8-3-10-enum-underlying-type-restriction	ecma-334-ed7	8.3.10, p. 80 (PDF p. 108)	"""shall be byte, sbyte, short, ushort, int, uint, long or ulong"""	forbids	An enum's underlying type must be byte, sbyte, short, ushort, int, uint, long, or ulong.		
+E8-3-10-enum-underlying-value-set	ecma-334-ed7	8.3.10, p. 80 (PDF p. 108)	"""the same as the set of values of the underlying type"""	behavior	An enum's value set equals its underlying type's value set.		
+E8-3-10-enum-unnamed-values	ecma-334-ed7	8.3.10, p. 80 (PDF p. 108)	"""not restricted to the values of the named constants"""	permits	Enum values may include values lacking named constants.		Enumeration declarations belong to 19.2.
+E8-3-10-enum-declaration-form	ecma-334-ed7	8.3.10, p. 80 (PDF p. 108)	"""defined through enumeration declarations"""	permits	Enumeration declarations define enumeration types.		See 19.2 for declaration syntax.
+E8-3-11-tuple-ordered-sequence	ecma-334-ed7	8.3.11, p. 80 (PDF p. 108)	"""an ordered, fixed-length sequence of values"""	behavior	A tuple value contains an ordered fixed-length sequence of independently typed elements.		
+E8-3-11-tuple-arity-definition	ecma-334-ed7	8.3.11, p. 80 (PDF p. 108)	"""referred to as its arity"""	permits	A tuple type's arity is its number of elements.		
+E8-3-11-tuple-minimum-arity	ecma-334-ed7	8.3.11, p. 80 (PDF p. 108)	"""with n \u2265 2"""	forbids	Tuple type syntax must contain at least two elements.		
+E8-3-11-tuple-optional-names	ecma-334-ed7	8.3.11, p. 80 (PDF p. 108)	"""optional tuple element names"""	permits	Each tuple element may have an optional identifier name.		
+E8-3-11-tuple-valuetuple-shorthand	ecma-334-ed7	8.3.11, p. 80 (PDF p. 108)	"""shorthand for a type constructed"""	permits	Tuple type syntax denotes the corresponding constructed System.ValueTuple struct type.		
+E8-3-11-tuple-direct-arities	ecma-334-ed7	8.3.11, p. 80 (PDF p. 108)	"""any arity between two and seven inclusive"""	permits	System.ValueTuple generic struct types must directly express tuple arities two through seven.		
+E8-3-11-tuple-matching-arity-not-required	ecma-334-ed7	8.3.11, p. 80 (PDF p. 108)	"""There does not need to exist"""	permits	Tuple syntax does not require a ValueTuple declaration with exactly the tuple's arity of type parameters.		
+E8-3-11-large-tuple-rest-representation	ecma-334-ed7	8.3.11, p. 80 (PDF p. 108)	"""a Rest field containing a nested value of the remaining elements"""	behavior	A tuple with more than seven elements uses ValueTuple<T1,...,T7,TRest> with the remaining elements nested in Rest.		
+E8-3-11-tuple-nesting-observability	ecma-334-ed7	8.3.11, p. 80 (PDF p. 108)	"""Such nesting may be observable"""	behavior	Large-tuple nesting may be observable through the Rest field.		
+E8-3-11-tuple-single-rest-representation	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""System.ValueTuple<T1> is used"""	behavior	A single remaining tuple element is stored in System.ValueTuple<T1>.		
+E8-3-11-valuetuple-one-not-tuple	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""not considered a tuple type in itself"""	permits	System.ValueTuple<T1> is not itself a tuple type.		
+E8-3-11-tuple-recursive-rest	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""is used recursively"""	behavior	More than seven remaining tuple elements use recursively nested ValueTuple<T1,...,T7,TRest>.		
+E8-3-11-tuple-name-distinctness	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""Element names within a tuple type shall be distinct."""	forbids	Tuple element names must be distinct.		
+E8-3-11-tuple-item-name-position	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""only permitted at the position denoted by X"""	forbids	A tuple element name ItemX whose nonzero-leading decimal digits denote an element position is allowed only at that position.		
+E8-3-11-tuple-names-not-in-type	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""not represented in the ValueTuple<...> types"""	permits	Tuple element names do not form part of the constructed ValueTuple types.		
+E8-3-11-tuple-names-not-stored	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""not stored in the runtime representation"""	behavior	Tuple element names are not stored in tuple runtime values.		
+E8-3-11-tuple-identity-conversion	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""same arity and identity-convertible sequences of element types"""	permits	Tuple types of equal arity have identity conversions when their corresponding element types have identity conversions.		
+E8-3-11-tuple-valuetuple-identity-conversion	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""to and from the corresponding constructed ValueTuple<...> type"""	permits	A tuple type has identity conversions to and from its corresponding constructed ValueTuple type.		
+E8-3-11-tuple-new-syntax-forbidden	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""cannot be applied with the tuple type syntax"""	forbids	The new operator cannot use tuple type syntax new (T1,...,Tn).		
+E8-3-11-tuple-expression-creation	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""created from tuple expressions"""	permits	Tuple values may be created from tuple expressions.		See 12.8.6.
+E8-3-11-tuple-valuetuple-construction	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""new operator directly to a type constructed from ValueTuple<...>"""	permits	Tuple values may be created by applying new to the corresponding constructed ValueTuple type.		
+E8-3-11-tuple-item-fields	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""public fields with the names Item1, Item2, etc."""	permits	Tuple elements are public fields named Item1, Item2, and so on.		
+E8-3-11-tuple-item-access	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""accessed via a member access on a tuple value"""	permits	Tuple element fields may be accessed by member access on a tuple value.		See 12.8.7.
+E8-3-11-tuple-named-access	ecma-334-ed7	8.3.11, p. 81 (PDF p. 109)	"""that name can be used to access the element"""	permits	A named tuple element may also be accessed through its declared element name.		
+E8-3-12-nullable-value-set	ecma-334-ed7	8.3.12, p. 81 (PDF p. 109)	"""all values of its underlying type plus an additional null value"""	behavior	A nullable value type represents its underlying values plus null.		
+E8-3-12-nullable-shorthand	ecma-334-ed7	8.3.12, p. 81 (PDF p. 109)	"""shorthand for System.Nullable<T>"""	permits	The forms T? and System.Nullable<T> are interchangeable.		
+E8-3-12-nonnullable-definition	ecma-334-ed7	8.3.12, p. 81 (PDF p. 109)	"""any value type other than System.Nullable<T>"""	permits	A nonnullable value type is a value type excluding Nullable<T> or a type parameter constrained to nonnullable value types.		
+E8-3-12-nullable-underlying-constraint	ecma-334-ed7	8.3.12, p. 81 (PDF p. 109)	"""specifies the value type constraint for T"""	forbids	Nullable<T> requires T to satisfy the value-type constraint.		Continuation at p. 82; see 15.2.5.
+E8-3-12-nullable-underlying-nonnullable	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""nullable value type"""	permits	Any nonnullable value type can underlie a nullable value type.		Completes the preceding page's 'non-nullable value type' sentence.
+E8-3-12-nullable-nested-forbidden	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""cannot be a nullable value type"""	forbids	A nullable value type cannot underlie another nullable value type.		
+E8-3-12-nullable-reference-forbidden	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""or a reference type"""	forbids	A reference type cannot underlie a nullable value type.		
+E8-3-12-nullable-properties-public-readonly	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""two public read-only properties"""	permits	Nullable<T> exposes public read-only HasValue and Value properties.		
+E8-3-12-nullable-hasvalue-type	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""HasValue property of type bool"""	permits	Nullable<T>.HasValue has type bool.		
+E8-3-12-nullable-value-type	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""Value property of type T"""	permits	Nullable<T>.Value has type T.		
+E8-3-12-nullable-nonnull-definition	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""HasValue is true"""	behavior	A nullable instance is non-null when HasValue is true.		
+E8-3-12-nullable-null-definition	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""HasValue is false"""	behavior	A nullable instance is null when HasValue is false.		
+E8-3-12-nullable-null-underlying-unspecified	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""A null instance has an undefined value."""	unspecified	A null nullable instance's underlying value is undefined.		
+E8-3-12-unwrapping-definition	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""referred to as unwrapping"""	permits	Accessing a nullable instance's Value property is unwrapping.		
+E8-3-12-nullable-value-constructor	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""a public constructor with a single parameter of type T"""	permits	Nullable<T> has a public constructor taking one T value in addition to its default constructor.		
+E8-3-12-nullable-constructor-form	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""new T?(x)"""	permits	The nullable value constructor can be invoked as new T?(x).		
+E8-3-12-null-to-nullable-conversion	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""from the null literal to T?"""	permits	An implicit conversion exists from the null literal to T?.		See 10.2.7.
+E8-3-12-value-to-nullable-conversion	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""from T to T?"""	permits	An implicit conversion exists from T to T?.		See 10.2.6.
+E8-3-12-nullable-no-interfaces	ecma-334-ed7	8.3.12, p. 82 (PDF p. 110)	"""implements no interfaces"""	permits	Nullable<T> implements no interfaces, including those implemented by T.		See 18.
+E8-3-13-boxing-to-object	ecma-334-ed7	8.3.13, p. 82 (PDF p. 110)	"""converted to and from type object"""	permits	A value-type value can be converted to object by boxing.		Details belong to 10.2.9.
+E8-3-13-unboxing-from-object	ecma-334-ed7	8.3.13, p. 82 (PDF p. 110)	"""converted to and from type object"""	permits	A boxed value can be converted back from object by unboxing.		Details belong to 10.3.7.
+E8-4-1-unbound-generic-definition	ecma-334-ed7	8.4.1, p. 82 (PDF p. 110)	"""denotes an unbound generic type"""	permits	A generic declaration by itself denotes an unbound generic template for constructing types.		
+E8-4-1-generic-argument-spelling	ecma-334-ed7	8.4.1, p. 82 (PDF p. 110)	"""within angle brackets (< and >) immediately following the name"""	permits	Type arguments are written in angle brackets immediately following the generic type's name.		
+E8-4-1-constructed-type-definition	ecma-334-ed7	8.4.1, p. 82 (PDF p. 110)	"""includes at least one type argument"""	permits	A constructed type contains at least one type argument.		
+E8-4-1-constructed-type-use	ecma-334-ed7	8.4.1, p. 82 (PDF p. 110)	"""most places in the language in which a type name can appear"""	permits	Constructed types may be used in the permitted type-name contexts.		
+E8-4-1-unbound-generic-typeof-only	ecma-334-ed7	8.4.1, p. 82 (PDF p. 110)	"""only be used within a typeof_expression"""	forbids	An unbound generic type may be used only in typeof.		See 12.8.17.
+E8-4-1-constructed-simple-name	ecma-334-ed7	8.4.1, p. 82 (PDF p. 110)	"""as simple names"""	permits	Constructed types may appear in expressions as simple names.		See 12.8.4.
+E8-4-1-constructed-member-access	ecma-334-ed7	8.4.1, p. 82 (PDF p. 110)	"""when accessing a member"""	permits	Constructed types may be used in member access.		See 12.8.7.
+E8-4-1-generic-lookup-arity	ecma-334-ed7	8.4.1, p. 82 (PDF p. 110)	"""only generic types with the correct number of type parameters"""	permits	Namespace-or-type-name lookup considers generic types only at the requested arity.		
+E8-4-1-same-type-name-different-arity	ecma-334-ed7	8.4.1, p. 82 (PDF p. 110)	"""as long as the types have different numbers of type parameters"""	permits	Different type arities may share the same identifier.		
+E8-4-1-nested-implicit-constructed-type	ecma-334-ed7	8.4.1, p. 83 (PDF p. 111)	"""doesn\u2019t specify type parameters directly"""	permits	A nested type name may denote a constructed type through its containing generic type's implicit instance type.		Name lookup and ambiguity rules belong to 7.8, 6.2.5, and 15.3.9.7.
+E8-4-1-constructed-unmanaged-forbidden	ecma-334-ed7	8.4.1, p. 83 (PDF p. 111)	"""A non-enum constructed type shall not be used as an unmanaged_type"""	forbids	A non-enum constructed type must not be used as an unmanaged type.		See 8.8; the enum exception must be read with that definition.
+E8-4-2-type-argument-is-type	ecma-334-ed7	8.4.2, p. 83 (PDF p. 111)	"""is simply a type"""	permits	Each type argument denotes a type.		
+E8-4-2-type-argument-list-form	ecma-334-ed7	8.4.2, p. 83 (PDF p. 111)	"""'<' type_arguments '>'"""	permits	A type argument list encloses type_arguments in angle brackets.		
+E8-4-2-type-arguments-form	ecma-334-ed7	8.4.2, p. 83 (PDF p. 111)	"""type_argument (',' type_argument)*"""	permits	Type_arguments comprise one or more comma-separated type arguments.		
+E8-4-2-type-argument-form	ecma-334-ed7	8.4.2, p. 83 (PDF p. 111)	"""type"""	permits	The type_argument grammar form is type.		
+E8-4-2-type-argument-constraints	ecma-334-ed7	8.4.2, p. 83 (PDF p. 111)	"""satisfy any constraints on the corresponding type parameter"""	forbids	Every type argument must satisfy its corresponding type parameter's constraints.		See 15.2.5.
+E8-4-3-open-type-definition	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""involves type parameters"""	permits	An open type involves type parameters.		
+E8-4-3-type-parameter-open	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""A type parameter defines an open type."""	permits	A type parameter is an open type.		
+E8-4-3-array-openness	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""if and only if its element type is an open type"""	permits	An array type is open exactly when its element type is open.		
+E8-4-3-constructed-openness	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""one or more of its type arguments is an open type"""	permits	A constructed type is open exactly when at least one type argument is open.		
+E8-4-3-nested-constructed-openness	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""type arguments of its containing type(s)"""	permits	A constructed nested type is open exactly when its own or an enclosing type's type arguments include an open type.		
+E8-4-3-closed-type-definition	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""not an open type"""	permits	A closed type is a type that is not open.		
+E8-4-3-generic-code-closed-context	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""executed in the context of a closed constructed type"""	behavior	Generic type code executes in the context of a closed type constructed from the declaration.		
+E8-4-3-generic-parameter-runtime-binding	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""bound to a particular run-time type"""	behavior	Each generic type parameter is bound to a specific runtime type.		
+E8-4-3-runtime-types-closed	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""always occurs with closed types"""	behavior	Runtime statement and expression processing uses only closed types.		
+E8-4-3-open-types-compile-time-only	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""only during compile- time processing"""	permits	Open types occur only during compilation.		
+E8-4-3-closed-type-own-statics	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""its own set of static variables"""	behavior	Each closed constructed type has static variables separate from all other closed constructed types.		
+E8-4-3-open-type-no-statics	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""no static variables associated with an open type"""	behavior	An open type has no runtime static variables.		
+E8-4-3-closed-constructed-identity	ecma-334-ed7	8.4.3, p. 84 (PDF p. 112)	"""their corresponding type arguments are the same type"""	permits	Closed constructed types are identical when their unbound generic type and corresponding type arguments are identical.		
+E8-4-4-unbound-type-definition	ecma-334-ed7	8.4.4, p. 84 (PDF p. 112)	"""a non-generic type or an unbound generic type"""	permits	An unbound type is a nongeneric type or an unbound generic declaration.		
+E8-4-4-bound-type-definition	ecma-334-ed7	8.4.4, p. 84 (PDF p. 112)	"""a non-generic type or a constructed type"""	permits	A bound type is a nongeneric type or a constructed type.		
+E8-4-4-unbound-declared-entity	ecma-334-ed7	8.4.4, p. 84 (PDF p. 112)	"""the entity declared by a type declaration"""	permits	An unbound type denotes the entity introduced by a type declaration.		
+E8-4-4-unbound-generic-not-type	ecma-334-ed7	8.4.4, p. 84 (PDF p. 112)	"""not itself a type"""	permits	An unbound generic declaration is not itself a type.		
+E8-4-4-unbound-generic-variable-forbidden	ecma-334-ed7	8.4.4, p. 84 (PDF p. 112)	"""the type of a variable, argument or return value"""	forbids	An unbound generic declaration must not be a variable's type.		
+E8-4-4-unbound-generic-argument-forbidden	ecma-334-ed7	8.4.4, p. 84 (PDF p. 112)	"""the type of a variable, argument or return value"""	forbids	An unbound generic declaration must not be an argument's type.		
+E8-4-4-unbound-generic-return-forbidden	ecma-334-ed7	8.4.4, p. 84 (PDF p. 112)	"""the type of a variable, argument or return value"""	forbids	An unbound generic declaration must not be a return value's type.		
+E8-4-4-unbound-generic-base-forbidden	ecma-334-ed7	8.4.4, p. 84 (PDF p. 112)	"""or as a base type"""	forbids	An unbound generic declaration must not be a base type.		
+E8-4-4-unbound-generic-only-typeof	ecma-334-ed7	8.4.4, p. 84 (PDF p. 112)	"""The only construct"""	forbids	An unbound generic declaration may be referenced only by typeof.		See 12.8.17.
+E8-4-5-constraints-checked-on-reference	ecma-334-ed7	8.4.5, p. 84 (PDF p. 112)	"""Whenever a constructed type or generic method is referenced"""	forbids	Every reference to a constructed type or generic method must satisfy each declared type-parameter constraint after argument substitution.		
+E8-4-5-constraint-substitution	ecma-334-ed7	8.4.5, p. 84 (PDF p. 112)	"""supplied type arguments substituted"""	permits	A class, interface, or type-parameter constraint is instantiated by substituting supplied arguments for its type parameters.		
+E8-4-5-type-constraint-conversion-required	ecma-334-ed7	8.4.5, p. 84 (PDF p. 112)	"""type A is convertible to type C"""	forbids	A type argument must convert to each instantiated type constraint through one of the listed conversion categories.		
+E8-4-5-constraint-identity	ecma-334-ed7	8.4.5, p. 84 (PDF p. 112)	"""An identity conversion"""	permits	An identity conversion from A to C satisfies a type constraint.		See 10.2.2.
+E8-4-5-constraint-reference	ecma-334-ed7	8.4.5, p. 84 (PDF p. 112)	"""An implicit reference conversion"""	permits	An implicit reference conversion from A to C satisfies a type constraint.		See 10.2.8.
+E8-4-5-constraint-boxing	ecma-334-ed7	8.4.5, p. 84 (PDF p. 112)	"""provided that type A is a non-nullable value type"""	permits	A boxing conversion from nonnullable value type A to C satisfies a type constraint.		See 10.2.9.
+E8-4-5-constraint-parameter-conversion	ecma-334-ed7	8.4.5, p. 84 (PDF p. 112)	"""from a type parameter A to C"""	permits	An implicit reference, boxing, or type-parameter conversion from type parameter A to C satisfies a type constraint.		
+E8-4-5-class-constraint-required	ecma-334-ed7	8.4.5, p. 84 (PDF p. 112)	"""shall satisfy one of the following"""	forbids	A class-constrained type argument must meet one of the listed reference-type conditions.		
+E8-4-5-class-constraint-reference-types	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""interface type, class type, delegate type, array type or the dynamic type"""	permits	An interface, class, delegate, array, or dynamic type satisfies the reference-type constraint.		
+E8-4-5-class-constraint-known-reference-parameter	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""known to be a reference type"""	permits	A type parameter known to be a reference type satisfies the reference-type constraint.		
+E8-4-5-struct-constraint-required	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""shall satisfy one of the following"""	forbids	A struct-constrained type argument must meet one of the listed nonnullable-value-type conditions.		
+E8-4-5-struct-constraint-value-type	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""a struct type or enum type, but not a nullable value type"""	permits	A nonnullable struct or enum satisfies the value-type constraint.		
+E8-4-5-struct-constraint-parameter	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""having the value type constraint"""	permits	A type parameter with a value-type constraint satisfies the value-type constraint.		
+E8-4-5-new-constraint-nonabstract	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""shall not be abstract"""	forbids	An abstract type argument must not satisfy a constructor constraint.		
+E8-4-5-new-constraint-public-parameterless	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""shall have a public parameterless constructor"""	forbids	A constructor-constrained type argument must have a public parameterless constructor or satisfy one of the stated type-parameter conditions.		
+E8-4-5-new-constraint-value-type	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""A is a value type"""	permits	A value type satisfies the constructor constraint through its public default constructor.		
+E8-4-5-new-constraint-new-parameter	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""having the constructor constraint"""	permits	A type parameter with a constructor constraint satisfies the constructor constraint.		
+E8-4-5-new-constraint-struct-parameter	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""having the value type constraint"""	permits	A type parameter with a value-type constraint satisfies the constructor constraint.		
+E8-4-5-new-constraint-class-constructor	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""explicitly declared public constructor with no parameters"""	permits	A nonabstract class with an explicit public parameterless constructor satisfies the constructor constraint.		
+E8-4-5-new-constraint-default-constructor	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""not abstract and has a default constructor"""	permits	A nonabstract type with the specified default constructor satisfies the constructor constraint.		See 15.11.5.
+E8-4-5-constraint-failure-error	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""one or more of a type parameter\u2019s constraints are not satisfied"""	forbids	Failure of any type-parameter constraint is a compile-time error.		
+E8-4-5-type-parameters-not-inherited	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""type parameters are not inherited"""	permits	Type parameters are not inherited.		
+E8-4-5-constraints-not-inherited	ecma-334-ed7	8.4.5, p. 85 (PDF p. 113)	"""constraints are never inherited either"""	permits	Type-parameter constraints are not inherited.		
+E8-5-type-parameter-definition	ecma-334-ed7	8.5, p. 85 (PDF p. 113)	"""an identifier designating a value type or reference type"""	permits	A type parameter identifies the value or reference type to which it is bound at runtime.		
+E8-5-type-parameter-form	ecma-334-ed7	8.5, p. 85 (PDF p. 113)	"""identifier"""	permits	A type_parameter has the grammar form identifier.		
+E8-5-type-parameters-compile-time	ecma-334-ed7	8.5, p. 86 (PDF p. 114)	"""purely a compile-time construct"""	permits	Type parameters as types exist only during compilation.		
+E8-5-type-parameter-runtime-type	ecma-334-ed7	8.5, p. 86 (PDF p. 114)	"""bound to a run-time type"""	behavior	At runtime a type parameter binds to its supplied type argument.		
+E8-5-type-parameter-variable-closed	ecma-334-ed7	8.5, p. 86 (PDF p. 114)	"""a closed constructed type"""	behavior	The paragraph describes a variable declared with a type parameter as having a closed constructed runtime type.		Open question: a nongeneric supplied type is closed under 8.4.3 but does not meet the constructed-type definition in 8.4.1; retain the printed qualification for review.
+E8-5-type-parameter-execution-type	ecma-334-ed7	8.5, p. 86 (PDF p. 114)	"""uses the type that was supplied"""	behavior	Statements and expressions involving a type parameter execute using its supplied argument type.		
+E8-6-expression-tree-data	ecma-334-ed7	8.6, p. 86 (PDF p. 114)	"""represented as data structures instead of executable code"""	permits	Expression trees represent lambda expressions as data structures.		
+E8-6-expression-tree-type	ecma-334-ed7	8.6, p. 86 (PDF p. 114)	"""System.Linq.Expressions.Expression<TDelegate>"""	permits	An expression-tree type is Expression<TDelegate> for a delegate type TDelegate.		
+E8-6-lambda-expression-tree-conversion	ecma-334-ed7	8.6, p. 86 (PDF p. 114)	"""a conversion also exists"""	permits	A lambda convertible to a delegate type also has the stated corresponding expression-tree conversion.		The paragraph names D then TDelegate and is broader than detailed restrictions in 10.7.3; review that relationship before tests.
+E8-6-lambda-delegate-executable	ecma-334-ed7	8.6, p. 86 (PDF p. 114)	"""references executable code for the lambda expression"""	behavior	Converting a lambda to a delegate creates a delegate referencing its executable code.		
+E8-6-lambda-expression-tree-representation	ecma-334-ed7	8.6, p. 86 (PDF p. 114)	"""creates an expression tree representation"""	behavior	Converting a lambda to an expression-tree type creates its data representation.		See 10.7.3.
+E8-6-expression-tree-compile	ecma-334-ed7	8.6, p. 87 (PDF p. 115)	"""an instance method Compile"""	permits	Expression<TDelegate> provides an instance Compile method returning TDelegate.		
+E8-6-compiled-expression-tree-execution	ecma-334-ed7	8.6, p. 87 (PDF p. 115)	"""the code represented by the expression tree to be executed"""	behavior	Invoking the delegate produced by Compile executes the code represented by the expression tree.		
+E8-6-expression-tree-api	ecma-334-ed7	8.6, p. 87 (PDF p. 115)	"""implementation-specific beyond the requirement for a Compile method"""	implementation-defined	Expression-tree APIs beyond the required Compile method are implementation-specific.		The unmarked code and value comparison illustrate the preceding execution predicate, not a new lambda rule.
+E8-7-dynamic-binding-type	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""dynamic uses dynamic binding"""	permits	The dynamic type uses dynamic binding where other types use static binding.		See 12.3.2.
+E8-7-dynamic-object-equivalence	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""identical to object except"""	permits	The dynamic type is identical to object subject to the listed exceptions.		
+E8-7-dynamic-operations	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""can be dynamically bound"""	permits	Operations on dynamic expressions may bind dynamically.		See 12.3.3.
+E8-7-dynamic-inference-preference	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""prefer dynamic over object"""	permits	Type inference prefers dynamic when both dynamic and object are candidates.		See 12.6.3.
+E8-7-dynamic-new-forbidden	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""the type in an object_creation_expression"""	forbids	Dynamic must not be the instantiated type in an object creation expression.		
+E8-7-dynamic-predefined-member-access-forbidden	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""a predefined_type in a member_access"""	forbids	Dynamic must not be a predefined_type in member access.		
+E8-7-dynamic-typeof-forbidden	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""the operand of the typeof operator"""	forbids	Dynamic must not be a typeof operand.		
+E8-7-dynamic-attribute-argument-forbidden	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""an attribute argument"""	forbids	Dynamic must not be an attribute argument.		
+E8-7-dynamic-constraint-forbidden	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""a constraint"""	forbids	Dynamic must not be a constraint.		
+E8-7-dynamic-extension-type-forbidden	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""an extension method type"""	forbids	Dynamic must not be an extension method type.		The precise extent of 'extension method type' is deferred to 15.6.10 for review.
+E8-7-dynamic-struct-interface-argument-forbidden	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""any part of a type argument within struct_interfaces"""	forbids	Dynamic must not occur within a type argument in a struct's interface list.		
+E8-7-dynamic-class-interface-argument-forbidden	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""interface_type_list"""	forbids	Dynamic must not occur within a type argument in an interface_type_list.		See 15.2.4.1.
+E8-7-dynamic-object-identity	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""an implicit identity conversion between object and dynamic"""	permits	Object and dynamic have implicit identity conversions.		
+E8-7-dynamic-constructed-identity	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""constructed types that are the same when replacing dynamic with object"""	permits	Constructed types equivalent after replacing dynamic with object have implicit identity conversions.		
+E8-7-dynamic-object-implicit-conversions	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""Implicit and explicit conversions to and from object"""	permits	Object's implicit conversions to and from other types also apply to dynamic.		
+E8-7-dynamic-object-explicit-conversions	ecma-334-ed7	8.7, p. 87 (PDF p. 115)	"""Implicit and explicit conversions to and from object"""	permits	Object's explicit conversions to and from other types also apply to dynamic.		
+E8-7-dynamic-object-signature	ecma-334-ed7	8.7, p. 88 (PDF p. 116)	"""considered the same signature"""	permits	Signatures equivalent after replacing dynamic with object are identical.		
+E8-7-dynamic-object-runtime	ecma-334-ed7	8.7, p. 88 (PDF p. 116)	"""indistinguishable from object at run-time"""	behavior	Dynamic is indistinguishable from object at runtime.		
+E8-7-dynamic-expression-definition	ecma-334-ed7	8.7, p. 88 (PDF p. 116)	"""referred to as a dynamic expression"""	permits	An expression typed dynamic is a dynamic expression.		
+E8-8-unmanaged-form-value	ecma-334-ed7	8.8, p. 88 (PDF p. 116)	"""value_type"""	permits	A value_type is an unmanaged_type grammar alternative subject to the semantic restrictions below.		
+E8-8-unmanaged-form-pointer	ecma-334-ed7	8.8, p. 88 (PDF p. 116)	"""pointer_type"""	permits	A pointer_type is an unmanaged_type grammar alternative in unsafe code.		See 23.3; pointer semantics are not copied here.
+E8-8-unmanaged-no-reference-type	ecma-334-ed7	8.8, p. 88 (PDF p. 116)	"""isn\u2019t a reference_type"""	forbids	A reference type cannot be an unmanaged type.		
+E8-8-unmanaged-no-type-parameter	ecma-334-ed7	8.8, p. 88 (PDF p. 116)	"""a type_parameter"""	forbids	A type parameter cannot be an unmanaged type.		
+E8-8-unmanaged-no-constructed-type	ecma-334-ed7	8.8, p. 88 (PDF p. 116)	"""or a constructed type"""	forbids	A constructed type cannot be an unmanaged type as this paragraph states.		Compare the non-enum qualification in 8.4.1; generic-context enum handling requires review.
+E8-8-unmanaged-field-restriction	ecma-334-ed7	8.8, p. 88 (PDF p. 116)	"""contains no instance fields whose type is not an unmanaged_type"""	forbids	Every instance field of an unmanaged type must itself have unmanaged type.		
+E8-8-unmanaged-simple-types	ecma-334-ed7	8.8, p. 88 (PDF p. 116)	"""sbyte, byte, short, ushort, int, uint, long, ulong, char, float, double, decimal, or bool"""	permits	Every listed simple type is unmanaged.		
+E8-8-unmanaged-enum	ecma-334-ed7	8.8, p. 88 (PDF p. 116)	"""Any enum_type."""	permits	Every enum type is unmanaged.		
+E8-8-unmanaged-user-struct	ecma-334-ed7	8.8, p. 88 (PDF p. 116)	"""not a constructed type and contains instance fields of unmanaged_types only"""	permits	A user-defined nonconstructed struct with only unmanaged instance fields is unmanaged.		

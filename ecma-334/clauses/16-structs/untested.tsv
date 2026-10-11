@@ -1,0 +1,3 @@
+rule_id	reason
+E16-2-3-stack-allocation	A portable standalone C# program cannot observe whether a ref struct's physical storage is on the execution stack; its observable lifetime and use restrictions have separate tests.
+E16-4-11-backing-field-access	The standard supplies no source-level name for an auto-property's hidden backing field, so a source program cannot name that field to test its access independently of name lookup.

@@ -1,0 +1,548 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "compiler schema v1",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string"
+    },
+    "version": {
+      "type": "string"
+    },
+    "commit": {
+      "type": "string"
+    },
+    "discovery": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "enum": [
+              "config",
+              "dotnet",
+              "environment"
+            ]
+          },
+          "environment": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "root": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "root",
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false
+      },
+      "minProperties": 1
+    },
+    "command": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "prefixItems": [
+        {
+          "type": "string",
+          "pattern": "^\\{[a-z][a-z0-9_-]*\\}$"
+        }
+      ]
+    },
+    "arguments": {
+      "type": "object",
+      "properties": {
+        "kinds": {
+          "type": "object",
+          "properties": {
+            "exe": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "library": {
+              "anyOf": [
+                {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  },
+                  "minItems": 1
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "exe",
+            "library"
+          ],
+          "additionalProperties": false
+        },
+        "entry_point": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "reference": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "alias_reference": {
+          "anyOf": [
+            {
+              "type": "array",
+              "items": {
+                "type": "string"
+              },
+              "minItems": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      },
+      "required": [
+        "kinds",
+        "entry_point",
+        "reference",
+        "alias_reference"
+      ],
+      "additionalProperties": false
+    },
+    "requirements": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        }
+      },
+      "propertyNames": {
+        "enum": [
+          "unsafe-disabled",
+          "updated-memory-safety"
+        ]
+      }
+    },
+    "language": {
+      "type": "object",
+      "properties": {
+        "explicit": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string"
+          },
+          "propertyNames": {
+            "enum": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "7.1",
+              "7.2",
+              "7.3",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13",
+              "14",
+              "15"
+            ]
+          }
+        },
+        "unsupported": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "1",
+              "2",
+              "3",
+              "4",
+              "5",
+              "6",
+              "7",
+              "7.1",
+              "7.2",
+              "7.3",
+              "8",
+              "9",
+              "10",
+              "11",
+              "12",
+              "13",
+              "14",
+              "15"
+            ]
+          },
+          "uniqueItems": true
+        },
+        "symbolic": {
+          "type": "object",
+          "properties": {
+            "default": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "level": {
+                      "enum": [
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "7.1",
+                        "7.2",
+                        "7.3",
+                        "8",
+                        "9",
+                        "10",
+                        "11",
+                        "12",
+                        "13",
+                        "14",
+                        "15"
+                      ]
+                    },
+                    "argument": {
+                      "type": "string"
+                    },
+                    "mode": {
+                      "enum": [
+                        "explicit",
+                        "preview"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "level",
+                    "argument",
+                    "mode"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "latest": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "level": {
+                      "enum": [
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "7.1",
+                        "7.2",
+                        "7.3",
+                        "8",
+                        "9",
+                        "10",
+                        "11",
+                        "12",
+                        "13",
+                        "14",
+                        "15"
+                      ]
+                    },
+                    "argument": {
+                      "type": "string"
+                    },
+                    "mode": {
+                      "enum": [
+                        "explicit",
+                        "preview"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "level",
+                    "argument",
+                    "mode"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "latestmajor": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "level": {
+                      "enum": [
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "7.1",
+                        "7.2",
+                        "7.3",
+                        "8",
+                        "9",
+                        "10",
+                        "11",
+                        "12",
+                        "13",
+                        "14",
+                        "15"
+                      ]
+                    },
+                    "argument": {
+                      "type": "string"
+                    },
+                    "mode": {
+                      "enum": [
+                        "explicit",
+                        "preview"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "level",
+                    "argument",
+                    "mode"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            },
+            "preview": {
+              "anyOf": [
+                {
+                  "type": "object",
+                  "properties": {
+                    "level": {
+                      "enum": [
+                        "1",
+                        "2",
+                        "3",
+                        "4",
+                        "5",
+                        "6",
+                        "7",
+                        "7.1",
+                        "7.2",
+                        "7.3",
+                        "8",
+                        "9",
+                        "10",
+                        "11",
+                        "12",
+                        "13",
+                        "14",
+                        "15"
+                      ]
+                    },
+                    "argument": {
+                      "type": "string"
+                    },
+                    "mode": {
+                      "enum": [
+                        "explicit",
+                        "preview"
+                      ]
+                    }
+                  },
+                  "required": [
+                    "level",
+                    "argument",
+                    "mode"
+                  ],
+                  "additionalProperties": false
+                },
+                {
+                  "type": "null"
+                }
+              ]
+            }
+          },
+          "required": [
+            "default",
+            "latest",
+            "latestmajor",
+            "preview"
+          ],
+          "additionalProperties": false
+        },
+        "probe": {
+          "type": "object",
+          "minProperties": 1
+        }
+      },
+      "required": [
+        "explicit",
+        "unsupported",
+        "symbolic",
+        "probe"
+      ],
+      "additionalProperties": false
+    },
+    "diagnostics": {
+      "type": "object",
+      "properties": {
+        "patterns": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "information_pattern": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "feature_refusal_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "version_feature_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        },
+        "command_line_codes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "uniqueItems": true
+        }
+      },
+      "required": [
+        "patterns",
+        "information_pattern",
+        "feature_refusal_codes",
+        "version_feature_codes",
+        "command_line_codes"
+      ],
+      "additionalProperties": false
+    },
+    "rejection_exit_codes": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "artifact_extension": {
+      "type": "string",
+      "pattern": "^\\.[a-z0-9]+$"
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "version",
+    "commit",
+    "discovery",
+    "files",
+    "command",
+    "arguments",
+    "requirements",
+    "language",
+    "diagnostics",
+    "rejection_exit_codes",
+    "artifact_extension"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,33 @@
+/*
+Rules: E10-2-3-ushort; E12-23-numeric
+Authority: ECMA-334 7th ed 10.2.3
+Version: 7.3
+Expected: run
+Stdout: OK 3
+Generated: clauses/10-conversions/generators/standard-matrices.py
+*/
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        {
+            const ushort input = (ushort)(0);
+            uint result = checked(input);
+            Check(result==0U, "ushort-uint-implicit-checked-constant-0");
+        }
+        {
+            const ushort input = (ushort)(65535);
+            uint result = checked(input);
+            Check(result==65535U, "ushort-uint-implicit-checked-constant-1");
+        }
+        {
+            const ushort input = (ushort)(1);
+            uint result = checked(input);
+            Check(result==1U, "ushort-uint-implicit-checked-constant-2");
+        }
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

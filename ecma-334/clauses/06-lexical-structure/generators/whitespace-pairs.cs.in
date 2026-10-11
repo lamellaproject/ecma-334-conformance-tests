@@ -1,0 +1,20 @@
+/*
+Rules: @RULES@
+Authority: ECMA-334 7th ed 6.3.4
+Version: 7.3
+Expected: run
+Stdout: OK 1
+Generated: clauses/06-lexical-structure/generators/whitespace-pairs.py
+*/
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        int@LEFT@amount@RIGHT@=@RIGHT@19;
+        Check(amount == 19, "@CASE@");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

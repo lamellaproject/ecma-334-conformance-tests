@@ -1,0 +1,3 @@
+// Additional compilation unit for separate-imports.cs.
+using ForeignSecond;
+namespace Second { class Reader { public static int Read() { return Beacon.Code; } } }

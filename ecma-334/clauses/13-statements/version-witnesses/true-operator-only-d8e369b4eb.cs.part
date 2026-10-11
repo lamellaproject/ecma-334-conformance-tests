@@ -1,0 +1,16 @@
+// Positive compilation witness for E13-8-3-guard-bool-conversion-required.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+struct Truth
+{
+    public static bool operator true(Truth value) { return true; }
+    public static bool operator false(Truth value) { return false; }
+}
+class Program
+{
+    static void Main()
+    {
+        int value = 1;
+        // operator true satisfies a boolean_expression, but supplies no implicit conversion to bool.
+        switch (value) { case 1 when true: break; }
+    }
+}

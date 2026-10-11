@@ -1,0 +1,23 @@
+// Positive compilation witness for E13-9-5-movenext-overload-resolution.
+// An explicit invocation retains the optional parameter and omitted argument without relying on foreach overload selection.
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    class Source { public Cursor GetEnumerator() { return new Cursor(); } }
+    class Cursor
+    {
+        int position;
+        public int Current { get { return 41; } }
+        public bool MoveNext(int limit = 1) { return ++position <= limit; }
+    }
+    static void Main()
+    {
+        int total = 0, visits = 0;
+        foreach (int item in new int[] { new Source().GetEnumerator().MoveNext() ? 41 : 0 }) { total += item; visits++; }
+        Check(total == 41, "movenext-optional-argument-default");
+        Check(visits == 1, "optional-movenext-is-applicable-to-empty-list");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

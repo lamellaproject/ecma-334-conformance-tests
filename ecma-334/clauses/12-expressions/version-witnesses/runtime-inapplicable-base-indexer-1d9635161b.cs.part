@@ -1,0 +1,20 @@
+// Positive compilation witness for E12-8-14-dynamic-base-indexer-required.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+class Root { public int this[int index] { get { Program.reads++; return index; } } }
+class Leaf : Root { public int Read(dynamic index) { return base[0]; } }
+public class Program
+{
+    public static int reads;
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        bool rejected = false;
+        try { new Leaf().Read("fir"); }
+        catch (Exception) { rejected = true; }
+        Check(rejected, "inapplicable-base-indexer-fails-at-runtime-binding");
+        Check(reads == 0, "inapplicable-base-indexer-never-invokes-getter");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

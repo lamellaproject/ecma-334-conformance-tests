@@ -1,0 +1,70 @@
+block_id	source_id	locator	rule_ids	disposition	notes
+E11-b001	ecma-334-ed7	11, p. 145 (PDF p. 173)		heading	
+E11-b002	ecma-334-ed7	11.1, p. 145 (PDF p. 173)		heading	
+E11-b003	ecma-334-ed7	11.1, p. 145 (PDF p. 173)	E11-1-is-context;E11-1-switch-context;E11-1-switch-input;E11-1-is-input	rules	
+E11-b004	ecma-334-ed7	11.2, p. 145 (PDF p. 173)		heading	
+E11-b005	ecma-334-ed7	11.2.1, p. 145 (PDF p. 173)		heading	
+E11-b006	ecma-334-ed7	11.2.1, p. 145 (PDF p. 173)		covered-by E11-2-1-grammar-pattern-1	Introduces the declaration, constant, and var grammar alternatives.
+E11-b007	ecma-334-ed7	11.2.1, p. 145 (PDF p. 173)	E11-2-1-grammar-pattern-1;E11-2-1-grammar-pattern-2;E11-2-1-grammar-pattern-3	rules	
+E11-b008	ecma-334-ed7	11.2.1, p. 145 (PDF p. 173)		covered-by E11-2-2-declaration-local	Introduces variable-declaring pattern forms; var-local is recorded in 11.2.4.
+E11-b009	ecma-334-ed7	11.2.1, p. 145 (PDF p. 173)	E11-2-1-applicability-definition;E11-2-1-inapplicable-pattern	rules	
+E11-b010	ecma-334-ed7	11.2.1, p. 145 (PDF p. 173)		informative	Introduction to the runtime matching rules given separately for each form.
+E11-b011	ecma-334-ed7	11.2.2, p. 145 (PDF p. 173)		heading	
+E11-b012	ecma-334-ed7	11.2.2, p. 145 (PDF p. 173)		covered-by E11-2-2-declaration-type-test	Introduction to declaration-pattern matching; variable assignment is recorded below.
+E11-b013	ecma-334-ed7	11.2.2, p. 145 (PDF p. 173)	E11-2-2-grammar-declaration-pattern-1	rules	
+E11-b014	ecma-334-ed7	11.2.2, p. 145 (PDF p. 173)	E11-2-2-grammar-simple-designation-1	rules	
+E11-b015	ecma-334-ed7	11.2.2, p. 145 (PDF p. 173)	E11-2-2-grammar-single-variable-designation-1	rules	
+E11-b016	ecma-334-ed7	11.2.2, p. 145 (PDF p. 173)	E11-2-2-declaration-type-test;E11-2-2-declaration-no-nullable-type;E11-2-2-declaration-null-never-matches	rules	
+E11-b017	ecma-334-ed7	11.2.2, p. 145 (PDF p. 173)		note	
+E11-b018	ecma-334-ed7	11.2.2, p. 146 (PDF p. 174)	E11-2-2-declaration-discard;E11-2-2-declaration-discard-hides-name;E11-2-2-declaration-local;E11-2-2-declaration-assignment	rules	
+E11-b019	ecma-334-ed7	11.2.2, p. 146 (PDF p. 174)	E11-2-2-incompatible-types;E11-2-2-compatible-identity;E11-2-2-compatible-implicit-reference;E11-2-2-compatible-explicit-reference;E11-2-2-compatible-boxing;E11-2-2-compatible-unboxing;E11-2-2-compatible-open-input;E11-2-2-compatible-open-pattern;E11-2-2-declaration-applicability	rules	
+E11-b020	ecma-334-ed7	11.2.2, p. 146 (PDF p. 174)		note	This text block contains the end of a marked Note immediately followed by the start of a marked Example; neither yields rules, and the following blocks remain example text.
+E11-b021	ecma-334-ed7	11.2.2, p. 146 (PDF p. 174)		example	
+E11-b022	ecma-334-ed7	11.2.2, p. 146 (PDF p. 174)		example	
+E11-b023	ecma-334-ed7	11.2.2, p. 146 (PDF p. 174)		example	
+E11-b024	ecma-334-ed7	11.2.2, p. 146 (PDF p. 174)		example	
+E11-b025	ecma-334-ed7	11.2.2, p. 146 (PDF p. 174)		covered-by E11-2-2-declaration-no-nullable-type	Repeats the nullable-pattern-type compile-time error.
+E11-b026	ecma-334-ed7	11.2.2, p. 146 (PDF p. 174)		example	
+E11-b027	ecma-334-ed7	11.2.2, p. 146 (PDF p. 174)		example	
+E11-b028	ecma-334-ed7	11.2.2, p. 146 (PDF p. 174)		example	
+E11-b029	ecma-334-ed7	11.2.3, p. 146 (PDF p. 174)		heading	
+E11-b030	ecma-334-ed7	11.2.3, p. 146 (PDF p. 174)		covered-by E11-2-3-constant-numeric-match	Introduction to constant-value comparison; the object-equality fallback is also recorded below.
+E11-b031	ecma-334-ed7	11.2.3, p. 146 (PDF p. 174)	E11-2-3-grammar-constant-pattern-1	rules	
+E11-b032	ecma-334-ed7	11.2.3, p. 146 (PDF p. 174)	E11-2-3-constant-applicability	rules	
+E11-b033	ecma-334-ed7	11.2.3, p. 146 (PDF p. 174)		informative	Introduction to the ordered converted-value cases.
+E11-b034	ecma-334-ed7	11.2.3, p. 146 (PDF p. 174)	E11-2-3-constant-convert-integral-enum	rules	
+E11-b035	ecma-334-ed7	11.2.3, p. 146 (PDF p. 174)	E11-2-3-constant-convert-nullable	rules	
+E11-b036	ecma-334-ed7	11.2.3, p. 146 (PDF p. 174)	E11-2-3-constant-convert-other	rules	
+E11-b037	ecma-334-ed7	11.2.3, p. 146 (PDF p. 174)		informative	Introduction to matching given input e and the converted constant value v.
+E11-b038	ecma-334-ed7	11.2.3, p. 147 (PDF p. 175)	E11-2-3-constant-numeric-match	rules	
+E11-b039	ecma-334-ed7	11.2.3, p. 147 (PDF p. 175)	E11-2-3-constant-object-match	rules	
+E11-b040	ecma-334-ed7	11.2.3, p. 147 (PDF p. 175)		example	
+E11-b041	ecma-334-ed7	11.2.3, p. 147 (PDF p. 175)		example	
+E11-b042	ecma-334-ed7	11.2.3, p. 147 (PDF p. 175)		example	
+E11-b043	ecma-334-ed7	11.2.3, p. 147 (PDF p. 175)		example	
+E11-b044	ecma-334-ed7	11.2.3, p. 147 (PDF p. 175)		example	
+E11-b045	ecma-334-ed7	11.2.4, p. 147 (PDF p. 175)		heading	
+E11-b046	ecma-334-ed7	11.2.4, p. 147 (PDF p. 175)	E11-2-4-var-always-matches	rules	
+E11-b047	ecma-334-ed7	11.2.4, p. 147 (PDF p. 175)	E11-2-4-var-all-types	rules	
+E11-b048	ecma-334-ed7	11.2.4, p. 147 (PDF p. 175)	E11-2-4-grammar-var-pattern-1	rules	
+E11-b049	ecma-334-ed7	11.2.4, p. 147 (PDF p. 175)	E11-2-4-grammar-designation-1	rules	
+E11-b050	ecma-334-ed7	11.2.4, p. 147 (PDF p. 175)	E11-2-4-var-discard;E11-2-4-var-discard-hides-name;E11-2-4-var-local;E11-2-4-var-assignment	rules	
+E11-b051	ecma-334-ed7	11.2.4, p. 147 (PDF p. 175)	E11-2-4-var-type-binding-error	rules	
+E11-b052	ecma-334-ed7	11.3, p. 147 (PDF p. 175)		heading	
+E11-b053	ecma-334-ed7	11.3, p. 147 (PDF p. 175)	E11-3-subsumed-case	rules	
+E11-b054	ecma-334-ed7	11.3, p. 147 (PDF p. 175)	E11-3-would-match-constant	rules	
+E11-b055	ecma-334-ed7	11.3, p. 147 (PDF p. 175)		informative	Introduction to the alternative subsumption criteria.
+E11-b056	ecma-334-ed7	11.3, p. 147 (PDF p. 175)	E11-3-subsumption-constant	rules	
+E11-b057	ecma-334-ed7	11.3, p. 148 (PDF p. 176)	E11-3-subsumption-var-nonnullable;E11-3-subsumption-var-nullable	rules	
+E11-b058	ecma-334-ed7	11.3, p. 148 (PDF p. 176)	E11-3-subsumption-declaration	rules	
+E11-b059	ecma-334-ed7	11.4, p. 148 (PDF p. 176)		heading	
+E11-b060	ecma-334-ed7	11.4, p. 148 (PDF p. 176)		informative	Explicitly informal description introducing the formal exhaustiveness criteria; it is not an extra criterion.
+E11-b061	ecma-334-ed7	11.4, p. 148 (PDF p. 176)		informative	Introduction to the alternative exhaustiveness criteria.
+E11-b062	ecma-334-ed7	11.4, p. 148 (PDF p. 176)	E11-4-exhaustive-integral-enum	rules	
+E11-b063	ecma-334-ed7	11.4, p. 148 (PDF p. 176)	E11-4-exhaustive-var	rules	
+E11-b064	ecma-334-ed7	11.4, p. 148 (PDF p. 176)	E11-4-exhaustive-declaration-identity;E11-4-exhaustive-declaration-reference;E11-4-exhaustive-declaration-boxing	rules	
+E11-b065	ecma-334-ed7	11.4, p. 148 (PDF p. 176)		example	
+E11-b066	ecma-334-ed7	11.4, p. 148 (PDF p. 176)		example	
+E11-b067	ecma-334-ed7	11.4, p. 148 (PDF p. 176)		example	
+E11-b068	ecma-334-ed7	11.4, p. 148 (PDF p. 176)		example	
+E11-b069	ecma-334-ed7	11.4, p. 148 (PDF p. 176)		example	

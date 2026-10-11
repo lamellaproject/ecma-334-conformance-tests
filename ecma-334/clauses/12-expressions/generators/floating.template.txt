@@ -1,0 +1,18 @@
+{header}
+using System;
+unsafe class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static float F(uint bits) { return *(float*)&bits; }
+    static double D(ulong bits) { return *(double*)&bits; }
+    static bool Bits(float value, uint bits) { return *(uint*)&value == bits; }
+    static bool Bits(double value, ulong bits) { return *(ulong*)&value == bits; }
+    static bool Nan(float value) { return value != value; }
+    static bool Nan(double value) { return value != value; }
+    static void Main()
+    {
+{cases}
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

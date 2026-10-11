@@ -1,0 +1,29 @@
+// Positive compilation witness for E12-12-11-inequality-dynamic-result.
+// Boolean element equality removes the departure while retaining tuple equality and its language prerequisite.
+using System;
+public class Truth
+{
+    public int State; public Truth(int state) { State = state; }
+    public static bool operator true(Truth x) { Program.Trace += "T"; return x.State == 1; }
+    public static bool operator false(Truth x) { Program.Trace += "F"; return x.State == 0; }
+}
+public struct Number
+{
+    public int State; public Number(int state) { State = state; }
+    public static bool operator ==(Number x, Number y) { Program.Trace += "="; return x.State == y.State; }
+    public static bool operator !=(Number x, Number y) { Program.Trace += "!"; return x.State != y.State; }
+    public override bool Equals(object x) { return false; }
+    public override int GetHashCode() { return 0; }
+}
+public class Program
+{
+    public static string Trace = "";
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        var left = (new Number(2), new Number(2)); var right = (new Number(9), new Number(9));
+        bool result = left != right; Check(!result && Trace == "!T!T", "dynamic-true-operator");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

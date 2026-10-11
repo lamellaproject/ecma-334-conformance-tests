@@ -1,0 +1,78 @@
+/*
+Rules: E10-3-2-all-pairs; E12-23-numeric
+Authority: ECMA-334 7th ed 10.3.2
+Version: 7.3
+Expected: run
+Stdout: OK 12
+Generated: clauses/10-conversions/generators/standard-matrices.py
+*/
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        {
+            const float input = -3.40282347e+38f;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==4286578687U, "float-float-explicit-unchecked-constant-0");
+        }
+        {
+            const float input = 3.40282347e+38f;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==2139095039U, "float-float-explicit-unchecked-constant-1");
+        }
+        {
+            const float input = 0.0f;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==0U, "float-float-explicit-unchecked-constant-2");
+        }
+        {
+            const float input = -0.0f;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==2147483648U, "float-float-explicit-unchecked-constant-3");
+        }
+        {
+            const float input = 1.0f;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==1065353216U, "float-float-explicit-unchecked-constant-4");
+        }
+        {
+            const float input = -1.0f;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==3212836864U, "float-float-explicit-unchecked-constant-5");
+        }
+        {
+            const float input = 0.75f;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==1061158912U, "float-float-explicit-unchecked-constant-6");
+        }
+        {
+            const float input = -0.75f;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==3208642560U, "float-float-explicit-unchecked-constant-7");
+        }
+        {
+            const float input = 16777215.0f;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==1266679807U, "float-float-explicit-unchecked-constant-11");
+        }
+        {
+            const float input = 16777216.0f;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==1266679808U, "float-float-explicit-unchecked-constant-12");
+        }
+        {
+            const float input = -16777216.0f;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==3414163456U, "float-float-explicit-unchecked-constant-13");
+        }
+        {
+            const float input = -16777215.0f;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==3414163455U, "float-float-explicit-unchecked-constant-14");
+        }
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

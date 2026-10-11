@@ -1,0 +1,2097 @@
+{
+  "rows": {
+    "0fc9218cbb3c6ca58bd1cfe16eb34b715c12fbf7d6994465016bcded8c37e023": {
+      "12-expressions--E12-8-8-void-result--value-context": {
+        "basis": "repair",
+        "below_since": {
+          "behavior": "refuses",
+          "diagnostic_codes": [
+            "CS8026"
+          ],
+          "level": "5"
+        },
+        "declared_witness_sha256": "",
+        "evidence_sha256": "550e2b519d49f3c8c79ff65c8ca5d8afac24805f9420e09c3c3818eae119f4c2",
+        "fixture_sha256": "9a34ce6a41899f54ca24304ad941725d93e30bd145975113f3c5e17cd15f2221",
+        "measurement_target": "dotnet",
+        "method": "exhaustive",
+        "observations": {
+          "1": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS0029",
+              "CS8022"
+            ],
+            "original_evidence_sha256": "cdb3ccd9a45912913f9ca7b319c7288b3c2bae3c4a2f16d3e2494108c26b1392",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8022"
+            ],
+            "witness_evidence_sha256": "d0f85ec4cb970ff826865c8d910bbeca94540f8d0e091421251c64a8530b381a",
+            "witness_status": "unexpected-reject"
+          },
+          "10": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "7546edf99c1e12fdf2ed10e6099f5c5a6a406e42b68970e390c068261755575a",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "6ed56c3fefda91c11af342ad6bd010a25ffda85f8376dcfc33480819f19a0e35",
+            "witness_status": "pass"
+          },
+          "11": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "3237c1f3a7ff12f71882d7475613f345bc77228f8312b5e1150ed28deb883c7b",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "3a409834a9629ec4fb8ab33badf514d03981454dfe462a9dd0779d0d8a0c46c4",
+            "witness_status": "pass"
+          },
+          "12": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "8b0a03e565779ba86284fc7ffe372bfd878a74da245b77b24bb685381741495f",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "b6eff7e43a38c4439b294d70d0369d0f6dd278c9fa71580de6d7afee3d5a38d5",
+            "witness_status": "pass"
+          },
+          "13": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "30d119c5500535e69b474d45fd9de05fc1e6e69af71c424a019d67ccd9befe44",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "bacfc3b89e223c71a7109c346c9f80f6d2d52081129a5b3525440f935b796b99",
+            "witness_status": "pass"
+          },
+          "14": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "370785caf0fdb986f98a945c86c65115f236fe70e4af327337142bea34279858",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "2ca8628209a6a97f2713982f07746c3bada50421105400c298c5bb40363bcd91",
+            "witness_status": "pass"
+          },
+          "15": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "605c3bec3c857fdf0842580c339c59420a837195874d0e43c0d979b90689e2f5",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "9328a079323f7ecd1ff51eabf78e3c9d76ec84932a07372762bc1aaec83807a3",
+            "witness_status": "pass"
+          },
+          "15-preview": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "4e961f1dee2fb073a3368f86c94f7a3ee97b050c7eb480ffdc9dee5a60d02cbd",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "7cc173fecf65589c28ebef6148f73cf84cd72b788d538de81fafca18dae909ee",
+            "witness_status": "pass"
+          },
+          "2": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS0029",
+              "CS8023"
+            ],
+            "original_evidence_sha256": "af4d5c5df2e7a1ee403b143f0546734a32191e9568777c87db8f784d16b1a3be",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8023"
+            ],
+            "witness_evidence_sha256": "7b1a0e20f668defdbd7cedcc89fc4a1a1e67143a0c8b22d0d365c448decb1073",
+            "witness_status": "unexpected-reject"
+          },
+          "3": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS0029",
+              "CS8024"
+            ],
+            "original_evidence_sha256": "27ef01401c2cc4be8a4c301d4b312dd8491997e2e3c50cdc15247bb63958455e",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8024"
+            ],
+            "witness_evidence_sha256": "da6cf3a185bb5b71d5d61fd4a1e15930917302ee17364a71bc752507f89af679",
+            "witness_status": "unexpected-reject"
+          },
+          "4": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS0029",
+              "CS8025"
+            ],
+            "original_evidence_sha256": "6c69bf931af45d1525941a29fcd8f58811284a1c40558796ede8dfcb782a6d3c",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8025"
+            ],
+            "witness_evidence_sha256": "d0184a5175abd60ab8ae5041a21e79e468540df8629dd9bc5b6ad693851d2b8f",
+            "witness_status": "unexpected-reject"
+          },
+          "5": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS0029",
+              "CS8026"
+            ],
+            "original_evidence_sha256": "a3cafdb8a97dde2ad99da459a35b871681c9f8242f1279008a8d1f242a23a4f1",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8026"
+            ],
+            "witness_evidence_sha256": "b116b293cb605f73702b816cf9d95b4a367b08e1cd7625a04d06f993612a9e35",
+            "witness_status": "unexpected-reject"
+          },
+          "6": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "edab2ff8116ce83211be517f9c414fdcac904a3871e1b84698d2f3bd9b294ae1",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "96348091a09c5c018884aa3c401a1325acb646c7c10301df7c678de8aabf6485",
+            "witness_status": "pass"
+          },
+          "7": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "2232711e609920f9571caeeee939813ebefcc0d9bf32f8138a4578a85ffd5d55",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "addce72e5a5a421e7becdbc3fc6657189bc90941d90a19c5f1ade5588cf52038",
+            "witness_status": "pass"
+          },
+          "7.1": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "39d5654dd97c68ca2676caea025dd7bf8def25083e2b3967962f3d3124198581",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "1409bb9ceb4073ac00a278805a962eb3b3335f0a0cda8c93240f29ea4b7a12c3",
+            "witness_status": "pass"
+          },
+          "7.2": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "e35f98ffe73161448fa4dc97cb98adcff4a8831bb4b27ebd4038b2cf68ba8762",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "45fb9b4c8dac2d467282c27de1b17d34177095f997ebbbdc55d00aa08d1f9912",
+            "witness_status": "pass"
+          },
+          "7.3": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "f6967389680b54be75f1bf5513275c1b32c0b2c952b92a24cbe694390aaed850",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "68e19e42fea1952cd370f403cd15a1ab5f8fbc6892c0af2201f9a57cee9e7e5b",
+            "witness_status": "pass"
+          },
+          "8": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "7196173fb7ae01b4c51505f461a96580daa2c13460c03f8d238e41ffd2f17b9f",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "d89609a184968bf9bf54bdc61fc5fb83f42a82ab22bf222044ae03cc417d9b09",
+            "witness_status": "pass"
+          },
+          "9": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0029"
+            ],
+            "original_evidence_sha256": "98c1cd3b66a6ce40d081667bcc2260b9513b5d24e96f960da4372dab7990e4b7",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "cd97b5d5a40663c116e4227c840979bb640d42d960919d86aab4af1dd45e946f",
+            "witness_status": "pass"
+          }
+        },
+        "other_passing_levels": [],
+        "since": "6",
+        "witness_sha256": "75a60fcd4afa4d762d0d75626774c9527bde1c87a34fe332947b6d8c5cae3610"
+      }
+    },
+    "51a3bb13ecb8e6f8cd57e495c25f485a9ec2e4f0d2eb2ae91f2986380b9ad701": {
+      "12-expressions--E12-8-11-3-class-type-search--first-indexer-declaration": {
+        "basis": "original",
+        "below_since": {
+          "behavior": "refuses",
+          "diagnostic_codes": [
+            "CS8023"
+          ],
+          "level": "2"
+        },
+        "declared_witness_sha256": "",
+        "evidence_sha256": "f9d7b4ea3ad57c5756c08b2ee7e3be452650933b12b150a29d78c36e4d9af4f1",
+        "fixture_sha256": "9a34ce6a41899f54ca24304ad941725d93e30bd145975113f3c5e17cd15f2221",
+        "measurement_target": "dotnet",
+        "method": "exhaustive",
+        "observations": {
+          "1": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS8022"
+            ],
+            "original_evidence_sha256": "a2f85c96a46b342995ac1ad67f3f8fffaab73b397bd72e09a42cf3c695c17b9d",
+            "original_status": "unexpected-reject",
+            "witness_diagnostic_codes": [
+              "CS8022"
+            ],
+            "witness_evidence_sha256": "a2f85c96a46b342995ac1ad67f3f8fffaab73b397bd72e09a42cf3c695c17b9d",
+            "witness_status": "unexpected-reject"
+          },
+          "10": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "9901a9d86af9c01980626aa9ca8fdb41083bd1aec41b8eed247907468bf353bd",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "9901a9d86af9c01980626aa9ca8fdb41083bd1aec41b8eed247907468bf353bd",
+            "witness_status": "pass"
+          },
+          "11": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "b5ebec4a79976ae2f32a476b6152d751d75592d4ca00a0366ac84e766f7f191e",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "b5ebec4a79976ae2f32a476b6152d751d75592d4ca00a0366ac84e766f7f191e",
+            "witness_status": "pass"
+          },
+          "12": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "2526cfdfa0c46ac0f6900094bf3dd04f9dfbbc8902f6443f9ccac052dc53ceff",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "2526cfdfa0c46ac0f6900094bf3dd04f9dfbbc8902f6443f9ccac052dc53ceff",
+            "witness_status": "pass"
+          },
+          "13": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "7f5a7378ee5e82c78a2773bd7651c493c1e9682b2ebc9f7fd5e0d44d037553c4",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "7f5a7378ee5e82c78a2773bd7651c493c1e9682b2ebc9f7fd5e0d44d037553c4",
+            "witness_status": "pass"
+          },
+          "14": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "625a0ab0e8afeb1a038b34dea6ebbed08e769a1e5bbd84d6e148a8f44a5ced83",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "625a0ab0e8afeb1a038b34dea6ebbed08e769a1e5bbd84d6e148a8f44a5ced83",
+            "witness_status": "pass"
+          },
+          "15": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "499eb88c0303afd01a5c3ccb925e239bc7278ddc6beb59035102f8ef9979c607",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "499eb88c0303afd01a5c3ccb925e239bc7278ddc6beb59035102f8ef9979c607",
+            "witness_status": "pass"
+          },
+          "15-preview": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "2103f965fa2d8e978209e94652400ad464d655cc5c31bfd2eae3ae84f5d3c5df",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "2103f965fa2d8e978209e94652400ad464d655cc5c31bfd2eae3ae84f5d3c5df",
+            "witness_status": "pass"
+          },
+          "2": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS8023"
+            ],
+            "original_evidence_sha256": "220b63df0e4aa49c8245f27554385792c2b8be621a2d46f1d1d978a02d479271",
+            "original_status": "unexpected-reject",
+            "witness_diagnostic_codes": [
+              "CS8023"
+            ],
+            "witness_evidence_sha256": "220b63df0e4aa49c8245f27554385792c2b8be621a2d46f1d1d978a02d479271",
+            "witness_status": "unexpected-reject"
+          },
+          "3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "5c109ae576123baaa08d81fc4363599aea84f5e507ea0ed220b4f3098455c5a4",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "5c109ae576123baaa08d81fc4363599aea84f5e507ea0ed220b4f3098455c5a4",
+            "witness_status": "pass"
+          },
+          "4": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "8f91ab911c73033b61a51f94b652ace71c85f0a68282fbb64957be21e300e15f",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "8f91ab911c73033b61a51f94b652ace71c85f0a68282fbb64957be21e300e15f",
+            "witness_status": "pass"
+          },
+          "5": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "214f5537c9acad67ecf89a0ec0089285b0bc4536809a5c9946b94c88661d5cf8",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "214f5537c9acad67ecf89a0ec0089285b0bc4536809a5c9946b94c88661d5cf8",
+            "witness_status": "pass"
+          },
+          "6": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "5c96306e60f1642cc5d7b0e6afdde905bebe27942be87c884666aa82d9834098",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "5c96306e60f1642cc5d7b0e6afdde905bebe27942be87c884666aa82d9834098",
+            "witness_status": "pass"
+          },
+          "7": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "e7fa7bdec56d69dd1498b69c4c8fa242e89e82f1b013d3b9636b1daac6d44c8d",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "e7fa7bdec56d69dd1498b69c4c8fa242e89e82f1b013d3b9636b1daac6d44c8d",
+            "witness_status": "pass"
+          },
+          "7.1": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "065323fcc2a087b03efd39729822f12090197b888922ac5d8345f93c253b5f7e",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "065323fcc2a087b03efd39729822f12090197b888922ac5d8345f93c253b5f7e",
+            "witness_status": "pass"
+          },
+          "7.2": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "c0c322b2d471427405ef87802e169e40a351fc70e694dc52402f1ec9e74592eb",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "c0c322b2d471427405ef87802e169e40a351fc70e694dc52402f1ec9e74592eb",
+            "witness_status": "pass"
+          },
+          "7.3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "4dfeb9146e039447443803c2611a97166750e0b200bdf79a6d734d073650ce26",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "4dfeb9146e039447443803c2611a97166750e0b200bdf79a6d734d073650ce26",
+            "witness_status": "pass"
+          },
+          "8": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "25853f8cbe468531c5b8c08ac350f3ef1ff9f5d3478684fb75f6f2f37e725288",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "25853f8cbe468531c5b8c08ac350f3ef1ff9f5d3478684fb75f6f2f37e725288",
+            "witness_status": "pass"
+          },
+          "9": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "cff3b6f04ed69d53b45cd1e3cd3ef3f17fe75361d69c04b2c5bdfb244546b823",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "cff3b6f04ed69d53b45cd1e3cd3ef3f17fe75361d69c04b2c5bdfb244546b823",
+            "witness_status": "pass"
+          }
+        },
+        "other_passing_levels": [],
+        "since": "3",
+        "witness_sha256": "51a3bb13ecb8e6f8cd57e495c25f485a9ec2e4f0d2eb2ae91f2986380b9ad701"
+      }
+    },
+    "68e7dc3242e71ed7427c7772bae7352fde47e885f783ae6f635f054b2e75d197": {
+      "12-expressions--E12-6-4-7-target-short--short-over-uint-nullable": {
+        "basis": "original",
+        "below_since": {
+          "behavior": "refuses",
+          "diagnostic_codes": [
+            "CS8022"
+          ],
+          "level": "1"
+        },
+        "declared_witness_sha256": "",
+        "evidence_sha256": "000fe8ddad060b1e880de15b0b3dfdd8bce83f79acb8c621a791b7bf07a2e257",
+        "fixture_sha256": "9a34ce6a41899f54ca24304ad941725d93e30bd145975113f3c5e17cd15f2221",
+        "measurement_target": "dotnet",
+        "method": "exhaustive",
+        "observations": {
+          "1": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS8022"
+            ],
+            "original_evidence_sha256": "4e67e61e136f60b663119daeadd5d4b578c44289785609b3a7a359a5bb709732",
+            "original_status": "unexpected-reject",
+            "witness_diagnostic_codes": [
+              "CS8022"
+            ],
+            "witness_evidence_sha256": "4e67e61e136f60b663119daeadd5d4b578c44289785609b3a7a359a5bb709732",
+            "witness_status": "unexpected-reject"
+          },
+          "10": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "051d03efdf93686177e54de59bd41ce6e35bf3315d322ee3efecb71a0483bea1",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "051d03efdf93686177e54de59bd41ce6e35bf3315d322ee3efecb71a0483bea1",
+            "witness_status": "pass"
+          },
+          "11": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "f5ab13917d9abff0cefa67ab3589f4e4046dc0ba629c9ffc32eb70c3a70d9ddf",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "f5ab13917d9abff0cefa67ab3589f4e4046dc0ba629c9ffc32eb70c3a70d9ddf",
+            "witness_status": "pass"
+          },
+          "12": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "fb22c4835cc3b93ba1c56c905f445b59939afd8216b9513ca74d178c56a3367a",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "fb22c4835cc3b93ba1c56c905f445b59939afd8216b9513ca74d178c56a3367a",
+            "witness_status": "pass"
+          },
+          "13": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "c5ac86fa9f3214f4ce78d8dad89f1d188742a1fbb7b7928a49df684a0c319e9a",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "c5ac86fa9f3214f4ce78d8dad89f1d188742a1fbb7b7928a49df684a0c319e9a",
+            "witness_status": "pass"
+          },
+          "14": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "fd5a34d11a3d3fc690c769b14805932020ac14cf82d4b42911a7b14bf8ac1489",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "fd5a34d11a3d3fc690c769b14805932020ac14cf82d4b42911a7b14bf8ac1489",
+            "witness_status": "pass"
+          },
+          "15": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "a079e2183023145e36cc2bc82c4a4f9a56c65b48f9f370069a5ee5ada45b7651",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "a079e2183023145e36cc2bc82c4a4f9a56c65b48f9f370069a5ee5ada45b7651",
+            "witness_status": "pass"
+          },
+          "15-preview": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "6725bfd1400e7cc248df098f42ced0230b0400179da601639106a5f120d301e2",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "6725bfd1400e7cc248df098f42ced0230b0400179da601639106a5f120d301e2",
+            "witness_status": "pass"
+          },
+          "2": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "698693b2528f6c2c82953b87e7b544ab70f691c0d6b1d1a020af2d23fecb9ca0",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "698693b2528f6c2c82953b87e7b544ab70f691c0d6b1d1a020af2d23fecb9ca0",
+            "witness_status": "pass"
+          },
+          "3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "e804417b2b390d9234b163321802b0bc024707e30163053e171c10880b11fcec",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "e804417b2b390d9234b163321802b0bc024707e30163053e171c10880b11fcec",
+            "witness_status": "pass"
+          },
+          "4": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "f204374f4255ca0c488c9703cfcce44b5cd3a93e9161f35fa8a4fe7c3e5de19c",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "f204374f4255ca0c488c9703cfcce44b5cd3a93e9161f35fa8a4fe7c3e5de19c",
+            "witness_status": "pass"
+          },
+          "5": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "9f4a1d8661da2fcefe1b377793e6a513306372027e20e4deb5766aa7dd87c27a",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "9f4a1d8661da2fcefe1b377793e6a513306372027e20e4deb5766aa7dd87c27a",
+            "witness_status": "pass"
+          },
+          "6": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "363d9a2e04e660eee3b9f848ef703c6bfd1ab9bbb1bb23b412734790794c82e6",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "363d9a2e04e660eee3b9f848ef703c6bfd1ab9bbb1bb23b412734790794c82e6",
+            "witness_status": "pass"
+          },
+          "7": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "0ac5864d87599c0cafe22ff2ae97a5e0dafa853ac904509210c2c62efdc7bfab",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "0ac5864d87599c0cafe22ff2ae97a5e0dafa853ac904509210c2c62efdc7bfab",
+            "witness_status": "pass"
+          },
+          "7.1": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "71e307316188bb6dc683b42bcf3b1e5d49be6e45ce6a1a9a2e74ebafddec8880",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "71e307316188bb6dc683b42bcf3b1e5d49be6e45ce6a1a9a2e74ebafddec8880",
+            "witness_status": "pass"
+          },
+          "7.2": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "dec98bc5c41808a151b34f3e8e44e82a1af3811c09f13475ddb00c0075237a9d",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "dec98bc5c41808a151b34f3e8e44e82a1af3811c09f13475ddb00c0075237a9d",
+            "witness_status": "pass"
+          },
+          "7.3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "f3b04146130da836cf6b6622d7efb76c06b957a9cdc14ea982cc40d78ab0b33f",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "f3b04146130da836cf6b6622d7efb76c06b957a9cdc14ea982cc40d78ab0b33f",
+            "witness_status": "pass"
+          },
+          "8": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "8ea7cdd1d9ee080a2b7b399a624e441e58d8304a3b1ce3c00ff9f176e2234cde",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "8ea7cdd1d9ee080a2b7b399a624e441e58d8304a3b1ce3c00ff9f176e2234cde",
+            "witness_status": "pass"
+          },
+          "9": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "66b905a8d7e37ea15bf6cac5a9f525f154695b03c4caf9c9c40ba381df91200c",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "66b905a8d7e37ea15bf6cac5a9f525f154695b03c4caf9c9c40ba381df91200c",
+            "witness_status": "pass"
+          }
+        },
+        "other_passing_levels": [],
+        "since": "2",
+        "witness_sha256": "68e7dc3242e71ed7427c7772bae7352fde47e885f783ae6f635f054b2e75d197"
+      }
+    },
+    "745e06640ed069bc4f0ba9433147d5f188e595fc2d60e8fde48617288e3b3af6": {
+      "12-expressions--E12-6-2-2-unnamed-after-named--after-parameter-array": {
+        "basis": "repair",
+        "below_since": {
+          "behavior": "refuses",
+          "diagnostic_codes": [
+            "CS8024"
+          ],
+          "level": "3"
+        },
+        "declared_witness_sha256": "",
+        "evidence_sha256": "ca7e6fd1583ddd62d33d5c44586e6cbca40e382c94e12fabca14a6fd9a14cab5",
+        "fixture_sha256": "9a34ce6a41899f54ca24304ad941725d93e30bd145975113f3c5e17cd15f2221",
+        "measurement_target": "dotnet",
+        "method": "exhaustive",
+        "observations": {
+          "1": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS1501",
+              "CS1738",
+              "CS8022"
+            ],
+            "original_evidence_sha256": "47d4ccb4cafde99de84e20dbf3b76589098eb6b29feeeea21c33d78b22e967ac",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8022"
+            ],
+            "witness_evidence_sha256": "b8f6c03f25f61d2f41843ef7d7f3d4cd47fe54a2d63c7b86f3542b90ea1d3487",
+            "witness_status": "unexpected-reject"
+          },
+          "10": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501"
+            ],
+            "original_evidence_sha256": "20cd8cc4c5391758eeea3f6c46c5bed09125367ee64a5a081a1b022da87e1abe",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "ed6dbebadecff0be2e2555ec9c7b553ef7a88956e4270e4ba34bdd2dc45c2fce",
+            "witness_status": "pass"
+          },
+          "11": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501"
+            ],
+            "original_evidence_sha256": "4103f860afd3cee240c44f5f787f778872a4e0a1bad94597f22103c49b18379a",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "6c5ff917316d3fcf4a60f988326a1c2f4b040823f26e78704a496dba649567aa",
+            "witness_status": "pass"
+          },
+          "12": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501"
+            ],
+            "original_evidence_sha256": "236b68fdfda9d35bf0e64940d1608739adb9d9250b6d54871f056afb7a719fb0",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "0c99cb092efa29d486e0faad0de8af05d59205776e477c9fb4d14c7aa25eebb4",
+            "witness_status": "pass"
+          },
+          "13": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501"
+            ],
+            "original_evidence_sha256": "1de5182f5a2714e01ae39631c0af874ae8847aa6fe4d4d7b38b77192768a4337",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "e704c2dc796bc315aa824c9dd656851e2b36514b85d1d1edd6eed3fbb6acfbd3",
+            "witness_status": "pass"
+          },
+          "14": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501"
+            ],
+            "original_evidence_sha256": "6a7416047cd5290c92230e34f139d880fe12996c7a33d861d4b73dd76d033197",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "8be90196cd232659c52cf1401d1c4703775a6e3b26955427608456ee90d785b9",
+            "witness_status": "pass"
+          },
+          "15": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501"
+            ],
+            "original_evidence_sha256": "83842b8f5638ef528b732cb01b8401eb7a6d3e6d28d8f7af3804753bed2a6940",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "eaa872e4da5dfb769efa1769c26e7f53c8b5024bbfc5379cce98780a27297538",
+            "witness_status": "pass"
+          },
+          "15-preview": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501"
+            ],
+            "original_evidence_sha256": "2bbc6deccb676d1655e25cc66bd63a764f925c1d56195c67ca76e9049fd04e49",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "8bf9e71fcf5aad1bdbad7dcb5944ac46bfd7639409983f474b4b165dc2b2e4a1",
+            "witness_status": "pass"
+          },
+          "2": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS1501",
+              "CS1738",
+              "CS8023"
+            ],
+            "original_evidence_sha256": "fc4ffdc0c62f6b33d1a4adcbb731acdf6b21ccb2697f140c202c0fb5b8e9e907",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8023"
+            ],
+            "witness_evidence_sha256": "1a6c050bf89aa1f99660c23ccdfb8e7d3de5800c2e133a7b07bac3611961cabf",
+            "witness_status": "unexpected-reject"
+          },
+          "3": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS1501",
+              "CS1738",
+              "CS8024"
+            ],
+            "original_evidence_sha256": "b8b8aee8aa879ff7a1430cb1f5674f4fe72ced6cfcb48a1283ba0f1b3842736c",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8024"
+            ],
+            "witness_evidence_sha256": "b074cc4557d7e21664220d26a31227521759658addf9d0a94664017b27057614",
+            "witness_status": "unexpected-reject"
+          },
+          "4": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501",
+              "CS1738"
+            ],
+            "original_evidence_sha256": "68973d2fa82a5ee46b571bb5cbbf11ea4f3e2fb2309db8f2a82f0002589769bb",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "28be47b13097e55a706db3437df4edbdc522e673a2cbd4b6c836f178c76458a5",
+            "witness_status": "pass"
+          },
+          "5": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501",
+              "CS1738"
+            ],
+            "original_evidence_sha256": "79f17653643376085c85c716472ef0559a31f81785662fd6a95e2cbb0035710f",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "ae8529b8a0535644b3e51a99499de7d9073e6b649530f4707f623bb3d15454b8",
+            "witness_status": "pass"
+          },
+          "6": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501",
+              "CS1738"
+            ],
+            "original_evidence_sha256": "e0f8da1be5503b476c4b7adc8b099f711760e0860be908096424d19e47018567",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "1b99b9fe32e2dbb65376b51a8bdcb6f4857c7fb0513725e03c976b70f0f14ee2",
+            "witness_status": "pass"
+          },
+          "7": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501",
+              "CS1738"
+            ],
+            "original_evidence_sha256": "635a28257d6e2a9c38767558f6e9f19b23624003f37f261907e681283ac5e70f",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "1f14895ebc21b7e336be4ec5a3bdbadb25562653b334831ed1afa42e6952b547",
+            "witness_status": "pass"
+          },
+          "7.1": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501",
+              "CS1738"
+            ],
+            "original_evidence_sha256": "dd6cba5ceafb54da2d4f647ce92c8e3194c0f285c6f91608549b1bcc7c48ab3b",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "855dfe2affb2408989112734b4788c8c6f047fae6ddb427953dcbb86f8f53d75",
+            "witness_status": "pass"
+          },
+          "7.2": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501"
+            ],
+            "original_evidence_sha256": "966cc03b0a1d7b31a0c146db1ac289a212b1b0f510785225a702f8474ae1d83f",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "94c643a9adc6ca1c019d39b19d86bafe349e83413bb204595d4642cf5a69f250",
+            "witness_status": "pass"
+          },
+          "7.3": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501"
+            ],
+            "original_evidence_sha256": "15db44c523ed3a4d4ab06b209be679da6340fd50a4d2d2fbed73062fa6660c96",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "5854059f95f88387dcf7a26b2ae46f5ab9b697cb6df5a9bdf4f602535c689754",
+            "witness_status": "pass"
+          },
+          "8": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501"
+            ],
+            "original_evidence_sha256": "821e199352c506bcb78ea144c52d57e2a15eeeae9559ec09f6c1e7e92fb71fb7",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "6d157a1f3349fcf7ceae4725b82a0dfe3e82bc7230cbd8a4b2b765dc8d96dec5",
+            "witness_status": "pass"
+          },
+          "9": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS1501"
+            ],
+            "original_evidence_sha256": "3a867012b44e855c01befdc4ebe43c247f2838f14a3478b2ee549db30ef21c26",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "a0b91a5ef1052d289956e2b427397f794fbac95d6039cf057f85931ec5c1412f",
+            "witness_status": "pass"
+          }
+        },
+        "other_passing_levels": [],
+        "since": "4",
+        "witness_sha256": "3abb56eaeb74b26e04f38759fc2e69644d1045f17cafa03d6ace6831c28ccf02"
+      }
+    },
+    "870166d85c4d50b8f0b1736298740c1fd8503210de8215dfdc7ef453b0c3dd04": {
+      "12-expressions--E12-8-7-1-static-readonly-field--outside-static-constructor": {
+        "basis": "repair",
+        "below_since": {
+          "behavior": "none",
+          "diagnostic_codes": [],
+          "level": ""
+        },
+        "declared_witness_sha256": "",
+        "evidence_sha256": "902cec8d3f51a6aa7d080a11be676c8d4e7e6b85c1663c8e8b9475478145a5ea",
+        "fixture_sha256": "9a34ce6a41899f54ca24304ad941725d93e30bd145975113f3c5e17cd15f2221",
+        "measurement_target": "dotnet",
+        "method": "exhaustive",
+        "observations": {
+          "1": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "9c02c02495f7126dcb474fca6afd41c700734692d734b537f3f800ddfff5bd16",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "6a6d547f1005caef215955adc522202235a41c6f08ec5421f398d09b46ad5c4f",
+            "witness_status": "pass"
+          },
+          "10": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "bc594a71da6ceb976cade3640a4affef0f80ad35a1bfff9109618f4240f4891f",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "81aafef30b43a1611b951f485acf93dd2d7925b7c02b784614160277a538a3ae",
+            "witness_status": "pass"
+          },
+          "11": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "efc7c27c3d760b8d6145c713c04f639d73119a38f88dacc7ffe682552e9ff684",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "9542a5198f59746cad74afe51eac5aad3e8abf1678e7df98705588f058e36b65",
+            "witness_status": "pass"
+          },
+          "12": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "6dde73067b1195d1b9516cb666ee96f691318793f1056b6990239f5044e603f2",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "a755b5e94ba1cc614125d8554bb8761f6f8a57097f31131b73fdaa612607b69b",
+            "witness_status": "pass"
+          },
+          "13": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "532b7bc44865bdd56f6aa980cf324abda750eaca0902ad1684a9ec989e558892",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "91b12c923851df8385e0e8976293372178826554e0b32c8697017e1db4454cee",
+            "witness_status": "pass"
+          },
+          "14": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "5a995a35916568b8b9fa1244273b7067b539479ceaf796662d5536a6be7bbb93",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "e8acf44334d7f6ce77dae1c04709765392aa7dabf04864bdc58cb8131ba2f810",
+            "witness_status": "pass"
+          },
+          "15": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "b67de07d3a9a6c954ade16fb0f64cb01f247731f361136542ce298760481372e",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "2672d84af0215a3590838f7788252e75c861f13256b494a20ba02cbad62093ef",
+            "witness_status": "pass"
+          },
+          "15-preview": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "957f87c8c2e050d1aaae1483685fe11c79a7d63dc5d5217099d4e86974c484b8",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "2d8de3e1b60c89a7b89f72cc41f9c51958bce07bb357ce95bd13866271b2f47d",
+            "witness_status": "pass"
+          },
+          "2": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "635c94b41e57229f64bdf48cf02d8cedefd1382550069502b5e56e4d25513b53",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "1e1f97e6dbbabaa26aa47cc4b22eaba41ec76bdd792808560537a4e9aa31d68b",
+            "witness_status": "pass"
+          },
+          "3": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "fcc664fba8dfd89abec51ede70cc7e006170855f7a5aff7eaf3c6a5a80a2c0b7",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "6fd9a131700ba0bcef6e9f28395ed016b14bb0ef761d482dea000b9d8864693a",
+            "witness_status": "pass"
+          },
+          "4": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "866acd8f498f47d8368691ef5ef40a060914b2150b05a33a3089fd7b9c5a8479",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "b00c7cdee83c5a58ee14bc89f959690ebd8adac1e2553227858e7e6799fb488e",
+            "witness_status": "pass"
+          },
+          "5": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "ee4f332f738ab22ea5e175ba159372e95b09c0a1d27d0e74e2ceb42b43763f56",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "58e870602e44acee918894fe03225960e6248a4c41cb6bb928e0e98cf9dca0a1",
+            "witness_status": "pass"
+          },
+          "6": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "1c50dcfdec9fa3f05b5f3ba3cde42a825e8dbc7a02e8026e425aa78e6d6abe2b",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "422e324ed2464c945747c5f63095bccd6e0f1c544beffdeb63ab8bb38ed067c8",
+            "witness_status": "pass"
+          },
+          "7": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "a0e22610b2a5eb8b196712b3a54a2028ed29998f563ca8c491f365f1f67cbec1",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "f5aefb4f81b4b2445c1bc0b5ac7710a90fbaa83d87bfbf07226701bd7eccd918",
+            "witness_status": "pass"
+          },
+          "7.1": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "34dfd3dd2c17dd7ae3b2094ac16b0bd6f397ee8533dc085440c3ad582e83b54c",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "da69188ee582736ffe48f7839156443a2f566ccf074eaab9609b81e5fbd689b1",
+            "witness_status": "pass"
+          },
+          "7.2": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "ec8d55c1870c46d4e036abf62329abf4a847e39ded959cbe7d72c71b10f6ebf8",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "619d3c332a81453bad8b649d623ac7d3bf46172a1b62d2d87aa7e8a32e589abd",
+            "witness_status": "pass"
+          },
+          "7.3": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "24c31043a95697d61b7e1d14d58c4a6c832e966cca64daaee7ffbdc764cdba74",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "ddec2bba697d582e6424cb6268192a7fb9e2c0b933c3e6a634562deb9bcab8f2",
+            "witness_status": "pass"
+          },
+          "8": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "bda06c5b47e4454b25abc3da86f4ffd762eb9401ce8157c124d7cea8f695962e",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "bd762d07ec28a02e99b76c7fdca2d9e92fa9d8747490d644d869121fd2baec8b",
+            "witness_status": "pass"
+          },
+          "9": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0199"
+            ],
+            "original_evidence_sha256": "abebf6a637704733732fe8033bbeaed528a6093569b9d03e16e2376450ec43a4",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "37e28f02f7f262b24bf16f7351a9fccda76abfa85f73a1e282cf4adc2df0caa2",
+            "witness_status": "pass"
+          }
+        },
+        "other_passing_levels": [],
+        "since": "1",
+        "witness_sha256": "1fd9a18140868f398a7ae5af92405ce58411e69fff9ade2bcaa768f1dfcba679"
+      }
+    },
+    "a386f1ee1d1da176ff391a8f116dc8dd5c2e17a798ff1b7cf717ba22f0b42a78": {
+      "12-expressions--E12-12-6-predefined-equality--sbyte": {
+        "basis": "original",
+        "below_since": {
+          "behavior": "none",
+          "diagnostic_codes": [],
+          "level": ""
+        },
+        "declared_witness_sha256": "",
+        "evidence_sha256": "8fae752e8d43e93debbf7c5f07a89432eddc006747255c9db286e33e23ebd165",
+        "fixture_sha256": "9a34ce6a41899f54ca24304ad941725d93e30bd145975113f3c5e17cd15f2221",
+        "measurement_target": "dotnet",
+        "method": "exhaustive",
+        "observations": {
+          "1": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "c36ee87288c3a437dc674e4f79509a8f4c40256bcb2f8123dab56db877966436",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "c36ee87288c3a437dc674e4f79509a8f4c40256bcb2f8123dab56db877966436",
+            "witness_status": "pass"
+          },
+          "10": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "50c7b9fc51a373a411bb51413516ec80630b2a9511e4a7aa2ff888bd6a6add37",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "50c7b9fc51a373a411bb51413516ec80630b2a9511e4a7aa2ff888bd6a6add37",
+            "witness_status": "pass"
+          },
+          "11": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "9098aa61cd8bd0ebf96f9434c40d81b0888e4adf38afcb24612461a36ee21d31",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "9098aa61cd8bd0ebf96f9434c40d81b0888e4adf38afcb24612461a36ee21d31",
+            "witness_status": "pass"
+          },
+          "12": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "8a64a58d744df9fb4adebd9df88a032199ac3e38d007fd0d9e65e57be51879bc",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "8a64a58d744df9fb4adebd9df88a032199ac3e38d007fd0d9e65e57be51879bc",
+            "witness_status": "pass"
+          },
+          "13": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "813a7d7d3695c8ddb2a09262a7c56a55100ec21416419461e95e974d39a374dd",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "813a7d7d3695c8ddb2a09262a7c56a55100ec21416419461e95e974d39a374dd",
+            "witness_status": "pass"
+          },
+          "14": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "e5ffbd46a81c7771797a442b6e7703d9cf1353bd770adc5f897a9d4072b068a7",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "e5ffbd46a81c7771797a442b6e7703d9cf1353bd770adc5f897a9d4072b068a7",
+            "witness_status": "pass"
+          },
+          "15": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "ae3ec8fd2dc37cd7d18e4fd77a6b69172193329f881eda4a2cce273a6bffe270",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "ae3ec8fd2dc37cd7d18e4fd77a6b69172193329f881eda4a2cce273a6bffe270",
+            "witness_status": "pass"
+          },
+          "15-preview": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "0ec3ba5ada03a6f2f66b4ca36485009c1c73b36c5c7d24f3c036254648cea93b",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "0ec3ba5ada03a6f2f66b4ca36485009c1c73b36c5c7d24f3c036254648cea93b",
+            "witness_status": "pass"
+          },
+          "2": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "3a6e1628dca5a5e11efbb61e34848302a30e8e3ba02b0fc6c7156c3a8c6ffae2",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "3a6e1628dca5a5e11efbb61e34848302a30e8e3ba02b0fc6c7156c3a8c6ffae2",
+            "witness_status": "pass"
+          },
+          "3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "ad7204993fc2ce02ab79dad636e0008cba656a3b19d29a055e319573ee9d3b37",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "ad7204993fc2ce02ab79dad636e0008cba656a3b19d29a055e319573ee9d3b37",
+            "witness_status": "pass"
+          },
+          "4": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "1aa212a3b482e50c61c4027df95bab2a00b3968918db0178ec9fd39d37b66da8",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "1aa212a3b482e50c61c4027df95bab2a00b3968918db0178ec9fd39d37b66da8",
+            "witness_status": "pass"
+          },
+          "5": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "bb24f044efe797ab1e910a17bc8b7c90b64fba1373edee5e88b47e1d14fc36d3",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "bb24f044efe797ab1e910a17bc8b7c90b64fba1373edee5e88b47e1d14fc36d3",
+            "witness_status": "pass"
+          },
+          "6": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "a4e80732ad66c1b5260958e086252d7a515119e0264c2c98a2e3e7c13b03111e",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "a4e80732ad66c1b5260958e086252d7a515119e0264c2c98a2e3e7c13b03111e",
+            "witness_status": "pass"
+          },
+          "7": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "f6ab2c17714a5a7884d4e1ce8bac8b3e1b94840a1bd0b406939e888094cc7824",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "f6ab2c17714a5a7884d4e1ce8bac8b3e1b94840a1bd0b406939e888094cc7824",
+            "witness_status": "pass"
+          },
+          "7.1": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "e116d845322b0e47b6d374bccd9a9cadafb96e55b4c952c6460d2ac7a8267737",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "e116d845322b0e47b6d374bccd9a9cadafb96e55b4c952c6460d2ac7a8267737",
+            "witness_status": "pass"
+          },
+          "7.2": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "bdc2fc029af5014341f1f1cf3232bb0c35ca9fd79a87febe228ef9030e68ddb2",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "bdc2fc029af5014341f1f1cf3232bb0c35ca9fd79a87febe228ef9030e68ddb2",
+            "witness_status": "pass"
+          },
+          "7.3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "753067dc6303caa4b97e475daa5f6c5abc8d21e4174ff6479887109491b61523",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "753067dc6303caa4b97e475daa5f6c5abc8d21e4174ff6479887109491b61523",
+            "witness_status": "pass"
+          },
+          "8": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "2feaaf0effde73b82dd28ed399ff1ad186d6228fbc669fd8205e20a87e6e2bd6",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "2feaaf0effde73b82dd28ed399ff1ad186d6228fbc669fd8205e20a87e6e2bd6",
+            "witness_status": "pass"
+          },
+          "9": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "e251ddf11d94022f1a9a638e502d91942364cdbb7815240c2158f9a2e54e4eaf",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "e251ddf11d94022f1a9a638e502d91942364cdbb7815240c2158f9a2e54e4eaf",
+            "witness_status": "pass"
+          }
+        },
+        "other_passing_levels": [],
+        "since": "1",
+        "witness_sha256": "a386f1ee1d1da176ff391a8f116dc8dd5c2e17a798ff1b7cf717ba22f0b42a78"
+      }
+    },
+    "c6dcea8e7263ff669816ca84a143724c18c05139ea8efb0f94d87950e669a868": {
+      "12-expressions--E12-8-18-enum-size--enum-underlying-widths": {
+        "basis": "original",
+        "below_since": {
+          "behavior": "none",
+          "diagnostic_codes": [],
+          "level": ""
+        },
+        "declared_witness_sha256": "",
+        "evidence_sha256": "963bee32af439e54144a6361981d5ac5cb0b165154dfcf65212a1f0b1cbf7b87",
+        "fixture_sha256": "9a34ce6a41899f54ca24304ad941725d93e30bd145975113f3c5e17cd15f2221",
+        "measurement_target": "dotnet",
+        "method": "exhaustive",
+        "observations": {
+          "1": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "32e029c886447ce4d1ec07fe37444e8b31d9fbeed5eab6e5d4b3438a776a6f13",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "32e029c886447ce4d1ec07fe37444e8b31d9fbeed5eab6e5d4b3438a776a6f13",
+            "witness_status": "pass"
+          },
+          "10": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "4ce3fbf8875e942ef38649aa9d4bc57f93c4f43616671586ece9a9719deb48f6",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "4ce3fbf8875e942ef38649aa9d4bc57f93c4f43616671586ece9a9719deb48f6",
+            "witness_status": "pass"
+          },
+          "11": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "2a2359ee871fb05a183877024241ca2200c9b43cff76bd3771adfd56352a5c31",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "2a2359ee871fb05a183877024241ca2200c9b43cff76bd3771adfd56352a5c31",
+            "witness_status": "pass"
+          },
+          "12": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "765b1f2e05a44d425d304a97e7877cc289cf8a837a839373438dc882a4729e34",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "765b1f2e05a44d425d304a97e7877cc289cf8a837a839373438dc882a4729e34",
+            "witness_status": "pass"
+          },
+          "13": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "cd07a733b9164e3e2f180d40f0cb27d73279f203eeb4bda6d8d5aed7d034db79",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "cd07a733b9164e3e2f180d40f0cb27d73279f203eeb4bda6d8d5aed7d034db79",
+            "witness_status": "pass"
+          },
+          "14": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "357ca834a730ad13b6aeb07871700ecd569f58f6216e6021289c0a574de882fb",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "357ca834a730ad13b6aeb07871700ecd569f58f6216e6021289c0a574de882fb",
+            "witness_status": "pass"
+          },
+          "15": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "663b68cd9f17279bac9b25f6fb9ed4b9af46c541871739280ccec97eca63b452",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "663b68cd9f17279bac9b25f6fb9ed4b9af46c541871739280ccec97eca63b452",
+            "witness_status": "pass"
+          },
+          "15-preview": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "b2a38305a6e588398ac0a167601f81f0881c30158240cec2bd1fcaeb63b5df47",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "b2a38305a6e588398ac0a167601f81f0881c30158240cec2bd1fcaeb63b5df47",
+            "witness_status": "pass"
+          },
+          "2": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "866cafc54bfa7821ffffe1dabb4091fb95641b9e7f709a43b0b4eae80f33494a",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "866cafc54bfa7821ffffe1dabb4091fb95641b9e7f709a43b0b4eae80f33494a",
+            "witness_status": "pass"
+          },
+          "3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "e1b387d9baa781bc437bae24b1896786643ab314f54af7883184b2bd31cce43d",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "e1b387d9baa781bc437bae24b1896786643ab314f54af7883184b2bd31cce43d",
+            "witness_status": "pass"
+          },
+          "4": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "42425d32264efa8a8775222b980e70f11bf59b32342ca5ba8c2f526792ec3b08",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "42425d32264efa8a8775222b980e70f11bf59b32342ca5ba8c2f526792ec3b08",
+            "witness_status": "pass"
+          },
+          "5": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "bf9aa9d05e9ca3303a70633b326a19e46ca04d448e4d168c9bcacc5a36d8e375",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "bf9aa9d05e9ca3303a70633b326a19e46ca04d448e4d168c9bcacc5a36d8e375",
+            "witness_status": "pass"
+          },
+          "6": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "5a48fba72a4abbd469c70ce614c5884f431ac21bc5bb183015784f9caf8d5df8",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "5a48fba72a4abbd469c70ce614c5884f431ac21bc5bb183015784f9caf8d5df8",
+            "witness_status": "pass"
+          },
+          "7": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "bd321e2d93fc776349678a19be3a4122f9bc3fbe992132da610e2a1ca1ef9121",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "bd321e2d93fc776349678a19be3a4122f9bc3fbe992132da610e2a1ca1ef9121",
+            "witness_status": "pass"
+          },
+          "7.1": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "96a9d78a2bb25d3944161a0c009f25f094dfa579359f80dc562660c3de7844e8",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "96a9d78a2bb25d3944161a0c009f25f094dfa579359f80dc562660c3de7844e8",
+            "witness_status": "pass"
+          },
+          "7.2": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "d2b7d306f2edc6f63c65ef924c86f1c0548f52ce623c61137eba3bcd4925b74c",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "d2b7d306f2edc6f63c65ef924c86f1c0548f52ce623c61137eba3bcd4925b74c",
+            "witness_status": "pass"
+          },
+          "7.3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "bd35e026038ef5d4587f4d14bbd981f35d9ba9d27a4286bf680c31b47f35ee8e",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "bd35e026038ef5d4587f4d14bbd981f35d9ba9d27a4286bf680c31b47f35ee8e",
+            "witness_status": "pass"
+          },
+          "8": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "c43d673407da55ed79a5e6ff7e380d1717dc5eea92a1f9017f99d1a8318b0a19",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "c43d673407da55ed79a5e6ff7e380d1717dc5eea92a1f9017f99d1a8318b0a19",
+            "witness_status": "pass"
+          },
+          "9": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "b6e792c8e23f983a24b66b3485d05be0f9fda39c1750dd86864e4c74e094dc9d",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "b6e792c8e23f983a24b66b3485d05be0f9fda39c1750dd86864e4c74e094dc9d",
+            "witness_status": "pass"
+          }
+        },
+        "other_passing_levels": [],
+        "since": "1",
+        "witness_sha256": "c6dcea8e7263ff669816ca84a143724c18c05139ea8efb0f94d87950e669a868"
+      }
+    },
+    "d4b052d3be636e67635ff5a974a3cc7160f32a6cae0255a2ddcb62a34c1f3091": {
+      "12-expressions--E12-8-19-lexical--anonymous-body": {
+        "basis": "departure-witness",
+        "below_since": {
+          "behavior": "refuses",
+          "diagnostic_codes": [
+            "CS8023"
+          ],
+          "level": "2"
+        },
+        "declared_witness_sha256": "0271f66cbe6a12bf4022b90471c4b7e1b527b4d13ee2cdc70fcd177809939c01",
+        "evidence_sha256": "2b1b0450431c410fc7c46e49bb8967cce9e16ae7c23fa1df0992936924248212",
+        "fixture_sha256": "9a34ce6a41899f54ca24304ad941725d93e30bd145975113f3c5e17cd15f2221",
+        "measurement_target": "dotnet",
+        "method": "exhaustive",
+        "observations": {
+          "1": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS8022"
+            ],
+            "original_evidence_sha256": "37521db9d82c58652a5603cdae5c2f52cbc5642dadb8a12ea13fb9ff43da3aae",
+            "original_status": "unexpected-reject",
+            "witness_diagnostic_codes": [
+              "CS8022"
+            ],
+            "witness_evidence_sha256": "97ea22caee429f8a7cdc002bd4a97c5730ab0696a3eed687bb05ce1881fd54bc",
+            "witness_status": "unexpected-reject"
+          },
+          "10": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "b099f0229a7d9141772aeb0562b31485f73b62e59d8c952f41e060c29b0d477b",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "e50a0adb1b57c2735a793b4c77e510955317986156e4b9003424f93fdc69823d",
+            "witness_status": "pass"
+          },
+          "11": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "a3e7d60d812b26da442823499b65dee18a2477f519b387bd19c134b92403d4b6",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "af46e071a7543c949e4ca8370422e2da9947070f523fe18952e9d59f1f74fe05",
+            "witness_status": "pass"
+          },
+          "12": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "525447fe8a8535e589e06b29ab23f12b4ccda3321cdc9f46d7c6b043dd6f9ff5",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "8942a5bd014415fdd29f8a7a81a4bf7093e70b1b19662f6976a3d8afbf5d507f",
+            "witness_status": "pass"
+          },
+          "13": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "4a692e3d71f6619cfc967709a32ba5886654b234ad00f33d1cd21cce74a9a227",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "617e6d7fb4a29d15835d180b4120c84c8b805cc12b650ad5b3b9637a2e31dc6e",
+            "witness_status": "pass"
+          },
+          "14": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "75908e9bb26cb405947c835e78c82859d66d8f3259e3cda1a12c05cfb84ee32a",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "e6a913cb503a7ae6a9b5a73d29ddd3130334ced9c10b57e5b9fa140a3500a355",
+            "witness_status": "pass"
+          },
+          "15": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "c7551e2bc728a450e10410caec7436f0177c929e6fb015c6c430f699fb50b527",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "3a8e4f86ff1277659b27045658b22b22686a8c1d4774c84f7a2e5a226f44685d",
+            "witness_status": "pass"
+          },
+          "15-preview": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "7f89d5a3433d444c1228624f267aa7b42a404ca81351c5b218e93ae811eedbf8",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "83c97ce949ed5008bb17a6ee42b8edf4e512872a9648857022a863e1204e8d86",
+            "witness_status": "pass"
+          },
+          "2": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS8023"
+            ],
+            "original_evidence_sha256": "1c3ba24ae6a4028fd208d456f85c74d720e3ace924972a5311862db216237430",
+            "original_status": "unexpected-reject",
+            "witness_diagnostic_codes": [
+              "CS8023"
+            ],
+            "witness_evidence_sha256": "2b33e542ce88651af42cc80d63eb4f06c744f8ada5677c8f3b6f1b88f6ac235f",
+            "witness_status": "unexpected-reject"
+          },
+          "3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "544d33645629478f876486607603711d3143c8a23c0c7ff84b0a085b0d08f563",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "e0df863d55b1e7171e2d0344c9f961e4b1aaf9a50b21630aac6589f1b21887a8",
+            "witness_status": "pass"
+          },
+          "4": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "d92f98c5aa197e47623bdda96ef0c8efbfc6731dff1d73c22f5b62c10dd34eaa",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "7647235eec25b03f783b8d6432e0ef8c987301bfb2f225931253334862ce5fc0",
+            "witness_status": "pass"
+          },
+          "5": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "924199c2a110e125ae1d5191532e91de0ba3f036a006d144e096200a2ee07d2d",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "8a2fdd993e709d09559f3c3502cea49be486df338e1612f94bce84ecb026e007",
+            "witness_status": "pass"
+          },
+          "6": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "44a995e7f9c4bc7d5a47b03cc134867aedd2a0151c4b4c8c653f9c02036ab5bb",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "47e27106de3814e38889d714d098d21a6678609816bdc8e663b0feedb2135af4",
+            "witness_status": "pass"
+          },
+          "7": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "a046e6bed0a7c18184a632a28bd2fa536e01002232162a088285a11c250afbf4",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "ca8542d3ec36590aa2a36063a2f33e5610bc13e9a1945c832cf9979723857c13",
+            "witness_status": "pass"
+          },
+          "7.1": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "503c836dc983c6e2fc19e1112fd3a195a3435cb74d55e58095f5f96d6edf74ad",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "7c6527423a0793b67d33ca81e9cc5ddbb0bacec1928aff5a2a691c8f6bdfbac3",
+            "witness_status": "pass"
+          },
+          "7.2": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "db1c9c39b32a25559c9a33311b5b66fdeb23f96e979814c8038928c3c34e370a",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "b81b56bf635b4b0418c7e6ca21a92405ad0231ac7e867c37e0b5a7622a4bb3bd",
+            "witness_status": "pass"
+          },
+          "7.3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "b26fb795d70ec57d1a34aea056593e875634689732f779009d0d1ee19ca7b5de",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "7952b8184dd90076b135fbcc13d6fa9fe7c5ca268dc74bfaf4f9c405be005c42",
+            "witness_status": "pass"
+          },
+          "8": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "27e3e60f194f0df26ff2660a4a95154ac2ae7874a1b50219ed0b8ab3a140a92a",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "077e46af12860cdf6614d1a3141ef8c4b85852f87f385c5564bc254566f5f5f3",
+            "witness_status": "pass"
+          },
+          "9": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "fa997849ee4418a95dcb26f746476ba043e6137a8f75f4e4c302cd0b4c9a2646",
+            "original_status": "runtime-fail",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "7b77f6cf533cf7d67a272698845eb30e9a5df64b3f2c7dc1cb02f7dbd8fbc7d8",
+            "witness_status": "pass"
+          }
+        },
+        "other_passing_levels": [],
+        "since": "3",
+        "witness_sha256": "0271f66cbe6a12bf4022b90471c4b7e1b527b4d13ee2cdc70fcd177809939c01"
+      }
+    },
+    "d9d71e2dea605de32abc832e00a71d4b435d76d4839a9b2e7175dfd64838eff0": {
+      "12-expressions--E12-10-2-integer-unchecked-truncation--int-unchecked": {
+        "basis": "original",
+        "below_since": {
+          "behavior": "none",
+          "diagnostic_codes": [],
+          "level": ""
+        },
+        "declared_witness_sha256": "",
+        "evidence_sha256": "b09f0290bc200f8928f84b0c60c003a465d6b8c6d18424ab80c03249ed253dcf",
+        "fixture_sha256": "9a34ce6a41899f54ca24304ad941725d93e30bd145975113f3c5e17cd15f2221",
+        "measurement_target": "dotnet",
+        "method": "exhaustive",
+        "observations": {
+          "1": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "3b2d0b789ac7b0ef29e138fd42f6df40fad62a2e374834167ec6a7d8ad68ba0f",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "3b2d0b789ac7b0ef29e138fd42f6df40fad62a2e374834167ec6a7d8ad68ba0f",
+            "witness_status": "pass"
+          },
+          "10": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "4ef132cd88652e5a4953aa8dd21c2b9a56a760c52bd32fdc50a44774f81410c1",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "4ef132cd88652e5a4953aa8dd21c2b9a56a760c52bd32fdc50a44774f81410c1",
+            "witness_status": "pass"
+          },
+          "11": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "3227af27f5ecfc90350a19f131ac4c5debc35935c18bbc66758d591b63af1e52",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "3227af27f5ecfc90350a19f131ac4c5debc35935c18bbc66758d591b63af1e52",
+            "witness_status": "pass"
+          },
+          "12": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "ebcf2ac3f75689ada22fb6e89124de8b740b59617eb39889baff3bdea9c22add",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "ebcf2ac3f75689ada22fb6e89124de8b740b59617eb39889baff3bdea9c22add",
+            "witness_status": "pass"
+          },
+          "13": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "49ad4ec60fce19004eeb8f4948aa9440c7cec8d8a2d9655cfbc4bda704a0880e",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "49ad4ec60fce19004eeb8f4948aa9440c7cec8d8a2d9655cfbc4bda704a0880e",
+            "witness_status": "pass"
+          },
+          "14": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "dab1b891a3454d53bfceeac1ebf6f29139d02857a620e28326a8bb8b56a96cd1",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "dab1b891a3454d53bfceeac1ebf6f29139d02857a620e28326a8bb8b56a96cd1",
+            "witness_status": "pass"
+          },
+          "15": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "3cfda90aa4d982dbfc48d86d32a067469469df3cf8ef268e46c31ee5146a71d4",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "3cfda90aa4d982dbfc48d86d32a067469469df3cf8ef268e46c31ee5146a71d4",
+            "witness_status": "pass"
+          },
+          "15-preview": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "fa3bdb0c38bd38cf3cbee71487544ed3520e69ddd42c1bf0dbe37aa1283d3090",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "fa3bdb0c38bd38cf3cbee71487544ed3520e69ddd42c1bf0dbe37aa1283d3090",
+            "witness_status": "pass"
+          },
+          "2": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "8fc438afed6ecd24850eef516302e854af0c20c2784f1e04a65e6a8ae3789137",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "8fc438afed6ecd24850eef516302e854af0c20c2784f1e04a65e6a8ae3789137",
+            "witness_status": "pass"
+          },
+          "3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "5ed5da9c306d4b4a73da8874aec35241d18652a548a0d36b65940f018b9e1573",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "5ed5da9c306d4b4a73da8874aec35241d18652a548a0d36b65940f018b9e1573",
+            "witness_status": "pass"
+          },
+          "4": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "799add2e20940a69fed6b2d9b09434eb7cbd4415ffb04c2dc8e5307aa65d7829",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "799add2e20940a69fed6b2d9b09434eb7cbd4415ffb04c2dc8e5307aa65d7829",
+            "witness_status": "pass"
+          },
+          "5": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "4d2a8e2f39a1827c26f6b1f3bbdf963efe0b854243834cbc3a23a36e1332e718",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "4d2a8e2f39a1827c26f6b1f3bbdf963efe0b854243834cbc3a23a36e1332e718",
+            "witness_status": "pass"
+          },
+          "6": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "bcd492ee6b3a97af0b3d0ecbb9809b160ab9745cb0ee5971abc76478bf5e88b2",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "bcd492ee6b3a97af0b3d0ecbb9809b160ab9745cb0ee5971abc76478bf5e88b2",
+            "witness_status": "pass"
+          },
+          "7": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "a003086f6726eb23e34393c657b0f8b9524a2b67b8ab1805bc4037975c5ad6b0",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "a003086f6726eb23e34393c657b0f8b9524a2b67b8ab1805bc4037975c5ad6b0",
+            "witness_status": "pass"
+          },
+          "7.1": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "14e317d98c886c70e769ef600c6e8ee82618f26243dc82a6b4293cc59aa1ba2f",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "14e317d98c886c70e769ef600c6e8ee82618f26243dc82a6b4293cc59aa1ba2f",
+            "witness_status": "pass"
+          },
+          "7.2": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "f66627d89b3b8c51ab400e6a80d0a7332ce510f0d53cab11fdc3022fadf93d1c",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "f66627d89b3b8c51ab400e6a80d0a7332ce510f0d53cab11fdc3022fadf93d1c",
+            "witness_status": "pass"
+          },
+          "7.3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "7cfbc0343f243ab832065c0de4e738a8d50c94a1fefcc7cd923ffcd0a8103ad2",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "7cfbc0343f243ab832065c0de4e738a8d50c94a1fefcc7cd923ffcd0a8103ad2",
+            "witness_status": "pass"
+          },
+          "8": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "3d31125f6a6def9cc43ee1b7da63e157a92ac61e04bc8f6e0a8a6963038334f7",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "3d31125f6a6def9cc43ee1b7da63e157a92ac61e04bc8f6e0a8a6963038334f7",
+            "witness_status": "pass"
+          },
+          "9": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "40722bf338e71a9e256d7427c4c169a47dbe02b91e7c8946e5529fc762b01492",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "40722bf338e71a9e256d7427c4c169a47dbe02b91e7c8946e5529fc762b01492",
+            "witness_status": "pass"
+          }
+        },
+        "other_passing_levels": [],
+        "since": "1",
+        "witness_sha256": "d9d71e2dea605de32abc832e00a71d4b435d76d4839a9b2e7175dfd64838eff0"
+      }
+    },
+    "dd6eecce84374d7fb23f33f235b04730b847c99a41d4b5997687daf15faf2f1f": {
+      "12-expressions--E12-8-20-predefined-value-constant--predefined-default-constants": {
+        "basis": "original",
+        "below_since": {
+          "behavior": "refuses",
+          "diagnostic_codes": [
+            "CS8022"
+          ],
+          "level": "1"
+        },
+        "declared_witness_sha256": "",
+        "evidence_sha256": "2f428bd2f50263822d804a2d97dbd631deb40b56fc2e48d70bcb4c85d9c43f58",
+        "fixture_sha256": "9a34ce6a41899f54ca24304ad941725d93e30bd145975113f3c5e17cd15f2221",
+        "measurement_target": "dotnet",
+        "method": "exhaustive",
+        "observations": {
+          "1": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS8022"
+            ],
+            "original_evidence_sha256": "3f8fb73981369831201d9d3726d353046e774a31a1afc2c44981c52e2bcfe2d5",
+            "original_status": "unexpected-reject",
+            "witness_diagnostic_codes": [
+              "CS8022"
+            ],
+            "witness_evidence_sha256": "3f8fb73981369831201d9d3726d353046e774a31a1afc2c44981c52e2bcfe2d5",
+            "witness_status": "unexpected-reject"
+          },
+          "10": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "a8f43fa3d76a036a547fbd8b6cf35da1f2f084824edf22432ddc7b2b2e457f4e",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "a8f43fa3d76a036a547fbd8b6cf35da1f2f084824edf22432ddc7b2b2e457f4e",
+            "witness_status": "pass"
+          },
+          "11": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "0e5ba5dac75e1b5c1133e637072902388b78956f3ea18cdcf0e1f6b93ebd76d2",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "0e5ba5dac75e1b5c1133e637072902388b78956f3ea18cdcf0e1f6b93ebd76d2",
+            "witness_status": "pass"
+          },
+          "12": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "42aba463893d7bc5805a56f2e7833203f948b00dc1712c66c66f077a913f7712",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "42aba463893d7bc5805a56f2e7833203f948b00dc1712c66c66f077a913f7712",
+            "witness_status": "pass"
+          },
+          "13": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "52d6a7e6466be53c52a7627954f723ba6566a93d185f9c38055b853440bd60a2",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "52d6a7e6466be53c52a7627954f723ba6566a93d185f9c38055b853440bd60a2",
+            "witness_status": "pass"
+          },
+          "14": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "4b91eaf146e8d98af34ff0b004c3e83b300c74892fd5c612c48fdf7b228f3aa1",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "4b91eaf146e8d98af34ff0b004c3e83b300c74892fd5c612c48fdf7b228f3aa1",
+            "witness_status": "pass"
+          },
+          "15": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "c48a7230a77261c8ae5a7157c3d4ed7a3d93690a9d34cb40163d5dc6e02c37ab",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "c48a7230a77261c8ae5a7157c3d4ed7a3d93690a9d34cb40163d5dc6e02c37ab",
+            "witness_status": "pass"
+          },
+          "15-preview": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "4298150bea8b859058252f9f12e21ed52bb5c50b2dede33a23dee68f8647ef45",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "4298150bea8b859058252f9f12e21ed52bb5c50b2dede33a23dee68f8647ef45",
+            "witness_status": "pass"
+          },
+          "2": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "11a20e366e0fb5306ffb605e36ad8e156dfb91ce78d5597fe0e714c9b7a9c526",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "11a20e366e0fb5306ffb605e36ad8e156dfb91ce78d5597fe0e714c9b7a9c526",
+            "witness_status": "pass"
+          },
+          "3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "88a150c1d8356261be953c960a5affe7ba157e20ca1723060716f74ee890dd07",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "88a150c1d8356261be953c960a5affe7ba157e20ca1723060716f74ee890dd07",
+            "witness_status": "pass"
+          },
+          "4": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "c49da9828ca89cf81a1f608db61994752d5e49e6a4a0f62e05295aad1b0afc87",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "c49da9828ca89cf81a1f608db61994752d5e49e6a4a0f62e05295aad1b0afc87",
+            "witness_status": "pass"
+          },
+          "5": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "6339fee62a213f0482aa936eadcae3943392eb6303976caaa739ee16d58d1bd3",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "6339fee62a213f0482aa936eadcae3943392eb6303976caaa739ee16d58d1bd3",
+            "witness_status": "pass"
+          },
+          "6": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "ee2f12798ac4b4069ed6536d3c3a68951c87e34bad07b1162708ec613acb7aae",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "ee2f12798ac4b4069ed6536d3c3a68951c87e34bad07b1162708ec613acb7aae",
+            "witness_status": "pass"
+          },
+          "7": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "cc17b471f170dde965227c679e2987643e5bd2cfeb1e5de9fe864a530e8dbe41",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "cc17b471f170dde965227c679e2987643e5bd2cfeb1e5de9fe864a530e8dbe41",
+            "witness_status": "pass"
+          },
+          "7.1": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "1aabc4c6a5835ca7db8021d7f671a064d03d924ef3dac0ef1ff335145dec47b0",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "1aabc4c6a5835ca7db8021d7f671a064d03d924ef3dac0ef1ff335145dec47b0",
+            "witness_status": "pass"
+          },
+          "7.2": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "db196ca472e7b58e9035cbb528e7cf52ee99647ca58ad850dba8dee6954da74b",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "db196ca472e7b58e9035cbb528e7cf52ee99647ca58ad850dba8dee6954da74b",
+            "witness_status": "pass"
+          },
+          "7.3": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "7cb7372a9deee20204869d9db99348d22b4883e178bbbfad9db01b644b638ec3",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "7cb7372a9deee20204869d9db99348d22b4883e178bbbfad9db01b644b638ec3",
+            "witness_status": "pass"
+          },
+          "8": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "09973288169a6a33e6c5f8d17d95bf85bc12ad2fa161551025d9cb2af431977d",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "09973288169a6a33e6c5f8d17d95bf85bc12ad2fa161551025d9cb2af431977d",
+            "witness_status": "pass"
+          },
+          "9": {
+            "applicable": true,
+            "diagnostic_codes": [],
+            "original_evidence_sha256": "244f1c58b049cc2575861100dbe4fe333b592a11ce3ef6a1a478a9ebd80fc4a8",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "244f1c58b049cc2575861100dbe4fe333b592a11ce3ef6a1a478a9ebd80fc4a8",
+            "witness_status": "pass"
+          }
+        },
+        "other_passing_levels": [],
+        "since": "2",
+        "witness_sha256": "dd6eecce84374d7fb23f33f235b04730b847c99a41d4b5997687daf15faf2f1f"
+      }
+    }
+  },
+  "schema_version": 2
+}

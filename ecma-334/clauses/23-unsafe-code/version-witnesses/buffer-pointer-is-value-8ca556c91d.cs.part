@@ -1,0 +1,15 @@
+// Positive compilation witness for E23-8-3-fixed-receiver-value.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+unsafe struct Item { public fixed short Values[2]; }
+class Program
+{
+    static unsafe void Main()
+    {
+        Item value = new Item();
+        short* copy = value.Values;
+        short** pointer = &copy;
+        // Supplemental observation only: compare addresses without dereferencing short**.
+        Console.WriteLine((void*)pointer == (void*)&copy ? "copy" : "temporary");
+    }
+}

@@ -1,0 +1,26 @@
+{
+  "schema_version": 1,
+  "id": "net481",
+  "description": "Windows x64; .NET Framework 4.8.1 or later; pinned .NET Framework 4.8 references",
+  "adapter": "netframework",
+  "platforms": ["win32"],
+  "architectures": ["x64"],
+  "runtime": {"kind": "netframework", "minimum_release": 533320},
+  "discovery": {
+    "framework-reference": {
+      "kind": "netframework-reference",
+      "environment": ["CONFORMANCE_NETFRAMEWORK_REF_ROOT"]
+    }
+  },
+  "files": {
+    "mscorlib": {"root": "framework-reference", "path": "mscorlib.dll", "sha256": "6b35530467b914b0b195146ca1d1485ddd219afaad6461103f16f54e952f75a9"},
+    "system": {"root": "framework-reference", "path": "System.dll", "sha256": "2fe343569f794f2ca92ee14a41875571a9f21bf92637b8f8ee86306534209cca"},
+    "system-core": {"root": "framework-reference", "path": "System.Core.dll", "sha256": "94a1fc97eb0d36f13acd209bb7207da504c8be10caf7e5096b2c46e671dc6fe2"},
+    "microsoft-csharp": {"root": "framework-reference", "path": "Microsoft.CSharp.dll", "sha256": "cd5767fef2ab0069042bb0c09f9095afcf29d2ceee82213728448d64e14eddd7"}
+  },
+  "references": {"mscorlib.dll": "mscorlib", "System.dll": "system", "System.Core.dll": "system-core", "Microsoft.CSharp.dll": "microsoft-csharp"},
+  "capabilities": ["framework-runtime", "process-launch"],
+  "build": {"kinds": ["exe", "library"], "runtimeconfig": false, "artifact_extension": ".exe"},
+  "command": ["{entry}", "{arguments}"],
+  "batch_size": 12
+}

@@ -1,0 +1,22 @@
+// Positive compilation witness for E11-2-3-constant-object-match.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+class EqualTo
+{
+    public static int calls;
+    public override bool Equals(object other) { calls++; return other is int && (int)other == 29; }
+    public override int GetHashCode() { return 29; }
+}
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        object input = new EqualTo();
+        bool matched = input is EqualTo value;
+        Check(matched, "object-equals-match");
+        Check(EqualTo.calls == 1, "object-equals-invoked");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

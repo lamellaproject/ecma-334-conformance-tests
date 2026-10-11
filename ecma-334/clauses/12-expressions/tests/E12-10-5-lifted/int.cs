@@ -1,0 +1,25 @@
+/*
+Rules: E12-10-5-lifted
+Authority: ECMA-334 7th ed 12.10.5
+Version: 7.3
+Expected: run
+Stdout: OK 4
+Generated: clauses/12-expressions/generators/arithmetic.py
+*/
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static int? A(int? value) { return value; }
+    static int Kind(int? value) { return 1; }
+    static int Kind(object value) { return 2; }
+    static void Main()
+    {
+        Check(A(19) + A(4) == 23 && Kind(A(19) + A(4)) == 1, "case-0");
+        Check(!(A(null) + A(4)).HasValue, "case-1");
+        Check(!(A(19) + A(null)).HasValue, "case-2");
+        Check(!(A(null) + A(null)).HasValue, "case-3");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

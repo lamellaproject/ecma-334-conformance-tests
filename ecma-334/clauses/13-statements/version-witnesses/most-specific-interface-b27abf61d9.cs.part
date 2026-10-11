@@ -1,0 +1,36 @@
+// Positive compilation witness for E13-9-5-generic-interface-collection-type.
+// A valid foreach cast removes the departure; a covariant interface conversion retains the most-specific-interface prerequisite.
+using System;
+using System.Collections;
+using System.Collections.Generic;
+class Program
+{
+    static int checks, failures, gets;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static int Length(string value) { return value.Length; }
+    static int Length(object value) { return -1; }
+    class Source : IEnumerable<object>, IEnumerable<string>
+    {
+        IEnumerator<string> IEnumerable<string>.GetEnumerator() { gets++; return new Cursor(); }
+        IEnumerator<object> IEnumerable<object>.GetEnumerator() { throw new Exception(); }
+        IEnumerator IEnumerable.GetEnumerator() { throw new Exception(); }
+    }
+    class Cursor : IEnumerator<string>
+    {
+        int position;
+        public string Current { get { return "word"; } }
+        object IEnumerator.Current { get { throw new Exception(); } }
+        public bool MoveNext() { return ++position == 1; }
+        public void Reset() { throw new Exception(); }
+        public void Dispose() { }
+    }
+    static IEnumerable<object> Covariant(IEnumerable<string> value) { return value; }
+    static void Main()
+    {
+        int length = 0;
+        foreach (var item in (IEnumerable<object>)new Source()) { length += Length(item); }
+        Check(length == 4, "string-current-and-string-iteration-type");
+        Check(gets == 1, "unique-most-specific-interface-selected");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

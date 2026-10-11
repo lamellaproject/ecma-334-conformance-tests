@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "source-diagnostic schema v1",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "case_id": {
+        "type": "string"
+      },
+      "source": {
+        "type": "string"
+      },
+      "severity": {
+        "enum": [
+          "error",
+          "warning"
+        ]
+      },
+      "file": {
+        "type": "string"
+      },
+      "line": {
+        "anyOf": [
+          {
+            "const": "physical"
+          },
+          {
+            "type": "integer",
+            "minimum": 1
+          }
+        ]
+      },
+      "contains": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "case_id",
+      "source",
+      "severity",
+      "file",
+      "line"
+    ],
+    "additionalProperties": false
+  },
+  "minItems": 1
+}

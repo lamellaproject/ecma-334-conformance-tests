@@ -1,0 +1,12 @@
+rule_id	reason
+E6-4-3-available-identifier-not-contextual-keyword	The identifier production also accepts the same spelling through contextual_keyword; a standalone program cannot observe which lexical alternative recognized it.
+E6-4-3-non-nfc-handling	The response to a non-NFC identifier is unrestricted implementation-defined behavior; no standalone program can verify an implementation's documentation or exclude a permitted response.
+E6-4-3-non-nfc-no-diagnostic-required	A diagnostic for a non-NFC identifier is optional, so neither accepting nor diagnosing the source violates this predicate.
+E6-4-3-double-underscore-reserved	Reservation of names for an implementation is a naming-policy constraint with no required standalone-program result.
+E6-4-3-double-underscore-no-diagnostic-required	A diagnostic for an implementation-reserved double-underscore name is optional, so a source program cannot require acceptance or rejection.
+E6-1-no-file-bijection	The standard removes a file-system correspondence requirement; a standalone program cannot select or require how an implementation packages compilation units.
+E6-1-additional-encodings	Accepting a non-UTF-8 encoding is an optional implementation choice with no required program result or required set of additional encodings.
+E6-5-8-line-number-maximum	The directive argument maximum is chosen and documented by the implementation; no standalone program can require a particular limit or validate its documentation.
+E6-5-8-hidden-debug-line-information	A running standalone program cannot observe source-level debugger line information; this predicate requires inspection of emitted debug information.
+E6-5-8-hidden-debug-stepping	A standalone program cannot observe where an external source-level debugger stops while stepping; that requires a debugger session.
+E6-5-9-pragma-interpretation	The particular interpretation of pragma text is implementation-defined with no required interpretation to assert in a standalone program; separate tests check the mandatory semantic bounds.

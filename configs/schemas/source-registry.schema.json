@@ -1,0 +1,183 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "source-registry schema v1",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "standard": {
+      "type": "string"
+    },
+    "standard_version": {
+      "type": "string"
+    },
+    "standard_sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "feature_commit": {
+      "type": "string"
+    },
+    "csc_version": {
+      "type": "string"
+    },
+    "csc_commit": {
+      "type": "string"
+    },
+    "editions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "standard": {
+            "type": "string"
+          },
+          "edition": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "primary",
+              "secondary"
+            ]
+          },
+          "authority_prefix": {
+            "type": "string"
+          },
+          "language_version": {
+            "type": "string"
+          },
+          "asset": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "url": {
+            "type": "string"
+          },
+          "version_proof": {
+            "type": "object"
+          },
+          "text": {
+            "type": "object",
+            "properties": {
+              "asset": {"type": "string"},
+              "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+            },
+            "required": ["asset", "sha256"],
+            "additionalProperties": false
+          }
+        },
+        "required": [
+          "id",
+          "standard",
+          "edition",
+          "role",
+          "authority_prefix",
+          "language_version",
+          "asset",
+          "sha256"
+        ],
+        "additionalProperties": false
+      },
+      "minItems": 1
+    },
+    "references": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "role": {
+            "enum": [
+              "primary",
+              "secondary"
+            ]
+          },
+          "repository": {
+            "type": "string"
+          },
+          "branch": {
+            "type": "string"
+          },
+          "commit": {
+            "type": "string"
+          },
+          "assets": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "properties": {
+                "path": {
+                  "type": "string"
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              },
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "additionalProperties": false
+            }
+          }
+        },
+        "required": [
+          "id",
+          "role",
+          "repository",
+          "commit"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "raw_source_rules": {
+      "type": "array",
+      "items": {"type": "string"},
+      "uniqueItems": true
+    },
+    "compiler_authority": {
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "version": {
+          "type": "string"
+        },
+        "commit": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "id",
+        "version",
+        "commit"
+      ],
+      "additionalProperties": false
+    }
+  },
+  "required": [
+    "schema_version",
+    "standard",
+    "standard_version",
+    "standard_sha256",
+    "feature_commit",
+    "csc_version",
+    "csc_commit",
+    "editions",
+    "references",
+    "compiler_authority"
+  ],
+  "additionalProperties": false
+}

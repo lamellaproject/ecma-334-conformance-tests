@@ -1,0 +1,11 @@
+// Positive compilation witness for E13-10-4-goto-case-conversion-required.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+class Program
+{
+    enum Choice { Zero, One }
+    static void Main()
+    {
+        Choice value = Choice.Zero;
+        switch (value) { case Choice.Zero: goto case Choice.One; case Choice.One: break; }
+    }
+}

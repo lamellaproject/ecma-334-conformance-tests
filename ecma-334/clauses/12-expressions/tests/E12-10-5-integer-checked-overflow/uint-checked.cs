@@ -1,0 +1,22 @@
+/*
+Rules: E12-10-5-integer-checked-overflow
+Authority: ECMA-334 7th ed 12.10.5
+Version: 7.3
+Expected: run
+Stdout: OK 1
+Generated: clauses/12-expressions/generators/arithmetic.py
+*/
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static uint A(uint value) { return value; }
+    static int Kind(uint value) { return 1; }
+    static int Kind(object value) { return 2; }
+    static void Main()
+    {
+        bool c0 = false; try { uint r = checked(A(4294967295U) + A(1U)); } catch (OverflowException) { c0 = true; } catch (Exception) { } Check(c0, "case-0");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

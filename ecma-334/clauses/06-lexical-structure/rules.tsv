@@ -1,0 +1,552 @@
+rule_id	source_id	locator	quote_json	kind	requirement	version	notes
+E6-1-compilation-units	ecma-334-ed7	6.1, p. 11 (PDF p. 39)	"""one or more source files"""	permits	A program may consist of one or more compilation units.		See 14.2 for compilation-unit syntax.
+E6-1-no-file-bijection	ecma-334-ed7	6.1, p. 11 (PDF p. 39)	"""correspondence is not required"""	permits	Compilation units need not correspond one-to-one with filesystem files.		
+E6-1-transformation	ecma-334-ed7	6.1, p. 11 (PDF p. 39)	"""into a sequence of Unicode characters"""	permits	Source input is interpreted as the Unicode character sequence produced by its encoding transformation.		Conceptual model; no physical compiler architecture is mandated.
+E6-1-lexical-analysis	ecma-334-ed7	6.1, p. 11 (PDF p. 39)	"""into a stream of tokens"""	permits	Lexical analysis supplies the token sequence obtained from the Unicode input characters.		
+E6-1-syntactic-analysis	ecma-334-ed7	6.1, p. 11 (PDF p. 39)	"""into executable code"""	permits	Syntactic analysis interprets the token sequence as executable program code.		
+E6-1-utf8	ecma-334-ed7	6.1, p. 11 (PDF p. 39)	"""shall accept Unicode compilation units encoded with the UTF-8 encoding"""	permits	A conforming implementation must accept UTF-8 compilation units and interpret their Unicode characters.		
+E6-1-additional-encodings	ecma-334-ed7	6.1, p. 11 (PDF p. 39)	"""can choose to accept and transform additional character encoding schemes"""	permits	An implementation may also accept source encodings other than UTF-8.		
+E6-2-1-terminal-codepoints	ecma-334-ed7	6.2.1, p. 12 (PDF p. 40)	"""as opposed to any similar-looking characters"""	forbids	A grammar terminal in U+0020 through U+007F cannot be replaced by a visually similar character from another Unicode range.		
+E6-2-3-unicode-terminals	ecma-334-ed7	6.2.3, p. 12 (PDF p. 40)	"""characters of the Unicode character set"""	permits	Lexical productions operate on Unicode characters, subject to the productions in this clause.		See 6.3, 6.4, and 6.5.
+E6-2-3-implicit-literal-tokens	ecma-334-ed7	6.2.3, p. 12 (PDF p. 40)	"""literal strings in the grammar are extracted as implicit lexical tokens"""	permits	Literal strings in the syntactic grammar supply implicit lexical tokens even without a separately named lexical production.		
+E6-2-3-input-conformance	ecma-334-ed7	6.2.3, p. 12 (PDF p. 40)	"""shall conform to the input production"""	forbids	A compilation unit must satisfy the lexical input production.		See 6.3.1.
+E6-2-4-compilation-unit-conformance	ecma-334-ed7	6.2.4, p. 12 (PDF p. 40)	"""shall conform to the compilation_unit production"""	forbids	A compilation unit must satisfy the syntactic compilation_unit production.		See 14.2; this clause states the conformance constraint.
+E6-2-5-generic-lookahead	ecma-334-ed7	6.2.5, p. 13 (PDF p. 41)	"""token immediately following the closing > token is examined"""	permits	When a contextual simple_name, member_access, or pointer_member_access parse ends in a type_argument_list, its closing '>' is disambiguated using the next token.		See 12.8.4, 12.8.7, 23.6.3, and 8.4.2; retention conditions follow.
+E6-2-5-generic-punctuation	ecma-334-ed7	6.2.5, p. 13 (PDF p. 41)	"""( ) ] } : ; , . ? == != | ^ && || & ["""	permits	A following token from '( ) ] } : ; , . ? == != | ^ && || & [' selects the type-argument-list parse.		
+E6-2-5-generic-relational	ecma-334-ed7	6.2.5, p. 13 (PDF p. 41)	"""< > <= >= is as"""	permits	A following token from '< > <= >= is as' selects the type-argument-list parse.		
+E6-2-5-generic-query-keyword	ecma-334-ed7	6.2.5, p. 13 (PDF p. 41)	"""contextual query keyword appearing inside a query expression"""	permits	A following contextual query keyword selects the type-argument-list parse when it occurs inside a query expression.		
+E6-2-5-generic-identifier-keywords	ecma-334-ed7	6.2.5, p. 13 (PDF p. 41)	"""immediately preceded by one of the keywords is, case or out"""	permits	A following identifier selects the type-argument-list parse when the ambiguous token sequence is immediately preceded by is, case, or out.		
+E6-2-5-generic-identifier-first-tuple	ecma-334-ed7	6.2.5, p. 13 (PDF p. 41)	"""first element of a tuple literal"""	permits	A following identifier selects the type-argument-list parse in a first tuple element when the sequence follows '(' or ':' and the identifier is followed by ','.		
+E6-2-5-generic-identifier-later-tuple	ecma-334-ed7	6.2.5, p. 13 (PDF p. 41)	"""a subsequent element of a tuple literal"""	permits	A following identifier selects the type-argument-list parse when parsing a subsequent tuple-literal element.		
+E6-2-5-generic-selected-parse	ecma-334-ed7	6.2.5, p. 13 (PDF p. 41)	"""any other possible parse of the sequence of tokens is discarded"""	permits	When a listed disambiguating token follows, the type_argument_list remains in the name or access and competing parses are discarded.		
+E6-2-5-generic-unselected-parse	ecma-334-ed7	6.2.5, p. 13 (PDF p. 41)	"""even if there is no other possible parse"""	forbids	Without a listed disambiguating token, the type_argument_list cannot remain part of the name or access even if no alternative parse exists.		
+E6-2-5-namespace-type-exemption	ecma-334-ed7	6.2.5, p. 13 (PDF p. 41)	"""These rules are not applied when parsing a type_argument_list"""	permits	The expression lookahead disambiguation rules do not apply to a type_argument_list within a namespace_or_type_name.		See 7.8.
+E6-2-5-is-prefer-type	ecma-334-ed7	6.2.5, p. 14 (PDF p. 42)	"""an attempt is made to bind it as a type"""	permits	An ambiguous qualified identifier after 'is' is first bound as a type.		See 7.8.1 and 12.12.1.
+E6-2-5-is-expression-fallback	ecma-334-ed7	6.2.5, p. 14 (PDF p. 42)	"""if that fails, it is bound as an expression"""	permits	If the qualified identifier after 'is' cannot bind as a type, it is bound as an expression.		
+E6-2-5-is-fallback-constant	ecma-334-ed7	6.2.5, p. 14 (PDF p. 42)	"""the result must be a constant"""	forbids	The expression fallback for an ambiguous qualified identifier after 'is' must yield a constant.		
+E6-3-1-grammar-default-1	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""'default'"""	permits	The DEFAULT production permits the form 'default'.		
+E6-3-1-grammar-null-1	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""'null'"""	permits	The NULL production permits the form 'null'.		
+E6-3-1-grammar-true-1	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""'true'"""	permits	The TRUE production permits the form 'true'.		
+E6-3-1-grammar-false-1	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""'false'"""	permits	The FALSE production permits the form 'false'.		
+E6-3-1-grammar-asterisk-1	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""'*'"""	permits	The ASTERISK production permits the form '*'.		
+E6-3-1-grammar-slash-1	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""'/'"""	permits	The SLASH production permits the form '/'.		
+E6-3-1-grammar-input-1	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""input_section?"""	permits	The input production permits the form input_section?.		
+E6-3-1-grammar-input-section-1	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""input_section_part+"""	permits	The input_section production permits the form input_section_part+.		
+E6-3-1-grammar-input-section-part-1	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""input_element* New_Line"""	permits	The input_section_part production permits the form input_element* New_Line.		
+E6-3-1-grammar-input-section-part-2	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""PP_Directive"""	permits	The input_section_part production permits the form PP_Directive.		
+E6-3-1-grammar-input-element-1	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""Whitespace"""	permits	The input_element production permits the form Whitespace.		
+E6-3-1-grammar-input-element-2	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""Comment"""	permits	The input_element production permits the form Comment.		
+E6-3-1-grammar-input-element-3	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""token"""	permits	The input_element production permits the form token.		
+E6-3-1-only-tokens-syntactic	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""only tokens are significant in the syntactic grammar"""	permits	Syntactic analysis consumes tokens rather than line terminators, whitespace, comments, or pre-processing directives.		
+E6-3-1-lexical-token-sequence	ecma-334-ed7	6.3.1, p. 14 (PDF p. 42)	"""reducing the file into a sequence of tokens"""	permits	Lexical processing supplies the token sequence used by syntactic analysis.		
+E6-3-1-separators	ecma-334-ed7	6.3.1, p. 15 (PDF p. 43)	"""separate tokens"""	permits	Line terminators, whitespace, and comments may separate tokens without otherwise changing program syntax.		Sentence begins on the preceding PDF page.
+E6-3-1-directive-skipping	ecma-334-ed7	6.3.1, p. 15 (PDF p. 43)	"""pre-processing directives can cause sections of the compilation unit to be skipped"""	permits	Pre-processing directives can exclude source sections from the token sequence.		See 6.5.
+E6-3-1-longest-element	ecma-334-ed7	6.3.1, p. 15 (PDF p. 43)	"""longest possible lexical element"""	permits	When several lexical productions match at an input position, the longest possible lexical element is selected.		
+E6-3-1-fragment-component	ecma-334-ed7	6.3.1, p. 15 (PDF p. 43)	"""the rule defines part of another token"""	permits	A fragment production specifies a component of a token rather than a separately recognized token.		
+E6-3-1-fragment-order	ecma-334-ed7	6.3.1, p. 15 (PDF p. 43)	"""not considered in the top-to-bottom ordering of lexical rules"""	permits	Fragment productions do not participate in top-to-bottom lexical-rule ordering.		
+E6-3-2-line-division	ecma-334-ed7	6.3.2, p. 15 (PDF p. 43)	"""divide the characters"""	permits	Line terminators partition compilation-unit characters into source lines.		
+E6-3-2-grammar-new-line-1	ecma-334-ed7	6.3.2, p. 15 (PDF p. 43)	"""New_Line_Character"""	permits	The New_Line production permits the form New_Line_Character.		
+E6-3-2-grammar-new-line-2	ecma-334-ed7	6.3.2, p. 15 (PDF p. 43)	"""'\\u000D\\u000A'"""	permits	The New_Line production permits the form '\u000D\u000A'.		
+E6-3-2-remove-final-control-z	ecma-334-ed7	6.3.2, p. 15 (PDF p. 43)	"""this character is deleted"""	permits	A final U+001A in a compilation unit is removed before the final-line termination transformation.		
+E6-3-2-append-final-cr	ecma-334-ed7	6.3.2, p. 15 (PDF p. 43)	"""A carriage-return character (U+000D) is added"""	permits	After final Control-Z removal, a nonempty compilation unit receives a trailing U+000D unless it already ends in U+000D, U+000A, U+0085, U+2028, or U+2029.		
+E6-3-3-grammar-comment-1	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""Single_Line_Comment"""	permits	The Comment production permits the form Single_Line_Comment.		
+E6-3-3-grammar-comment-2	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""Delimited_Comment"""	permits	The Comment production permits the form Delimited_Comment.		
+E6-3-3-grammar-single-line-comment-1	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""'//' Input_Character*"""	permits	The Single_Line_Comment production permits the form '//' Input_Character*.		
+E6-3-3-grammar-input-character-1	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""~('\\u000D' | '\\u000A' | '\\u0085' | '\\u2028' | '\\u2029')"""	permits	The Input_Character production permits the form ~('\u000D' | '\u000A' | '\u0085' | '\u2028' | '\u2029').		
+E6-3-3-grammar-new-line-character-1	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""'\\u000D'"""	permits	The New_Line_Character production permits the form '\u000D'.		
+E6-3-3-grammar-new-line-character-2	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""'\\u000A'"""	permits	The New_Line_Character production permits the form '\u000A'.		
+E6-3-3-grammar-new-line-character-3	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""'\\u0085'"""	permits	The New_Line_Character production permits the form '\u0085'.		
+E6-3-3-grammar-new-line-character-4	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""'\\u2028'"""	permits	The New_Line_Character production permits the form '\u2028'.		
+E6-3-3-grammar-new-line-character-5	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""'\\u2029'"""	permits	The New_Line_Character production permits the form '\u2029'.		
+E6-3-3-grammar-delimited-comment-1	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""'/*' Delimited_Comment_Section* ASTERISK+ '/'"""	permits	The Delimited_Comment production permits the form '/*' Delimited_Comment_Section* ASTERISK+ '/'.		
+E6-3-3-grammar-delimited-comment-section-1	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""SLASH"""	permits	The Delimited_Comment_Section production permits the form SLASH.		
+E6-3-3-grammar-delimited-comment-section-2	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""ASTERISK* Not_Slash_Or_Asterisk"""	permits	The Delimited_Comment_Section production permits the form ASTERISK* Not_Slash_Or_Asterisk.		
+E6-3-3-grammar-not-slash-or-asterisk-1	ecma-334-ed7	6.3.3, p. 16 (PDF p. 44)	"""~('/' | '*')"""	permits	The Not_Slash_Or_Asterisk production permits the form ~('/' | '*').		
+E6-3-3-no-nesting	ecma-334-ed7	6.3.3, p. 17 (PDF p. 45)	"""Comments do not nest"""	permits	A comment opener within a comment does not start a nested comment.		
+E6-3-3-single-line-delimiters-ordinary	ecma-334-ed7	6.3.3, p. 17 (PDF p. 45)	"""/* and */ have no special meaning within a single-line comment"""	permits	The sequences /* and */ inside a single-line comment are ordinary comment text.		
+E6-3-3-delimited-openers-ordinary	ecma-334-ed7	6.3.3, p. 17 (PDF p. 45)	"""// and /* have no special meaning within a delimited comment"""	permits	The sequences // and /* inside a delimited comment are ordinary comment text.		
+E6-3-3-character-literal-no-comments	ecma-334-ed7	6.3.3, p. 17 (PDF p. 45)	"""Comments are not processed within character and string literals"""	permits	Comment delimiters inside a character literal are literal contents rather than comments.		
+E6-3-3-string-literal-no-comments	ecma-334-ed7	6.3.3, p. 17 (PDF p. 45)	"""Comments are not processed within character and string literals"""	permits	Comment delimiters inside a string literal are literal contents rather than comments.		
+E6-3-3-documentation-comments	ecma-334-ed7	6.3.3, p. 17 (PDF p. 45)	"""can be used as documentation comments"""	permits	Single-line or delimited comments of the specified formats may serve as documentation comments.		Formats and documentation processing are stated in Annex D.
+E6-3-4-grammar-whitespace-1	ecma-334-ed7	6.3.4, p. 17 (PDF p. 45)	"""[\\p{Zs}]"""	permits	The Whitespace production permits the form [\p{Zs}].		
+E6-3-4-grammar-whitespace-2	ecma-334-ed7	6.3.4, p. 17 (PDF p. 45)	"""'\\u0009'"""	permits	The Whitespace production permits the form '\u0009'.		
+E6-3-4-grammar-whitespace-3	ecma-334-ed7	6.3.4, p. 17 (PDF p. 45)	"""'\\u000B'"""	permits	The Whitespace production permits the form '\u000B'.		
+E6-3-4-grammar-whitespace-4	ecma-334-ed7	6.3.4, p. 17 (PDF p. 45)	"""'\\u000C'"""	permits	The Whitespace production permits the form '\u000C'.		
+E6-4-1-whitespace-separator	ecma-334-ed7	6.4.1, p. 17 (PDF p. 45)	"""White space and comments are not tokens"""	permits	Whitespace separates tokens without itself becoming a token.		
+E6-4-1-comment-separator	ecma-334-ed7	6.4.1, p. 17 (PDF p. 45)	"""White space and comments are not tokens"""	permits	Comments separate tokens without themselves becoming tokens.		
+E6-4-1-grammar-token-1	ecma-334-ed7	6.4.1, p. 17 (PDF p. 45)	"""identifier"""	permits	The token production permits the form identifier.		
+E6-4-1-grammar-token-2	ecma-334-ed7	6.4.1, p. 17 (PDF p. 45)	"""keyword"""	permits	The token production permits the form keyword.		
+E6-4-1-grammar-token-3	ecma-334-ed7	6.4.1, p. 18 (PDF p. 46)	"""Integer_Literal"""	permits	The token production permits the form Integer_Literal.		
+E6-4-1-grammar-token-4	ecma-334-ed7	6.4.1, p. 18 (PDF p. 46)	"""Real_Literal"""	permits	The token production permits the form Real_Literal.		
+E6-4-1-grammar-token-5	ecma-334-ed7	6.4.1, p. 18 (PDF p. 46)	"""Character_Literal"""	permits	The token production permits the form Character_Literal.		
+E6-4-1-grammar-token-6	ecma-334-ed7	6.4.1, p. 18 (PDF p. 46)	"""String_Literal"""	permits	The token production permits the form String_Literal.		
+E6-4-1-grammar-token-7	ecma-334-ed7	6.4.1, p. 18 (PDF p. 46)	"""operator_or_punctuator"""	permits	The token production permits the form operator_or_punctuator.		
+E6-4-2-escape-identifiers	ecma-334-ed7	6.4.2, p. 18 (PDF p. 46)	"""processed in identifiers"""	permits	Unicode character escapes are interpreted in identifiers.		See 6.4.3 for character-class restrictions.
+E6-4-2-escape-character-literals	ecma-334-ed7	6.4.2, p. 18 (PDF p. 46)	"""character literals"""	permits	Unicode character escapes are interpreted in character literals.		See 6.4.5.5.
+E6-4-2-escape-regular-strings	ecma-334-ed7	6.4.2, p. 18 (PDF p. 46)	"""regular string literals"""	permits	Unicode character escapes are interpreted in regular string literals.		See 6.4.5.6.
+E6-4-2-escape-interpolated-strings	ecma-334-ed7	6.4.2, p. 18 (PDF p. 46)	"""interpolated regular string expressions"""	permits	Unicode character escapes are interpreted in interpolated regular string expressions.		See 12.8.3; this is the lexical permission stated here.
+E6-4-2-escape-context-restriction	ecma-334-ed7	6.4.2, p. 18 (PDF p. 46)	"""not processed in any other location"""	forbids	Unicode character escapes cannot form source constructs outside identifiers, character literals, regular string literals, and interpolated regular string expressions.		
+E6-4-2-grammar-unicode-escape-sequence-1	ecma-334-ed7	6.4.2, p. 18 (PDF p. 46)	"""'\\\\u' Hex_Digit Hex_Digit Hex_Digit Hex_Digit"""	permits	The Unicode_Escape_Sequence production permits the form '\\u' Hex_Digit Hex_Digit Hex_Digit Hex_Digit.		
+E6-4-2-grammar-unicode-escape-sequence-2	ecma-334-ed7	6.4.2, p. 18 (PDF p. 46)	"""'\\\\U' Hex_Digit Hex_Digit Hex_Digit Hex_Digit Hex_Digit Hex_Digit Hex_Digit Hex_Digit"""	permits	The Unicode_Escape_Sequence production permits the form '\\U' Hex_Digit Hex_Digit Hex_Digit Hex_Digit Hex_Digit Hex_Digit Hex_Digit Hex_Digit.		
+E6-4-2-escape-codepoint	ecma-334-ed7	6.4.2, p. 18 (PDF p. 46)	"""formed by the hexadecimal number"""	behavior	A Unicode character escape denotes the code point whose number is its hexadecimal payload.		
+E6-4-2-supplementary-surrogates	ecma-334-ed7	6.4.2, p. 18 (PDF p. 46)	"""represented using two Unicode surrogate code units"""	behavior	An escaped code point from U+10000 through U+10FFFF produces two UTF-16 surrogate code units in a string value.		
+E6-4-2-character-bmp-only	ecma-334-ed7	6.4.2, p. 18 (PDF p. 46)	"""above U+FFFF are not permitted in character literals"""	forbids	A character literal cannot contain a Unicode escape for a code point above U+FFFF.		
+E6-4-2-unicode-maximum	ecma-334-ed7	6.4.2, p. 18 (PDF p. 46)	"""above U+10FFFF are invalid"""	forbids	A Unicode escape cannot denote a code point above U+10FFFF.		
+E6-4-2-no-recursive-escapes	ecma-334-ed7	6.4.2, p. 18 (PDF p. 46)	"""Multiple translations are not performed"""	behavior	The result of translating an escape is not translated again as an escape sequence.		
+E6-4-3-identifier-initial-underscore	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""underscore is allowed as an initial character"""	permits	An identifier may start with an underscore.		
+E6-4-3-identifier-unicode-escapes	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Unicode escape sequences are permitted in identifiers"""	permits	An identifier may contain Unicode character escapes that satisfy its character categories.		
+E6-4-3-identifier-at-keywords	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""enable keywords to be used as identifiers"""	permits	A keyword may be used as an identifier when prefixed with '@'.		
+E6-4-3-grammar-identifier-1	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Simple_Identifier"""	permits	The identifier production permits the form Simple_Identifier.		
+E6-4-3-grammar-identifier-2	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""contextual_keyword"""	permits	The identifier production permits the form contextual_keyword.		
+E6-4-3-grammar-simple-identifier-1	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Available_Identifier"""	permits	The Simple_Identifier production permits the form Available_Identifier.		
+E6-4-3-grammar-simple-identifier-2	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Escaped_Identifier"""	permits	The Simple_Identifier production permits the form Escaped_Identifier.		
+E6-4-3-grammar-available-identifier-1	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Basic_Identifier"""	permits	The Available_Identifier production permits the form Basic_Identifier, excluding keywords and contextual keywords.		
+E6-4-3-available-identifier-not-keyword	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""excluding keywords or contextual keywords"""	forbids	A keyword token cannot be an Available_Identifier.		This restricts the grammar fragment, not Unicode-escape spellings or verbatim identifiers.
+E6-4-3-available-identifier-not-contextual-keyword	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""excluding keywords or contextual keywords"""	forbids	A contextual-keyword token cannot be an Available_Identifier.		The identifier production separately permits contextual_keyword; this restriction does not reserve contextual keywords in all contexts.
+E6-4-3-grammar-escaped-identifier-1	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""'@' Basic_Identifier"""	permits	The Escaped_Identifier production permits the form '@' Basic_Identifier.		
+E6-4-3-grammar-basic-identifier-1	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Identifier_Start_Character Identifier_Part_Character*"""	permits	The Basic_Identifier production permits the form Identifier_Start_Character Identifier_Part_Character*.		
+E6-4-3-grammar-identifier-start-character-1	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Letter_Character"""	permits	The Identifier_Start_Character production permits the form Letter_Character.		
+E6-4-3-grammar-identifier-start-character-2	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Underscore_Character"""	permits	The Identifier_Start_Character production permits the form Underscore_Character.		
+E6-4-3-grammar-underscore-character-1	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""'_'"""	permits	The Underscore_Character production permits the form '_'.		Open grammar question: the escaped initial-underscore alternative lists only the short lowercase-u form, not the eight-digit uppercase-U spelling supported by Unicode_Escape_Sequence in 6.4.2; no extra alternative is inferred.
+E6-4-3-grammar-underscore-character-2	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""'\\\\u005' [fF]"""	permits	The Underscore_Character production permits the form '\\u005' [fF].		Open grammar question: the escaped initial-underscore alternative lists only the short lowercase-u form, not the eight-digit uppercase-U spelling supported by Unicode_Escape_Sequence in 6.4.2; no extra alternative is inferred.
+E6-4-3-grammar-identifier-part-character-1	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Letter_Character"""	permits	The Identifier_Part_Character production permits the form Letter_Character.		
+E6-4-3-grammar-identifier-part-character-2	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Decimal_Digit_Character"""	permits	The Identifier_Part_Character production permits the form Decimal_Digit_Character.		
+E6-4-3-grammar-identifier-part-character-3	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Connecting_Character"""	permits	The Identifier_Part_Character production permits the form Connecting_Character.		
+E6-4-3-grammar-identifier-part-character-4	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Combining_Character"""	permits	The Identifier_Part_Character production permits the form Combining_Character.		
+E6-4-3-grammar-identifier-part-character-5	ecma-334-ed7	6.4.3, p. 19 (PDF p. 47)	"""Formatting_Character"""	permits	The Identifier_Part_Character production permits the form Formatting_Character.		
+E6-4-3-grammar-letter-character-1	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""[\\p{L}\\p{Nl}]"""	permits	The Letter_Character production permits the form [\p{L}\p{Nl}].		Character-category restriction is stated in the production's grammar comment; the following Note explains the notation.
+E6-4-3-grammar-letter-character-2	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""Unicode_Escape_Sequence"""	permits	The Letter_Character production permits the form Unicode_Escape_Sequence, only when the escaped character has Unicode category L or Nl.		Character-category restriction is stated in the production's grammar comment; the following Note explains the notation.
+E6-4-3-escape-letter-character-category	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""Only escapes for categories L & Nl allowed"""	forbids	A Unicode escape cannot satisfy Letter_Character in an identifier unless its decoded character has Unicode category L or Nl.		The normative grammar comment states the exclusion; the following marked Note only discusses enforcement.
+E6-4-3-grammar-combining-character-1	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""[\\p{Mn}\\p{Mc}]"""	permits	The Combining_Character production permits the form [\p{Mn}\p{Mc}].		Character-category restriction is stated in the production's grammar comment; the following Note explains the notation.
+E6-4-3-grammar-combining-character-2	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""Unicode_Escape_Sequence"""	permits	The Combining_Character production permits the form Unicode_Escape_Sequence, only when the escaped character has Unicode category Mn or Mc.		Character-category restriction is stated in the production's grammar comment; the following Note explains the notation.
+E6-4-3-escape-combining-character-category	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""Only escapes for categories Mn & Mc allowed"""	forbids	A Unicode escape cannot satisfy Combining_Character in an identifier unless its decoded character has Unicode category Mn or Mc.		The normative grammar comment states the exclusion; the following marked Note only discusses enforcement.
+E6-4-3-grammar-decimal-digit-character-1	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""[\\p{Nd}]"""	permits	The Decimal_Digit_Character production permits the form [\p{Nd}].		Character-category restriction is stated in the production's grammar comment; the following Note explains the notation.
+E6-4-3-grammar-decimal-digit-character-2	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""Unicode_Escape_Sequence"""	permits	The Decimal_Digit_Character production permits the form Unicode_Escape_Sequence, only when the escaped character has Unicode category Nd.		Character-category restriction is stated in the production's grammar comment; the following Note explains the notation.
+E6-4-3-escape-decimal-digit-character-category	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""Only escapes for category Nd allowed"""	forbids	A Unicode escape cannot satisfy Decimal_Digit_Character in an identifier unless its decoded character has Unicode category Nd.		The normative grammar comment states the exclusion; the following marked Note only discusses enforcement.
+E6-4-3-grammar-connecting-character-1	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""[\\p{Pc}]"""	permits	The Connecting_Character production permits the form [\p{Pc}].		Character-category restriction is stated in the production's grammar comment; the following Note explains the notation.
+E6-4-3-grammar-connecting-character-2	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""Unicode_Escape_Sequence"""	permits	The Connecting_Character production permits the form Unicode_Escape_Sequence, only when the escaped character has Unicode category Pc.		Character-category restriction is stated in the production's grammar comment; the following Note explains the notation.
+E6-4-3-escape-connecting-character-category	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""Only escapes for category Pc allowed"""	forbids	A Unicode escape cannot satisfy Connecting_Character in an identifier unless its decoded character has Unicode category Pc.		The normative grammar comment states the exclusion; the following marked Note only discusses enforcement.
+E6-4-3-grammar-formatting-character-1	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""[\\p{Cf}]"""	permits	The Formatting_Character production permits the form [\p{Cf}].		Character-category restriction is stated in the production's grammar comment; the following Note explains the notation.
+E6-4-3-grammar-formatting-character-2	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""Unicode_Escape_Sequence"""	permits	The Formatting_Character production permits the form Unicode_Escape_Sequence, only when the escaped character has Unicode category Cf.		Character-category restriction is stated in the production's grammar comment; the following Note explains the notation.
+E6-4-3-escape-formatting-character-category	ecma-334-ed7	6.4.3, p. 20 (PDF p. 48)	"""Only escapes for category Cf allowed"""	forbids	A Unicode escape cannot satisfy Formatting_Character in an identifier unless its decoded character has Unicode category Cf.		The normative grammar comment states the exclusion; the following marked Note only discusses enforcement.
+E6-4-3-identifier-nfc	ecma-334-ed7	6.4.3, p. 21 (PDF p. 49)	"""shall be in the canonical format defined by Unicode Normalization Form C"""	permits	A conforming program uses identifiers in Unicode Normalization Form C.		
+E6-4-3-non-nfc-handling	ecma-334-ed7	6.4.3, p. 21 (PDF p. 49)	"""behavior when encountering an identifier not in Normalization Form C is implementation-defined"""	implementation-defined	The implementation defines its handling of an identifier outside Unicode Normalization Form C.		
+E6-4-3-non-nfc-no-diagnostic-required	ecma-334-ed7	6.4.3, p. 21 (PDF p. 49)	"""a diagnostic is not required"""	permits	An implementation may handle a non-NFC identifier without issuing a diagnostic.		
+E6-4-3-identifier-equivalence	ecma-334-ed7	6.4.3, p. 21 (PDF p. 49)	"""considered the same if they are identical"""	permits	Identifiers denote the same name when their character sequences are identical after the ordered prefix, escape, and formatting transformations.		
+E6-4-3-identity-remove-at	ecma-334-ed7	6.4.3, p. 21 (PDF p. 49)	"""prefix \u201c@\u201d, if used, is removed"""	permits	Identifier comparison first removes any '@' prefix.		
+E6-4-3-identity-translate-escapes	ecma-334-ed7	6.4.3, p. 21 (PDF p. 49)	"""transformed into its corresponding Unicode character"""	permits	After removing any '@' prefix, identifier comparison replaces each Unicode escape with its character.		
+E6-4-3-identity-remove-format	ecma-334-ed7	6.4.3, p. 21 (PDF p. 49)	"""Any Formatting_Characters are removed"""	permits	After prefix removal and escape translation, identifier comparison removes all Unicode formatting characters.		
+E6-4-3-underscore-name	ecma-334-ed7	6.4.3, p. 22 (PDF p. 50)	"""a named program element"""	permits	An identifier '_' may denote a named program element when its context treats it as a name.		
+E6-4-3-underscore-discard	ecma-334-ed7	6.4.3, p. 22 (PDF p. 50)	"""denote a discard"""	permits	An identifier '_' may denote a discard when its context treats it as a discard.		See 9.2.9.1 for the contexts and semantics.
+E6-4-3-double-underscore-reserved	ecma-334-ed7	6.4.3, p. 22 (PDF p. 50)	"""reserved for use by the implementation"""	permits	Identifiers containing two consecutive U+005F characters are reserved for use by the implementation.		Reservation is stated unconditionally; the next sentence does not require a diagnostic for a user definition.
+E6-4-3-double-underscore-no-diagnostic-required	ecma-334-ed7	6.4.3, p. 22 (PDF p. 50)	"""no diagnostic is required"""	permits	An implementation may accept a defined identifier containing consecutive underscores without a diagnostic.		
+E6-4-4-reserved-identifier	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""cannot be used as an identifier except when prefaced by the @ character"""	forbids	A reserved keyword's literal spelling cannot be an unprefixed identifier.		Unicode-escape spellings are identifiers rather than keywords under 6.4.2.
+E6-4-4-grammar-keyword-1	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'abstract'"""	permits	The keyword production permits the form 'abstract'.		
+E6-4-4-grammar-keyword-2	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'as'"""	permits	The keyword production permits the form 'as'.		
+E6-4-4-grammar-keyword-3	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'base'"""	permits	The keyword production permits the form 'base'.		
+E6-4-4-grammar-keyword-4	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'bool'"""	permits	The keyword production permits the form 'bool'.		
+E6-4-4-grammar-keyword-5	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'break'"""	permits	The keyword production permits the form 'break'.		
+E6-4-4-grammar-keyword-6	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'byte'"""	permits	The keyword production permits the form 'byte'.		
+E6-4-4-grammar-keyword-7	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'case'"""	permits	The keyword production permits the form 'case'.		
+E6-4-4-grammar-keyword-8	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'catch'"""	permits	The keyword production permits the form 'catch'.		
+E6-4-4-grammar-keyword-9	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'char'"""	permits	The keyword production permits the form 'char'.		
+E6-4-4-grammar-keyword-10	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'checked'"""	permits	The keyword production permits the form 'checked'.		
+E6-4-4-grammar-keyword-11	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'class'"""	permits	The keyword production permits the form 'class'.		
+E6-4-4-grammar-keyword-12	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'const'"""	permits	The keyword production permits the form 'const'.		
+E6-4-4-grammar-keyword-13	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'continue'"""	permits	The keyword production permits the form 'continue'.		
+E6-4-4-grammar-keyword-14	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'decimal'"""	permits	The keyword production permits the form 'decimal'.		
+E6-4-4-grammar-keyword-15	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""DEFAULT"""	permits	The keyword production permits the form DEFAULT.		
+E6-4-4-grammar-keyword-16	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'delegate'"""	permits	The keyword production permits the form 'delegate'.		
+E6-4-4-grammar-keyword-17	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'do'"""	permits	The keyword production permits the form 'do'.		
+E6-4-4-grammar-keyword-18	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'double'"""	permits	The keyword production permits the form 'double'.		
+E6-4-4-grammar-keyword-19	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'else'"""	permits	The keyword production permits the form 'else'.		
+E6-4-4-grammar-keyword-20	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'enum'"""	permits	The keyword production permits the form 'enum'.		
+E6-4-4-grammar-keyword-21	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'event'"""	permits	The keyword production permits the form 'event'.		
+E6-4-4-grammar-keyword-22	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'explicit'"""	permits	The keyword production permits the form 'explicit'.		
+E6-4-4-grammar-keyword-23	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'extern'"""	permits	The keyword production permits the form 'extern'.		
+E6-4-4-grammar-keyword-24	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""FALSE"""	permits	The keyword production permits the form FALSE.		
+E6-4-4-grammar-keyword-25	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'finally'"""	permits	The keyword production permits the form 'finally'.		
+E6-4-4-grammar-keyword-26	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'fixed'"""	permits	The keyword production permits the form 'fixed'.		
+E6-4-4-grammar-keyword-27	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'float'"""	permits	The keyword production permits the form 'float'.		
+E6-4-4-grammar-keyword-28	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'for'"""	permits	The keyword production permits the form 'for'.		
+E6-4-4-grammar-keyword-29	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'foreach'"""	permits	The keyword production permits the form 'foreach'.		
+E6-4-4-grammar-keyword-30	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'goto'"""	permits	The keyword production permits the form 'goto'.		
+E6-4-4-grammar-keyword-31	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'if'"""	permits	The keyword production permits the form 'if'.		
+E6-4-4-grammar-keyword-32	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'implicit'"""	permits	The keyword production permits the form 'implicit'.		
+E6-4-4-grammar-keyword-33	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'in'"""	permits	The keyword production permits the form 'in'.		
+E6-4-4-grammar-keyword-34	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'int'"""	permits	The keyword production permits the form 'int'.		
+E6-4-4-grammar-keyword-35	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'interface'"""	permits	The keyword production permits the form 'interface'.		
+E6-4-4-grammar-keyword-36	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'internal'"""	permits	The keyword production permits the form 'internal'.		
+E6-4-4-grammar-keyword-37	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'is'"""	permits	The keyword production permits the form 'is'.		
+E6-4-4-grammar-keyword-38	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'lock'"""	permits	The keyword production permits the form 'lock'.		
+E6-4-4-grammar-keyword-39	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'long'"""	permits	The keyword production permits the form 'long'.		
+E6-4-4-grammar-keyword-40	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'namespace'"""	permits	The keyword production permits the form 'namespace'.		
+E6-4-4-grammar-keyword-41	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'new'"""	permits	The keyword production permits the form 'new'.		
+E6-4-4-grammar-keyword-42	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""NULL"""	permits	The keyword production permits the form NULL.		
+E6-4-4-grammar-keyword-43	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'object'"""	permits	The keyword production permits the form 'object'.		
+E6-4-4-grammar-keyword-44	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'operator'"""	permits	The keyword production permits the form 'operator'.		
+E6-4-4-grammar-keyword-45	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'out'"""	permits	The keyword production permits the form 'out'.		
+E6-4-4-grammar-keyword-46	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'override'"""	permits	The keyword production permits the form 'override'.		
+E6-4-4-grammar-keyword-47	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'params'"""	permits	The keyword production permits the form 'params'.		
+E6-4-4-grammar-keyword-48	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'private'"""	permits	The keyword production permits the form 'private'.		
+E6-4-4-grammar-keyword-49	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'protected'"""	permits	The keyword production permits the form 'protected'.		
+E6-4-4-grammar-keyword-50	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'public'"""	permits	The keyword production permits the form 'public'.		
+E6-4-4-grammar-keyword-51	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'readonly'"""	permits	The keyword production permits the form 'readonly'.		
+E6-4-4-grammar-keyword-52	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'ref'"""	permits	The keyword production permits the form 'ref'.		
+E6-4-4-grammar-keyword-53	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'return'"""	permits	The keyword production permits the form 'return'.		
+E6-4-4-grammar-keyword-54	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'sbyte'"""	permits	The keyword production permits the form 'sbyte'.		
+E6-4-4-grammar-keyword-55	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'sealed'"""	permits	The keyword production permits the form 'sealed'.		
+E6-4-4-grammar-keyword-56	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'short'"""	permits	The keyword production permits the form 'short'.		
+E6-4-4-grammar-keyword-57	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'sizeof'"""	permits	The keyword production permits the form 'sizeof'.		
+E6-4-4-grammar-keyword-58	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'stackalloc'"""	permits	The keyword production permits the form 'stackalloc'.		
+E6-4-4-grammar-keyword-59	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'static'"""	permits	The keyword production permits the form 'static'.		
+E6-4-4-grammar-keyword-60	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'string'"""	permits	The keyword production permits the form 'string'.		
+E6-4-4-grammar-keyword-61	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'struct'"""	permits	The keyword production permits the form 'struct'.		
+E6-4-4-grammar-keyword-62	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'switch'"""	permits	The keyword production permits the form 'switch'.		
+E6-4-4-grammar-keyword-63	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'this'"""	permits	The keyword production permits the form 'this'.		
+E6-4-4-grammar-keyword-64	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'throw'"""	permits	The keyword production permits the form 'throw'.		
+E6-4-4-grammar-keyword-65	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""TRUE"""	permits	The keyword production permits the form TRUE.		
+E6-4-4-grammar-keyword-66	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'try'"""	permits	The keyword production permits the form 'try'.		
+E6-4-4-grammar-keyword-67	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'typeof'"""	permits	The keyword production permits the form 'typeof'.		
+E6-4-4-grammar-keyword-68	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'uint'"""	permits	The keyword production permits the form 'uint'.		
+E6-4-4-grammar-keyword-69	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'ulong'"""	permits	The keyword production permits the form 'ulong'.		
+E6-4-4-grammar-keyword-70	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'unchecked'"""	permits	The keyword production permits the form 'unchecked'.		
+E6-4-4-grammar-keyword-71	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'unsafe'"""	permits	The keyword production permits the form 'unsafe'.		
+E6-4-4-grammar-keyword-72	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'ushort'"""	permits	The keyword production permits the form 'ushort'.		
+E6-4-4-grammar-keyword-73	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'using'"""	permits	The keyword production permits the form 'using'.		
+E6-4-4-grammar-keyword-74	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'virtual'"""	permits	The keyword production permits the form 'virtual'.		
+E6-4-4-grammar-keyword-75	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'void'"""	permits	The keyword production permits the form 'void'.		
+E6-4-4-grammar-keyword-76	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'volatile'"""	permits	The keyword production permits the form 'volatile'.		
+E6-4-4-grammar-keyword-77	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'while'"""	permits	The keyword production permits the form 'while'.		
+E6-4-4-contextual-identifier	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""can be used as an identifier outside of those contexts"""	permits	A contextual keyword may be an ordinary identifier outside its special syntactic contexts.		
+E6-4-4-contextual-verbatim-identifier	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""when prefaced by the @ character"""	permits	A contextual keyword may be an ordinary identifier when prefixed with '@'.		
+E6-4-4-grammar-contextual-keyword-1	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'add'"""	permits	The contextual_keyword production permits the form 'add'.		
+E6-4-4-grammar-contextual-keyword-2	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'alias'"""	permits	The contextual_keyword production permits the form 'alias'.		
+E6-4-4-grammar-contextual-keyword-3	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'ascending'"""	permits	The contextual_keyword production permits the form 'ascending'.		
+E6-4-4-grammar-contextual-keyword-4	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'async'"""	permits	The contextual_keyword production permits the form 'async'.		
+E6-4-4-grammar-contextual-keyword-5	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'await'"""	permits	The contextual_keyword production permits the form 'await'.		
+E6-4-4-grammar-contextual-keyword-6	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'by'"""	permits	The contextual_keyword production permits the form 'by'.		
+E6-4-4-grammar-contextual-keyword-7	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'descending'"""	permits	The contextual_keyword production permits the form 'descending'.		
+E6-4-4-grammar-contextual-keyword-8	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'dynamic'"""	permits	The contextual_keyword production permits the form 'dynamic'.		
+E6-4-4-grammar-contextual-keyword-9	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'equals'"""	permits	The contextual_keyword production permits the form 'equals'.		
+E6-4-4-grammar-contextual-keyword-10	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'from'"""	permits	The contextual_keyword production permits the form 'from'.		
+E6-4-4-grammar-contextual-keyword-11	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'get'"""	permits	The contextual_keyword production permits the form 'get'.		
+E6-4-4-grammar-contextual-keyword-12	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'global'"""	permits	The contextual_keyword production permits the form 'global'.		
+E6-4-4-grammar-contextual-keyword-13	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'group'"""	permits	The contextual_keyword production permits the form 'group'.		
+E6-4-4-grammar-contextual-keyword-14	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'into'"""	permits	The contextual_keyword production permits the form 'into'.		
+E6-4-4-grammar-contextual-keyword-15	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'join'"""	permits	The contextual_keyword production permits the form 'join'.		
+E6-4-4-grammar-contextual-keyword-16	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'let'"""	permits	The contextual_keyword production permits the form 'let'.		
+E6-4-4-grammar-contextual-keyword-17	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'nameof'"""	permits	The contextual_keyword production permits the form 'nameof'.		
+E6-4-4-grammar-contextual-keyword-18	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'on'"""	permits	The contextual_keyword production permits the form 'on'.		
+E6-4-4-grammar-contextual-keyword-19	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'orderby'"""	permits	The contextual_keyword production permits the form 'orderby'.		
+E6-4-4-grammar-contextual-keyword-20	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'partial'"""	permits	The contextual_keyword production permits the form 'partial'.		
+E6-4-4-grammar-contextual-keyword-21	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'remove'"""	permits	The contextual_keyword production permits the form 'remove'.		
+E6-4-4-grammar-contextual-keyword-22	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'select'"""	permits	The contextual_keyword production permits the form 'select'.		
+E6-4-4-grammar-contextual-keyword-23	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'set'"""	permits	The contextual_keyword production permits the form 'set'.		
+E6-4-4-grammar-contextual-keyword-24	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'unmanaged'"""	permits	The contextual_keyword production permits the form 'unmanaged'.		
+E6-4-4-grammar-contextual-keyword-25	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'value'"""	permits	The contextual_keyword production permits the form 'value'.		
+E6-4-4-grammar-contextual-keyword-26	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'var'"""	permits	The contextual_keyword production permits the form 'var'.		
+E6-4-4-grammar-contextual-keyword-27	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'when'"""	permits	The contextual_keyword production permits the form 'when'.		
+E6-4-4-grammar-contextual-keyword-28	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'where'"""	permits	The contextual_keyword production permits the form 'where'.		
+E6-4-4-grammar-contextual-keyword-29	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""'yield'"""	permits	The contextual_keyword production permits the form 'yield'.		
+E6-4-4-accessor-identifier-restriction	ecma-334-ed7	6.4.4, p. 22 (PDF p. 50)	"""An identifier other than get or set is never permitted in these locations"""	forbids	A property accessor location that expects get or set cannot use a different identifier.		This illustrative prose is not a marked Example block; see 15.7.3 for accessor grammar.
+E6-4-4-var-declared-type-precedence	ecma-334-ed7	6.4.4, p. 23 (PDF p. 51)	"""the declared name takes precedence"""	permits	A declared type named var takes precedence over contextual var in an implicitly typed local-variable declaration.		See 13.6.2; the precedence is stated in this unmarked illustrative paragraph.
+E6-4-4-await-keyword-context	ecma-334-ed7	6.4.4, p. 23 (PDF p. 51)	"""considered a keyword only when inside a method declared async"""	permits	The word await has keyword meaning inside a method declared async.		Open wording question: this summary mentions methods, while 12.9.8.1 covers async functions and 15.15.1 includes async anonymous functions; the PDF confirms the difference.
+E6-4-4-await-identifier-context	ecma-334-ed7	6.4.4, p. 23 (PDF p. 51)	"""can be used as an identifier elsewhere"""	permits	The word await may be used as an identifier outside the async-method context stated in this paragraph.		See 12.9.8.1 and 15.15.1 for async-function contexts; this illustrative summary must be reconciled with those clauses before deriving an identifier-acceptance test.
+E6-4-5-1-literal-value	ecma-334-ed7	6.4.5.1, p. 23 (PDF p. 51)	"""source-code representation of a value"""	behavior	A literal denotes the value represented by its source spelling.		See 12.8.2.
+E6-4-5-1-grammar-literal-1	ecma-334-ed7	6.4.5.1, p. 23 (PDF p. 51)	"""boolean_literal"""	permits	The literal production permits the form boolean_literal.		
+E6-4-5-1-grammar-literal-2	ecma-334-ed7	6.4.5.1, p. 23 (PDF p. 51)	"""Integer_Literal"""	permits	The literal production permits the form Integer_Literal.		
+E6-4-5-1-grammar-literal-3	ecma-334-ed7	6.4.5.1, p. 23 (PDF p. 51)	"""Real_Literal"""	permits	The literal production permits the form Real_Literal.		
+E6-4-5-1-grammar-literal-4	ecma-334-ed7	6.4.5.1, p. 23 (PDF p. 51)	"""Character_Literal"""	permits	The literal production permits the form Character_Literal.		
+E6-4-5-1-grammar-literal-5	ecma-334-ed7	6.4.5.1, p. 23 (PDF p. 51)	"""String_Literal"""	permits	The literal production permits the form String_Literal.		
+E6-4-5-1-grammar-literal-6	ecma-334-ed7	6.4.5.1, p. 23 (PDF p. 51)	"""null_literal"""	permits	The literal production permits the form null_literal.		
+E6-4-5-2-true-value	ecma-334-ed7	6.4.5.2, p. 23 (PDF p. 51)	"""true and false"""	behavior	The true Boolean literal denotes the true value.		
+E6-4-5-2-false-value	ecma-334-ed7	6.4.5.2, p. 23 (PDF p. 51)	"""true and false"""	behavior	The false Boolean literal denotes the false value.		
+E6-4-5-2-grammar-boolean-literal-1	ecma-334-ed7	6.4.5.2, p. 23 (PDF p. 51)	"""TRUE"""	permits	The boolean_literal production permits the form TRUE.		
+E6-4-5-2-grammar-boolean-literal-2	ecma-334-ed7	6.4.5.2, p. 23 (PDF p. 51)	"""FALSE"""	permits	The boolean_literal production permits the form FALSE.		
+E6-4-5-2-boolean-type	ecma-334-ed7	6.4.5.2, p. 23 (PDF p. 51)	"""type of a boolean_literal is bool"""	permits	A Boolean literal has compile-time type bool.		
+E6-4-5-3-decimal-value	ecma-334-ed7	6.4.5.3, p. 23 (PDF p. 51)	"""decimal, hexadecimal, and binary"""	behavior	The decimal integer-literal form denotes its decimal numeric value.		
+E6-4-5-3-hexadecimal-value	ecma-334-ed7	6.4.5.3, p. 23 (PDF p. 51)	"""decimal, hexadecimal, and binary"""	behavior	The hexadecimal integer-literal form denotes its hexadecimal numeric value.		
+E6-4-5-3-binary-value	ecma-334-ed7	6.4.5.3, p. 23 (PDF p. 51)	"""decimal, hexadecimal, and binary"""	behavior	The binary integer-literal form denotes its binary numeric value.		
+E6-4-5-3-grammar-integer-literal-1	ecma-334-ed7	6.4.5.3, p. 23 (PDF p. 51)	"""Decimal_Integer_Literal"""	permits	The Integer_Literal production permits the form Decimal_Integer_Literal.		
+E6-4-5-3-grammar-integer-literal-2	ecma-334-ed7	6.4.5.3, p. 23 (PDF p. 51)	"""Hexadecimal_Integer_Literal"""	permits	The Integer_Literal production permits the form Hexadecimal_Integer_Literal.		
+E6-4-5-3-grammar-integer-literal-3	ecma-334-ed7	6.4.5.3, p. 23 (PDF p. 51)	"""Binary_Integer_Literal"""	permits	The Integer_Literal production permits the form Binary_Integer_Literal.		
+E6-4-5-3-grammar-decimal-integer-literal-1	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""Decimal_Digit Decorated_Decimal_Digit* Integer_Type_Suffix?"""	permits	The Decimal_Integer_Literal production permits the form Decimal_Digit Decorated_Decimal_Digit* Integer_Type_Suffix?.		
+E6-4-5-3-grammar-decorated-decimal-digit-1	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'_'* Decimal_Digit"""	permits	The Decorated_Decimal_Digit production permits the form '_'* Decimal_Digit.		
+E6-4-5-3-grammar-decimal-digit-1	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'0'..'9'"""	permits	The Decimal_Digit production permits the form '0'..'9'.		
+E6-4-5-3-grammar-integer-type-suffix-1	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'U'"""	permits	The Integer_Type_Suffix production permits the form 'U'.		
+E6-4-5-3-grammar-integer-type-suffix-2	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'u'"""	permits	The Integer_Type_Suffix production permits the form 'u'.		
+E6-4-5-3-grammar-integer-type-suffix-3	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'L'"""	permits	The Integer_Type_Suffix production permits the form 'L'.		
+E6-4-5-3-grammar-integer-type-suffix-4	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'l'"""	permits	The Integer_Type_Suffix production permits the form 'l'.		
+E6-4-5-3-grammar-integer-type-suffix-5	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'UL'"""	permits	The Integer_Type_Suffix production permits the form 'UL'.		
+E6-4-5-3-grammar-integer-type-suffix-6	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'Ul'"""	permits	The Integer_Type_Suffix production permits the form 'Ul'.		
+E6-4-5-3-grammar-integer-type-suffix-7	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'uL'"""	permits	The Integer_Type_Suffix production permits the form 'uL'.		
+E6-4-5-3-grammar-integer-type-suffix-8	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'ul'"""	permits	The Integer_Type_Suffix production permits the form 'ul'.		
+E6-4-5-3-grammar-integer-type-suffix-9	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'LU'"""	permits	The Integer_Type_Suffix production permits the form 'LU'.		
+E6-4-5-3-grammar-integer-type-suffix-10	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'Lu'"""	permits	The Integer_Type_Suffix production permits the form 'Lu'.		
+E6-4-5-3-grammar-integer-type-suffix-11	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'lU'"""	permits	The Integer_Type_Suffix production permits the form 'lU'.		
+E6-4-5-3-grammar-integer-type-suffix-12	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'lu'"""	permits	The Integer_Type_Suffix production permits the form 'lu'.		
+E6-4-5-3-grammar-hexadecimal-integer-literal-1	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""('0x' | '0X') Decorated_Hex_Digit+ Integer_Type_Suffix?"""	permits	The Hexadecimal_Integer_Literal production permits the form ('0x' | '0X') Decorated_Hex_Digit+ Integer_Type_Suffix?.		
+E6-4-5-3-grammar-decorated-hex-digit-1	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'_'* Hex_Digit"""	permits	The Decorated_Hex_Digit production permits the form '_'* Hex_Digit.		
+E6-4-5-3-grammar-hex-digit-1	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'0'..'9'"""	permits	The Hex_Digit production permits the form '0'..'9'.		
+E6-4-5-3-grammar-hex-digit-2	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'A'..'F'"""	permits	The Hex_Digit production permits the form 'A'..'F'.		
+E6-4-5-3-grammar-hex-digit-3	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'a'..'f'"""	permits	The Hex_Digit production permits the form 'a'..'f'.		
+E6-4-5-3-grammar-binary-integer-literal-1	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""('0b' | '0B') Decorated_Binary_Digit+ Integer_Type_Suffix?"""	permits	The Binary_Integer_Literal production permits the form ('0b' | '0B') Decorated_Binary_Digit+ Integer_Type_Suffix?.		
+E6-4-5-3-grammar-decorated-binary-digit-1	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'_'* Binary_Digit"""	permits	The Decorated_Binary_Digit production permits the form '_'* Binary_Digit.		
+E6-4-5-3-grammar-binary-digit-1	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'0'"""	permits	The Binary_Digit production permits the form '0'.		
+E6-4-5-3-grammar-binary-digit-2	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""'1'"""	permits	The Binary_Digit production permits the form '1'.		
+E6-4-5-3-unsuffixed-type	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""int, uint, long, ulong"""	permits	An unsuffixed integer literal has the first representable type in the order int, uint, long, ulong, subject to the immediately-unary-minus exceptions below.		
+E6-4-5-3-u-type	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""uint, ulong"""	permits	An integer literal suffixed U or u has the first representable type in the order uint, ulong.		
+E6-4-5-3-l-type	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""long, ulong"""	permits	An integer literal suffixed L or l has the first representable type in the order long, ulong, subject to the immediately-unary-minus exception below.		
+E6-4-5-3-ul-type	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""UL, Ul, uL, ul, LU, Lu, lU, or lu"""	permits	An integer literal with either ordering and either casing of U and L as its suffix has type ulong.		
+E6-4-5-3-integer-overflow	ecma-334-ed7	6.4.5.3, p. 24 (PDF p. 52)	"""outside the range of the ulong type"""	forbids	An integer literal whose numeric value exceeds the range of ulong is a compile-time error.		
+E6-4-5-3-int-minimum-type	ecma-334-ed7	6.4.5.3, p. 25 (PDF p. 53)	"""constant of type int"""	permits	An unsuffixed integer token denoting 2147483648 immediately after a unary-minus token yields an int constant together with that token.		See 12.9.3.
+E6-4-5-3-int-minimum-value	ecma-334-ed7	6.4.5.3, p. 25 (PDF p. 53)	"""value \u22122147483648"""	behavior	The unary-minus and unsuffixed 2147483648 token pair has constant value -2147483648.		
+E6-4-5-3-int-boundary-other-type	ecma-334-ed7	6.4.5.3, p. 25 (PDF p. 53)	"""In all other situations"""	permits	An unsuffixed integer literal denoting 2147483648 has type uint outside the immediately-unary-minus case.		
+E6-4-5-3-long-minimum-type	ecma-334-ed7	6.4.5.3, p. 25 (PDF p. 53)	"""constant of type long"""	permits	An integer token denoting 9223372036854775808 with no suffix or L/l immediately after a unary-minus token yields a long constant together with that token.		See 12.9.3.
+E6-4-5-3-long-minimum-value	ecma-334-ed7	6.4.5.3, p. 25 (PDF p. 53)	"""value \u22129223372036854775808"""	behavior	The unary-minus and 9223372036854775808 token pair with no suffix or L/l has constant value -9223372036854775808.		
+E6-4-5-3-long-boundary-other-type	ecma-334-ed7	6.4.5.3, p. 25 (PDF p. 53)	"""In all other situations"""	permits	An integer literal denoting 9223372036854775808 with no suffix or L/l has type ulong outside the immediately-unary-minus case.		
+E6-4-5-4-grammar-real-literal-1	ecma-334-ed7	6.4.5.4, p. 25 (PDF p. 53)	"""Decimal_Digit Decorated_Decimal_Digit* '.' Decimal_Digit Decorated_Decimal_Digit* Exponent_Part? Real_Type_Suffix?"""	permits	The Real_Literal production permits the form Decimal_Digit Decorated_Decimal_Digit* '.' Decimal_Digit Decorated_Decimal_Digit* Exponent_Part? Real_Type_Suffix?.		
+E6-4-5-4-grammar-real-literal-2	ecma-334-ed7	6.4.5.4, p. 25 (PDF p. 53)	"""'.' Decimal_Digit Decorated_Decimal_Digit* Exponent_Part? Real_Type_Suffix?"""	permits	The Real_Literal production permits the form '.' Decimal_Digit Decorated_Decimal_Digit* Exponent_Part? Real_Type_Suffix?.		
+E6-4-5-4-grammar-real-literal-3	ecma-334-ed7	6.4.5.4, p. 25 (PDF p. 53)	"""Decimal_Digit Decorated_Decimal_Digit* Exponent_Part Real_Type_Suffix?"""	permits	The Real_Literal production permits the form Decimal_Digit Decorated_Decimal_Digit* Exponent_Part Real_Type_Suffix?.		
+E6-4-5-4-grammar-real-literal-4	ecma-334-ed7	6.4.5.4, p. 25 (PDF p. 53)	"""Decimal_Digit Decorated_Decimal_Digit* Real_Type_Suffix"""	permits	The Real_Literal production permits the form Decimal_Digit Decorated_Decimal_Digit* Real_Type_Suffix.		
+E6-4-5-4-grammar-exponent-part-1	ecma-334-ed7	6.4.5.4, p. 25 (PDF p. 53)	"""('e' | 'E') Sign? Decimal_Digit Decorated_Decimal_Digit*"""	permits	The Exponent_Part production permits the form ('e' | 'E') Sign? Decimal_Digit Decorated_Decimal_Digit*.		
+E6-4-5-4-grammar-sign-1	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""'+'"""	permits	The Sign production permits the form '+'.		
+E6-4-5-4-grammar-sign-2	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""'-'"""	permits	The Sign production permits the form '-'.		
+E6-4-5-4-grammar-real-type-suffix-1	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""'F'"""	permits	The Real_Type_Suffix production permits the form 'F'.		
+E6-4-5-4-grammar-real-type-suffix-2	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""'f'"""	permits	The Real_Type_Suffix production permits the form 'f'.		
+E6-4-5-4-grammar-real-type-suffix-3	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""'D'"""	permits	The Real_Type_Suffix production permits the form 'D'.		
+E6-4-5-4-grammar-real-type-suffix-4	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""'d'"""	permits	The Real_Type_Suffix production permits the form 'd'.		
+E6-4-5-4-grammar-real-type-suffix-5	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""'M'"""	permits	The Real_Type_Suffix production permits the form 'M'.		
+E6-4-5-4-grammar-real-type-suffix-6	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""'m'"""	permits	The Real_Type_Suffix production permits the form 'm'.		
+E6-4-5-4-unsuffixed-type	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""type of the Real_Literal is double"""	permits	A real literal without a real-type suffix has type double.		
+E6-4-5-4-f-type	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""suffixed by F or f is of type float"""	permits	A real literal suffixed F or f has type float.		
+E6-4-5-4-d-type	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""suffixed by D or d is of type double"""	permits	A real literal suffixed D or d has type double.		
+E6-4-5-4-m-type	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""suffixed by M or m is of type decimal"""	permits	A real literal suffixed M or m has type decimal.		
+E6-4-5-4-decimal-rounding	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""rounding to the nearest representable value using banker\u2019s rounding"""	behavior	A decimal real literal is converted from its exact value with nearest-representable banker rounding when necessary.		See 8.3.8.
+E6-4-5-4-decimal-scale	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""Any scale apparent in the literal is preserved unless the value is rounded"""	behavior	A decimal literal preserves its written scale unless rounding its value is necessary.		
+E6-4-5-4-real-overflow	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""too large to be represented in the indicated type"""	forbids	A real literal whose magnitude is too large for its indicated type is a compile-time error.		
+E6-4-5-4-floating-nearest-even	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""ties broken to \u201ceven\u201d"""	behavior	A float or double real literal is rounded to nearest under IEC 60559 with ties to even.		
+E6-4-5-4-floating-significant-digits	ecma-334-ed7	6.4.5.4, p. 26 (PDF p. 54)	"""all digits considered significant"""	behavior	Conversion of a float or double real literal considers every written digit significant.		
+E6-4-5-5-grammar-character-literal-1	ecma-334-ed7	6.4.5.5, p. 26 (PDF p. 54)	"""'\\'' Character '\\''"""	permits	The Character_Literal production permits the form '\'' Character '\''.		
+E6-4-5-5-grammar-character-1	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""Single_Character"""	permits	The Character production permits the form Single_Character.		
+E6-4-5-5-grammar-character-2	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""Simple_Escape_Sequence"""	permits	The Character production permits the form Simple_Escape_Sequence.		
+E6-4-5-5-grammar-character-3	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""Hexadecimal_Escape_Sequence"""	permits	The Character production permits the form Hexadecimal_Escape_Sequence.		
+E6-4-5-5-grammar-character-4	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""Unicode_Escape_Sequence"""	permits	The Character production permits the form Unicode_Escape_Sequence.		
+E6-4-5-5-grammar-single-character-1	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""~['\\\\\\u000D\\u000A\\u0085\\u2028\\u2029]"""	permits	The Single_Character production permits the form ~['\\\u000D\u000A\u0085\u2028\u2029].		
+E6-4-5-5-grammar-simple-escape-sequence-1	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""'\\\\\\''"""	permits	The Simple_Escape_Sequence production permits the form '\\\''.		
+E6-4-5-5-grammar-simple-escape-sequence-2	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""'\\\\\""'"""	permits	"The Simple_Escape_Sequence production permits the form '\\""'."		
+E6-4-5-5-grammar-simple-escape-sequence-3	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""'\\\\\\\\'"""	permits	The Simple_Escape_Sequence production permits the form '\\\\'.		
+E6-4-5-5-grammar-simple-escape-sequence-4	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""'\\\\0'"""	permits	The Simple_Escape_Sequence production permits the form '\\0'.		
+E6-4-5-5-grammar-simple-escape-sequence-5	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""'\\\\a'"""	permits	The Simple_Escape_Sequence production permits the form '\\a'.		
+E6-4-5-5-grammar-simple-escape-sequence-6	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""'\\\\b'"""	permits	The Simple_Escape_Sequence production permits the form '\\b'.		
+E6-4-5-5-grammar-simple-escape-sequence-7	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""'\\\\f'"""	permits	The Simple_Escape_Sequence production permits the form '\\f'.		
+E6-4-5-5-grammar-simple-escape-sequence-8	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""'\\\\n'"""	permits	The Simple_Escape_Sequence production permits the form '\\n'.		
+E6-4-5-5-grammar-simple-escape-sequence-9	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""'\\\\r'"""	permits	The Simple_Escape_Sequence production permits the form '\\r'.		
+E6-4-5-5-grammar-simple-escape-sequence-10	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""'\\\\t'"""	permits	The Simple_Escape_Sequence production permits the form '\\t'.		
+E6-4-5-5-grammar-simple-escape-sequence-11	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""'\\\\v'"""	permits	The Simple_Escape_Sequence production permits the form '\\v'.		
+E6-4-5-5-grammar-hexadecimal-escape-sequence-1	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""'\\\\x' Hex_Digit Hex_Digit? Hex_Digit? Hex_Digit?"""	permits	The Hexadecimal_Escape_Sequence production permits the form '\\x' Hex_Digit Hex_Digit? Hex_Digit? Hex_Digit?.		
+E6-4-5-5-hex-escape-value	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""single Unicode UTF-16 code unit"""	behavior	A hexadecimal escape denotes the UTF-16 code unit whose value is the following hexadecimal number.		
+E6-4-5-5-character-value-range	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""greater than U+FFFF"""	forbids	A character literal cannot represent a value greater than U+FFFF.		
+E6-4-5-5-unicode-escape-range	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""range U+0000 to U+FFFF"""	forbids	A Unicode escape in a character literal must denote a code point in U+0000 through U+FFFF.		Repeats the character-specific restriction from 6.4.2.
+E6-4-5-5-simple-escape-single-quote	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""\\'"""	behavior	The simple escape \' denotes the Unicode character U+0027.		Escape sequence, character name, and code point checked against the PDF table.
+E6-4-5-5-simple-escape-double-quote	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""\\\"""""	behavior	"The simple escape \"" denotes the Unicode character U+0022."		Escape sequence, character name, and code point checked against the PDF table.
+E6-4-5-5-simple-escape-backslash	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""\\\\"""	behavior	The simple escape \\ denotes the Unicode character U+005C.		Escape sequence, character name, and code point checked against the PDF table.
+E6-4-5-5-simple-escape-null	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""\\0"""	behavior	The simple escape \0 denotes the Unicode character U+0000.		Escape sequence, character name, and code point checked against the PDF table.
+E6-4-5-5-simple-escape-alert	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""\\a"""	behavior	The simple escape \a denotes the Unicode character U+0007.		Escape sequence, character name, and code point checked against the PDF table.
+E6-4-5-5-simple-escape-backspace	ecma-334-ed7	6.4.5.5, p. 27 (PDF p. 55)	"""\\b"""	behavior	The simple escape \b denotes the Unicode character U+0008.		Escape sequence, character name, and code point checked against the PDF table.
+E6-4-5-5-simple-escape-form-feed	ecma-334-ed7	6.4.5.5, p. 28 (PDF p. 56)	"""\\f"""	behavior	The simple escape \f denotes the Unicode character U+000C.		Continuation of the PDF simple-escape table.
+E6-4-5-5-simple-escape-line-feed	ecma-334-ed7	6.4.5.5, p. 28 (PDF p. 56)	"""\\n"""	behavior	The simple escape \n denotes the Unicode character U+000A.		Continuation of the PDF simple-escape table.
+E6-4-5-5-simple-escape-carriage-return	ecma-334-ed7	6.4.5.5, p. 28 (PDF p. 56)	"""\\r"""	behavior	The simple escape \r denotes the Unicode character U+000D.		Continuation of the PDF simple-escape table.
+E6-4-5-5-simple-escape-horizontal-tab	ecma-334-ed7	6.4.5.5, p. 28 (PDF p. 56)	"""\\t"""	behavior	The simple escape \t denotes the Unicode character U+0009.		Continuation of the PDF simple-escape table.
+E6-4-5-5-simple-escape-vertical-tab	ecma-334-ed7	6.4.5.5, p. 28 (PDF p. 56)	"""\\v"""	behavior	The simple escape \v denotes the Unicode character U+000B.		Continuation of the PDF simple-escape table.
+E6-4-5-5-character-type	ecma-334-ed7	6.4.5.5, p. 28 (PDF p. 56)	"""type of a Character_Literal is char"""	permits	A character literal has compile-time type char.		
+E6-4-5-6-verbatim-contents	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""characters between the delimiters are interpreted verbatim"""	behavior	A verbatim string's interior characters are preserved except for doubled double quotes.		
+E6-4-5-6-verbatim-quote-value	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""represents one double-quote character"""	behavior	A Quote_Escape_Sequence in a verbatim string produces one double-quote character.		
+E6-4-5-6-verbatim-no-backslash-escapes	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""not processed in verbatim string literals"""	behavior	Backslash simple, hexadecimal, and Unicode escapes in a verbatim string remain ordinary characters.		
+E6-4-5-6-verbatim-multiline	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""may span multiple lines"""	permits	A verbatim string literal may contain source line terminators and span multiple lines.		
+E6-4-5-6-grammar-string-literal-1	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""Regular_String_Literal"""	permits	The String_Literal production permits the form Regular_String_Literal.		
+E6-4-5-6-grammar-string-literal-2	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""Verbatim_String_Literal"""	permits	The String_Literal production permits the form Verbatim_String_Literal.		
+E6-4-5-6-grammar-regular-string-literal-1	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""'\""' Regular_String_Literal_Character* '\""'"""	permits	"The Regular_String_Literal production permits the form '""' Regular_String_Literal_Character* '""'."		
+E6-4-5-6-grammar-regular-string-literal-character-1	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""Single_Regular_String_Literal_Character"""	permits	The Regular_String_Literal_Character production permits the form Single_Regular_String_Literal_Character.		
+E6-4-5-6-grammar-regular-string-literal-character-2	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""Simple_Escape_Sequence"""	permits	The Regular_String_Literal_Character production permits the form Simple_Escape_Sequence.		
+E6-4-5-6-grammar-regular-string-literal-character-3	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""Hexadecimal_Escape_Sequence"""	permits	The Regular_String_Literal_Character production permits the form Hexadecimal_Escape_Sequence.		
+E6-4-5-6-grammar-regular-string-literal-character-4	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""Unicode_Escape_Sequence"""	permits	The Regular_String_Literal_Character production permits the form Unicode_Escape_Sequence.		
+E6-4-5-6-grammar-single-regular-string-literal-character-1	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""~[\""\\\\\\u000D\\u000A\\u0085\\u2028\\u2029]"""	permits	"The Single_Regular_String_Literal_Character production permits the form ~[""\\\u000D\u000A\u0085\u2028\u2029]."		
+E6-4-5-6-grammar-verbatim-string-literal-1	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""'@\""' Verbatim_String_Literal_Character* '\""'"""	permits	"The Verbatim_String_Literal production permits the form '@""' Verbatim_String_Literal_Character* '""'."		
+E6-4-5-6-grammar-verbatim-string-literal-character-1	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""Single_Verbatim_String_Literal_Character"""	permits	The Verbatim_String_Literal_Character production permits the form Single_Verbatim_String_Literal_Character.		
+E6-4-5-6-grammar-verbatim-string-literal-character-2	ecma-334-ed7	6.4.5.6, p. 28 (PDF p. 56)	"""Quote_Escape_Sequence"""	permits	The Verbatim_String_Literal_Character production permits the form Quote_Escape_Sequence.		
+E6-4-5-6-grammar-single-verbatim-string-literal-character-1	ecma-334-ed7	6.4.5.6, p. 29 (PDF p. 57)	"""~[\""]"""	permits	"The Single_Verbatim_String_Literal_Character production permits the form ~[""]."		
+E6-4-5-6-grammar-quote-escape-sequence-1	ecma-334-ed7	6.4.5.6, p. 29 (PDF p. 57)	"""'\""\""'"""	permits	"The Quote_Escape_Sequence production permits the form '""""'."		
+E6-4-5-6-string-type	ecma-334-ed7	6.4.5.6, p. 29 (PDF p. 57)	"""type of a String_Literal is string"""	permits	A string literal has compile-time type string.		
+E6-4-5-6-literal-interning	ecma-334-ed7	6.4.5.6, p. 29 (PDF p. 57)	"""refer to the same string instance"""	behavior	String literals in the same assembly that compare equal with the string equality operator refer to one string instance.		See 12.12.8; this does not require sharing across assemblies.
+E6-4-5-7-grammar-null-literal-1	ecma-334-ed7	6.4.5.7, p. 30 (PDF p. 58)	"""NULL"""	permits	The null_literal production permits the form NULL.		
+E6-4-5-7-null-value	ecma-334-ed7	6.4.5.7, p. 30 (PDF p. 58)	"""represents a null value"""	behavior	The null literal denotes the null value.		
+E6-4-5-7-null-untyped	ecma-334-ed7	6.4.5.7, p. 30 (PDF p. 58)	"""does not have a type"""	permits	The null literal has no type before conversion.		
+E6-4-5-7-null-reference-conversion	ecma-334-ed7	6.4.5.7, p. 30 (PDF p. 58)	"""converted to any reference type"""	permits	The null literal may convert to any reference type by a null-literal conversion.		See 10.2.7; this is the permission stated in this clause.
+E6-4-5-7-null-nullable-conversion	ecma-334-ed7	6.4.5.7, p. 30 (PDF p. 58)	"""nullable value type"""	permits	The null literal may convert to any nullable value type by a null-literal conversion.		See 10.2.7.
+E6-4-6-grammar-operator-or-punctuator-1	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'{'"""	permits	The operator_or_punctuator production permits the form '{'.		
+E6-4-6-grammar-operator-or-punctuator-2	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'}'"""	permits	The operator_or_punctuator production permits the form '}'.		
+E6-4-6-grammar-operator-or-punctuator-3	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'['"""	permits	The operator_or_punctuator production permits the form '['.		
+E6-4-6-grammar-operator-or-punctuator-4	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""']'"""	permits	The operator_or_punctuator production permits the form ']'.		
+E6-4-6-grammar-operator-or-punctuator-5	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'('"""	permits	The operator_or_punctuator production permits the form '('.		
+E6-4-6-grammar-operator-or-punctuator-6	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""')'"""	permits	The operator_or_punctuator production permits the form ')'.		
+E6-4-6-grammar-operator-or-punctuator-7	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'.'"""	permits	The operator_or_punctuator production permits the form '.'.		
+E6-4-6-grammar-operator-or-punctuator-8	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""','"""	permits	The operator_or_punctuator production permits the form ','.		
+E6-4-6-grammar-operator-or-punctuator-9	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""':'"""	permits	The operator_or_punctuator production permits the form ':'.		
+E6-4-6-grammar-operator-or-punctuator-10	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""';'"""	permits	The operator_or_punctuator production permits the form ';'.		
+E6-4-6-grammar-operator-or-punctuator-11	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'+'"""	permits	The operator_or_punctuator production permits the form '+'.		
+E6-4-6-grammar-operator-or-punctuator-12	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'-'"""	permits	The operator_or_punctuator production permits the form '-'.		
+E6-4-6-grammar-operator-or-punctuator-13	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""ASTERISK"""	permits	The operator_or_punctuator production permits the form ASTERISK.		
+E6-4-6-grammar-operator-or-punctuator-14	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""SLASH"""	permits	The operator_or_punctuator production permits the form SLASH.		
+E6-4-6-grammar-operator-or-punctuator-15	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'%'"""	permits	The operator_or_punctuator production permits the form '%'.		
+E6-4-6-grammar-operator-or-punctuator-16	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'&'"""	permits	The operator_or_punctuator production permits the form '&'.		
+E6-4-6-grammar-operator-or-punctuator-17	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'|'"""	permits	The operator_or_punctuator production permits the form '|'.		
+E6-4-6-grammar-operator-or-punctuator-18	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'^'"""	permits	The operator_or_punctuator production permits the form '^'.		
+E6-4-6-grammar-operator-or-punctuator-19	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'!'"""	permits	The operator_or_punctuator production permits the form '!'.		
+E6-4-6-grammar-operator-or-punctuator-20	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'~'"""	permits	The operator_or_punctuator production permits the form '~'.		
+E6-4-6-grammar-operator-or-punctuator-21	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'='"""	permits	The operator_or_punctuator production permits the form '='.		
+E6-4-6-grammar-operator-or-punctuator-22	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'<'"""	permits	The operator_or_punctuator production permits the form '<'.		
+E6-4-6-grammar-operator-or-punctuator-23	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'>'"""	permits	The operator_or_punctuator production permits the form '>'.		
+E6-4-6-grammar-operator-or-punctuator-24	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'?'"""	permits	The operator_or_punctuator production permits the form '?'.		
+E6-4-6-grammar-operator-or-punctuator-25	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'??'"""	permits	The operator_or_punctuator production permits the form '??'.		
+E6-4-6-grammar-operator-or-punctuator-26	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'::'"""	permits	The operator_or_punctuator production permits the form '::'.		
+E6-4-6-grammar-operator-or-punctuator-27	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'++'"""	permits	The operator_or_punctuator production permits the form '++'.		
+E6-4-6-grammar-operator-or-punctuator-28	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'--'"""	permits	The operator_or_punctuator production permits the form '--'.		
+E6-4-6-grammar-operator-or-punctuator-29	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'&&'"""	permits	The operator_or_punctuator production permits the form '&&'.		
+E6-4-6-grammar-operator-or-punctuator-30	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'||'"""	permits	The operator_or_punctuator production permits the form '||'.		
+E6-4-6-grammar-operator-or-punctuator-31	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'->'"""	permits	The operator_or_punctuator production permits the form '->'.		
+E6-4-6-grammar-operator-or-punctuator-32	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'=='"""	permits	The operator_or_punctuator production permits the form '=='.		
+E6-4-6-grammar-operator-or-punctuator-33	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'!='"""	permits	The operator_or_punctuator production permits the form '!='.		
+E6-4-6-grammar-operator-or-punctuator-34	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'<='"""	permits	The operator_or_punctuator production permits the form '<='.		
+E6-4-6-grammar-operator-or-punctuator-35	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'>='"""	permits	The operator_or_punctuator production permits the form '>='.		
+E6-4-6-grammar-operator-or-punctuator-36	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'+='"""	permits	The operator_or_punctuator production permits the form '+='.		
+E6-4-6-grammar-operator-or-punctuator-37	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'-='"""	permits	The operator_or_punctuator production permits the form '-='.		
+E6-4-6-grammar-operator-or-punctuator-38	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'*='"""	permits	The operator_or_punctuator production permits the form '*='.		
+E6-4-6-grammar-operator-or-punctuator-39	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'/='"""	permits	The operator_or_punctuator production permits the form '/='.		
+E6-4-6-grammar-operator-or-punctuator-40	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'%='"""	permits	The operator_or_punctuator production permits the form '%='.		
+E6-4-6-grammar-operator-or-punctuator-41	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'&='"""	permits	The operator_or_punctuator production permits the form '&='.		
+E6-4-6-grammar-operator-or-punctuator-42	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'|='"""	permits	The operator_or_punctuator production permits the form '|='.		
+E6-4-6-grammar-operator-or-punctuator-43	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'^='"""	permits	The operator_or_punctuator production permits the form '^='.		
+E6-4-6-grammar-operator-or-punctuator-44	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'<<'"""	permits	The operator_or_punctuator production permits the form '<<'.		
+E6-4-6-grammar-operator-or-punctuator-45	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'<<='"""	permits	The operator_or_punctuator production permits the form '<<='.		
+E6-4-6-grammar-operator-or-punctuator-46	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'=>'"""	permits	The operator_or_punctuator production permits the form '=>'.		
+E6-4-6-grammar-right-shift-1	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'>' '>'"""	permits	The right_shift production permits the form '>' '>'.		
+E6-4-6-grammar-right-shift-assignment-1	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""'>' '>='"""	permits	The right_shift_assignment production permits the form '>' '>='.		
+E6-4-6-right-shift-adjacency	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""no characters of any kind (not even whitespace) are allowed"""	forbids	No character may appear between the two '>' tokens forming right_shift.		See 15.2.3 for the type-parameter-list motivation.
+E6-4-6-right-shift-assignment-adjacency	ecma-334-ed7	6.4.6, p. 30 (PDF p. 58)	"""no characters of any kind (not even whitespace) are allowed"""	forbids	No character may appear between the '>' and '>=' tokens forming right_shift_assignment.		
+E6-5-1-grammar-pp-directive-1	ecma-334-ed7	6.5.1, p. 31 (PDF p. 59)	"""PP_Start PP_Kind PP_New_Line"""	permits	The PP_Directive production permits the form PP_Start PP_Kind PP_New_Line.		
+E6-5-1-grammar-pp-kind-1	ecma-334-ed7	6.5.1, p. 31 (PDF p. 59)	"""PP_Declaration"""	permits	The PP_Kind production permits the form PP_Declaration.		
+E6-5-1-grammar-pp-kind-2	ecma-334-ed7	6.5.1, p. 31 (PDF p. 59)	"""PP_Conditional"""	permits	The PP_Kind production permits the form PP_Conditional.		
+E6-5-1-grammar-pp-kind-3	ecma-334-ed7	6.5.1, p. 31 (PDF p. 59)	"""PP_Line"""	permits	The PP_Kind production permits the form PP_Line.		
+E6-5-1-grammar-pp-kind-4	ecma-334-ed7	6.5.1, p. 31 (PDF p. 59)	"""PP_Diagnostic"""	permits	The PP_Kind production permits the form PP_Diagnostic.		
+E6-5-1-grammar-pp-kind-5	ecma-334-ed7	6.5.1, p. 31 (PDF p. 59)	"""PP_Region"""	permits	The PP_Kind production permits the form PP_Region.		
+E6-5-1-grammar-pp-kind-6	ecma-334-ed7	6.5.1, p. 31 (PDF p. 59)	"""PP_Pragma"""	permits	The PP_Kind production permits the form PP_Pragma.		
+E6-5-1-directive-line-start	ecma-334-ed7	6.5.1, p. 31 (PDF p. 59)	"""Only recognised at the beginning of a line"""	forbids	A pre-processing directive cannot begin after a non-whitespace lexical element on the same source line.		The ANTLR semantic-predicate call is an informative implementation technique, as the following Note states.
+E6-5-1-directive-start-form	ecma-334-ed7	6.5.1, p. 31 (PDF p. 59)	"""PP_Whitespace? '#' PP_Whitespace?"""	permits	A directive start permits optional pre-processing whitespace before and after '#', at the beginning of a source line.		
+E6-5-1-grammar-pp-whitespace-1	ecma-334-ed7	6.5.1, p. 31 (PDF p. 59)	"""PP_Whitespace"""	permits	The PP_Whitespace production permits the form ( [\p{Zs}] | '\u0009' | '\u000B' | '\u000C' )+.		
+E6-5-1-grammar-pp-new-line-1	ecma-334-ed7	6.5.1, p. 31 (PDF p. 59)	"""PP_Whitespace? Single_Line_Comment? New_Line"""	permits	The PP_New_Line production permits the form PP_Whitespace? Single_Line_Comment? New_Line.		
+E6-5-1-directive-separate-line	ecma-334-ed7	6.5.1, p. 32 (PDF p. 60)	"""always occupies a separate line of source code"""	forbids	A pre-processing directive must occupy its own source line.		
+E6-5-1-directive-trailing-comment	ecma-334-ed7	6.5.1, p. 32 (PDF p. 60)	"""can end with a single-line comment"""	permits	A define, undef, if, elif, else, endif, line, or endregion directive may have a trailing single-line comment.		
+E6-5-1-directive-no-delimited-comment	ecma-334-ed7	6.5.1, p. 32 (PDF p. 60)	"""Delimited comments"""	forbids	A directive source line cannot contain a delimited-comment lexical element.		Character sequences within a PP_Message are message contents, not parsed delimited comments.
+E6-5-2-grammar-pp-conditional-symbol-1	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""Basic_Identifier"""	permits	The PP_Conditional_Symbol production permits the form Basic_Identifier, excluding the TRUE and FALSE tokens.		
+E6-5-2-symbol-not-boolean-token	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""Must not be equal to tokens TRUE or FALSE"""	forbids	A conditional compilation symbol cannot be the TRUE or FALSE token.		
+E6-5-2-symbol-equivalence	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""considered the same if they are identical"""	permits	Conditional compilation symbols denote the same name when their characters agree after ordered Unicode-escape translation and formatting-character removal.		
+E6-5-2-symbol-translate-escapes	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""transformed into its corresponding Unicode character"""	permits	Conditional-symbol comparison first translates each Unicode escape to its character.		
+E6-5-2-symbol-remove-format	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""Any Formatting_Characters are removed"""	permits	Conditional-symbol comparison removes formatting characters after escape translation.		
+E6-5-2-symbol-two-states	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""two possible states: defined or undefined"""	permits	A conditional compilation symbol is either defined or undefined.		
+E6-5-2-symbol-initially-undefined	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""undefined unless it has been explicitly defined by an external mechanism"""	permits	At the start of a compilation unit's lexical processing, a symbol is undefined unless an external mechanism defined it.		
+E6-5-2-symbol-definition-duration	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""remains defined until a #undef directive"""	permits	A processed definition persists until a processed undefinition of the same symbol or the end of the compilation unit.		The next-line start is specified in 6.5.4.
+E6-5-2-symbol-compilation-unit-scope	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""have no effect on other compilation units"""	permits	A compilation unit's define and undef directives do not change conditional-symbol states in other units.		
+E6-5-2-defined-symbol-true	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""a defined conditional compilation symbol has the Boolean value true"""	permits	A defined conditional symbol evaluates to true in a pre-processing expression.		
+E6-5-2-undefined-symbol-false	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""an undefined conditional compilation symbol has the Boolean value false"""	permits	An undefined conditional symbol evaluates to false in a pre-processing expression.		
+E6-5-2-undeclared-symbol-reference	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""no requirement that conditional compilation symbols be explicitly declared"""	permits	A pre-processing expression may reference an undeclared conditional symbol, which is undefined and evaluates to false.		
+E6-5-2-symbol-separate-namespace	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""distinct and separate from all other named entities"""	permits	Conditional-symbol names occupy a namespace separate from all other program entities.		
+E6-5-2-symbol-reference-contexts	ecma-334-ed7	6.5.2, p. 33 (PDF p. 61)	"""can only be referenced in #define and #undef directives and in pre-processing expressions"""	forbids	A conditional symbol can be referenced as such only in define directives, undef directives, or pre-processing expressions.		
+E6-5-3-expression-directive-contexts	ecma-334-ed7	6.5.3, p. 33 (PDF p. 61)	"""can occur in #if and #elif directives"""	permits	Pre-processing expressions may occur in if and elif directives.		
+E6-5-3-grammar-pp-expression-1	ecma-334-ed7	6.5.3, p. 33 (PDF p. 61)	"""PP_Whitespace? PP_Or_Expression PP_Whitespace?"""	permits	The PP_Expression production permits the form PP_Whitespace? PP_Or_Expression PP_Whitespace?.		
+E6-5-3-grammar-pp-or-expression-1	ecma-334-ed7	6.5.3, p. 33 (PDF p. 61)	"""PP_And_Expression (PP_Whitespace? '||' PP_Whitespace? PP_And_Expression)*"""	permits	The PP_Or_Expression production permits the form PP_And_Expression (PP_Whitespace? '||' PP_Whitespace? PP_And_Expression)*.		
+E6-5-3-grammar-pp-and-expression-1	ecma-334-ed7	6.5.3, p. 33 (PDF p. 61)	"""PP_Equality_Expression (PP_Whitespace? '&&' PP_Whitespace? PP_Equality_Expression)*"""	permits	The PP_And_Expression production permits the form PP_Equality_Expression (PP_Whitespace? '&&' PP_Whitespace? PP_Equality_Expression)*.		
+E6-5-3-grammar-pp-equality-expression-1	ecma-334-ed7	6.5.3, p. 33 (PDF p. 61)	"""PP_Unary_Expression (PP_Whitespace? ('==' | '!=') PP_Whitespace? PP_Unary_Expression)*"""	permits	The PP_Equality_Expression production permits the form PP_Unary_Expression (PP_Whitespace? ('==' | '!=') PP_Whitespace? PP_Unary_Expression)*.		
+E6-5-3-grammar-pp-unary-expression-1	ecma-334-ed7	6.5.3, p. 34 (PDF p. 62)	"""PP_Primary_Expression"""	permits	The PP_Unary_Expression production permits the form PP_Primary_Expression.		
+E6-5-3-grammar-pp-unary-expression-2	ecma-334-ed7	6.5.3, p. 34 (PDF p. 62)	"""'!' PP_Whitespace? PP_Unary_Expression"""	permits	The PP_Unary_Expression production permits the form '!' PP_Whitespace? PP_Unary_Expression.		
+E6-5-3-grammar-pp-primary-expression-1	ecma-334-ed7	6.5.3, p. 34 (PDF p. 62)	"""TRUE"""	permits	The PP_Primary_Expression production permits the form TRUE.		
+E6-5-3-grammar-pp-primary-expression-2	ecma-334-ed7	6.5.3, p. 34 (PDF p. 62)	"""FALSE"""	permits	The PP_Primary_Expression production permits the form FALSE.		
+E6-5-3-grammar-pp-primary-expression-3	ecma-334-ed7	6.5.3, p. 34 (PDF p. 62)	"""PP_Conditional_Symbol"""	permits	The PP_Primary_Expression production permits the form PP_Conditional_Symbol.		
+E6-5-3-grammar-pp-primary-expression-4	ecma-334-ed7	6.5.3, p. 34 (PDF p. 62)	"""'(' PP_Whitespace? PP_Expression PP_Whitespace? ')'"""	permits	The PP_Primary_Expression production permits the form '(' PP_Whitespace? PP_Expression PP_Whitespace? ')'.		
+E6-5-3-expression-boolean-result	ecma-334-ed7	6.5.3, p. 34 (PDF p. 62)	"""always yields a Boolean value"""	permits	A pre-processing expression always evaluates to a Boolean value.		
+E6-5-3-expression-constant-evaluation	ecma-334-ed7	6.5.3, p. 34 (PDF p. 62)	"""same as those for a constant expression"""	permits	A pre-processing expression follows constant-expression evaluation rules except for its conditional-symbol entity restriction.		See 12.23; no constant-expression rules are copied here.
+E6-5-3-expression-entity-restriction	ecma-334-ed7	6.5.3, p. 34 (PDF p. 62)	"""only user- defined entities that can be referenced are conditional compilation symbols"""	forbids	A pre-processing expression cannot reference user-defined entities other than conditional compilation symbols.		
+E6-5-4-grammar-pp-declaration-1	ecma-334-ed7	6.5.4, p. 34 (PDF p. 62)	"""'define' PP_Whitespace PP_Conditional_Symbol"""	permits	The PP_Declaration production permits the form 'define' PP_Whitespace PP_Conditional_Symbol.		
+E6-5-4-grammar-pp-declaration-2	ecma-334-ed7	6.5.4, p. 34 (PDF p. 62)	"""'undef' PP_Whitespace PP_Conditional_Symbol"""	permits	The PP_Declaration production permits the form 'undef' PP_Whitespace PP_Conditional_Symbol.		
+E6-5-4-define-next-line	ecma-334-ed7	6.5.4, p. 34 (PDF p. 62)	"""become defined, starting with the source line that follows the directive"""	permits	A processed define directive makes its symbol defined starting on the following source line.		
+E6-5-4-undef-next-line	ecma-334-ed7	6.5.4, p. 34 (PDF p. 62)	"""become undefined, starting with the source line that follows the directive"""	permits	A processed undef directive makes its symbol undefined starting on the following source line.		
+E6-5-4-define-before-tokens	ecma-334-ed7	6.5.4, p. 34 (PDF p. 62)	"""shall occur before the first token"""	forbids	A define directive in a compilation unit cannot occur after its first token.		Applies to processed directives; skipped directives have no effects under 6.5.5.
+E6-5-4-undef-before-tokens	ecma-334-ed7	6.5.4, p. 34 (PDF p. 62)	"""shall occur before the first token"""	forbids	An undef directive in a compilation unit cannot occur after its first token.		Applies to processed directives; skipped directives have no effects under 6.5.5.
+E6-5-4-redefine-symbol	ecma-334-ed7	6.5.4, p. 35 (PDF p. 63)	"""already defined"""	permits	A define directive may define an already-defined symbol without an intervening undef directive.		
+E6-5-4-undef-undefined-symbol	ecma-334-ed7	6.5.4, p. 35 (PDF p. 63)	"""symbol that is not defined"""	permits	An undef directive may name an already-undefined symbol.		
+E6-5-5-grammar-pp-conditional-1	ecma-334-ed7	6.5.5, p. 35 (PDF p. 63)	"""PP_If_Section"""	permits	The PP_Conditional production permits the form PP_If_Section.		
+E6-5-5-grammar-pp-conditional-2	ecma-334-ed7	6.5.5, p. 35 (PDF p. 63)	"""PP_Elif_Section"""	permits	The PP_Conditional production permits the form PP_Elif_Section.		
+E6-5-5-grammar-pp-conditional-3	ecma-334-ed7	6.5.5, p. 35 (PDF p. 63)	"""PP_Else_Section"""	permits	The PP_Conditional production permits the form PP_Else_Section.		
+E6-5-5-grammar-pp-conditional-4	ecma-334-ed7	6.5.5, p. 35 (PDF p. 63)	"""PP_Endif"""	permits	The PP_Conditional production permits the form PP_Endif.		
+E6-5-5-grammar-pp-if-section-1	ecma-334-ed7	6.5.5, p. 35 (PDF p. 63)	"""'if' PP_Whitespace PP_Expression"""	permits	The PP_If_Section production permits the form 'if' PP_Whitespace PP_Expression.		
+E6-5-5-grammar-pp-elif-section-1	ecma-334-ed7	6.5.5, p. 35 (PDF p. 63)	"""'elif' PP_Whitespace PP_Expression"""	permits	The PP_Elif_Section production permits the form 'elif' PP_Whitespace PP_Expression.		
+E6-5-5-grammar-pp-else-section-1	ecma-334-ed7	6.5.5, p. 35 (PDF p. 63)	"""'else'"""	permits	The PP_Else_Section production permits the form 'else'.		
+E6-5-5-grammar-pp-endif-1	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""'endif'"""	permits	The PP_Endif production permits the form 'endif'.		
+E6-5-5-conditional-group-order	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""groups consisting of, in order"""	forbids	A conditional directive group must consist of if, followed by zero or more elif directives, at most one else, and a matching endif.		
+E6-5-5-section-controller	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""controlled by the immediately preceding directive"""	permits	Each source section in a conditional group is controlled by its immediately preceding directive.		
+E6-5-5-nested-complete-groups	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""provided these directives form complete groups"""	permits	A conditional section may contain nested conditional directives when they form complete groups.		
+E6-5-5-at-most-one-section	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""At most one"""	permits	A conditional directive group selects at most one of its source sections for normal lexical processing.		
+E6-5-5-first-true-section	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""evaluated in order until one yields true"""	permits	A conditional group evaluates if and elif expressions in source order and selects the section after the first true expression.		
+E6-5-5-else-section	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""If all PP_Expressions yield false"""	permits	A conditional group selects its else section when every if and elif expression is false and an else exists.		
+E6-5-5-no-selected-section	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""no conditional section is selected"""	permits	A conditional group selects no section when every condition is false and no else exists.		
+E6-5-5-selected-lexical-conformance	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""shall adhere to the lexical grammar"""	forbids	Source in a selected conditional section must conform to the normal lexical grammar.		
+E6-5-5-selected-tokens	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""tokens are generated"""	permits	A selected conditional section contributes its normally lexed tokens to the program token stream.		
+E6-5-5-selected-directives	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""pre-processing directives in the section have the prescribed effects"""	permits	Directives in a selected conditional section are processed with their specified effects.		
+E6-5-5-skipped-no-program-tokens	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""no tokens, except those for pre-processing directives"""	permits	An unselected conditional section contributes no tokens other than recognition of its pre-processing directives.		
+E6-5-5-skipped-malformed-source	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""may be lexically incorrect"""	permits	Skipped source outside pre-processing directives may violate the lexical grammar.		
+E6-5-5-skipped-directive-conformance	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""Skipped pre-processing directives shall be lexically correct"""	forbids	Pre-processing directives in a skipped conditional section must still be lexically correct.		
+E6-5-5-skipped-directive-no-effects	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""not otherwise processed"""	permits	Directives in a skipped conditional section are recognized but their effects are not processed.		
+E6-5-5-skipped-nested-sections	ecma-334-ed7	6.5.5, p. 36 (PDF p. 64)	"""any nested conditional sections"""	permits	Skipping a conditional section also skips every conditional section nested inside it.		
+E6-5-6-error-diagnostic	ecma-334-ed7	6.5.6, p. 38 (PDF p. 66)	"""error and warning messages"""	forbids	A processed error directive generates a compile-time error reported in the same way as other compilation errors.		
+E6-5-6-warning-diagnostic	ecma-334-ed7	6.5.6, p. 38 (PDF p. 66)	"""reported in the same way as other compile-time errors and warnings"""	permits	A processed warning directive generates a warning reported in the same way as other compilation warnings.		
+E6-5-6-grammar-pp-diagnostic-1	ecma-334-ed7	6.5.6, p. 38 (PDF p. 66)	"""'error' PP_Message?"""	permits	The PP_Diagnostic production permits the form 'error' PP_Message?.		
+E6-5-6-grammar-pp-diagnostic-2	ecma-334-ed7	6.5.6, p. 38 (PDF p. 66)	"""'warning' PP_Message?"""	permits	The PP_Diagnostic production permits the form 'warning' PP_Message?.		
+E6-5-6-grammar-pp-message-1	ecma-334-ed7	6.5.6, p. 38 (PDF p. 66)	"""PP_Whitespace Input_Character*"""	permits	The PP_Message production permits the form PP_Whitespace Input_Character*.		
+E6-5-7-region-marker	ecma-334-ed7	6.5.7, p. 38 (PDF p. 66)	"""mark explicitly regions of source code"""	permits	Region directives may mark a source-code region.		
+E6-5-7-grammar-pp-region-1	ecma-334-ed7	6.5.7, p. 38 (PDF p. 66)	"""PP_Start_Region"""	permits	The PP_Region production permits the form PP_Start_Region.		
+E6-5-7-grammar-pp-region-2	ecma-334-ed7	6.5.7, p. 38 (PDF p. 66)	"""PP_End_Region"""	permits	The PP_Region production permits the form PP_End_Region.		
+E6-5-7-grammar-pp-start-region-1	ecma-334-ed7	6.5.7, p. 38 (PDF p. 66)	"""'region' PP_Message?"""	permits	The PP_Start_Region production permits the form 'region' PP_Message?.		
+E6-5-7-grammar-pp-end-region-1	ecma-334-ed7	6.5.7, p. 38 (PDF p. 66)	"""'endregion' PP_Message?"""	permits	The PP_End_Region production permits the form 'endregion' PP_Message?.		
+E6-5-7-region-no-semantics	ecma-334-ed7	6.5.7, p. 38 (PDF p. 66)	"""No semantic meaning is attached to a region"""	behavior	Marking a region does not change the semantics of its enclosed program code.		
+E6-5-7-region-matching-end	ecma-334-ed7	6.5.7, p. 38 (PDF p. 66)	"""one #endregion directive matching every #region directive"""	forbids	Every region directive must have one matching endregion directive.		
+E6-5-7-region-message-no-semantics	ecma-334-ed7	6.5.7, p. 38 (PDF p. 66)	"""message specified in a #region or #endregion directive likewise has no semantic meaning"""	behavior	A region or endregion message has no program-semantic effect.		
+E6-5-7-region-different-messages	ecma-334-ed7	6.5.7, p. 38 (PDF p. 66)	"""may have different PP_Messages"""	permits	Matching region and endregion directives may contain different messages.		
+E6-5-7-region-lexical-equivalence	ecma-334-ed7	6.5.7, p. 38 (PDF p. 66)	"""corresponds exactly to the lexical processing"""	permits	Lexical processing of a region/endregion pair with its enclosed source is the same as processing an if-true/endif pair around that source.		The unmarked directive forms on the adjacent blocks and pages supply both sides of this equivalence.
+E6-5-8-line-caller-info	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""also used by caller-info attributes"""	behavior	Caller-info attributes use the compilation-unit names and line numbers established by line directives.		See 22.5.5; this clause states the mapping dependency, not attribute processing rules.
+E6-5-8-grammar-pp-line-1	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""'line' PP_Whitespace PP_Line_Indicator"""	permits	The PP_Line production permits the form 'line' PP_Whitespace PP_Line_Indicator.		
+E6-5-8-grammar-pp-line-indicator-1	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""Decimal_Digit+ PP_Whitespace PP_Compilation_Unit_Name"""	permits	The PP_Line_Indicator production permits the form Decimal_Digit+ PP_Whitespace PP_Compilation_Unit_Name.		
+E6-5-8-grammar-pp-line-indicator-2	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""Decimal_Digit+"""	permits	The PP_Line_Indicator production permits the form Decimal_Digit+.		
+E6-5-8-grammar-pp-line-indicator-3	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""DEFAULT"""	permits	The PP_Line_Indicator production permits the form DEFAULT.		
+E6-5-8-grammar-pp-line-indicator-4	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""'hidden'"""	permits	The PP_Line_Indicator production permits the form 'hidden'.		
+E6-5-8-grammar-pp-compilation-unit-name-1	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""'\""' PP_Compilation_Unit_Name_Character+ '\""'"""	permits	"The PP_Compilation_Unit_Name production permits the form '""' PP_Compilation_Unit_Name_Character+ '""'."		
+E6-5-8-grammar-pp-compilation-unit-name-character-1	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""~('\\u000D' | '\\u000A' | '\\u0085' | '\\u2028' | '\\u2029' | '#')"""	permits	The PP_Compilation_Unit_Name_Character production permits the form ~('\u000D' | '\u000A' | '\u0085' | '\u2028' | '\u2029' | '#').		PDF conflict: the comment excludes double quote but the character complement excludes '#'; retain the printed production pending editorial resolution.
+E6-5-8-line-filename-comment-restriction	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""Any Input_Character except \"""""	forbids	The filename-character production's comment prohibits a double quote within the compilation-unit name.		Conflicts with the production below it, which excludes '#' instead; the report flags both statements without correcting either.
+E6-5-8-true-source-line	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""reports true line numbers"""	permits	Without line directives, compiler output reports the actual source line numbers.		
+E6-5-8-true-source-name	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""compilation unit names in its output"""	permits	Without line directives, compiler output reports the actual compilation-unit names.		
+E6-5-8-reported-line-number	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""line after the directive as having the given line number"""	permits	A numeric line directive gives the following source line the specified reported line number.		Subsequent line numbers proceed from that mapping; hidden and default have the specific rules stated below.
+E6-5-8-reported-source-name	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""compilation unit name, if specified"""	permits	A numeric line directive with a compilation-unit name gives the following source line that reported source name.		
+E6-5-8-line-number-maximum	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""maximum value allowed for Decimal_Digit+"""	implementation-defined	The implementation defines the maximum numeric line-directive value.		
+E6-5-8-line-default-reset	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""undoes the effect of all preceding #line directives"""	permits	A line-default directive restores subsequent reported line numbers and source names to actual source information.		
+E6-5-8-hidden-error-line	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""no effect on the compilation unit and line numbers reported in error messages"""	permits	A line-hidden directive does not change source names or line numbers in error messages.		
+E6-5-8-hidden-caller-line	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""produced by use of CallerLineNumberAttribute"""	behavior	A line-hidden directive does not change the line numbers produced by CallerLineNumberAttribute.		See 22.5.5.2.
+E6-5-8-hidden-debug-line-information	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""have no line number information"""	permits	Lines after line-hidden through the next line directive other than line-hidden have no source-level debugging line information.		The paragraph states the intended source-level debugger effect; debugging-tool conformance itself is outside the language.
+E6-5-8-hidden-debug-stepping	ecma-334-ed7	6.5.8, p. 39 (PDF p. 67)	"""skipped entirely when stepping through code"""	permits	Source-level debugging is intended to skip lines in a line-hidden interval when stepping through code.		Same interval as hidden-debug-line-information; stated as intended debugger behavior.
+E6-5-9-contextual-information	ecma-334-ed7	6.5.9, p. 40 (PDF p. 68)	"""specify contextual information to a compiler"""	permits	A pragma directive may provide contextual information to the compiler.		
+E6-5-9-grammar-pp-pragma-1	ecma-334-ed7	6.5.9, p. 40 (PDF p. 68)	"""'pragma' PP_Pragma_Text?"""	permits	The PP_Pragma production permits the form 'pragma' PP_Pragma_Text?.		
+E6-5-9-grammar-pp-pragma-text-1	ecma-334-ed7	6.5.9, p. 40 (PDF p. 68)	"""PP_Whitespace Input_Character*"""	permits	The PP_Pragma_Text production permits the form PP_Whitespace Input_Character*.		
+E6-5-9-pragma-interpretation	ecma-334-ed7	6.5.9, p. 40 (PDF p. 68)	"""interpreted by the compiler in an implementation- defined manner"""	implementation-defined	The implementation defines how it interprets pragma text.		
+E6-5-9-pragma-preserve-semantics	ecma-334-ed7	6.5.9, p. 40 (PDF p. 68)	"""shall not change program semantics"""	behavior	A pragma directive preserves the program's language-defined semantics.		
+E6-5-9-pragma-compiler-scope	ecma-334-ed7	6.5.9, p. 40 (PDF p. 68)	"""shall only change compiler behavior that is outside the scope"""	permits	A pragma directive may change only compiler behavior outside this language specification's scope.		
+E6-5-9-unknown-pragma-warning	ecma-334-ed7	6.5.9, p. 40 (PDF p. 68)	"""compiler can produce a warning"""	permits	The compiler may issue a warning for pragma text it cannot interpret.		
+E6-5-9-unknown-pragma-no-error	ecma-334-ed7	6.5.9, p. 40 (PDF p. 68)	"""shall not produce a compile-time error"""	permits	Uninterpretable pragma text must be accepted without a compile-time error.		

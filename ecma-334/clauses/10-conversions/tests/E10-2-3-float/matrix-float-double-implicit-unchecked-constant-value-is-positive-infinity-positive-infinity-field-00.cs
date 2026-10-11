@@ -1,0 +1,23 @@
+/*
+Rules: E10-2-3-float; E12-23-numeric
+Authority: ECMA-334 7th ed 10.2.3
+Version: 7.3
+Expected: run
+Stdout: OK 1
+Generated: clauses/10-conversions/generators/standard-matrices.py
+*/
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        {
+            const float input = float.PositiveInfinity;
+            double result = unchecked(input);
+            Check(double.IsPositiveInfinity(result), "float-double-implicit-unchecked-constant-9");
+        }
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

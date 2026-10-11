@@ -1,0 +1,24 @@
+// Positive compilation witness for E13-9-5-dynamic-explicit-iteration-type.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    public struct Convertible
+    {
+        public static explicit operator int(Convertible value) { return 99; }
+    }
+    static void Main()
+    {
+        dynamic collection = new object[] { 42, new Convertible() };
+        int total = 0, caught = 0;
+        try { foreach (int item in new int[] { 42 }) { total += item; } }
+        catch (InvalidCastException) { caught = 1; }
+        catch (Exception) { caught = 2; }
+        Check(total == 42, "first-boxed-int-unboxed");
+        Check(caught == 1, "iteration-cast-from-object-not-dynamic-conversion");
+        Check((int)(Convertible)((object[])collection)[1] == 99, "user-conversion-available-outside-object-cast");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

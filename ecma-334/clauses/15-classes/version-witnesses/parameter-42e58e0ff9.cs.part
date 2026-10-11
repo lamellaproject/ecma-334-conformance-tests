@@ -1,0 +1,5 @@
+// Positive compilation witness for E15-14-1-iterator-no-ref-struct-parameters.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System.Collections.Generic;
+ref struct Packet { }
+class Program { static IEnumerable<int> Sequence(int p) { yield return 13; } static void Main() { } }

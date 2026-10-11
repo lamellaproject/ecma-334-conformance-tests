@@ -1,0 +1,13 @@
+rule_id	reason
+E9-2-2-static-lifetime-end	A standalone program has no execution in the application domain after that domain has ceased to exist.
+E9-2-3-2-class-field-lifetime-end	After all references are gone and finalization has ended, no defined operation can access the instance field to observe its cessation.
+E9-2-4-array-element-lifetime-end	After every array reference is gone, no defined operation can access an element to observe its cessation.
+E9-2-5-value-parameter-lifetime-end	An uncaptured parameter has no defined access after its function body completes, so its storage's cessation is unobservable.
+E9-2-6-reference-parameter-lifetime-end	Returning a reference preserves the referent rather than the parameter variable, which has no defined access after the function body completes.
+E9-2-7-output-parameter-lifetime-end	The caller can observe the referent after return but has no defined access to the completed invocation's output-parameter variable itself.
+E9-2-8-input-parameter-lifetime-end	The caller can observe the referent after return but has no defined access to the completed invocation's input-parameter variable itself.
+E9-4-4-9-false-state-body-transfer	The initial do-body edge is always present and no assignment can undo an assigned state, so its join already excludes assignment for any variable merely assigned after false on the backedge; no legal goto can bypass that initial edge by entering the nested body block.
+E9-4-4-20-yield-break-state	A yield-break endpoint is unreachable and therefore treated as assigned by 9.4.4.2; finally-entry state comes from the try entry rather than yield break, and iterator parameters cannot be out, leaving no defined observation of its unchanged internal state.
+E9-7-2-1-class-this-context	Class this expressions are classified as values by 12.8.13, so source code cannot obtain a variable_reference to the implicit class-this parameter to distinguish its function-member context from the nearest enclosing value context.
+E9-6-bool-read-atomic	A Boolean read has only the two language-defined values, so every observed value during overlapping true/false writes is also an allowed atomic result; inspecting its physical representation is outside the portable Boolean semantics.
+E9-6-bool-write-atomic	A Boolean write cannot expose an intermediate third Boolean value, so a standalone program cannot distinguish tearing from an atomic true/false write without imposing a nonstandard representation.

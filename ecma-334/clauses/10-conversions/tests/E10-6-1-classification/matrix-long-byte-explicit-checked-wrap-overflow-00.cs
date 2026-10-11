@@ -1,0 +1,86 @@
+/*
+Rules: E10-6-1-classification; E10-6-1-wrap
+Authority: ECMA-334 7th ed 10.6.1
+Version: 7.3
+Expected: run
+Stdout: OK 4
+Generated: clauses/10-conversions/generators/standard-matrices.py
+*/
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        {
+            long input = long.MinValue;
+            bool threw = false;
+            try
+            {
+                byte? result = checked((byte?)input);
+            }
+            catch (OverflowException)
+            {
+                threw = true;
+            }
+            catch (Exception error)
+            {
+                Console.WriteLine("EXCEPTION " + error.GetType().FullName);
+            }
+            Check(threw, "nullable-long-byte-explicit-checked-wrap-0");
+        }
+        {
+            long input = 9223372036854775807L;
+            bool threw = false;
+            try
+            {
+                byte? result = checked((byte?)input);
+            }
+            catch (OverflowException)
+            {
+                threw = true;
+            }
+            catch (Exception error)
+            {
+                Console.WriteLine("EXCEPTION " + error.GetType().FullName);
+            }
+            Check(threw, "nullable-long-byte-explicit-checked-wrap-1");
+        }
+        {
+            long input = -1L;
+            bool threw = false;
+            try
+            {
+                byte? result = checked((byte?)input);
+            }
+            catch (OverflowException)
+            {
+                threw = true;
+            }
+            catch (Exception error)
+            {
+                Console.WriteLine("EXCEPTION " + error.GetType().FullName);
+            }
+            Check(threw, "nullable-long-byte-explicit-checked-wrap-4");
+        }
+        {
+            long input = 256L;
+            bool threw = false;
+            try
+            {
+                byte? result = checked((byte?)input);
+            }
+            catch (OverflowException)
+            {
+                threw = true;
+            }
+            catch (Exception error)
+            {
+                Console.WriteLine("EXCEPTION " + error.GetType().FullName);
+            }
+            Check(threw, "nullable-long-byte-explicit-checked-wrap-7");
+        }
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

@@ -1,0 +1,262 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Source-keyed language bounds index, schema v2",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 2
+    },
+    "identity": {
+      "type": "object"
+    },
+    "provenance": {
+      "type": "object"
+    },
+    "levels": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "pattern": "^(?:[1-9]|1[0-5]|7\\.[123])(?:-preview)?$"
+      },
+      "uniqueItems": true,
+      "minItems": 1
+    },
+    "implementation_revalidation": {
+      "type": "object",
+      "properties": {
+        "schema_version": {
+          "const": 1
+        },
+        "metadata_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "suite_files": {
+          "type": "object",
+          "propertyNames": {
+            "pattern": "^runner/(?:run-suite|tools/[A-Za-z0-9_-]+)\\.py$"
+          },
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "minProperties": 1
+        },
+        "audit_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "evidence_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "reconstructed_rows_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      },
+      "required": [
+        "schema_version",
+        "metadata_sha256",
+        "suite_files",
+        "audit_sha256",
+        "evidence_sha256",
+        "reconstructed_rows_sha256"
+      ],
+      "additionalProperties": false
+    },
+    "sample": {
+      "type": "object"
+    },
+    "row_shards": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "path": {
+            "type": "string",
+            "pattern": "^[0-9]{2}-[a-z0-9]+(?:-[a-z0-9]+)*/[0-9a-f]{2}\\.json$"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          },
+          "rows": {
+            "type": "integer",
+            "minimum": 1
+          }
+        },
+        "required": [
+          "path",
+          "sha256",
+          "rows"
+        ],
+        "additionalProperties": false
+      }
+    }
+  },
+  "required": [
+    "schema_version",
+    "identity",
+    "provenance",
+    "levels",
+    "sample",
+    "row_shards"
+  ],
+  "additionalProperties": false,
+  "$defs": {
+    "rows": {
+      "type": "object",
+      "propertyNames": {
+        "type": "string",
+        "pattern": "^[0-9a-f]{64}$"
+      },
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": {
+          "type": "object",
+          "properties": {
+            "since": {
+              "type": "string",
+              "pattern": "^(?:[1-9]|1[0-5]|7\\.[123])(?:-preview)?$"
+            },
+            "until": {
+              "type": "string",
+              "pattern": "^(?:[1-9]|1[0-5]|7\\.[123])(?:-preview)?$"
+            },
+            "fixture_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "declared_witness_sha256": {
+              "type": "string",
+              "pattern": "^(?:[0-9a-f]{64})?$"
+            },
+            "witness_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "basis": {
+              "enum": [
+                "original",
+                "repair",
+                "feature-free-rejection",
+                "departure-witness"
+              ]
+            },
+            "measurement_target": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9_-]*$"
+            },
+            "method": {
+              "enum": [
+                "exhaustive",
+                "monotonic-search"
+              ]
+            },
+            "below_since": {
+              "type": "object",
+              "properties": {
+                "level": {
+                  "type": "string"
+                },
+                "behavior": {
+                  "enum": [
+                    "refuses",
+                    "meaning-change",
+                    "none"
+                  ]
+                },
+                "diagnostic_codes": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": [
+                "level",
+                "behavior",
+                "diagnostic_codes"
+              ],
+              "additionalProperties": false
+            },
+            "other_passing_levels": {
+              "type": "array",
+              "items": {
+                "type": "string",
+                "pattern": "^(?:[1-9]|1[0-5]|7\\.[123])(?:-preview)?$"
+              },
+              "uniqueItems": true
+            },
+            "observations": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "object",
+                "properties": {
+                  "applicable": {
+                    "type": "boolean"
+                  },
+                  "witness_status": {
+                    "type": "string"
+                  },
+                  "original_status": {
+                    "type": "string"
+                  },
+                  "diagnostic_codes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "witness_diagnostic_codes": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  },
+                  "witness_evidence_sha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  },
+                  "original_evidence_sha256": {
+                    "type": "string",
+                    "pattern": "^(?:[0-9a-f]{64})?$"
+                  }
+                },
+                "required": [
+                  "applicable",
+                  "witness_status",
+                  "original_status",
+                  "diagnostic_codes",
+                  "witness_diagnostic_codes",
+                  "witness_evidence_sha256",
+                  "original_evidence_sha256"
+                ],
+                "additionalProperties": false
+              }
+            },
+            "evidence_sha256": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            }
+          },
+          "required": [
+            "since",
+            "fixture_sha256",
+            "declared_witness_sha256",
+            "witness_sha256",
+            "basis",
+            "measurement_target",
+            "method",
+            "below_since",
+            "other_passing_levels",
+            "observations",
+            "evidence_sha256"
+          ],
+          "additionalProperties": false
+        }
+      }
+    }
+  }
+}

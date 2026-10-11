@@ -1,0 +1,25 @@
+// Positive compilation witness for E23-6-7-arithmetic-overflow-result.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static unsafe void Main()
+    {
+        long* pointer = (long*)ulong.MaxValue;
+        ulong offset = ulong.MaxValue;
+        // Boundary casts exercise overflow on the configured linear-address target; mappings and results stay unrestricted.
+        bool plus = false, reverse = false, minus = false;
+        try { checked { throw new ArgumentException(); } plus = true; }
+        catch (Exception e) { Console.WriteLine("EXCEPTION " + e.GetType().FullName); }
+        try { checked { long* result = offset + pointer; } reverse = true; }
+        catch (Exception e) { Console.WriteLine("EXCEPTION " + e.GetType().FullName); }
+        try { checked { long* result = pointer - offset; } minus = true; }
+        catch (Exception e) { Console.WriteLine("EXCEPTION " + e.GetType().FullName); }
+        Check(plus, "pointer-addition-no-overflow-exception");
+        Check(reverse, "reverse-pointer-addition-no-overflow-exception");
+        Check(minus, "pointer-subtraction-no-overflow-exception");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

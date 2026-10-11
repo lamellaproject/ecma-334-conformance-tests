@@ -1,0 +1,24 @@
+// Positive compilation witness for E13-10-6-throw-expression-evaluation.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static int trace;
+    static Exception expected = new Exception(), replacement = new Exception();
+    struct Source
+    {
+        public static implicit operator Exception(Source value) { trace = trace * 10 + 2; return expected; }
+    }
+    static Source Make() { trace = trace * 10 + 1; return new Source(); }
+    static void Main()
+    {
+        Exception observed = null;
+        try { throw replacement; }
+        catch (Exception actual) { observed = actual; trace = trace * 10 + 3; }
+        Check(observed == expected, "throw-preserves-converted-object");
+        Check(trace == 123, "throw-evaluation-conversion-handler");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

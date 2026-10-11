@@ -1,0 +1,4 @@
+// Positive compilation witness for E16-2-2-readonly-no-setter.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+readonly struct Entry { public int Value { get { return 5; }  } }
+class Program { static void Main() { } }

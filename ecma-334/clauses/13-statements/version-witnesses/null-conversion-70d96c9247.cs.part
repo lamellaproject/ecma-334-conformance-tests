@@ -1,0 +1,22 @@
+// Positive compilation witness for E13-10-6-throw-null-exception.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static int converted;
+    struct Source
+    {
+        public static implicit operator Exception(Source value) { converted++; return null; }
+    }
+    static void Main()
+    {
+        bool rightType = false;
+        try { throw new Exception(); }
+        catch (NullReferenceException) { rightType = true; }
+        catch (Exception) { }
+        Check(rightType && converted == 1, "null-after-user-conversion");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

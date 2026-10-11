@@ -1,0 +1,27 @@
+/*
+Rules: E12-8-8-nonnullable-retain-type; E12-8-8-nonnullable-retain-null; E12-8-8-nonnullable-retain-present
+Authority: ECMA-334 7th ed 12.8.8
+Version: 7.3
+Expected: run
+Stdout: OK 2
+Mutate: filled?.Number
+Into: empty?.Number
+*/
+using System;
+class Cell { public int? Number { get { return 71; } } }
+class Program
+{
+    static int checks, failures;
+    static int Kind(int value) { return 1; }
+    static int Kind(int? value) { return 2; }
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        Cell filled = new Cell(), empty = null;
+        var present = filled?.Number;
+        var absent = empty?.Number;
+        Check(Kind(present) == 2 && present == 71, "reference-already-nullable-result");
+        Check(Kind(absent) == 2 && !absent.HasValue, "reference-retains-nullable-null");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

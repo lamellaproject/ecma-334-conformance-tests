@@ -1,0 +1,11 @@
+// Positive compilation witness for E12-8-22-dynamic-target.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+class Program
+{
+    private int Number;
+    static void Main()
+    {
+        Program receiver = new Program();
+        string name = nameof(receiver.Number);
+    }
+}

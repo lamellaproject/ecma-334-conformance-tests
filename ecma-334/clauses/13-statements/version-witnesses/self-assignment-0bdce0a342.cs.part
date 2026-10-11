@@ -1,0 +1,7 @@
+// Positive compilation witness for E13-6-2-1-local-own-initializer.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+class Program
+{
+    // The reference assigns the variable; it does not read an unassigned value.
+    static void Main() { int value = 7; }
+}

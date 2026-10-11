@@ -1,0 +1,17 @@
+// Positive compilation witness for E9-7-2-3-output-parameter-context.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+class Program
+{
+    static int checks, failures, backup = 3;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static ref int Select(out int output) { output = 68; return ref backup; }
+    static void Main()
+    {
+        int cell;
+        ref int alias = ref Select(out cell);
+        alias = 72;
+        Check(cell == 72, "out-parameter-has-caller-context");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

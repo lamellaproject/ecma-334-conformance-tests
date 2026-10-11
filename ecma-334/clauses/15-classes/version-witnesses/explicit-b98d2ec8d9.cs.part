@@ -1,0 +1,56 @@
+// Positive compilation witness for E15-15-2-builder-setstatemachine-forwarding.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+using System.Runtime.CompilerServices;
+using System.Threading.Tasks;
+class Completion { public bool Done, Forwarded; public int Forwards; public Exception Error; public Action Next; }
+[AsyncMethodBuilder(typeof(TokenBuilder))]
+class Token
+{
+    public Completion State;
+    public Token(Completion state) { State = state; }
+    public Awaiter GetAwaiter() { return new Awaiter(State); }
+}
+struct Awaiter : INotifyCompletion
+{
+    Completion state;
+    public Awaiter(Completion state) { this.state = state; }
+    public bool IsCompleted { get { return state.Done; } }
+    public void OnCompleted(Action action) { state.Next = action; }
+    public void GetResult() { if (state.Error != null) throw state.Error; }
+}
+class TokenBuilder
+{
+    Completion state;
+    public static TokenBuilder Create() { return new TokenBuilder { state = new Completion() }; }
+    public Token Task { get { return new Token(state); } }
+    public void Start<S>(ref S machine) where S : IAsyncStateMachine
+    {
+        int before = state.Forwards;
+        machine.MoveNext();
+        state.Forwarded = state.Forwards > before;
+        machine.MoveNext();
+    }
+    public void SetStateMachine(IAsyncStateMachine machine) { state.Forwards++; }
+    public void SetException(Exception error) { state.Error = error; state.Done = true; }
+    public void SetResult() { state.Done = true; }
+    public void AwaitOnCompleted<A, S>(ref A awaiter, ref S machine)
+        where A : INotifyCompletion where S : IAsyncStateMachine { awaiter.OnCompleted(machine.MoveNext); }
+    public void AwaitUnsafeOnCompleted<A, S>(ref A awaiter, ref S machine)
+        where A : ICriticalNotifyCompletion where S : IAsyncStateMachine { awaiter.UnsafeOnCompleted(machine.MoveNext); }
+}
+class Program
+{
+    static int checks, failures;
+    static string Trace = "";
+    static async Token Work() { Trace += "B"; await System.Threading.Tasks.Task.FromResult(0); Trace += "E"; }
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        Token task = Work();
+        // Optional compiler calls are unrestricted; the explicit call must reach the associated builder.
+        Check(task.State.Forwarded, "explicit-setstatemachine-call-reaches-associated-builder");
+        Check(task.State.Done && Trace == "BE", "forwarding-does-not-advance-body-before-start-movenext");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

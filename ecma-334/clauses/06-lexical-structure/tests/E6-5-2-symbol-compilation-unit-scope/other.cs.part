@@ -1,0 +1,10 @@
+// Additional compilation unit for two-unit-symbols.cs.
+#define EXTERNAL
+class OtherUnit
+{
+#if EXTERNAL && !LOCAL
+    public const int Number = 14;
+#else
+    public const int Number = 31;
+#endif
+}

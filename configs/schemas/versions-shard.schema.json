@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Source-keyed language bounds shard, schema v2",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 2
+    },
+    "rows": {
+      "$ref": "versions.schema.json#/$defs/rows"
+    }
+  },
+  "required": [
+    "schema_version",
+    "rows"
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,10 @@
+test_id	case_id	rule_ids	prerequisites	checks
+06-lexical-structure--E6-3-4-grammar-whitespace-1--space-then-space	space-then-space	E6-3-4-grammar-whitespace-1;E6-4-1-whitespace-separator;E6-3-1-separators	whitespace-0020-and-0020	1
+06-lexical-structure--E6-3-4-grammar-whitespace-1--space-then-vertical-tab	space-then-vertical-tab	E6-3-4-grammar-whitespace-1;E6-3-4-grammar-whitespace-3;E6-4-1-whitespace-separator;E6-3-1-separators	whitespace-0020-and-000B	1
+06-lexical-structure--E6-3-4-grammar-whitespace-1--space-then-form-feed	space-then-form-feed	E6-3-4-grammar-whitespace-1;E6-3-4-grammar-whitespace-4;E6-4-1-whitespace-separator;E6-3-1-separators	whitespace-0020-and-000C	1
+06-lexical-structure--E6-3-4-grammar-whitespace-3--vertical-tab-then-space	vertical-tab-then-space	E6-3-4-grammar-whitespace-3;E6-3-4-grammar-whitespace-1;E6-4-1-whitespace-separator;E6-3-1-separators	whitespace-000B-and-0020	1
+06-lexical-structure--E6-3-4-grammar-whitespace-3--vertical-tab-then-vertical-tab	vertical-tab-then-vertical-tab	E6-3-4-grammar-whitespace-3;E6-4-1-whitespace-separator;E6-3-1-separators	whitespace-000B-and-000B	1
+06-lexical-structure--E6-3-4-grammar-whitespace-3--vertical-tab-then-form-feed	vertical-tab-then-form-feed	E6-3-4-grammar-whitespace-3;E6-3-4-grammar-whitespace-4;E6-4-1-whitespace-separator;E6-3-1-separators	whitespace-000B-and-000C	1
+06-lexical-structure--E6-3-4-grammar-whitespace-4--form-feed-then-space	form-feed-then-space	E6-3-4-grammar-whitespace-4;E6-3-4-grammar-whitespace-1;E6-4-1-whitespace-separator;E6-3-1-separators	whitespace-000C-and-0020	1
+06-lexical-structure--E6-3-4-grammar-whitespace-4--form-feed-then-vertical-tab	form-feed-then-vertical-tab	E6-3-4-grammar-whitespace-4;E6-3-4-grammar-whitespace-3;E6-4-1-whitespace-separator;E6-3-1-separators	whitespace-000C-and-000B	1
+06-lexical-structure--E6-3-4-grammar-whitespace-4--form-feed-then-form-feed	form-feed-then-form-feed	E6-3-4-grammar-whitespace-4;E6-4-1-whitespace-separator;E6-3-1-separators	whitespace-000C-and-000C	1

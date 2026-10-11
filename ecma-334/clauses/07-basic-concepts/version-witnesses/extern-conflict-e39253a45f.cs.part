@@ -1,0 +1,13 @@
+// Positive compilation witness for E7-8-1-type-alias-conflict.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+#if LIBRARY
+public class Fruit { }
+#else
+namespace Orchard
+{
+    extern alias Vendor;
+    class Local { public class Fruit { } }
+    class Reader { public Vendor.Fruit value; }
+}
+class Program { static void Main() { } }
+#endif

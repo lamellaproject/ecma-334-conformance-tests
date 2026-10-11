@@ -1,0 +1,10 @@
+// Positive compilation witness for E13-14-resource-address-error.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+class Program
+{
+    // Only taking the address needs clause 23 unsafe pointers.
+    struct Resource : IDisposable { public int Value; public void Dispose() { } }
+    static unsafe void Use() { using (Resource resource = new Resource()) { Resource copy = resource; Resource* address = &copy; } }
+    static void Main() { }
+}

@@ -1,0 +1,4 @@
+// Positive compilation witness for E20-2-input-safe-parameter-constraint.
+// A valid class constraint removes the departure while preserving generic delegate covariance.
+delegate void Read<out T, U>() where U : class;
+class Program { static void Main() { } }

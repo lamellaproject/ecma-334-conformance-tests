@@ -1,0 +1,10 @@
+// Positive compilation witness for E13-6-2-4-iterator-no-ref-struct-local.
+// The ref struct local is in an ordinary method, preserving its prerequisite while separating it from the iterator.
+using System.Collections.Generic;
+ref struct Token { public int Value; }
+class Program
+{
+    static int Read() { Token item = default(Token); return item.Value; }
+    static IEnumerable<int> Values() { yield return Read(); }
+    static void Main() { }
+}

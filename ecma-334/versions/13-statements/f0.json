@@ -1,0 +1,254 @@
+{
+  "rows": {
+    "0c06ba7a07706edbeef36a0830a71254c984b84274ffe3b50163d1c28399d0a9": {
+      "13-statements--E13-8-3-constant-case-reachable--nonconstant-guard": {
+        "basis": "repair",
+        "below_since": {
+          "behavior": "refuses",
+          "diagnostic_codes": [
+            "CS8059"
+          ],
+          "level": "6"
+        },
+        "declared_witness_sha256": "",
+        "evidence_sha256": "fff7e8371eb3530e7e1567c5908e89473a92a9e256d4a265339524904b1f079d",
+        "fixture_sha256": "9a34ce6a41899f54ca24304ad941725d93e30bd145975113f3c5e17cd15f2221",
+        "measurement_target": "dotnet",
+        "method": "exhaustive",
+        "observations": {
+          "1": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS0165",
+              "CS8022"
+            ],
+            "original_evidence_sha256": "33daf935fc0ff7fa4359532acf4a810a7c17946b26404f946156f7a605283c25",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8022"
+            ],
+            "witness_evidence_sha256": "b50f2a88a06b4a06802df1facff07b4433c8994b6f5863741ef15d587891bbdf",
+            "witness_status": "unexpected-reject"
+          },
+          "10": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "9df5615d5c147a09bda7599be6aa2b47ee33b4b0dbfca829773b8350e7fdcb77",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "14e5582572979f4d81c29cfc2310a1f975bad866f18b00cfd9ca8516865155cb",
+            "witness_status": "pass"
+          },
+          "11": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "5065983da4121e6c02a4e2b823c80907db449592f5eb363271f44bd2e166cbb2",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "9578a3f8415c4824728859baf6fa67bf77f70332b2c1d97015f915e1a088980b",
+            "witness_status": "pass"
+          },
+          "12": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "dcbaba08ec3b208f22f55a9a7a1bdf44b6c9bdc9744ea06350938a010ce2b9bd",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "fe4eb3c337fbe96e4526cb015863f2933ce23966951bed102727380ac85b13ab",
+            "witness_status": "pass"
+          },
+          "13": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "e56d645c735926655a3ea56bb921826a908c6ebed2f990e4cc4ff02e44bd814c",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "54fdf30f691a80036baec7518d453c2aeb4b6aa42c352fae11c04d73f70d06e5",
+            "witness_status": "pass"
+          },
+          "14": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "f401f1d0d013ec04ee0e3686d0e72930b683610debbfdfa836ea07ad5a115f78",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "15ef98c0ebfc48aff517c12af052a0ed6cc95a9d08c4f18638aca126743dbdb7",
+            "witness_status": "pass"
+          },
+          "15": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "63fa0fadac97e622ec0af9e1848e7cb38a566eea7920a79f044cd4e0dea5fbee",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "2dc35895836bd3054b46ad3ebfc5f6b73e49796b37b1920e861db7de8b089be5",
+            "witness_status": "pass"
+          },
+          "15-preview": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "009fa05b71725527be159ec0dc227b89ff3bc51725f253b3143d95442583c69f",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "35c949a278ffc517a24a95b67a070a3c3e8699ad6c1b713a8e7430c5aab8f504",
+            "witness_status": "pass"
+          },
+          "2": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS0165",
+              "CS8023"
+            ],
+            "original_evidence_sha256": "95c593900cbde008ce95654be5f4b40c681600b097de9eda53b0a68eda54d0e8",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8023"
+            ],
+            "witness_evidence_sha256": "70d6e4ed4cf3aabb328be0d51c53a71bf42b737b66b0e2c87fde29988abfaf9b",
+            "witness_status": "unexpected-reject"
+          },
+          "3": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS0165",
+              "CS8024"
+            ],
+            "original_evidence_sha256": "31b76dd9cfce1b448334a7a51276b18d0ee65ec7a4a57cf07d53796dbd42d52c",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8024"
+            ],
+            "witness_evidence_sha256": "9000bdd2a47e76c62ddd5d85d927ef0b0d8bebaa3e5b08b0a7462f06fbd39e12",
+            "witness_status": "unexpected-reject"
+          },
+          "4": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS0165",
+              "CS8025"
+            ],
+            "original_evidence_sha256": "d8b412ed1983dfb847ab66953f7019943092ac09d866b44c7bced44e6b0ba2da",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8025"
+            ],
+            "witness_evidence_sha256": "38008e23eb1e677734810beed644c0ebf35f106e41cdbb1838fc138e71232257",
+            "witness_status": "unexpected-reject"
+          },
+          "5": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS0165",
+              "CS8026"
+            ],
+            "original_evidence_sha256": "2e043d64b46fc8e283c7904d94a7a597e99ef8e47d6af48906b9edfa1104368d",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8026"
+            ],
+            "witness_evidence_sha256": "bb868dd8e2f40dbcf7da0423d51db4657c617b6f031a2044ef79ce73a7f09fe5",
+            "witness_status": "unexpected-reject"
+          },
+          "6": {
+            "applicable": false,
+            "diagnostic_codes": [
+              "CS0165",
+              "CS8059"
+            ],
+            "original_evidence_sha256": "bc8c16587fa2bd8e99e91e230e6687f4dcc6b8bfe57906c0c0e6c65b5306739e",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [
+              "CS8059"
+            ],
+            "witness_evidence_sha256": "4b8c074517090d51cb422c56c268bcce76cd22cdb9dac5cadb36d6fcb0872238",
+            "witness_status": "unexpected-reject"
+          },
+          "7": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "2b41a78b60758d8eb99fee8aa70cc4061f0ab0e63a32cd114d9076158cc8a453",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "c306be47fa6a42322749abb5cc28694103fdb18c02de58b95fdff08f3cc09c90",
+            "witness_status": "pass"
+          },
+          "7.1": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "bb9d9932fb43e022f2b75087c992d4cebb3f826d12605c81fc52bb5a118e48eb",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "020ea1f1a97504f546134d3445cd2f00397867e04d4631af5d5ada9a62cacd5c",
+            "witness_status": "pass"
+          },
+          "7.2": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "fe75c6e5aa8aad1d2a2e372e29a4eead26741bac75f626bc2bbc4154d1a544ca",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "81bb4faa22227a9f5edd2738e0c4ecce5f6bc0a76c4b17f7592b534fd89d3287",
+            "witness_status": "pass"
+          },
+          "7.3": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "d6f97cf8bb7f3ecba2cea2873c950f6fd74f360ee1dab04fa2156fbd74784359",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "05e0e037a1e367d70d38a620f779dc686efec4772f6c4f6632a17b8963d8b839",
+            "witness_status": "pass"
+          },
+          "8": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "aee885611ad50d42838d10aaec15b2a8aabf7080a81a2bc8e4c1408f91e1764d",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "edcaf240a740401f4541d3827950e943370be2f7bb7d38e0f475a2d1208e3be5",
+            "witness_status": "pass"
+          },
+          "9": {
+            "applicable": true,
+            "diagnostic_codes": [
+              "CS0165"
+            ],
+            "original_evidence_sha256": "92c44a515c35cfafaa74f71893e9c57f94f34d9604d5151df4e7c6bb260c59f6",
+            "original_status": "pass",
+            "witness_diagnostic_codes": [],
+            "witness_evidence_sha256": "1f93284e752a203364b03af0383fc67a45af71eb23c40b4f912aa175cff1ce17",
+            "witness_status": "pass"
+          }
+        },
+        "other_passing_levels": [],
+        "since": "7",
+        "witness_sha256": "e8c0ba788da15766429462159e530b0ff423ce2a46a1a6703be82db6f360a53c"
+      }
+    }
+  },
+  "schema_version": 2
+}

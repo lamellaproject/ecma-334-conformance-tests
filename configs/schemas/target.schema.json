@@ -1,0 +1,172 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "target schema v1",
+  "type": "object",
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "id": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "adapter": {
+      "enum": [
+        "dotnet",
+        "netframework",
+        "external-batch"
+      ]
+    },
+    "platforms": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "discovery": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "kind": {
+            "enum": [
+              "config",
+              "dotnet",
+              "netframework-reference",
+              "environment"
+            ]
+          },
+          "environment": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            },
+            "uniqueItems": true
+          }
+        },
+        "required": [
+          "kind"
+        ],
+        "additionalProperties": false
+      }
+    },
+    "files": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "root": {
+            "type": "string"
+          },
+          "path": {
+            "type": "string"
+          },
+          "sha256": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        },
+        "required": [
+          "root",
+          "path",
+          "sha256"
+        ],
+        "additionalProperties": false
+      },
+      "minProperties": 1
+    },
+    "references": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    },
+    "architectures": {"type": "array", "items": {"const": "x64"}, "minItems": 1, "uniqueItems": true},
+    "runtime": {
+      "type": "object",
+      "properties": {"kind": {"const": "netframework"}, "minimum_release": {"type": "integer", "minimum": 533320}},
+      "required": ["kind", "minimum_release"],
+      "additionalProperties": false
+    },
+    "build": {
+      "type": "object",
+      "properties": {
+        "kinds": {
+          "type": "array",
+          "items": {
+            "enum": [
+              "exe",
+              "library"
+            ]
+          },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "framework": {
+          "type": "string"
+        },
+        "runtime_version": {
+          "type": "string"
+        },
+        "tfm": {
+          "type": "string"
+        },
+        "runtimeconfig": {
+          "type": "boolean"
+        },
+        "artifact_extension": {
+          "type": "string",
+          "pattern": "^\\.[a-z0-9]+$"
+        }
+      },
+      "required": [
+        "kinds",
+        "runtimeconfig"
+      ],
+      "additionalProperties": false
+    },
+    "command": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "prefixItems": [
+        {
+          "type": "string",
+          "pattern": "^\\{[a-z][a-z0-9_-]*\\}$"
+        }
+      ]
+    },
+    "batch_size": {
+      "type": "integer",
+      "minimum": 1
+    }
+  },
+  "required": [
+    "schema_version",
+    "id",
+    "description",
+    "adapter",
+    "platforms",
+    "discovery",
+    "files",
+    "references",
+    "capabilities",
+    "build",
+    "command",
+    "batch_size"
+  ],
+  "additionalProperties": false
+}

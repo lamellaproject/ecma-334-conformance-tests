@@ -1,0 +1,25 @@
+// Positive compilation witness for E12-16-exception-conversion.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+class Source
+{
+    public static implicit operator Exception(Source x) { Program.Trace += "C"; return Program.Saved; }
+}
+class Program
+{
+    public static string Trace = "";
+    public static Exception Saved = new Exception();
+    static Source Make() { Trace += "E"; return new Source(); }
+    static bool Choose(bool b) { return b; }
+    static int Kind(int x) { return 1; } static int Kind(object x) { return 2; }
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        try { int n = Choose(true) ? throw new Exception() : 19; Check(false, "throw-must-execute"); }
+        catch (Exception e) { Check(object.ReferenceEquals(e, Saved) && Trace == "EC", "operand-evaluated-converted-and-thrown-once"); }
+        Trace = ""; var value = Choose(false) ? throw new Exception() : 19;
+        Check(value == 19 && Kind(value) == 1 && Trace == "", "throw-arm-has-no-type-and-does-not-run");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

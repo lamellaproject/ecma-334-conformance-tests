@@ -1,0 +1,33 @@
+block_id	source_id	locator	rule_ids	disposition	notes
+E21-b001	ecma-334-ed7	21, p. 525 (PDF p. 553)		heading	
+E21-b002	ecma-334-ed7	21.1, p. 525 (PDF p. 553)		heading	
+E21-b003	ecma-334-ed7	21.1, p. 525 (PDF p. 553)		informative	Introduces exception handling and its design purpose without a separate operational requirement.
+E21-b004	ecma-334-ed7	21.2, p. 525 (PDF p. 553)		heading	
+E21-b005	ecma-334-ed7	21.2, p. 525 (PDF p. 553)		informative	Introduces the two sources of exceptions described below.
+E21-b006	ecma-334-ed7	21.2, p. 525 (PDF p. 553)	E21-2-throw-immediate;E21-2-throw-no-fallthrough	rules	
+E21-b007	ecma-334-ed7	21.2, p. 525 (PDF p. 553)		informative	Points to the common-exception operation list in 21.5 without identifying an additional triggering operation here.
+E21-b008	ecma-334-ed7	21.2, p. 525 (PDF p. 553)		example	
+E21-b009	ecma-334-ed7	21.3, p. 525 (PDF p. 553)		heading	
+E21-b010	ecma-334-ed7	21.3, p. 525 (PDF p. 553)	E21-3-exception-base	rules	
+E21-b011	ecma-334-ed7	21.3, p. 525 (PDF p. 553)	E21-3-message-readonly;E21-3-message-type;E21-3-message-description	rules	
+E21-b012	ecma-334-ed7	21.3, p. 525 (PDF p. 553)	E21-3-inner-readonly;E21-3-inner-type;E21-3-inner-cause;E21-3-inner-catch-context;E21-3-inner-null;E21-3-arbitrary-chain	rules	
+E21-b013	ecma-334-ed7	21.3, p. 525 (PDF p. 553)	E21-3-constructor-message;E21-3-constructor-inner	rules	
+E21-b014	ecma-334-ed7	21.4, p. 525 (PDF p. 553)		heading	
+E21-b015	ecma-334-ed7	21.4, p. 525 (PDF p. 553)	E21-4-try-handling	rules	
+E21-b016	ecma-334-ed7	21.4, p. 525 (PDF p. 553)	E21-4-nearest-handler;E21-4-current-method-search;E21-4-catch-order;E21-4-caller-search;E21-4-same-type-handler;E21-4-base-type-handler;E21-4-general-handler	rules	
+E21-b017	ecma-334-ed7	21.4, p. 526 (PDF p. 554)	E21-4-catch-entry;E21-4-nested-finally-first	rules	
+E21-b018	ecma-334-ed7	21.4, p. 526 (PDF p. 554)		informative	Introduces the ordered cases for a handler search with no match.
+E21-b019	ecma-334-ed7	21.4, p. 526 (PDF p. 554)	E21-4-initialization-wrapper;E21-4-initialization-inner	rules	
+E21-b020	ecma-334-ed7	21.4, p. 526 (PDF p. 554)	E21-4-unhandled-finalizer	rules	
+E21-b021	ecma-334-ed7	21.4, p. 526 (PDF p. 554)	E21-4-unhandled-thread-termination;E21-4-termination-impact	rules	
+E21-b022	ecma-334-ed7	21.5, p. 526 (PDF p. 554)		heading	
+E21-b023	ecma-334-ed7	21.5, p. 526 (PDF p. 554)		informative	Introduces the common-exception table below.
+E21-b024	ecma-334-ed7	21.5, p. 526 (PDF p. 554)		informative	Column headings of the normative table; the table body predicates are recorded below.
+E21-b025	ecma-334-ed7	21.5, p. 526 (PDF p. 554)	E21-5-arithmetic-base;E21-5-divide-by-zero-base;E21-5-overflow-base	rules	Also covered by E21-5-array-type-mismatch: The extract puts the next row's ArrayTypeMismatchException label in this block; its description is in the next block, paired against the PDF table.
+E21-b026	ecma-334-ed7	21.5, p. 526 (PDF p. 554)	E21-5-array-type-mismatch;E21-5-divide-by-zero;E21-5-negative-array-index;E21-5-high-array-index	rules	Also covered by E21-5-invalid-cast;E21-5-null-reference;E21-5-out-of-memory;E21-5-checked-overflow;E21-5-stack-overflow;E21-4-initialization-wrapper: The extract gathers these row labels here; their descriptions occur in later blocks and were paired against the PDF table.
+E21-b027	ecma-334-ed7	21.5, p. 526 (PDF p. 554)	E21-5-invalid-cast	rules	
+E21-b028	ecma-334-ed7	21.5, p. 526 (PDF p. 554)	E21-5-null-reference	rules	
+E21-b029	ecma-334-ed7	21.5, p. 526 (PDF p. 554)	E21-5-out-of-memory	rules	
+E21-b030	ecma-334-ed7	21.5, p. 526 (PDF p. 554)	E21-5-checked-overflow	rules	
+E21-b031	ecma-334-ed7	21.5, p. 526 (PDF p. 554)	E21-5-stack-overflow	rules	
+E21-b032	ecma-334-ed7	21.5, p. 526 (PDF p. 554)	E21-4-initialization-wrapper	covered-by E21-4-initialization-wrapper	PDF table: TypeInitializationException row visually paired; its description repeats the initialization wrapper condition in 21.4.

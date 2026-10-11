@@ -1,0 +1,12 @@
+// Positive compilation witness for E15-6-8-external-not-generic.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System.Runtime.CompilerServices;
+// 15.6.8, p. 412 requires a diagnostic (clause 5, p. 9).
+// Reject is the suite's nearest kind; an error is a valid diagnostic.
+// InternalCall removes the unrelated missing-implementation-attribute warning.
+class External
+{
+    [MethodImpl(MethodImplOptions.InternalCall)]
+    public static extern void Signal();
+}
+class Program { static void Main() { } }

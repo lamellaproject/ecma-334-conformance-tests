@@ -1,0 +1,29 @@
+/*
+Rules: E10-5-3-most-encompassed; E10-5-4-source-fallback; E10-5-4-pre
+Authority: ECMA-334 7th ed 10.5.3
+Version: 7.3
+Expected: run
+Stdout: OK 1
+Mutate: Packet result=input;
+Into: Packet result=default(Packet);
+*/
+using System;
+
+
+static class Trace {public static string Log="";}
+struct Packet {public int Number;
+    public static implicit operator Packet(int x){Trace.Log+="int";return new Packet {Number=x};}
+    public static implicit operator Packet(long x){Trace.Log+="long";return new Packet {Number=-1};}
+}
+
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        short input=61; Packet result=input;
+        Check(result.Number==61 && Trace.Log=="int", "E10-5-3-most-encompassed-pilot-001-check-01");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

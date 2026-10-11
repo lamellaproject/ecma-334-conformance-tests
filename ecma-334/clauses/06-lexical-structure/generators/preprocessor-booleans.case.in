@@ -1,0 +1,6 @@
+#if @EXPRESSION@
+        int answer@INDEX@ = 1;
+#else
+        int answer@INDEX@ = 0;
+#endif
+        Check(answer@INDEX@ == @EXPECTED@, "@CASE@");

@@ -1,0 +1,73 @@
+/*
+Rules: E10-6-1-classification; E10-6-1-unwrap
+Authority: ECMA-334 7th ed 10.6.1
+Version: 7.3
+Expected: run
+Stdout: OK 11
+Generated: clauses/10-conversions/generators/standard-matrices.py
+*/
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static void Main()
+    {
+        {
+            int? input = -2147483648;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==3472883712U, "nullable-int-float-explicit-unchecked-unwrap-0");
+        }
+        {
+            int? input = 2147483647;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==1325400064U, "nullable-int-float-explicit-unchecked-unwrap-1");
+        }
+        {
+            int? input = 0;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==0U, "nullable-int-float-explicit-unchecked-unwrap-2");
+        }
+        {
+            int? input = 1;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==1065353216U, "nullable-int-float-explicit-unchecked-unwrap-3");
+        }
+        {
+            int? input = -1;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==3212836864U, "nullable-int-float-explicit-unchecked-unwrap-4");
+        }
+        {
+            int? input = 16777215;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==1266679807U, "nullable-int-float-explicit-unchecked-unwrap-5");
+        }
+        {
+            int? input = 16777216;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==1266679808U, "nullable-int-float-explicit-unchecked-unwrap-6");
+        }
+        {
+            int? input = 16777217;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==1266679808U, "nullable-int-float-explicit-unchecked-unwrap-7");
+        }
+        {
+            int? input = -16777217;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==3414163456U, "nullable-int-float-explicit-unchecked-unwrap-8");
+        }
+        {
+            int? input = -16777216;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==3414163456U, "nullable-int-float-explicit-unchecked-unwrap-9");
+        }
+        {
+            int? input = -16777215;
+            float result = unchecked((float)input);
+            Check(unchecked((uint)BitConverter.SingleToInt32Bits(result))==3414163455U, "nullable-int-float-explicit-unchecked-unwrap-10");
+        }
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

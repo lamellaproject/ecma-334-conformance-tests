@@ -1,0 +1,18 @@
+// Positive compilation witness for E21-5-stack-overflow.
+// The causal mutation removes the departure's disputed part while retaining the program's remaining construct prerequisites.
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static int Descend() { return 0; }
+    static void Main()
+    {
+        bool caught = false;
+        try { int result = Descend(); }
+        catch (StackOverflowException) { caught = true; }
+        catch (Exception) { }
+        Check(caught, "exhausted-calls-stack-overflow-exception");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

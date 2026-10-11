@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "standard": "ECMA-334",
+  "standard_version": "7.3",
+  "standard_sha256": "7797c1d995dd7791683cb4f2dfd758cc1bfd22150b5234487fffe43e9b3e3ab0",
+  "feature_commit": "0df79080bfbd3d0120ad1904ed0a662fd69be6b9",
+  "csc_version": "5.11.0-1.26425.128",
+  "csc_commit": "3551975be08744f0418857c5bed8ab1545c5dd47",
+  "editions": [
+    {
+      "id": "ecma-334-ed7",
+      "standard": "ECMA-334",
+      "edition": "7th",
+      "role": "primary",
+      "authority_prefix": "ECMA-334 7th ed",
+      "language_version": "7.3",
+      "asset": "ECMA-334_7th_edition_december_2023.pdf",
+      "sha256": "7797c1d995dd7791683cb4f2dfd758cc1bfd22150b5234487fffe43e9b3e3ab0",
+      "text": {
+        "asset": "ecma334-raw.txt",
+        "sha256": "de4a918d4b82ded88bf703852c74ba1757f91dcd6b8ceb2ebd79f2163f55df38"
+      },
+      "version_proof": {
+        "locator": "Foreword, printed p. xxi (PDF p. 25); Scope, printed p. 1 (PDF p. 29)",
+        "method": "Infer C# 7.3 from the foreword's feature inventory, corroborated by Microsoft's explicit edition/dialect table.",
+        "foreword_markers": [
+          "System.Delegate and System.Enum as class_type constraints.",
+          "Additional generic constraints",
+          "Reduce ambiguity of overload resolution"
+        ],
+        "numeric_label_in_foreword_or_scope": false,
+        "corroboration_url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/language"
+      }
+    }
+  ],
+  "references": [
+    {
+      "id": "csharplang",
+      "role": "primary",
+      "repository": "https://github.com/dotnet/csharplang",
+      "commit": "0df79080bfbd3d0120ad1904ed0a662fd69be6b9",
+      "assets": [
+        {
+          "path": "proposals/csharp-10.0/caller-argument-expression.md",
+          "sha256": "3382a8fb87efebf49fa27820b08a3cbdba61bcc72e54120bf4d6a8623ac7ae01"
+        },
+        {
+          "path": "proposals/csharp-10.0/constant_interpolated_strings.md",
+          "sha256": "ab8f1e892a4126382720a39552197ea4540f7173c8f5d8034f6d7adbb3bc7e23"
+        },
+        {
+          "path": "proposals/csharp-10.0/improved-interpolated-strings.md",
+          "sha256": "a9232653b4497eae44487404a0c446af954667024beea4be2ad9a642b257b02c"
+        },
+        {
+          "path": "proposals/csharp-10.0/lambda-improvements.md",
+          "sha256": "43e4ead0e264a6e6580875a4178ad3f09374d22c739ffc682b6b5f5cfbfc752f"
+        },
+        {
+          "path": "proposals/csharp-11.0/checked-user-defined-operators.md",
+          "sha256": "a642cf9acf8c51991751873ecd9b447f3a7dbc6e7d5ffeb264c18d236d5ce34a"
+        },
+        {
+          "path": "proposals/csharp-11.0/low-level-struct-improvements.md",
+          "sha256": "48173c4aaa1ffb3cbd8f7602f52fbf0b38a57f1e4fc50a725ba5305f30a5ff54"
+        },
+        {
+          "path": "proposals/csharp-11.0/numeric-intptr.md",
+          "sha256": "b6fa2f3916ac2f585240e1ac40182daa372d04f4a8ea5a289855cf172af02f40"
+        },
+        {
+          "path": "proposals/csharp-11.0/raw-string-literal.md",
+          "sha256": "9105b87711beadf91856192d596637cd3f6d9d4a6a6178d7d31df33b93f26833"
+        },
+        {
+          "path": "proposals/csharp-11.0/static-abstracts-in-interfaces.md",
+          "sha256": "43691eee0c3c76ced605db5959df8d36d1334dd5cd4d01d4048a50c9c26f96f4"
+        },
+        {
+          "path": "proposals/csharp-11.0/utf8-string-literals.md",
+          "sha256": "365dc2aa1232a94b2920bc8ce136313146e9ed9fc904b94c550ecf94ffcaf045"
+        },
+        {
+          "path": "proposals/csharp-12.0/collection-expressions.md",
+          "sha256": "20d62bfc544dcdb95590930444205d98f916f935f7ce72834dddddddf33ad78b"
+        },
+        {
+          "path": "proposals/csharp-12.0/inline-arrays.md",
+          "sha256": "eaeb00c39ee13385dc57f72887951a6d44f48b1e715cb40ff42f513c92d2716e"
+        },
+        {
+          "path": "proposals/csharp-12.0/lambda-method-group-defaults.md",
+          "sha256": "663ca72db438d27be03c24504ddcfa11032e0e1acc2a7f996cff23c10f67dc6e"
+        },
+        {
+          "path": "proposals/csharp-12.0/ref-readonly-parameters.md",
+          "sha256": "a742250323e36f0b81de0743acf0124a6fa60e08c8c2a660eac4da17a8bba683"
+        },
+        {
+          "path": "proposals/csharp-13.0/collection-expressions-better-conversion.md",
+          "sha256": "26733c221fce730dc14d7401f2eaa0091116bc5915a42cc2fd019d14cc717618"
+        },
+        {
+          "path": "proposals/csharp-13.0/method-group-natural-type-improvements.md",
+          "sha256": "c9931581ffbe9e5bff9fec9f62433b304f9b33b34ab3a6169c24dbc66344fa9d"
+        },
+        {
+          "path": "proposals/csharp-13.0/overload-resolution-priority.md",
+          "sha256": "3ae409649aa5fc38d1b6a2d6a156f641c7c72feba0e394ce5765522d2322138b"
+        },
+        {
+          "path": "proposals/csharp-13.0/params-collections.md",
+          "sha256": "a92891ae4d2c1757b25061047db228f8e7d77f103c67991c9791dab9add7190e"
+        },
+        {
+          "path": "proposals/csharp-13.0/ref-struct-interfaces.md",
+          "sha256": "89db7c6f20f22a5b99df61e63033ebecc1f2cde6459e71f2fa50cd9458a4b123"
+        },
+        {
+          "path": "proposals/csharp-14.0/first-class-span-types.md",
+          "sha256": "3c3ef60c44f7d48f1ee4ada4268a2eb146fa7f74bf6b4a52f09d894366cb626a"
+        },
+        {
+          "path": "proposals/csharp-14.0/optional-and-named-parameters-in-expression-trees.md",
+          "sha256": "0a7589f220abae512c9cd08af57f434d7d36fd19b7380fca0478e0de40e68113"
+        },
+        {
+          "path": "proposals/csharp-14.0/simple-lambda-parameters-with-modifiers.md",
+          "sha256": "935dcbf54e8767a381f21f1c6277ff4a0a78a8d7f2f1c0ed500e7a5661c144e4"
+        },
+        {
+          "path": "proposals/csharp-15.0/closed-hierarchies.md",
+          "sha256": "42fefd4135df4a6d52f32ec44f95ddcf6f1a755a105a5fefe1cbf57d888feb96"
+        },
+        {
+          "path": "proposals/csharp-15.0/collection-expression-arguments.md",
+          "sha256": "491b1497fe1e4ebb212a7e14e84d7d4705d9e9c0c9644e27fa50f5a0432c2824"
+        },
+        {
+          "path": "proposals/csharp-15.0/unions.md",
+          "sha256": "410ddf2414c965438c060bad1fb58f0610d27df65ea47bcacb383583991c696f"
+        },
+        {
+          "path": "proposals/csharp-8.0/nested-stackalloc.md",
+          "sha256": "27681981346bfb8895f27af5fbfc925b594561a73525a23d3de7725646c909aa"
+        },
+        {
+          "path": "proposals/csharp-8.0/patterns.md",
+          "sha256": "51aab3fb3e9834eb32b8b2bab5066945f9e3b7f113df4fe172ef87221b04fe70"
+        },
+        {
+          "path": "proposals/csharp-9.0/function-pointers.md",
+          "sha256": "bc90e02cf896d5e3d8b15f8b80ac258caae8184b61e1231555410b50b8547b2a"
+        },
+        {
+          "path": "proposals/csharp-9.0/native-integers.md",
+          "sha256": "d0b0b6f2a77880d7ea7898939dd15177557aacb592d26800e709b4f7749c9496"
+        },
+        {
+          "path": "proposals/csharp-9.0/nullable-reference-types-specification.md",
+          "sha256": "42a167fadbee48ef00f87eacaae8d8d2cfe939c4e71e288aafd19a6710dd8dc4"
+        },
+        {
+          "path": "proposals/csharp-9.0/target-typed-conditional-expression.md",
+          "sha256": "895488dedc3d20d0d0d74e9f72aaad660e93a8ecf264d92e103c1d227c12bb73"
+        },
+        {
+          "path": "proposals/csharp-9.0/target-typed-new.md",
+          "sha256": "57832c908e368a18ab43b20db3fe4bde28b595af56d0fe5b4ae3740b54318e4e"
+        },
+        {
+          "path": "proposals/csharp-9.0/unconstrained-type-parameter-annotations.md",
+          "sha256": "f19e170e4e62cc7c4d334e5e32fb5e3c8f58d7aed4250837d2eb7622839ac3a8"
+        },
+        {
+          "path": "proposals/unsafe-evolution.md",
+          "sha256": "eb8008d7096758ff96b687c786b8e13d4c40f32735c3334a3202b672759c29a3"
+        }
+      ]
+    },
+    {
+      "id": "csharpstandard-draft-v8",
+      "role": "secondary",
+      "repository": "https://github.com/dotnet/csharpstandard",
+      "branch": "draft-v8",
+      "commit": "6460eafbf957c24565c0ba099f6077e8c701e3c9",
+      "assets": [
+        {
+          "path": "standard/types.md",
+          "sha256": "a48f6e3f35aad9a2dc241d9b444d55029d956579e6ff12696bb7f522d8eb3d0c"
+        },
+        {
+          "path": "standard/variables.md",
+          "sha256": "9ed435b619603e6392beca04c56f43b874a1caa017c541d6bafae1c17e8c223c"
+        }
+      ]
+    },
+    {
+      "id": "csharpstandard-alpha-v13",
+      "role": "secondary",
+      "repository": "https://github.com/dotnet/csharpstandard",
+      "branch": "alpha-v13",
+      "commit": "80f965b412cc88a49b5afebfe0f5f23200a4d6d3"
+    }
+  ],
+  "raw_source_rules": [
+    "E6-1-transformation", "E6-1-utf8", "E6-2-1-terminal-codepoints", "E6-2-3-unicode-terminals",
+    "E6-3-2-append-final-cr", "E6-3-2-grammar-new-line-2", "E6-3-2-remove-final-control-z",
+    "E6-3-3-grammar-new-line-character-1", "E6-3-3-grammar-new-line-character-3",
+    "E6-3-3-grammar-new-line-character-4", "E6-3-3-grammar-new-line-character-5",
+    "E6-3-4-grammar-whitespace-2", "E6-4-3-grammar-combining-character-1",
+    "E6-4-3-grammar-formatting-character-1"
+  ],
+  "compiler_authority": {
+    "id": "csc",
+    "version": "5.11.0-1.26425.128",
+    "commit": "3551975be08744f0418857c5bed8ab1545c5dd47"
+  }
+}
