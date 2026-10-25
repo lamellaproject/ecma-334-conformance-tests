@@ -1,0 +1,25 @@
+// ECMA-334 1st ed 21.1, p. 297 (PDF p. 311), lines 15-24. An explicitly specified enum
+// base must use a permitted integral keyword token.
+using System;
+using StorageWidth = System.UInt16;
+enum Mode : ushort { Seed = 60001 }
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool result, string label)
+    {
+        checks++;
+        if (!result)
+        {
+            failures++;
+            Console.WriteLine("FAIL " + label);
+        }
+    }
+    static int Main()
+    {
+        Check((int)Mode.Seed == 60001, "keyword-base-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

@@ -32,7 +32,7 @@ DEPARTURE_FIELDS = ["test_id", "kind", "rule_ids", "source_id", "locator", "quot
 
 def controlled_env(output):
     env = os.environ.copy()
-    for name, relative in {"TEMP": "tmp", "TMP": "tmp", "DOTNET_CLI_HOME": "dotnet-home", "NUGET_PACKAGES": "nuget"}.items():
+    for name, relative in {"TEMP": "tmp", "TMP": "tmp", "TMPDIR": "tmp", "DOTNET_CLI_HOME": "dotnet-home", "NUGET_PACKAGES": "nuget"}.items():
         path = output / ".environment" / relative
         path.mkdir(parents=True, exist_ok=True)
         env[name] = str(path)
@@ -128,7 +128,7 @@ class Context:
         self.identity = {"compiler_identity": compiler_identity, "target_identity": target_identity, "compile_timeout": compile_timeout,
                          "run_timeout": run_timeout, "suite_files": {p.relative_to(ROOT).as_posix(): sha(p) for p in [
             ROOT / "runner/run-suite.py", *[ROOT / "runner/tools" / name for name in ["suite_common.py", "suite_config.py",
-            "suite_diagnostics.py", "suite_targets.py", "suite_engine.py", "suite_versions.py", "suite_evidence.py"]],
+            "suite_diagnostics.py", "suite_targets.py", "suite_engine.py", "suite_versions.py", "suite_evidence.py", "suite_editions.py"]],
             *sorted((ROOT / "runner/controls").glob("*.cs"))] if p.is_file()}}
         if self.target_config["adapter"] == "netframework":
             self.identity["suite_files"]["runner/tools/suite_netframework.py"] = sha(ROOT / "runner/tools/suite_netframework.py")
@@ -253,7 +253,7 @@ class Context:
         status, reason, missing = self.preflight(test, level, fixture, mode)
         if skip_status:
             status, reason, missing = skip_status, "outside-applicability", []
-        record = {**test, "schema_version": 1, "level": level["level"] if level else test["version"], "level_argument": level["argument"] if level else "",
+        record = {**test, "schema_version": 2, "level": level["level"] if level else test["version"], "level_argument": level["argument"] if level else "",
             "mode": mode, "status": status, "reason": reason, "unsupported_reason": reason if status == "unsupported" else "",
             "missing_capabilities": missing, "compile_exit": "", "diagnostic_codes": "", "error_diagnostic_codes": "",
             "uncoded_error_diagnostics": False, "run_exit": "", "compile_command_json": "[]", "run_command_json": "[]",
@@ -310,7 +310,8 @@ class Context:
                 break
             if is_library:
                 if verdict == "rejected":
-                    record.update(status="unexpected-reject", reason="fixture-prerequisite:" + stage_name)
+                    record.update(status="not-applicable" if mode == "version-gating" else "unexpected-reject",
+                                  reason="fixture-prerequisite:" + stage_name)
                     break
                 outputs[stage_name] = output
                 continue

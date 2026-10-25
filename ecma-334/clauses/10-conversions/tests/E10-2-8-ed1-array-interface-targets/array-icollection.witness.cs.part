@@ -1,0 +1,11 @@
+// ECMA-334 1st ed 13.1.4, p. 114 (PDF p. 128), lines 18-31. The closed implicit-reference
+// conversion list gives an array conversion to System.Array and System.ICloneable, but not
+// a direct array conversion to IEnumerable, ICollection or IList.
+class Entry
+{
+    static void Main()
+    {
+        System.Collections.ICollection view = (System.Array)new int[0];
+        System.Console.WriteLine(view != null ? "OK 0" : "FAIL");
+    }
+}

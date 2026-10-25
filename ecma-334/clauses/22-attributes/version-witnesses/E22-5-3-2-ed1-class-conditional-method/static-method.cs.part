@@ -1,0 +1,19 @@
+#define LAMELLA_PULSE
+// ECMA-334 1st ed 24.4.2, p. 316 (PDF p. 330), line 29. Refuse a Conditional method whose
+// declaration is in a struct rather than a class.
+
+public class Envelope
+{
+    [System.Diagnostics.Conditional("LAMELLA_PULSE")]
+    public static void Signal()
+    {
+    }
+}
+
+class Exercise
+{
+    static void Main()
+    {
+        Envelope.Signal();
+    }
+}

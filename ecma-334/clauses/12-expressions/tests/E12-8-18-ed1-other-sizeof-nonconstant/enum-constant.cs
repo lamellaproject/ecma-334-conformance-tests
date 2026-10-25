@@ -1,0 +1,34 @@
+/*
+Rules: E12-8-18-ed1-other-sizeof-nonconstant
+Authority: ECMA-334 1st ed 25.5.8
+Version: ISO-1
+Expected: reject
+Version-Witness: tests/E12-8-18-ed1-other-sizeof-nonconstant/enum-constant-repair.cs.part
+Mutate: const int storage
+Into: int storage
+*/
+using System;
+
+// ECMA-334 1st ed 25.5.8, p. 332 (PDF p. 346), lines 20 and 22-23. For an unmanaged type
+// outside the old listed predefined-size table, classify sizeof as a nonconstant value and
+// refuse its use as a const initializer.
+
+enum Dial : short
+{
+    Below = -6,
+    Above = 31
+}
+
+class TestMain
+{
+    private static unsafe int Measure()
+    {
+        const int storage = sizeof(Dial);
+        return storage;
+    }
+
+    public static void Main()
+    {
+        Console.WriteLine(Measure());
+    }
+}

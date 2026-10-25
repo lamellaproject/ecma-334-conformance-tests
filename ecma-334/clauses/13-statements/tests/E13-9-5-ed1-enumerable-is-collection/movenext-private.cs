@@ -1,0 +1,81 @@
+/*
+Rules: E13-9-5-ed1-enumerable-is-collection; E13-9-5-ed1-incomplete-pattern-interface-fallback
+Authority: ECMA-334 1st ed 15.8.4
+Version: ISO-1
+Expected: run
+Stdout: OK 4
+Version-Witness: tests/E13-9-5-ed1-enumerable-is-collection/movenext-private-interface.cs.part
+Mutate: private bool MoveNext()
+Into: public bool MoveNext()
+*/
+using System;
+using System.Collections;
+
+// ECMA-334 1st ed 15.8.4, printed pp. 191-192 (PDF pp. 205-206): a collection implements
+// IEnumerable or the complete pattern; without the complete pattern the interface
+// expansion is used. The spelling System.IEnumerable in the collection definition and
+// interface expansion appears to be a namespace typo. This test follows the intent
+// System.Collections.IEnumerable, supported by Annex D, printed p. 407 (PDF p. 421). The
+// public candidate is incomplete only for the prerequisite named below. Completing that
+// prerequisite selects the pattern with different values; the mutation must fail the
+// interface-selection checks. Missing prerequisite: MoveNext is private, not public.
+
+sealed class RelayCollection : IEnumerable
+{
+    public static int PatternCalls;
+    public static int InterfaceCalls;
+    public PatternCursor GetEnumerator() { PatternCalls++; return new PatternCursor(); }
+    IEnumerator IEnumerable.GetEnumerator()
+    {
+        InterfaceCalls++;
+        return new DataCursor();
+    }
+}
+
+sealed class PatternCursor
+{
+    private int position;
+    public int Current { get { return 97; } }
+    private bool MoveNext() { return ++position <= 2; }
+}
+
+sealed class DataCursor : IEnumerator
+{
+    private int position;
+    public object Current { get { return position == 1 ? 37 : 11; } }
+    public bool MoveNext() { return ++position <= 2; }
+    public void Reset() { position = 0; }
+}
+
+class TestMain
+{
+    private static int checks;
+    private static int failures;
+    private static void Check(bool condition, string name)
+    {
+        checks++;
+        if (!condition)
+        {
+            failures++;
+            Console.WriteLine("FAIL " + name);
+        }
+    }
+
+    public static int Main()
+    {
+        RelayCollection source = new RelayCollection();
+        int count = 0;
+        int sum = 0;
+        foreach (int observed in source)
+        {
+            count++;
+            sum += observed;
+        }
+        Check(count == 2, "interface-item-count");
+        Check(sum == 48, "interface-values");
+        Check(RelayCollection.InterfaceCalls == 1, "interface-selected");
+        Check(RelayCollection.PatternCalls == 0, "incomplete-pattern-skipped");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

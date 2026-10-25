@@ -28,13 +28,14 @@ All tooling uses only the Python standard library. It passes argument arrays
 ### The standard directory
 
 Each installed standard occupies its own directory, named `ecma-<number>/`,
-which contains the entries below. Today the only installed standard is
-ECMA-334, in `ecma-334/`.
+which contains the entries below. The only installed standard is ECMA-334, in
+`ecma-334/`.
 
 | Path | Contents |
 | --- | --- |
 | `source-registry.json` | The registered sources: the standard's editions, the references and the compiler authority. It also lists the rules that may justify raw source. |
 | `ledger-scope.json` | The scope of each clause and its text-block inventory. |
+| `edition-conflicts/<N>.json` | Conflicts that an older registered edition replaces or leaves out; see [Edition selection](#edition-selection). |
 | `raw-source.tsv` | Optional. The inventory of raw-source exceptions; see [Bytes and raw source](CONVENTIONS.md#bytes-and-raw-source). |
 | `reference-notes.tsv` | Optional. Reference notes, which record where the pinned csc disagrees with the rule text of a test whose authority is csc. They use the columns of departure records; see [Departures](CONVENTIONS.md#departures). |
 | `manifest.tsv` and `manifest/` | The derived manifest; see [The manifest](#the-manifest). |
@@ -56,7 +57,7 @@ describes each of them.
 When the suite grows:
 
 - Adding another edition adds a registered primary source and edition-specific
-  rules.
+  rules, with its own conflict table.
 - Adding another standard adds its own standard directory.
 - The runner's default selection includes every installed standard.
 
@@ -95,9 +96,7 @@ clause ownership, then concatenate the clauses in index order. This storage
 layout does not change the resulting rows.
 
 Writers enforce threefold headroom under the same file cap as the version
-shards: each file must stay under 20 MiB even if its size triples. Archived
-full TSV manifests, which hold every row in one file, remain readable for
-evidence.
+shards: each file must stay under 20 MiB even if its size triples.
 
 ### Configurations
 
@@ -131,6 +130,13 @@ A target configuration declares:
 The schemas in `configs/schemas/` document these contracts. The shared
 validators enforce them and reject unknown fields.
 
+An asset entry either gives a common `root`, `path` and `sha256`, or gives a
+`root` and `variants`, keyed by host RID, each with its own `path` and
+`sha256`. All variant entries in a configuration cover the same hosts. The
+runner selects the host and architecture before discovery and verifies every
+selected file. It never substitutes another platform's variant. Compiler
+profiles may also restrict their host platforms.
+
 ## Modules and execution
 
 The runner is `runner/run-suite.py`. The other modules live in
@@ -141,6 +147,7 @@ The runner is `runner/run-suite.py`. The other modules live in
 | `run-suite.py` | Selection, level resolution, controls, scheduling and summaries |
 | `suite_common.py` | Exact source bytes, headers, registries, fixtures and derived inventory |
 | `suite_config.py` | Config validation, discovery, asset pins and argv expansion |
+| `suite_editions.py` | Registered editions, conflict-table validation and edition selection |
 | `suite_engine.py` | Compile stages, preflight checks, immutable attempts and departure annotations |
 | `suite_diagnostics.py` | Diagnostic parsing, source checks and compiler/runtime verdicts |
 | `suite_targets.py` | Artifact verification and batch execution adapters |
@@ -148,7 +155,7 @@ The runner is `runner/run-suite.py`. The other modules live in
 | `suite_evidence.py` | Replay of saved commands, sources, streams, artifacts and verdicts |
 | `suite_versions.py` | Source-keyed version metadata, applicability and gating source |
 | `suite_measurements.py` | Witness selection, per-level observations, intervals and registered contexts |
-| `suite_version_schedule.py` | Verified resume, rate policy and independent exhaustive sample |
+| `suite_version_schedule.py` | Verified resume, exhaustive measurement and independent exhaustive sample |
 | `suite_audits.py` | Ledger, raw-source and pinned csc evidence audits |
 
 ### How a test is compiled and run
@@ -167,6 +174,8 @@ For each stage, the engine works in this order:
    library's diagnostics stay apart from the program's.
 
 A library prerequisite must succeed before the program's rejection can count.
+Below `Since`, where a required fixture library is itself refused, the test is
+`not-applicable`.
 Successful programs are then sent to the target as a batch. The target returns
 one observation per requested artifact.
 
@@ -183,7 +192,7 @@ makes the run void.
 - For older compilers, they use the highest supported explicit level below
   that declaration.
 - Their sources and expected outcomes are the same at every supported level.
-- Ordinary tests keep their declared or requested language level.
+- Ordinary tests use their requested language level.
 
 ### Target adapters
 
@@ -237,7 +246,7 @@ generated version data, one row per test. Among other fields, a row records:
 The rows are measured with the registered pinned csc.
 `runner/tools/compute-versions.py` generates the files, and
 `runner/tools/check-versions.py` validates them. The runner uses them for
-explicit-level runs, which pass `--langversion`. Nobody edits them by hand.
+measured version runs and edition runs. Nobody edits them by hand.
 
 ### How the files are named
 
@@ -275,7 +284,7 @@ A worked example:
 `versions/index.json` and its indexed shards are committed generated data.
 Rows are keyed by source hash and test ID.
 
-- Each shard contains `schema_version: 2` and `rows`, keeping the
+- Each shard contains `schema_version: 3` and `rows`, keeping the
   source-hash/test-ID nesting.
 - The index carries shared metadata and a sorted `row_shards` list. Each
   entry holds a shard's relative path, the SHA-256 of its exact bytes and its
@@ -315,17 +324,37 @@ run on `net481` at every measured level.
 
 The measurement scheduler works like this:
 
-1. It begins exhaustively: it measures every level.
-2. An optional UTC deadline can switch the remaining tests to a monotonic
-   search. That happens when the rate measured on the first tests (the
-   prefix) projects that exhaustive measurement would finish too late. A
-   monotonic search finds the edges of the passing interval by bisection, so
-   it measures fewer levels.
-3. Each row records its method.
-4. A separate fixed-seed sample measures every level with fresh executions.
-   This independent sample checks the rows.
-5. A counterexample from the sample invalidates all search rows and requires
-   exhaustive refinement.
+1. It measures every test at every configured level, exhaustively.
+2. Each row records the `exhaustive` method and an observation at every level.
+3. A separate fixed-seed sample measures every level with fresh executions
+   (`--sample 200 --seed 1009`). This reproducibility check must agree with
+   the first measurement; a mismatch fails the computation.
+
+Version data requires exhaustive observations. Changing the measurement
+implementation makes existing bounds stale.
+
+### Bounds across platforms
+
+The measurement identity binds the complete compiler and target pin matrices,
+the configurations, the source registry, the implementation and the timeouts.
+It is independent of installation paths and the host performing a measurement.
+Changing any platform's pins stales the shared bounds.
+
+The SDK's managed compiler files and reference assemblies differ by platform;
+they are not treated as identical bytes. The shared identity includes each
+platform's exact pins, including its native host and runtime files. Execution
+evidence retains the selected RID, actual paths and verified hashes. Agreement
+of exhaustive observations and the independent sample is the evidence for
+sharing a measured range. A platform-dependent program still needs its
+portability finding recorded; a shared pin family alone proves no agreement.
+
+Framework bounds remain Windows observations. The shared identity binds the
+`net481` configuration, reference pins and minimum runtime requirement. Each
+Framework row additionally records the actual serviced runtime's release,
+version and file hashes, reconstructed from that row's execution evidence.
+This does not assert a Framework runtime on other hosts. A pilot that selects
+no Framework tests needs only `dotnet`; a selection that includes them must
+run on Windows with `net481` available.
 
 Disconnected passing levels remain recorded. The published interval is the
 contiguous interval that contains the header `Version`.
@@ -345,9 +374,9 @@ states:
 | `stale` | A row exists, but one of those has changed. |
 | `missing` | No row exists for the test. |
 
-Header-Version runs, which run every test at its own `Version` header, report
-these states and may run before bounds exist. Explicit-level runs and
-publishing require current rows.
+`--langversion declared-per-test` runs every test at its own `Version` header.
+Those runs report these states and may run before bounds exist. Other runs,
+including `earliest-per-test`, and publishing require current rows.
 
 ### Revalidating after an implementation change
 
@@ -376,9 +405,38 @@ row unchanged. It cannot override compiler, target, control, source or fixture
 pins. A further implementation edit makes the certificate stale as well.
 
 Implementation identities use relative file paths and content hashes, so a
-publication does not depend on repository history. Scheduling projections and
-cutoffs stay in external measurement evidence; they are not published
-metadata.
+publication does not depend on repository history. Scheduling timings stay in
+external measurement evidence.
+
+## Edition selection
+
+A version run uses the latest registered primary edition's tests and the
+compiler-authority tests. Tests whose authority is an older edition are
+excluded. `--langversion declared-per-test` keeps every test.
+
+An edition run uses `--edition N` instead of `--langversion`. It resolves the
+edition's registered `language_version` through the compiler configuration.
+Every test with that edition's authority runs at that level, even if its
+measured interval differs. Other tests join by continuity only when their
+current measured interval contains the level. The edition's conflict table
+then removes the tests it replaces or leaves out. Excluded tests produce no
+version-gating checks. Every candidate requires current bounds; an external
+pilot is validated against the complete selection before edition filtering.
+
+Each non-latest primary edition has `edition-conflicts/<N>.json`, including an
+empty table when it has no conflicts. The latest edition is the registered
+primary edition with the highest number. A table names its `edition` and
+`base_edition`, which must be that latest edition. Its `conflicts` contain:
+
+- `replace`: a latest-edition `test_id`, its older-edition
+  `replacement_test_id` and the older edition's public `authority` citation;
+- `leave-out`: a latest-edition `test_id` and the older edition's public
+  `authority` citation, without a replacement.
+
+Several replacements may supersede the same test. Duplicate pairs, opposing
+actions for one test, unknown IDs and mismatched authorities are errors. The
+[schema](../configs/schemas/edition-conflicts.schema.json) and
+`runner/tools/check-editions.py` describe and enforce the contract.
 
 ## Evidence
 
@@ -399,8 +457,8 @@ Rules for evidence:
 
 - Framework provenance observes servicing identity instead of pinning runtime
   files (see [The net481 target](TARGETS.md#the-net481-target)).
-- Historical reuse requires an explicit metadata binding and a replay of its
-  controls and observations.
+- Reusing earlier evidence requires an explicit metadata binding and a replay
+  of that evidence's controls and observations.
 - When header-Version evidence combines several runs, a combined header
   inventory declares every leaf context (each original run) and every
   record's origin. It keeps each original fingerprint and source hash.
@@ -416,7 +474,12 @@ Before publication, the published script `runner/tools/check-publishing.py`
 runs as the last of the [required checks](CONTRIBUTING.md#required-checks).
 It validates the public text, the legal notices, the ledgers and their
 quotations of the registered sources (the standard and the feature
-specifications), the raw-source inventory, the version data and the pinned csc
-evidence, including the tests' informational `Csc` headers. It also checks
+specifications), the edition tables, the raw-source inventory, the version data
+and the pinned csc evidence, including the tests' informational `Csc` headers. It also checks
 that the required public documents exist and that the manifests and bounds are
 current.
+
+An external `--extra-forbidden-patterns` file can add publication-specific
+text checks. These case-insensitive regular expressions inspect every public
+file, including inventoried raw sources and legal notices. The pattern file
+and the resulting audit remain external.

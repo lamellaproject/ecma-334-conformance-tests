@@ -15,33 +15,129 @@
   "files": {
     "dotnet": {
       "root": "dotnet",
-      "path": "dotnet.exe",
-      "sha256": "6682d18e2d6dd860f20bc762ad8deed58487e7522a05fa61281b1f3dad8f5c9d"
+      "variants": {
+        "win-x64": {
+          "path": "dotnet.exe",
+          "sha256": "6682d18e2d6dd860f20bc762ad8deed58487e7522a05fa61281b1f3dad8f5c9d"
+        },
+        "linux-x64": {
+          "path": "dotnet",
+          "sha256": "c491495f610b33f0b0c7d65f95a0c4ae4201f67fe18011498b505f1a8dbcadf1"
+        },
+        "osx-arm64": {
+          "path": "dotnet",
+          "sha256": "e86deb33d0dacad9cc1224466df6418149cb8e13cb8afd0dc6815ea6b7807975"
+        },
+        "linux-arm64": {
+          "path": "dotnet",
+          "sha256": "d21f04cc6d59261e9de5be5a2048b8431d2a01b1a9a8489e768fddf0594cfd6c"
+        }
+      }
     },
     "csc": {
       "root": "dotnet",
-      "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.dll",
-      "sha256": "eed48dd81098fa6b61fd7d51ff9b8c9d44159786588f25a0757dd8c5f14fb5c9"
+      "variants": {
+        "win-x64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.dll",
+          "sha256": "eed48dd81098fa6b61fd7d51ff9b8c9d44159786588f25a0757dd8c5f14fb5c9"
+        },
+        "linux-x64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.dll",
+          "sha256": "28fe387671e643eaeefcf5f9edd00b3dcd4e1b59bb6684809fdd2b867e58ab41"
+        },
+        "osx-arm64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.dll",
+          "sha256": "5e3ce6ecb942b61c5aa68b0eef07482124f767483c2ec8c6c293b8fec7ca7db1"
+        },
+        "linux-arm64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.dll",
+          "sha256": "a8a652c3f407e75915e656ac13df1c40bd37f84d6c9b533c8edef2a660901e7a"
+        }
+      }
     },
     "code-analysis": {
       "root": "dotnet",
-      "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/Microsoft.CodeAnalysis.dll",
-      "sha256": "dc4a35c97696efe111640f4cd215711ff39d10866eaf813de6158f91aff324d1"
+      "variants": {
+        "win-x64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/Microsoft.CodeAnalysis.dll",
+          "sha256": "dc4a35c97696efe111640f4cd215711ff39d10866eaf813de6158f91aff324d1"
+        },
+        "linux-x64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/Microsoft.CodeAnalysis.dll",
+          "sha256": "ebd79ccc283b9f7a5e35ac7412f6b22234d4038b4128f4e6f4c67af1f4d71d79"
+        },
+        "osx-arm64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/Microsoft.CodeAnalysis.dll",
+          "sha256": "874ae65de365da7a3966f7b8d2943dc0739e7e08901aa3530149a3f558686a7b"
+        },
+        "linux-arm64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/Microsoft.CodeAnalysis.dll",
+          "sha256": "780a25daf2a970b903e3807eef35a49fb2efa488480d59a396dea2c0c2617c16"
+        }
+      }
     },
     "csharp-analysis": {
       "root": "dotnet",
-      "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/Microsoft.CodeAnalysis.CSharp.dll",
-      "sha256": "141ea49c1640d4b118f41ac2734b86a4b0be127ae3f4cd5336fd5c3890b3f10b"
+      "variants": {
+        "win-x64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/Microsoft.CodeAnalysis.CSharp.dll",
+          "sha256": "141ea49c1640d4b118f41ac2734b86a4b0be127ae3f4cd5336fd5c3890b3f10b"
+        },
+        "linux-x64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/Microsoft.CodeAnalysis.CSharp.dll",
+          "sha256": "05c5b7120352c60bf1fb517640ca6e9d021243b5474a1bc0ddc5726bcc5ed23c"
+        },
+        "osx-arm64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/Microsoft.CodeAnalysis.CSharp.dll",
+          "sha256": "29e823540988da6a5ad8f9e82f607a2e17fff4af39e4239841ffc881d279dc14"
+        },
+        "linux-arm64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/Microsoft.CodeAnalysis.CSharp.dll",
+          "sha256": "d9c12bb4b14b64738dc25307e5724bebd84bfd5725b9a1fb30a2e3d909f1666d"
+        }
+      }
     },
     "csc-deps": {
       "root": "dotnet",
-      "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.deps.json",
-      "sha256": "3ab48581cd05976713bceb0d22970429b4f83bdc48e8fda1cf6471ab3cd01340"
+      "variants": {
+        "win-x64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.deps.json",
+          "sha256": "3ab48581cd05976713bceb0d22970429b4f83bdc48e8fda1cf6471ab3cd01340"
+        },
+        "linux-x64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.deps.json",
+          "sha256": "0f7bbd687c095cd630d96769e9c440990e1b6bcda1a518c600192be05dcadd93"
+        },
+        "osx-arm64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.deps.json",
+          "sha256": "0f7bbd687c095cd630d96769e9c440990e1b6bcda1a518c600192be05dcadd93"
+        },
+        "linux-arm64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.deps.json",
+          "sha256": "0f7bbd687c095cd630d96769e9c440990e1b6bcda1a518c600192be05dcadd93"
+        }
+      }
     },
     "csc-runtimeconfig": {
       "root": "dotnet",
-      "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.runtimeconfig.json",
-      "sha256": "eeb27d6eeb068b7c6fde5f95573fe69e7ef9e7f29b2f63dadd082f8cc8905e3f"
+      "variants": {
+        "win-x64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.runtimeconfig.json",
+          "sha256": "eeb27d6eeb068b7c6fde5f95573fe69e7ef9e7f29b2f63dadd082f8cc8905e3f"
+        },
+        "linux-x64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.runtimeconfig.json",
+          "sha256": "33182824b210244170013f8b179fc8c1916a23d3f61469f5c94f1ed7328e8e1a"
+        },
+        "osx-arm64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.runtimeconfig.json",
+          "sha256": "33182824b210244170013f8b179fc8c1916a23d3f61469f5c94f1ed7328e8e1a"
+        },
+        "linux-arm64": {
+          "path": "sdk/11.0.100-rc.1.26425.128/Roslyn/bincore/csc.runtimeconfig.json",
+          "sha256": "33182824b210244170013f8b179fc8c1916a23d3f61469f5c94f1ed7328e8e1a"
+        }
+      }
     }
   },
   "command": [
@@ -1194,5 +1290,10 @@
   "rejection_exit_codes": [
     1
   ],
-  "artifact_extension": ".dll"
+  "artifact_extension": ".dll",
+  "platforms": [
+    "win32",
+    "linux",
+    "darwin"
+  ]
 }

@@ -9,6 +9,7 @@ from suite_common import digest, inside, mutated_source, sha, standard_root, wri
 from suite_config import resolve_level
 from suite_engine import CONTROL_OUTCOMES, Context, control_level, departure_rows, load_controls
 from suite_evidence import CONTRACT_EXCLUSIONS, verify_record
+from suite_versions import observed_runtime
 
 
 def witness_for(test, context, departures):
@@ -190,35 +191,6 @@ class Measurement:
             if set(observations) != set(self.levels):
                 raise ValueError("Exhaustive bounds omit a language level")
             lower, upper, other = interval(observations, self.levels, header)
-        elif method == "monotonic-search":
-            # Reconstruct the exact search and require every requested observation.
-            def passing(index):
-                try:
-                    return observations[self.levels[index]]["applicable"]
-                except KeyError as error:
-                    raise ValueError("Searched bounds omit a required observation") from error
-            center = self.levels.index(header)
-            if not passing(center):
-                raise ValueError("The header Version has no applicable positive witness")
-            low, high = -1, center
-            while high - low > 1:
-                middle = (low + high) // 2
-                if passing(middle):
-                    high = middle
-                else:
-                    low = middle
-            lower, upper, other = high, len(self.levels) - 1, []
-            if not passing(upper):
-                low, high = center, upper
-                while high - low > 1:
-                    middle = (low + high) // 2
-                    if passing(middle):
-                        low = middle
-                    else:
-                        high = middle
-                upper = low
-            if lower and passing(lower - 1):
-                raise ValueError("A searched predecessor still passes")
         else:
             raise ValueError("Unknown bounds method")
         row = {"since": self.levels[lower], "fixture_sha256": test["fixture_sha256"], "declared_witness_sha256": declared,
@@ -229,6 +201,8 @@ class Measurement:
                "other_passing_levels": other, "observations": observations, "evidence_sha256": digest(evidence)}
         if upper + 1 < len(self.levels):
             row["until"] = self.levels[upper]
+        if self.context.target_config["id"] == "net481":
+            row["measurement_runtime"] = observed_runtime(self.context.identity["target_identity"])
         return {"test_id": test["test_id"], "source_sha256": test["source_sha256"], "identity": self.identity,
                 "contract": self.contract(test), "row": row, "evidence": evidence}
 
@@ -279,6 +253,8 @@ class Measurement:
         return reconstructed
 
     def measure(self, test, method, resume=False):
+        if method != "exhaustive":
+            raise ValueError("Bounds must be measured exhaustively")
         path = self.saved_row_path(test)
         if resume and path.is_file():
             result = self.replay(test, json.loads(path.read_text()))
@@ -325,30 +301,8 @@ class Measurement:
         if not observe(center):
             write_json(path.with_name("error.json"), {"test_id": test["test_id"], "observations": observations, "evidence": evidence})
             raise ValueError("The header Version has no applicable positive witness: " + test["test_id"])
-        if method == "exhaustive":
-            for index in range(len(self.levels)):
-                observe(index)
-        elif method == "monotonic-search":
-            low, high = -1, center
-            while high - low > 1:
-                middle = (low + high) // 2
-                if observe(middle):
-                    high = middle
-                else:
-                    low = middle
-            lower = high
-            upper = len(self.levels) - 1
-            if not observe(upper):
-                low, high = center, upper
-                while high - low > 1:
-                    middle = (low + high) // 2
-                    if observe(middle):
-                        low = middle
-                    else:
-                        high = middle
-                upper = low
-            if lower:
-                observe(lower - 1)
+        for index in range(len(self.levels)):
+            observe(index)
         result = self.build(test, basis, witness, declared, method, observations, evidence)
         write_json(path, result)
         return result

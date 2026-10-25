@@ -91,7 +91,8 @@ def verify_record(context, test, record, level, mode="test", executed_bytes=None
             if verdict not in {"accepted", "rejected"}:
                 status, reason = verdict, detail
             elif is_library and verdict == "rejected":
-                status, reason = "unexpected-reject", "fixture-prerequisite:" + name
+                status = "not-applicable" if mode == "version-gating" else "unexpected-reject"
+                reason = "fixture-prerequisite:" + name
             elif is_library:
                 outputs[name] = output
                 continue

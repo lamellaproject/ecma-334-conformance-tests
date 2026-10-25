@@ -1,0 +1,29 @@
+// ECMA-334 1st ed 14.4.3, p. 137 (PDF p. 151), lines 12-30. The 1st edition's 14.3
+// excludes overrides from lookup; the 1st edition's 14.4.3 boxes before virtual dispatch.
+using System;
+struct Gauge
+{
+    public int Level;
+    public Gauge(int level) { Level = level; }
+    public override int GetHashCode() { Level += 7; return Level; }
+    public int Advance() { Level += 7; return Level; }
+}
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool condition, string name)
+    {
+        checks++;
+        if (!condition) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    public static int Main()
+    {
+        Gauge value = new Gauge(11);
+        int result = ((object)value).GetHashCode();
+        Check(result == 18, "override-dispatched");
+        Check(value.Level == 11, "unboxed-storage-unchanged");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

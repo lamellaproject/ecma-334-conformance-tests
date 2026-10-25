@@ -1,0 +1,20 @@
+// ECMA-334 1st ed 17.5, p. 230 (PDF p. 244), lines 13-23. An abstract sealed override
+// method is a valid modifier combination when the enclosing class is abstract and the
+// overridden method is virtual.
+using System;
+class Meter
+{
+    public virtual int Tick() { return 197; }
+}
+abstract class LockedMeter : Meter
+{
+    public abstract override int Tick();
+}
+class Entry
+{
+    static int Main()
+    {
+        Console.WriteLine("OK 0");
+        return 0;
+    }
+}

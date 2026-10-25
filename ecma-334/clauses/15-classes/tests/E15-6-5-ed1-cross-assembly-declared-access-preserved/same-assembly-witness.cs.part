@@ -1,0 +1,23 @@
+// Positive prerequisite witness for the same-access override construct.
+// Its base declaration is in this compilation, so this does not certify
+// the original cross-assembly condition or give it a different oracle.
+public class LocalRoot
+{
+    protected internal virtual int Signal() { return 1; }
+}
+// Old 17.5.4, p. 238 (PDF p. 252), lines 23-24 requires matching declared accessibility.
+// Later 15.6.5 adds a different-assembly protected exception.
+// Declaration permission only: OK 0 has no runtime cases.
+// csc rejects the old-valid original; no conforming-original sensitivity is claimed.
+class Branch : LocalRoot
+{
+    protected internal override int Signal() { return 17; }
+}
+class Entry
+{
+    public static int Main()
+    {
+        System.Console.WriteLine("OK 0");
+        return 0;
+    }
+}

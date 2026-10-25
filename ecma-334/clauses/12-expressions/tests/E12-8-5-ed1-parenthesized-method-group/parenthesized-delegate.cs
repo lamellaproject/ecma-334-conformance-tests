@@ -1,0 +1,36 @@
+/*
+Rules: E12-8-5-ed1-parenthesized-method-group
+Authority: ECMA-334 1st ed 14.5.3
+Version: ISO-1
+Expected: reject
+Version-Witness: tests/E12-8-5-ed1-parenthesized-method-group/parenthesized-delegate.witness.cs.part
+Mutate: new Reader((Read))
+Into: new Reader(Read)
+*/
+// ECMA-334 1st ed 14.5.3, p. 140 (PDF p. 154), lines 20-23. A parenthesized expression
+// denoting a method group is a compile-time error, including when passed to a delegate
+// constructor or enclosed in additional parentheses before invocation.
+using System;
+delegate int Reader(int value);
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool result, string label)
+    {
+        checks++;
+        if (!result)
+        {
+            failures++;
+            Console.WriteLine("FAIL " + label);
+        }
+    }
+    static int Read(int value) { return value + 2; }
+    static int Main()
+    {
+        Reader reader = new Reader((Read));
+        Check(reader(32) == 34, "delegate-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

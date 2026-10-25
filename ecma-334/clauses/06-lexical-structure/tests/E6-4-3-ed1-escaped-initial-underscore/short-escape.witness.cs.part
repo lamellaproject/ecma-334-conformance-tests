@@ -1,0 +1,11 @@
+// ECMA-334 1st ed 9.4.2, p. 55 (PDF p. 69), lines 22-24. An identifier cannot start with a
+// Unicode escape for underscore.
+class Entry
+{
+    static int Main()
+    {
+        int _lever = 14;
+        System.Console.WriteLine("OK 0");
+        return _lever - 14;
+    }
+}

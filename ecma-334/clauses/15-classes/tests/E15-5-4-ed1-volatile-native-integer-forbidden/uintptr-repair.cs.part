@@ -1,0 +1,16 @@
+// ECMA-334 1st ed 17.4.3, p. 226 (PDF p. 240), lines 9-13. Refuse a volatile field whose
+// type is System.IntPtr or System.UIntPtr, which the old closed volatile type categories
+// do not permit.
+
+public class Cell
+{
+    public System.UIntPtr Slot = new System.UIntPtr();
+}
+
+class ProbeMain
+{
+    public static int Main()
+    {
+        return 0;
+    }
+}

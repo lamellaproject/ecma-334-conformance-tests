@@ -1,0 +1,49 @@
+/*
+Rules: E22-4-3-ed1-named-string-value
+Authority: ECMA-334 1st ed 24.3.2
+Version: ISO-1
+Expected: run
+Stdout: OK 4
+Fixture: {"target_requires":["reflection"]}
+Version-Witness: tests/E22-4-3-ed1-named-string-value/named-field.witness.cs.part
+Mutate: [Glyph(Text = Entry.Original)]
+Into: [Glyph(Text = "x")]
+*/
+// ECMA-334 1st ed 24.3.2, p. 316 (PDF p. 330), lines 4-11. Run-time attribute retrieval
+// sets each named field or property to its retained argument value, preserving string code
+// units including an unpaired surrogate.
+using System;
+class GlyphAttribute : Attribute
+{
+    public string Text;
+    public GlyphAttribute() { }
+}
+[Glyph(Text = Entry.Original)]
+class Plaque { }
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool result, string label)
+    {
+        checks++;
+        if (!result)
+        {
+            failures++;
+            Console.WriteLine("FAIL " + label);
+        }
+    }
+    public const string Original = "h\uD842s";
+    static int Main()
+    {
+        // The declared reflection capability observes the retained attribute values.
+        GlyphAttribute observed = (GlyphAttribute)Attribute.GetCustomAttribute(typeof(Plaque), typeof(GlyphAttribute));
+        string text = observed == null ? null : observed.Text;
+        Check(text != null && text.Length == Original.Length, "length");
+        Check(text != null && text.Length > 0 && text[0] == Original[0], "prefix-code-unit");
+        Check(text != null && text.Length > 1 && text[1] == Original[1], "middle-code-unit");
+        Check(text != null && text.Length > 2 && text[2] == Original[2], "suffix-code-unit");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

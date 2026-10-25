@@ -2,6 +2,38 @@
   "schema_version": 1,
   "coverage_proof": "The inventories account for recorded text blocks; they do not establish complete behavioral coverage.",
   "clauses": {
+    "02-normative-references": {
+      "status": "partial",
+      "complete_clause_claim": false,
+      "expected_block_ids": [
+        "ed1-3-006",
+        "ed1-D-003",
+        "ed1-3-007",
+        "ed1-3-008",
+        "ed1-3-009",
+        "ed1-3-010",
+        "ed1-3-013",
+        "ed1-3-014",
+        "ed1-3-015"
+      ]
+    },
+    "03-terms-and-definitions": {
+      "status": "partial",
+      "complete_clause_claim": false,
+      "expected_block_ids": [
+        "ed1-4-005"
+      ]
+    },
+    "05-conformance": {
+      "status": "partial",
+      "complete_clause_claim": false,
+      "expected_block_ids": [
+        "ed1-2-014",
+        "ed1-2-015",
+        "ed1-2-016",
+        "ed1-2-022"
+      ]
+    },
     "06-lexical-structure": {
       "status": "available",
       "complete_clause_claim": false,
@@ -534,7 +566,22 @@
         "E6-b526",
         "E6-b527",
         "E6-b528",
-        "E6-b529"
+        "E6-b529",
+        "ed1-9.4.4.3-012",
+        "ed1-9.4.4.6-002",
+        "ed1-9.3.1-002",
+        "ed1-9.3.1-005",
+        "ed1-9.3.2-008",
+        "ed1-9.3.2-009",
+        "ed1-9.4.4.4-004",
+        "ed1-9.4.4.5-012",
+        "ed1-9.5.3-003",
+        "ed1-9.5.5-003",
+        "ed1-9.5.7-003",
+        "ed1-9.5.7-006",
+        "ed1-9.4.4.2-018",
+        "ed1-9.4.4.2-020",
+        "ed1-9.4.2-005"
       ]
     },
     "07-basic-concepts": {
@@ -1058,7 +1105,22 @@
         "E7-b0515",
         "E7-b0516",
         "E7-b0517",
-        "E7-b0518"
+        "E7-b0518",
+        "ed1-10.6-011",
+        "ed1-10.6-012",
+        "ed1-10.1-009",
+        "ed1-10.1-011",
+        "ed1-10.2-005",
+        "ed1-10.4.5-001",
+        "ed1-10.1-012",
+        "ed1-10.4.7-001",
+        "ed1-10.5.2-003",
+        "ed1-10.5.2-015",
+        "ed1-10.5.2-018",
+        "ed1-10.5.2-012",
+        "ed1-10.5.2-010",
+        "iot:feature-top-level-statements",
+        "iot:feature-nested-function-name-shadowing"
       ]
     },
     "08-types": {
@@ -1369,7 +1431,25 @@
         "E8-b0294",
         "E8-b0295",
         "E8-b0296",
-        "E8-b0297"
+        "E8-b0297",
+        "ed1-11.1.5-010",
+        "ed1-11.1.5-011",
+        "ed1-11.1.5-012",
+        "ed1-11.1.5-013",
+        "ed1-11.1.5-024",
+        "ed1-11.1.5-026",
+        "ed1-11.1.6-002",
+        "ed1-11.1.6-003",
+        "ed1-11.1.6-014",
+        "ed1-11.1.6-018",
+        "ed1-11.1.6-004",
+        "ed1-11.1.6-005",
+        "ed1-11.1.6-006",
+        "ed1-11.1.6-007",
+        "ed1-11.1.6-015",
+        "iot:P08-nullable-assignment-warning",
+        "iot:feature-native-integers",
+        "iot:feature-unconstrained-type-parameter-annotations"
       ]
     },
     "09-variables": {
@@ -1921,7 +2001,11 @@
         "E9-b0541",
         "E9-b0542",
         "E9-b0543",
-        "E9-b0544"
+        "E9-b0544",
+        "ed1-12.3.3.19-002",
+        "ed1-12.3.3.20-008",
+        "ed1-12.3.3.22-002",
+        "iot:P08-nullable-null-test-flow"
       ]
     },
     "10-conversions": {
@@ -2241,7 +2325,35 @@
         "10.8:p18",
         "10.8:p19",
         "10.8:p20",
-        "10.8:p21"
+        "10.8:p21",
+        "ed1-13.1.3-001",
+        "ed1-13.2.1-022",
+        "ed1-13.2.1-023",
+        "ed1-13.2.1-024",
+        "ed1-13.2.1-039",
+        "ed1-13.2.1-040",
+        "ed1-13.2.1-041",
+        "ed1-13.2.1-033",
+        "ed1-13.2.1-034",
+        "ed1-11.3.1-001",
+        "ed1-11.3.2-001",
+        "ed1-11.3.2-005",
+        "ed1-13.1.4-011",
+        "ed1-13.1.4-013",
+        "ed1-13.2.1-030",
+        "ed1-13.2.1-031",
+        "iot:feature-nullable-reference-types",
+        "iot:feature-target-typed-new",
+        "iot:feature-null-forgiving-operator",
+        "iot:feature-switch-expressions",
+        "iot:feature-interpolated-string-handlers",
+        "iot:feature-target-typed-conditionals",
+        "iot:feature-nested-stackalloc",
+        "iot:feature-native-integers",
+        "iot:feature-unconstrained-type-parameter-annotations",
+        "iot:feature-collection-expressions-arrays",
+        "iot:feature-constant-interpolated-strings-conversions",
+        "iot:feature-natural-function-types-lambda-var"
       ]
     },
     "11-patterns": {
@@ -2316,7 +2428,9 @@
         "E11-b066",
         "E11-b067",
         "E11-b068",
-        "E11-b069"
+        "E11-b069",
+        "iot:feature-pattern-enhancements",
+        "iot:feature-recursive-patterns"
       ]
     },
     "12-expressions": {
@@ -5110,7 +5224,75 @@
         "E12-24-b004",
         "E12-24-b005",
         "E12-24-b006",
-        "E12-24-b007"
+        "E12-24-b007",
+        "ed1-14.7.2-009",
+        "ed1-25.5-004",
+        "ed1-25.5.8-006",
+        "ed1-14.9.6-004",
+        "ed1-14.9.6-005",
+        "ed1-14.5.10-005",
+        "ed1-14.5.10.3-001",
+        "ed1-14.5.10.3-014",
+        "ed1-14.5.10.3-028",
+        "ed1-14.5.10.3-030",
+        "ed1-14.5.10.3-029",
+        "ed1-14.5.10.3-011",
+        "ed1-14.5.10.3-012",
+        "ed1-14.5.10.3-013",
+        "ed1-14.12-020",
+        "ed1-14.3-010",
+        "ed1-14.5.5.1-013",
+        "ed1-14.5.5.1-014",
+        "ed1-14.5.5.1-015",
+        "ed1-14.5.5.2-006",
+        "ed1-14.5.5.2-007",
+        "ed1-14.13.2-004",
+        "ed1-14.4.3-015",
+        "ed1-14.4.1-019",
+        "ed1-14.4.1-022",
+        "ed1-14.2.3-004",
+        "ed1-14.2.4-006",
+        "ed1-14.3-007",
+        "ed1-14.4.1-034",
+        "ed1-14.4.1-038",
+        "ed1-14.4.1-039",
+        "ed1-14.4.2.2-003",
+        "ed1-14.5.2.1-001",
+        "ed1-15.2-007",
+        "ed1-15.7.2-029",
+        "ed1-14.5.3-004",
+        "ed1-14.5.4-032",
+        "ed1-14.5.4-033",
+        "ed1-17.7-023",
+        "ed1-14.5.5.1-010",
+        "ed1-14.5.6.2-010",
+        "ed1-14.5.10.3-008",
+        "ed1-14.5.10.3-009",
+        "ed1-14.5.10.3-016",
+        "ed1-14.5.10.3-017",
+        "ed1-14.5.10.3-037",
+        "ed1-14.6.4-004",
+        "ed1-14.7.2-010",
+        "ed1-14.7.2-020",
+        "ed1-14.7.3-007",
+        "ed1-14.7.3-015",
+        "ed1-14.9-006",
+        "ed1-14.9.8-007",
+        "ed1-14.15-009",
+        "ed1-14.15-011",
+        "iot:P08-nullable-dereference-warning",
+        "iot:P08-nullable-new-type",
+        "iot:feature-switch-expressions",
+        "iot:feature-record-with-expressions",
+        "iot:feature-native-integers",
+        "iot:feature-null-coalescing-assignment",
+        "iot:feature-alternative-verbatim-interpolation",
+        "iot:feature-collection-expressions-array-storage",
+        "iot:feature-constant-interpolated-strings",
+        "iot:feature-indices",
+        "iot:feature-ranges",
+        "iot:feature-ref-readonly-parameters-calls",
+        "iot:feature-static-abstract-interface-dispatch-arguments"
       ]
     },
     "13-statements": {
@@ -5838,7 +6020,27 @@
         "E13-15-b026",
         "E13-15-b027",
         "E13-15-b028",
-        "E13-15-b029"
+        "E13-15-b029",
+        "ed1-15.8.4-009",
+        "ed1-15.8.4-014",
+        "ed1-15.8.4-021",
+        "ed1-15.12-005",
+        "ed1-15.9.5-004",
+        "ed1-15.7.2-012",
+        "ed1-15.7.2-013",
+        "ed1-15.7.2-014",
+        "ed1-15.7.2-031",
+        "ed1-15.7.2-037",
+        "ed1-15.5.1-015",
+        "ed1-15.8.4-010",
+        "ed1-15.8.4-011",
+        "ed1-15.13-015",
+        "ed1-15.13-017",
+        "ed1-15.1-007",
+        "ed1-15.8.4-007",
+        "ed1-15.8.4-020",
+        "iot:feature-using-declarations",
+        "iot:feature-static-local-functions"
       ]
     },
     "14-namespaces": {
@@ -6197,7 +6399,10 @@
         "E14-b350",
         "E14-b351",
         "E14-b352",
-        "E14-b353"
+        "E14-b353",
+        "ed1-16.3.1-004",
+        "iot:feature-top-level-statements",
+        "iot:feature-file-scoped-namespaces"
       ]
     },
     "15-classes": {
@@ -8333,7 +8538,29 @@
         "B2095",
         "B2096",
         "B2097",
-        "B2098"
+        "B2098",
+        "ed1-17.2.7.3-001",
+        "ed1-17.4.3-013",
+        "ed1-17.10.4-002",
+        "ed1-17.10.4-003",
+        "ed1-17.9.1-003",
+        "ed1-17.5.4-012",
+        "ed1-17.6.3-013",
+        "ed1-17.7.1-007",
+        "ed1-17.12-017",
+        "ed1-17.1.2.1-011",
+        "ed1-17.5-016",
+        "ed1-17.9-007",
+        "ed1-17.9-009",
+        "ed1-17.9-011",
+        "iot:feature-records",
+        "iot:feature-init-only-setters",
+        "iot:feature-record-with-expressions",
+        "iot:feature-notnull-constraint",
+        "iot:feature-explicit-record-class",
+        "iot:feature-unconstrained-type-parameter-annotations",
+        "iot:feature-record-structs-shared-record-members",
+        "iot:feature-ref-readonly-parameters-declarations"
       ]
     },
     "16-structs": {
@@ -8581,7 +8808,10 @@
         "E16-b239",
         "E16-b240",
         "E16-b241",
-        "E16-b242"
+        "E16-b242",
+        "ed1-18.2-004",
+        "iot:feature-record-structs-kind",
+        "iot:feature-struct-constructors-and-initializers"
       ]
     },
     "17-arrays": {
@@ -8692,7 +8922,8 @@
         "E17-b102",
         "E17-b103",
         "E17-b104",
-        "E17-b105"
+        "E17-b105",
+        "ed1-19.6-013"
       ]
     },
     "18-interfaces": {
@@ -9197,7 +9428,12 @@
         "E18-b493",
         "E18-b494",
         "E18-b495",
-        "E18-b496"
+        "E18-b496",
+        "ed1-20.1.1-005",
+        "ed1-20.4.1-005",
+        "iot:feature-unconstrained-type-parameter-annotations",
+        "iot:feature-interface-member-enhancements",
+        "iot:feature-static-abstract-interface-dispatch"
       ]
     },
     "19-enums": {
@@ -9294,7 +9530,8 @@
         "E19-b088",
         "E19-b089",
         "E19-b090",
-        "E19-b091"
+        "E19-b091",
+        "ed1-21.1-004"
       ]
     },
     "20-delegates": {
@@ -9449,7 +9686,9 @@
         "E20-b140",
         "E20-b141",
         "E20-b142",
-        "E20-b143"
+        "E20-b143",
+        "ed1-22.1-012",
+        "ed1-22.1-013"
       ]
     },
     "21-exceptions": {
@@ -9487,7 +9726,9 @@
         "E21-b029",
         "E21-b030",
         "E21-b031",
-        "E21-b032"
+        "E21-b032",
+        "ed1-23.3-015",
+        "ed1-23.3-016"
       ]
     },
     "22-attributes": {
@@ -9843,7 +10084,17 @@
         "E22-b347",
         "E22-b348",
         "E22-b349",
-        "E22-b350"
+        "E22-b350",
+        "ed1-24.1.3-002",
+        "ed1-24.1.3-006",
+        "ed1-24.1.3-005",
+        "ed1-24.4.2-006",
+        "ed1-24.3.2-003",
+        "ed1-24.3.2-009",
+        "iot:feature-nullable-flow-attributes",
+        "iot:feature-member-not-null-attributes",
+        "iot:feature-member-not-null-attributes-caller",
+        "iot:feature-constant-interpolated-strings-attribute-argument"
       ]
     },
     "23-unsafe-code": {
@@ -10266,7 +10517,16 @@
         "E23-b414",
         "E23-b415",
         "E23-b416",
-        "E23-b417"
+        "E23-b417",
+        "ed1-25.5.8-006",
+        "ed1-25.1-001",
+        "ed1-25.5.4-005",
+        "ed1-25.6-016",
+        "ed1-15.13-010",
+        "ed1-25.1-022",
+        "ed1-25.4-008",
+        "ed1-25.5.8-004",
+        "ed1-25.7-007"
       ]
     }
   }

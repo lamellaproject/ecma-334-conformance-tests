@@ -1,0 +1,45 @@
+/*
+Rules: E12-12-7-ed1-standard-implicit-required
+Authority: ECMA-334 1st ed 14.9.6
+Version: ISO-1
+Expected: reject
+Version-Witness: tests/E12-12-7-ed1-standard-implicit-required/class-interface-unequal-repair.cs.part
+Mutate: first != second
+Into: (object)first != second
+*/
+using System;
+
+// ECMA-334 1st ed 14.9.6, p. 167 (PDF p. 181), lines 23-26. Refuse predefined reference ==
+// or != when no standard implicit conversion exists from either written operand type to
+// the other.
+
+interface IMark
+{
+}
+
+interface IFlag
+{
+}
+
+class Plain
+{
+}
+
+class Shared : Plain, IMark, IFlag
+{
+}
+
+class TestMain
+{
+    public static void Main()
+    {
+        Plain first = new Shared();
+        IMark second = (IMark)first;
+        bool result = first != second;
+        if (result)
+        {
+            throw new Exception("reference-identity");
+        }
+        Console.WriteLine("MATCH");
+    }
+}

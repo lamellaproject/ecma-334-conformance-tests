@@ -1,0 +1,5 @@
+// ECMA-334 1st ed 16.3.1, p. 205 (PDF p. 219), lines 36-48 forbids this unused
+// alias/member collision.
+using TextRecord = System.String;
+class Record { }
+class Entry { public static int Main() { return 0; } }

@@ -1,0 +1,36 @@
+/*
+Rules: E12-8-16-6-ed1-exact-method-compatibility
+Authority: ECMA-334 1st ed 14.5.10.3
+Version: ISO-1
+Expected: reject
+Version-Witness: tests/E12-8-16-6-ed1-exact-method-compatibility/delegate-method-parameter-variance.witness.cs.part
+Mutate: Read(object value)
+Into: Read(string value)
+*/
+// ECMA-334 1st ed 14.5.10.3, p. 149 (PDF p. 163), lines 44-45; continuation p. 150 (PDF p.
+// 164), lines 1-3. Creating a delegate from a method group chooses its unique exactly
+// compatible method: parameter types, modifiers and return type must match.
+using System;
+delegate int Narrow(string value);
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool result, string label)
+    {
+        checks++;
+        if (!result)
+        {
+            failures++;
+            Console.WriteLine("FAIL " + label);
+        }
+    }
+    static int Read(object value) { return 37; }
+    static int Main()
+    {
+        Narrow reader = new Narrow(Read);
+        Check(reader("tile") == 37, "exact-parameter-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

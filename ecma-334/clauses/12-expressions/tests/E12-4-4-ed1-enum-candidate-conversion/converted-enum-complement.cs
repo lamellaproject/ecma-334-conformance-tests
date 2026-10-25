@@ -1,0 +1,48 @@
+/*
+Rules: E12-4-4-ed1-enum-candidate-conversion
+Authority: ECMA-334 1st ed 14.2.3
+Version: ISO-1
+Expected: run
+Stdout: OK 2
+Version-Witness: tests/E12-4-4-ed1-enum-candidate-conversion/converted-enum-complement.witness.cs.part
+Mutate: Bits result = ~item;
+Into: Bits result = Bits.Seed;
+*/
+// ECMA-334 1st ed 14.2.3, p. 127 (PDF p. 141), lines 3-9. When no user-defined unary
+// operator is applicable, the predefined candidates include an enum operator reached by an
+// implicit operand conversion, without requiring that the operand already have that enum
+// type.
+using System;
+enum Bits { Seed = 5 }
+class Parcel
+{
+    public static int conversions;
+    public static implicit operator Bits(Parcel item)
+    {
+        conversions++;
+        return Bits.Seed;
+    }
+}
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool result, string label)
+    {
+        checks++;
+        if (!result)
+        {
+            failures++;
+            Console.WriteLine("FAIL " + label);
+        }
+    }
+    static int Main()
+    {
+        Parcel item = new Parcel();
+        Bits result = ~item;
+        Check(result == (Bits)(-6), "complement");
+        Check(Parcel.conversions == 1, "operand-conversion");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

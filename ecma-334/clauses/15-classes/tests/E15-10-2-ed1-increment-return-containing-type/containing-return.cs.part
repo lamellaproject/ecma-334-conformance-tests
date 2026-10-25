@@ -1,0 +1,12 @@
+// ECMA-334 1st ed 17.9.1, p. 259 (PDF p. 273), line 2. Refuse an increment operator whose
+// return type is a proper derived class of its containing parameter type; the return type
+// must be that containing type itself.
+public class Stem
+{
+    public static Stem operator ++(Stem value) { return null; }
+}
+public class Bud : Stem { }
+class Entry
+{
+    static void Main() { }
+}

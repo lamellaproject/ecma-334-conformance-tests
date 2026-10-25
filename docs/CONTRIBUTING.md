@@ -34,7 +34,14 @@ The [test contract](CONVENTIONS.md) defines each of these files.
 
 - A new clause gets its own directory and an explicit scope inventory.
 - A new edition gets a primary source entry and rules that distinguish its
-  text where necessary.
+  text where necessary. Add `edition-conflicts/<N>.json` beneath the standard
+  directory, following the [edition table contract](ARCHITECTURE.md#edition-selection).
+  Pair each replaced latest-edition test with its replacement, or use
+  `leave-out` when the older edition permits behavior the existing test
+  excludes and no replacement is justified. Use public clause/page citations.
+  Include an empty table if there are no conflicts, and run
+  `check-editions.py`. Adding a new latest edition also requires updating the
+  older tables against that new base.
 - Later language features use the registered feature authority and
   feature-version IDs (`P<version>-<predicate-slug>`, or
   `Ppreview-<predicate-slug>` for a preview feature).
@@ -94,13 +101,17 @@ Run commands from the repository root. Results and source caches are external
 working artifacts, not additions to the published tree.
 
 ```text
+python runner/tools/check-runner.py --report ../results/runner-check.json
+
 python runner/tools/check-generated.py --report ../results/generated-check.json
 
 python runner/tools/build-manifest.py --report ../results/manifest-build.json
 
+python runner/tools/check-editions.py --report ../results/editions-check.json
+
 python runner/tools/check-ledger.py --source-map ../sources/source-map.json --require-confirmed --report ../results/ledger-check.json
 
-python runner/run-suite.py --compiler configs/compilers/csc.json --target configs/targets/dotnet.json --results ../results/csc-own-versions --jobs 12
+python runner/run-suite.py --compiler configs/compilers/csc.json --target configs/targets/dotnet.json --results ../results/csc-own-versions --langversion declared-per-test --jobs 12
 
 python runner/tools/check-csc.py --results ../results/csc-own-versions --report ../results/csc-check.json
 
@@ -121,20 +132,26 @@ python runner/tools/check-publishing.py --csc-results ../results/csc-own-version
 
 What each command does, in order:
 
+`check-runner.py` first checks language and edition selection, platform pins,
+the exhaustive measurement logic and external publishing patterns. It uses
+synthetic observations and executes no compiler; the suite run below verifies
+the real compiler and runtime controls.
+
 | Step | Command | What it does |
 | --- | --- | --- |
 | 1 | `check-generated.py` | Regenerates the generated tests twice and verifies their source bytes and named cases. |
 | 2 | `build-manifest.py` | Derives the manifest from the test headers and joins any existing version data. |
-| 3 | `check-ledger.py` | Validates ledger ownership, text-block inventories, test coverage and the quotations against the registered sources. With `--require-confirmed`, a pending departure is an error. |
-| 4 | `run-suite.py` | Runs every test at its header `Version` with the pinned csc on the `dotnet` target. |
-| 5 | `check-csc.py` | Replays the pinned csc evidence and checks the informational `Csc` headers at each test's `Version`. |
-| 6 | `check-mutations.py` | Proves the handwritten tests' causal changes. |
-| 7 | `compute-versions.py` | Measures the bounds and the independent all-level sample. |
-| 8 | `build-manifest.py` | Rebuilds the manifest, which now joins the new bounds. |
-| 9 | `build-manifest.py --check` | Checks that the manifest is current. |
-| 10 | `check-versions.py` | Validates the current bounds and the independent sample. |
-| 11 | `check-file-sizes.py` | Enforces the tracked-file size cap and its threefold headroom. |
-| 12 | `check-publishing.py` | Validates the public text, legal notices, ledgers and their quotations, the raw-source inventory, the version data and the pinned csc evidence, including the informational `Csc` headers. Checks that the required public documents exist and that the manifests and bounds are current. |
+| 3 | `check-editions.py` | Checks each older edition's conflict table, its schema, registered authorities and every referenced test ID. |
+| 4 | `check-ledger.py` | Validates ledger ownership, text-block inventories, test coverage and the quotations against the registered sources. With `--require-confirmed`, a pending departure is an error. |
+| 5 | `run-suite.py` | Runs every test at its header `Version`, using `--langversion declared-per-test`, with the pinned csc on the `dotnet` target. |
+| 6 | `check-csc.py` | Replays the pinned csc evidence and checks the informational `Csc` headers at each test's `Version`. |
+| 7 | `check-mutations.py` | Proves the handwritten tests' causal changes. |
+| 8 | `compute-versions.py` | Measures the bounds and the independent all-level sample. |
+| 9 | `build-manifest.py` | Rebuilds the manifest, joining the bounds from step 8. |
+| 10 | `build-manifest.py --check` | Checks that the manifest is current. |
+| 11 | `check-versions.py` | Validates the current bounds and the independent sample. |
+| 12 | `check-file-sizes.py` | Enforces the tracked-file size cap and its threefold headroom. |
+| 13 | `check-publishing.py` | Validates the public text, legal notices, ledgers and their quotations, edition tables, the raw-source inventory, the version data and the pinned csc evidence, including the informational `Csc` headers. Checks that the required public documents exist and that the manifests and bounds are current. |
 
 ### What the checks must show
 
@@ -150,6 +167,13 @@ What each command does, in order:
 - Preserve all commands, commits, compiler/target identities and reports for
   review.
 - A publishing check does not replace review of coverage gaps.
+
+The publishing check also accepts `--extra-forbidden-patterns <file>`. Each
+nonblank line is a Python regular expression, matched case-insensitively
+against every public file, including raw sources and legal notices. Lines
+whose first nonspace character is `#` are comments. Invalid expressions fail
+the check. Keep this optional policy file outside the published tree; the
+report records its hash and the matching pattern's line number.
 
 ### File sizes
 
@@ -189,10 +213,33 @@ every registered source that the ledgers quote.
 
 ### Rerunning after changes
 
+- Every suite run names either `--edition N` or `--langversion`: one or more
+  levels, an inclusive range such as `5..7.3`, `all`, or `earliest-per-test`.
+  The selectors cannot be combined. Edition runs use the registered level and
+  conflict table; [Results](RESULTS.md#edition-runs) describes their selection.
 - Use a fresh result directory for changed inputs.
 - `--resume` on version computation accepts only the same measurement
   identity, selection and policy, and it replays its saved prefix.
+- Bounds are exhaustive at every configured level. Keep the independent
+  reproducibility check (`--sample 200 --seed 1009`); a mismatch fails the run.
 - A pilot `--select`, which measures only selected tests, produces pilot
-  metadata and cannot install full-suite bounds.
+  metadata and cannot install full-suite bounds, even when the selection matches
+  the full inventory. For a pilot smaller than 200 tests, set `--sample` to its
+  complete inventory size; the independent sample still freshly measures every
+  configured level.
+- Measured version runs, edition runs and `check-versions.py` can read that
+  external `pilot-versions.json` with `--pilot-versions` and the same `--select`. They
+  require an exact source inventory, current measurement identity, fixture and
+  witness bindings, and a complete independent sample. The public bounds and
+  manifest stay unchanged. The pilot must match the candidate selection before
+  edition or version filtering removes any tests.
 - A source or witness edit invalidates its bounds. A measurement
   implementation or pinned-asset change can invalidate the complete metadata.
+- The shared measurement identity binds the complete platform pin matrix;
+  execution evidence binds the host's selected files. Check the same fixed-seed
+  selection on each supported host before sharing bounds. Record any outcome
+  difference and its cause without changing a test to hide it.
+- Framework bounds remain original runtime observations on Windows. Their
+  rows bind the observed serviced runtime. A pilot without Framework tests can
+  run on any supported `dotnet` host; a selection containing them needs
+  Windows and `net481`.

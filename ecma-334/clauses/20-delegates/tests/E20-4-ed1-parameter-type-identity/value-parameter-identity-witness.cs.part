@@ -1,0 +1,19 @@
+// ECMA-334 1st ed 14.5.10.3, p. 150 (PDF p. 164), line 12 applies the 1st edition's 22.1
+// type identity. Only the target declaration's corresponding parameter type is repaired.
+using System;
+class Root { }
+class Leaf : Root { }
+delegate void Source(Root value);
+delegate void Receiver(Root value);
+class Entry
+{
+    static void Capture(Root value) { }
+    public static int Main()
+    {
+        Source source = new Source(Capture);
+        Receiver receiver = new Receiver(source);
+        receiver(new Leaf());
+        Console.WriteLine("OK 0");
+        return 0;
+    }
+}

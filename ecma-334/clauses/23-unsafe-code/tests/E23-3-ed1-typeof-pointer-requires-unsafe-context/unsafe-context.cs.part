@@ -1,0 +1,10 @@
+// ECMA-334 1st ed 25.1, p. 321 (PDF p. 335), line 24. Refuse a typeof expression
+// containing a pointer type outside an unsafe context.
+class Entry
+{
+    static unsafe void Main()
+    {
+        System.Type marker = typeof(long*);
+        if (marker == null) throw new System.Exception();
+    }
+}

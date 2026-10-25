@@ -1,0 +1,12 @@
+// ECMA-334 1st ed 25.1, p. 322 (PDF p. 336), lines 31-33. The unsafe static-constructor
+// productions place unsafe before static (with the specified optional extern orders).
+using System;
+class Entry
+{
+    unsafe static Entry() { }
+    static int Main()
+    {
+        Console.WriteLine("OK 0");
+        return 0;
+    }
+}

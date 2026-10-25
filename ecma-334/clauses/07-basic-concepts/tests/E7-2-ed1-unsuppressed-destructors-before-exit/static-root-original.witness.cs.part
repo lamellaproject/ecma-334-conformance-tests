@@ -1,0 +1,64 @@
+// Positive construct witness uses explicit hosted collection, not shutdown.
+// Its success does not establish the disputed original exit policy.
+using System;
+// ECMA-334 1st ed 10.2, p. 70 (PDF p. 84), lines 6-8. Before an application's termination,
+// invoke the destructors of its objects not yet garbage collected unless their cleanup has
+// been suppressed.
+class ExitToken
+{
+    public int Value;
+
+    public ExitToken(int value)
+    {
+        Value = value;
+    }
+
+    ~ExitToken()
+    {
+        ExitAudit.Check(Value == 41, "shutdown-root-state");
+        ExitAudit.Report();
+    }
+}
+
+class ExitAudit
+{
+    static ExitToken root;
+    static bool suppress = false;
+    static int checks, failures;
+
+    public static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok)
+        {
+            failures++;
+            System.Console.WriteLine("FAIL " + id);
+        }
+    }
+
+    public static void Report()
+    {
+        if (failures == 0)
+            Console.WriteLine("OK " + checks);
+    }
+
+    [System.Runtime.CompilerServices.MethodImpl(System.Runtime.CompilerServices.MethodImplOptions.NoInlining)]
+    static int Prepare()
+    {
+        root = new ExitToken(41);
+        if (root.Value != 41)
+            return 1;
+        if (suppress)
+            System.GC.SuppressFinalize(root);
+        root = null;
+        return 0;
+    }
+
+    static int Main()
+    {
+        if (Prepare() != 0) return 1;
+        System.GC.Collect();
+        System.GC.WaitForPendingFinalizers();
+        return 0;
+    }
+}

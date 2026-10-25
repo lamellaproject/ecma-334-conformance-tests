@@ -104,3 +104,4 @@ E17-b102	ecma-334-ed7	17.7, p. 486 (PDF p. 514)		example
 E17-b103	ecma-334-ed7	17.7, p. 486 (PDF p. 514)		example	
 E17-b104	ecma-334-ed7	17.7, p. 486 (PDF p. 514)		example	
 E17-b105	ecma-334-ed7	17.7, p. 486 (PDF p. 514)		note	
+ed1-19.6-013	ecma-334-ed1	19.6, printed p. 281 (PDF p. 295)	E17-7-ed1-full-initializer-depth	rules	A diagnostic (reject) at ISO-1 for `int[,,] cells = {};`, `static byte[,,] cells = { {}, {}, {} };` and `new long[,,,] {}`; the full-depth controls compile and print OK 0. Existing tests that rely on the zero-length assumption belong to the later level.

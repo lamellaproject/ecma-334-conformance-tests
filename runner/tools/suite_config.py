@@ -3,8 +3,10 @@ from __future__ import annotations
 
 import json
 import os
+import platform
 import re
 import shutil
+import struct
 import string
 import sys
 from pathlib import Path
@@ -16,6 +18,38 @@ SYMBOLS = ["default", "latest", "latestmajor", "preview"]
 CODE = re.compile(r"[A-Za-z][A-Za-z0-9_-]*\Z")
 HEX = re.compile(r"[0-9a-f]{64}\Z")
 NAME = re.compile(r"[a-z][a-z0-9_-]*\Z")
+HOST_RIDS = {("win32", "x64"): "win-x64", ("linux", "x64"): "linux-x64",
+             ("darwin", "arm64"): "osx-arm64", ("linux", "arm64"): "linux-arm64"}
+
+
+def host_rid():
+    machine = platform.machine().lower()
+    architecture = {"amd64": "x64", "x86_64": "x64", "aarch64": "arm64", "arm64": "arm64"}.get(machine)
+    rid = HOST_RIDS.get((sys.platform, architecture))
+    if rid is None or struct.calcsize("P") != 8:
+        raise ValueError("No pinned assets for this host: " + sys.platform + "/" + machine)
+    return rid
+
+
+def validate_platforms(config, check_host):
+    if "platforms" in config:
+        strings(config["platforms"], nonempty=True, distinct=True)
+        if check_host and sys.platform not in config["platforms"]:
+            raise ValueError("This configuration does not support host platform " + sys.platform)
+
+
+def asset_entries(config, rid=None):
+    """Select one complete pin set; never fall back to another platform's pins."""
+    selected = {}
+    for name, entry in config["files"].items():
+        if "variants" in entry:
+            rid = rid or host_rid()
+            if rid not in entry["variants"]:
+                raise ValueError("No pinned asset variant for " + rid + ": " + name)
+            selected[name] = {"root": entry["root"], **entry["variants"][rid]}
+        else:
+            selected[name] = entry
+    return selected
 
 
 def strings(value, nonempty=False, distinct=False):
@@ -67,21 +101,38 @@ def validate_discovery(config):
     files = config["files"]
     if not isinstance(files, dict) or not files:
         raise ValueError("A configuration must pin its executable/assets")
+    variant_rids = None
     for name, entry in files.items():
         if not NAME.fullmatch(name):
             raise ValueError("Invalid asset name")
-        checked_object(entry, {"root", "path", "sha256"}, {"root", "path", "sha256"})
-        if entry["root"] not in roots or not isinstance(entry["path"], str) or not entry["path"] or "\0" in entry["path"]:
-            raise ValueError("Invalid pinned asset path")
-        if Path(entry["path"]).is_absolute() or re.match(r"(?:[A-Za-z]:|[/\\])", entry["path"]):
-            raise ValueError("Pinned assets must use paths relative to their discovery root")
-        if not isinstance(entry["sha256"], str) or not HEX.fullmatch(entry["sha256"]):
-            raise ValueError("Pinned assets require a lowercase SHA-256")
+        variant = "variants" in entry
+        fields = {"root", "variants"} if variant else {"root", "path", "sha256"}
+        checked_object(entry, fields, fields)
+        if entry["root"] not in roots:
+            raise ValueError("Invalid pinned asset root")
+        if variant:
+            variants = entry["variants"]
+            if not isinstance(variants, dict) or not variants or set(variants) - set(HOST_RIDS.values()):
+                raise ValueError("Asset variants must name supported host RIDs")
+            if variant_rids is not None and set(variants) != variant_rids:
+                raise ValueError("Every asset variant matrix must cover the same host RIDs")
+            variant_rids = set(variants)
+            for pin in variants.values():
+                checked_object(pin, {"path", "sha256"}, {"path", "sha256"})
+        else:
+            variants = {"common": entry}
+        for pin in variants.values():
+            if not isinstance(pin["path"], str) or not pin["path"] or "\0" in pin["path"]:
+                raise ValueError("Invalid pinned asset path")
+            if Path(pin["path"]).is_absolute() or re.match(r"(?:[A-Za-z]:|[/\\])", pin["path"]):
+                raise ValueError("Pinned assets must use paths relative to their discovery root")
+            if not isinstance(pin["sha256"], str) or not HEX.fullmatch(pin["sha256"]):
+                raise ValueError("Pinned assets require a lowercase SHA-256")
 
 
-def validate_compiler(config):
+def validate_compiler(config, check_host=True):
     checked_object(config, {"schema_version", "id", "version", "commit", "discovery", "files", "command",
-        "arguments", "requirements", "language", "diagnostics", "rejection_exit_codes", "artifact_extension"},
+        "arguments", "requirements", "language", "diagnostics", "rejection_exit_codes", "artifact_extension", "platforms"},
         {"schema_version", "id", "version", "commit", "discovery", "files", "command", "arguments", "requirements",
          "language", "diagnostics", "rejection_exit_codes", "artifact_extension"})
     if type(config["schema_version"]) is not int or config["schema_version"] != 1:
@@ -89,6 +140,7 @@ def validate_compiler(config):
     for key in ("id", "version", "commit"):
         if not isinstance(config[key], str) or not config[key]:
             raise ValueError("Missing compiler identity: " + key)
+    validate_platforms(config, check_host)
     validate_discovery(config)
     argv_template(config["command"], [*config["files"], "level", "output"],
                   ["sources", "references", "requirements", "kind", "entry_point"])
@@ -158,7 +210,7 @@ def validate_compiler(config):
         raise ValueError("Invalid artifact extension")
 
 
-def validate_target(config):
+def validate_target(config, check_host=True):
     fields = {"schema_version", "id", "description", "adapter", "platforms", "discovery", "files", "references",
               "capabilities", "build", "command", "batch_size"}
     checked_object(config, fields | {"architectures", "runtime"}, fields)
@@ -166,15 +218,11 @@ def validate_target(config):
         raise ValueError("Unsupported target schema/adapter")
     if any(not isinstance(config[k], str) or not config[k] for k in ("id", "description")):
         raise ValueError("Target needs an identity and description")
-    strings(config["platforms"], nonempty=True, distinct=True)
-    if sys.platform not in config["platforms"]:
-        raise ValueError("This target does not support host platform " + sys.platform)
+    validate_platforms(config, check_host)
     if "architectures" in config:
         if strings(config["architectures"], nonempty=True, distinct=True) != ["x64"]:
             raise ValueError("Only the x64 target architecture is supported")
-        import platform
-        import struct
-        if platform.machine().lower() not in {"amd64", "x86_64"} or struct.calcsize("P") != 8:
+        if check_host and (platform.machine().lower() not in {"amd64", "x86_64"} or struct.calcsize("P") != 8):
             raise ValueError("This target requires an x64 host and an x64 Python process")
     if config["adapter"] == "netframework":
         runtime = config.get("runtime", {})
@@ -228,10 +276,16 @@ def dotnet_roots(variables):
         yield canonical(executable).parent
 
 
+def read_config(path, kind, *, check_host=True):
+    config = json.loads(canonical(path).read_text(encoding="utf-8"))
+    (validate_compiler if kind == "compiler" else validate_target)(config, check_host=check_host)
+    return config
+
+
 def load_config(path, kind):
     path = canonical(path)
-    config = json.loads(path.read_text(encoding="utf-8"))
-    (validate_compiler if kind == "compiler" else validate_target)(config)
+    config = read_config(path, kind)
+    entries = asset_entries(config)
     roots, files, identities = {}, {}, {}
     for name, discovery in config["discovery"].items():
         if discovery["kind"] == "config":
@@ -243,12 +297,12 @@ def load_config(path, kind):
             candidates = list(reference_roots(discovery.get("environment", [])))
         else:
             candidates = [canonical(os.environ[v]) for v in discovery["environment"] if os.environ.get(v)]
-        entries = {key: entry for key, entry in config["files"].items() if entry["root"] == name}
-        root = next((p for p in candidates if all((p / e["path"]).is_file() for e in entries.values())), None)
+        required = {key: entry for key, entry in entries.items() if entry["root"] == name}
+        root = next((p for p in candidates if all((p / e["path"]).is_file() for e in required.values())), None)
         if root is None:
             raise ValueError("Pinned assets not installed under discovery root " + name)
         roots[name] = root
-    for name, entry in config["files"].items():
+    for name, entry in entries.items():
         asset = canonical(roots[entry["root"]] / entry["path"])
         actual = sha(asset)
         if actual != entry["sha256"]:
@@ -256,6 +310,8 @@ def load_config(path, kind):
         files[name] = str(asset)
         identities[name] = {"path": str(asset), "sha256": actual}
     identity = {"config_sha256": sha(path), "id": config["id"], "assets": identities}
+    if any("variants" in entry for entry in config["files"].values()):
+        identity["rid"] = host_rid()
     if kind == "target" and config["adapter"] == "netframework":
         from suite_netframework import runtime_identity
         identity["runtime"] = runtime_identity(config["runtime"]["minimum_release"])
@@ -272,6 +328,49 @@ def resolve_level(config, spelling):
     if name not in language["explicit"]:
         return None
     return {"level": name, "argument": language["explicit"][name], "mode": "explicit", "requested": spelling}
+
+
+def select_levels(config, selectors):
+    """Resolve explicit lists and inclusive ranges in configuration level order."""
+    names = [name.strip() for item in selectors for name in item.split(",")]
+    if not names or any(not name for name in names):
+        raise ValueError("Choose at least one language selector")
+    special = {"all", "earliest-per-test", "declared-per-test"}
+    if any(name.lower() in special for name in names):
+        if len(names) != 1:
+            raise ValueError("all and per-test selectors cannot be combined with other language selectors")
+        selection = names[0].lower()
+        if selection != "all":
+            return selection, []
+    ordered = list(config["language"]["explicit"])
+    preview = resolve_level(config, "preview")
+    if preview:
+        ordered.append("preview")
+    resolutions = [resolve_level(config, name) for name in ordered]
+    labels = [level["level"] for level in resolutions]
+
+    def supported(name):
+        level = resolve_level(config, name)
+        if level is None:
+            raise ValueError("Requested language level is unsupported: " + name)
+        return level
+
+    selected = []
+    for name in ordered if names[0].lower() == "all" else names:
+        if ".." in name:
+            endpoints = name.split("..")
+            if len(endpoints) != 2 or not all(part.strip() for part in endpoints):
+                raise ValueError("A language range needs two endpoints: " + name)
+            lower, upper = [labels.index(supported(part.strip())["level"]) for part in endpoints]
+            if lower > upper:
+                raise ValueError("Language range endpoints are reversed: " + name)
+            levels = resolutions[lower:upper + 1]
+        else:
+            levels = [supported(name)]
+        for level in levels:
+            if level["level"] not in [item["level"] for item in selected]:
+                selected.append(level)
+    return "explicit", selected
 
 
 def level_tuple(value):

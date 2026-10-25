@@ -9,9 +9,10 @@ or an explicit reason it remains untested. Passing the suite establishes the
 recorded observations, not complete language conformance.
 
 The standard under test is [ECMA-334](https://ecma-international.org/publications-and-standards/standards/ecma-334/). Tests for C# features newer than the latest
-published ECMA-334 spec follow C# language proposals or the reference compiler's
-behavior. The source registry pins its editions, secondary references and
-compiler authority for later language features. Tests, ledgers and compiler
+published ECMA-334 edition take their rules from the C# feature specifications,
+and the pinned reference compiler decides their expected results. The source
+registry pins its editions, secondary references and compiler authority for
+later language features. Tests, ledgers and compiler
 configurations can grow without changing the runner.
 
 ## Status
@@ -23,50 +24,77 @@ tests, rule ledgers and expected results are subject to change.
 ## Run
 
 Use Python 3.10 or later and the exact compiler and runtime assets named in the
-configurations. The shipped targets currently require Windows x64. See
+configurations. The `dotnet` target supports Windows x64, Linux x64, macOS arm64
+and Linux arm64. The `net481` target requires Windows x64. See
 [target prerequisites](docs/TARGETS.md) for discovery variables and runtime pins.
-Run the commands below from the repository root.
+Run the commands below from the repository root, using your Python interpreter
+(`python3` on systems that use that name).
 
-### Run each test at the version it was written for
+### Run tests at the version you choose
 
 ```text
-python runner/run-suite.py --compiler configs/compilers/csc.json --target configs/targets/dotnet.json --results ../results/csc-own-versions --jobs 12
+python runner/run-suite.py --compiler configs/compilers/csc.json --target configs/targets/dotnet.json --results ../results/csc-7.3 --langversion 7.3 --jobs 12
 ```
 
-This runs every test once, at the C# version in its `Version` header: the
-version the test was written for. For most tests that is 7.3, the version the
-ECMA-334 7th edition describes, even when the feature they test is older. Tests
-for features added after that edition use the version they were written for,
-from 8.0 to 15.0, or `preview`. A test whose version the compiler does not
-support is reported as `unsupported`. Results are written to the folder named by
-`--results` (any folder works), and `--jobs 12` runs up to 12 tests at a time.
+This runs the suite once at C# 7.3, the version the ECMA-334 7th edition
+describes. It leaves out tests whose authority is an older edition, as
+explained below. Each test's measured range decides whether it runs normally,
+checks rejection of a newer feature, or is `not-applicable`, as described
+below. Results are written to the folder named by `--results` (any folder
+works), and `--jobs 12` runs up to 12 tests at a time. A run must name its
+language selection; without `--langversion` or `--edition` it stops and lists
+the choices.
 
-### Run every test at the versions you choose
+### Run tests at several versions
 
 ```text
 python runner/run-suite.py --compiler configs/compilers/csc.json --target configs/targets/dotnet.json --results ../results/csc-chosen-versions --langversion 1,2,3,7.3,latest --jobs 12
 ```
 
-This runs every test at each version you list: here C# 1, 2 and 3, C# 7.3 (the
-version the latest ECMA-334 edition describes), and `latest`, which each
+This runs the version selection at each version you list: here C# 1, 2 and 3,
+C# 7.3 (the version the latest ECMA-334 edition describes), and `latest`, which each
 compiler configuration maps to a version. Each test has a measured range of
 versions: the unbroken run of versions, including its own, at which the
 reference compiler passes it. At a version inside that range, the test runs
 normally. Below the range, where the reference compiler refuses the feature, the
 test checks that your compiler refuses it too. Otherwise the test is reported as
-`not-applicable`. `--langversion all` selects every version the configuration
-lists. If you name a version the compiler does not support, the run stops.
+`not-applicable`. `--langversion 5..7.3` selects an inclusive range, in the
+compiler configuration's level order. `--langversion all` selects every version
+the configuration lists, including its supported preview mode.
+`--langversion earliest-per-test` runs each test once, at the first level of
+its measured range. These runs require current measured ranges. If you name a
+version the compiler does not support, the run stops.
+
+Version runs use the latest standard edition's answers and compiler-authority
+tests. They exclude tests whose authority is an older standard edition.
+
+### Run an older edition
+
+```text
+python runner/run-suite.py --compiler configs/compilers/csc.json --target configs/targets/dotnet.json --results ../results/csc-edition-1 --edition 1 --jobs 12
+```
+
+An edition run checks a registered older edition at its fixed language level.
+`--edition 1` runs the ECMA-334 1st edition at ISO-1 (C# 1). It includes
+every test with that edition's authority, plus other tests whose current
+measured interval contains that level. The edition's conflict table removes
+tests it replaces or leaves out. These runs require current bounds, and results
+name the edition and level. `--edition` and `--langversion` cannot be combined.
 
 ### Running part of the suite
 
 Add `--suite ecma-334`, `--select` with a regular expression on test IDs, or
-`--origin handwritten|generated|post7`.
+`--origin handwritten|generated|post-ecma`. `post-ecma` selects tests for
+features newer than the latest ECMA-334 edition. Their rules come from the C#
+feature specifications, and the pinned reference compiler decides each expected
+result.
 
 ### Other compilers and runtimes
 
 To test another compiler or runtime, pass its configuration to `--compiler` or
 `--target`; configurations may live outside the repository. The `csc-framework`
-and `mcs` profiles cover older compiler language levels on the `net481` target.
+and `mcs` profiles are Windows-only. They cover older compiler language levels
+on the `net481` target.
 Their discovery prerequisites and commands are in
 [target prerequisites](docs/TARGETS.md).
 

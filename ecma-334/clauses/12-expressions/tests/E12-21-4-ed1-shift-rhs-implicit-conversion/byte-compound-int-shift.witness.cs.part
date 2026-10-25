@@ -1,0 +1,12 @@
+// ECMA-334 1st ed 14.13.2, p. 175 (PDF p. 189), lines 42-45 has no shift exception for the
+// right operand.
+class Entry
+{
+    public static int Main()
+    {
+        byte bits = 21;
+        int amount = 1;
+        bits <<= (byte)amount;
+        return bits == 42 ? 0 : 1;
+    }
+}

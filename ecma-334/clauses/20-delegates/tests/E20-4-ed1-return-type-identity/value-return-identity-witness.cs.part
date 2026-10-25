@@ -1,0 +1,20 @@
+// ECMA-334 1st ed 14.5.10.3, p. 150 (PDF p. 164), line 12 applies the 1st edition's 22.1
+// return identity. The source delegate and the target share every other signature
+// component.
+using System;
+class Root { }
+class Leaf : Root { }
+delegate Leaf Source();
+delegate Leaf Receiver();
+class Entry
+{
+    static Leaf Build() { return new Leaf(); }
+    public static int Main()
+    {
+        Source source = new Source(Build);
+        Receiver receiver = new Receiver(source);
+        receiver();
+        Console.WriteLine("OK 0");
+        return 0;
+    }
+}

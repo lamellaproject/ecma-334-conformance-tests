@@ -1,0 +1,12 @@
+// ECMA-334 1st ed 17.9.1, p. 259 (PDF p. 273), line 2. Refuse an decrement operator whose
+// return type is a proper derived class of its containing parameter type; the return type
+// must be that containing type itself.
+public class Branch
+{
+    public static Branch operator --(Branch value) { return null; }
+}
+public class Tip : Branch { }
+class Entry
+{
+    static void Main() { }
+}

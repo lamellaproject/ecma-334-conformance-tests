@@ -1,0 +1,19 @@
+using System;
+
+// ECMA-334 1st ed 25.5, p. 328 (PDF p. 342), line 5; context qualification p. 327 (PDF p.
+// 341), lines 50-51. A sizeof expression requires an unsafe context even for a predefined
+// int operand.
+
+class TestMain
+{
+    private static unsafe int Measure()
+    {
+        int storage = sizeof(int);
+        return storage;
+    }
+
+    public static void Main()
+    {
+        Console.WriteLine(Measure());
+    }
+}

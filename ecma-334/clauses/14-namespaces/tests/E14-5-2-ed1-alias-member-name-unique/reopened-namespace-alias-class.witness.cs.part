@@ -1,0 +1,8 @@
+// ECMA-334 1st ed 16.3.1, p. 205 (PDF p. 219), lines 36-48. The 1st edition's 10.3
+// combines namespace bodies; the 1st edition's 16.3.1 still requires uniqueness.
+namespace Ledger { class Label { } }
+namespace Ledger
+{
+    using NumericLabel = System.Int32;
+    class Entry { public static int Main() { return 0; } }
+}

@@ -1,0 +1,40 @@
+/*
+Rules: E12-8-16-6-ed1-exact-delegate-compatibility
+Authority: ECMA-334 1st ed 14.5.10.3
+Version: ISO-1
+Expected: reject
+Version-Witness: tests/E12-8-16-6-ed1-exact-delegate-compatibility/delegate-source-return-variance.witness.cs.part
+Mutate: delegate object ObjectMaker();
+Into: delegate string ObjectMaker();
+*/
+// ECMA-334 1st ed 14.5.10.3, p. 150 (PDF p. 164), lines 11-14. A delegate-valued
+// constructor argument must match the target delegate signature exactly.
+using System;
+delegate string TextMaker();
+delegate string Exact();
+delegate object ObjectMaker();
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool result, string label)
+    {
+        checks++;
+        if (!result)
+        {
+            failures++;
+            Console.WriteLine("FAIL " + label);
+        }
+    }
+    static string Create() { return "gem"; }
+    static int Main()
+    {
+        TextMaker source = new TextMaker(Create);
+        Exact same = new Exact(source);
+        ObjectMaker converted = new ObjectMaker(source);
+        Check(same() == "gem", "distinct-exact-types");
+        Check((string)converted() == "gem", "exact-return-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

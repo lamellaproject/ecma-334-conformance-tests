@@ -1,0 +1,46 @@
+// ECMA-334 1st ed 14.5.10.3, p. 150 (PDF p. 164), lines 11-14 and 41-42. Creating a
+// delegate from a delegate value copies its invocation list, rather than wrapping that
+// value as a single entry.
+using System;
+delegate void D();
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool result, string label)
+    {
+        checks++;
+        if (!result)
+        {
+            failures++;
+            Console.WriteLine("FAIL " + label);
+        }
+    }
+    static int trace;
+    static void First() { trace = trace * 10 + 1; }
+    static void Second() { trace = trace * 10 + 2; }
+    static void Last() { trace = trace * 10 + 3; }
+    static D Copy(D value) { return value; }
+    static int Main()
+    {
+        D first = new D(First);
+        D tail = new D(Last);
+        D single = Copy(first);
+        D sequence = first + new D(Second);
+        D multiple = Copy(sequence);
+        Check(single == first, "single-copy-equality");
+        Check(multiple == sequence, "multicast-copy-equality");
+        D singleRemainder = (first + tail) - single;
+        D multipleRemainder = (sequence + tail) - multiple;
+        Check(singleRemainder == tail, "single-removal-from-longer-list");
+        Check(multipleRemainder == tail, "multicast-removal-from-longer-list");
+        trace = 0;
+        singleRemainder();
+        Check(trace == 3, "single-remainder-invocation");
+        trace = 0;
+        multipleRemainder();
+        Check(trace == 3, "multicast-remainder-invocation");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

@@ -19,7 +19,7 @@
     "microsoft-csharp": {"root": "framework-reference", "path": "Microsoft.CSharp.dll", "sha256": "cd5767fef2ab0069042bb0c09f9095afcf29d2ceee82213728448d64e14eddd7"}
   },
   "references": {"mscorlib.dll": "mscorlib", "System.dll": "system", "System.Core.dll": "system-core", "Microsoft.CSharp.dll": "microsoft-csharp"},
-  "capabilities": ["framework-runtime", "process-launch"],
+  "capabilities": ["framework-runtime", "process-launch", "reflection"],
   "build": {"kinds": ["exe", "library"], "runtimeconfig": false, "artifact_extension": ".exe"},
   "command": ["{entry}", "{arguments}"],
   "batch_size": 12

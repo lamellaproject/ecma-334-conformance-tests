@@ -80,3 +80,4 @@ E19-6-operator-complement	ecma-334-ed7	19.6, p. 515 (PDF p. 543)	"""~"""	permits
 E19-6-operator-increment	ecma-334-ed7	19.6, p. 515 (PDF p. 543)	"""++"""	permits	Enum values support the ++ forms described in 12.8.15 and 12.9.6.		Source pointers: 12.8.15, 12.9.6.
 E19-6-operator-decrement	ecma-334-ed7	19.6, p. 515 (PDF p. 543)	"""--"""	permits	Enum values support the -- forms described in 12.8.15 and 12.9.6.		Source pointers: 12.8.15, 12.9.6.
 E19-6-operator-sizeof	ecma-334-ed7	19.6, p. 515 (PDF p. 543)	"""sizeof"""	permits	Enum types support sizeof as described in 23.6.9.		Source pointers: 23.6.9.
+E19-2-ed1-underlying-keyword-tokens	ecma-334-ed1	21.1, p. 297 (PDF p. 311), lines 15-24	""": integral-type"""	forbids	An explicitly specified enum base must use a permitted integral keyword token. Qualified System names or using aliases that denote those same underlying types do not satisfy the enum-base grammar.	ISO-1	See coverage.tsv for the mapped text block.

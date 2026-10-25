@@ -1,0 +1,39 @@
+/*
+Rules: E12-6-2-3-ed1-empty-params-fresh
+Authority: ECMA-334 1st ed 14.4.1
+Version: ISO-1
+Expected: run
+Stdout: OK 3
+Version-Witness: tests/E12-6-2-3-ed1-empty-params-fresh/separate-empty-arrays.witness.cs.part
+Mutate: string[] second = Capture();
+Into: string[] second = first;
+*/
+// ECMA-334 1st ed 14.4.1, p. 133 (PDF p. 147), lines 25-30. Each expanded-form call
+// creates a new parameter-array instance, including when it receives zero expanded
+// arguments.
+using System;
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool result, string label)
+    {
+        checks++;
+        if (!result)
+        {
+            failures++;
+            Console.WriteLine("FAIL " + label);
+        }
+    }
+    static string[] Capture(params string[] values) { return values; }
+    static int Main()
+    {
+        string[] first = Capture();
+        string[] second = Capture();
+        Check(first.Length == 0, "first-empty");
+        Check(second.Length == 0, "second-empty");
+        Check(!Object.ReferenceEquals(first, second), "fresh-array");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

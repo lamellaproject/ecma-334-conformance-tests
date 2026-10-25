@@ -1,3 +1,4 @@
 rule_id	reason
 E8-3-12-nullable-null-underlying-unspecified	No defined C# operation exposes a null nullable instance's underlying storage value; Value must throw, so asserting a stored value would constrain the explicitly undefined value.
 E8-6-expression-tree-api	Beyond Compile the standard names no required API or allowed-value set, so no portable standalone program can require an additional expression-tree API.
+E8-3-8-ed1-no-semantic-signed-decimal-zero	No portable standalone operation distinguishes a semantic decimal signed zero from an ordinary zero encoding with a sign flag. GetBits alone observes representation and cannot establish distinct semantic zero values. The explicit arithmetic sign/scale normalization rule is separately tested.

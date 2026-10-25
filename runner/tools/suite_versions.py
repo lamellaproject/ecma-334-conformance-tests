@@ -8,11 +8,15 @@ from functools import lru_cache
 from pathlib import Path
 
 from suite_common import ROOT, checked_object, digest, inside, mutated_source, scan_tests, sha, standard_root
-from suite_config import level_tuple, public_level
+from suite_config import level_tuple, public_level, read_config
 
 BASES = {"original", "repair", "feature-free-rejection", "departure-witness"}
-METHODS = {"exhaustive", "monotonic-search"}
+METHODS = {"exhaustive"}
+# Read historical shards so their rows can be reported as stale. New metadata
+# and measurement replay never accept the retired search method.
+LEGACY_METHODS = METHODS | {"monotonic-search"}
 FILE_LIMIT = 20 * 1024 * 1024
+_PILOT_VERSIONS = {}
 
 
 def shard_path(test_id):
@@ -43,7 +47,7 @@ def read_version_files(directory):
     index = json.loads((directory / "index.json").read_bytes(), object_pairs_hook=unique_object)
     fields = {"schema_version", "identity", "provenance", "levels", "sample", "row_shards", "implementation_revalidation"}
     checked_object(index, fields, fields - {"implementation_revalidation"})
-    if index["schema_version"] != 2 or not isinstance(index["row_shards"], list):
+    if index["schema_version"] not in {2, 3} or not isinstance(index["row_shards"], list):
         raise ValueError("Unsupported version index")
     rows, paths, test_ids = {}, [], set()
     for entry in index.pop("row_shards"):
@@ -59,7 +63,7 @@ def read_version_files(directory):
             raise ValueError("Version shard hash differs: " + relative)
         shard = json.loads(path.read_bytes(), object_pairs_hook=unique_object)
         checked_object(shard, {"schema_version", "rows"}, {"schema_version", "rows"})
-        if shard["schema_version"] != 2 or not isinstance(shard["rows"], dict):
+        if shard["schema_version"] != index["schema_version"] or not isinstance(shard["rows"], dict):
             raise ValueError("Invalid version shard: " + relative)
         count = 0
         for source_hash, tests in shard["rows"].items():
@@ -84,7 +88,7 @@ def read_version_files(directory):
 def write_version_files(directory, metadata):
     """Generate fixed-format LF JSON; update the index after its shards."""
     validate_metadata(metadata)
-    if metadata["schema_version"] != 2:
+    if metadata["schema_version"] != 3:
         raise ValueError("Only current metadata may be published")
     directory = Path(directory)
     shards = {}
@@ -95,7 +99,7 @@ def write_version_files(directory, metadata):
     index["row_shards"] = []
     outputs = {}
     for relative, rows in sorted(shards.items()):
-        data = json_bytes({"schema_version": 2, "rows": rows})
+        data = json_bytes({"schema_version": 3, "rows": rows})
         outputs[relative] = data
         index["row_shards"].append({"path": relative, "sha256": hashlib.sha256(data).hexdigest(),
                                     "rows": sum(map(len, rows.values()))})
@@ -136,31 +140,38 @@ def revalidated_files(metadata):
     return files
 
 
-def measurement_identity(context, suite_id, other_contexts=()):
-    """Ship hashes and relative paths; local compiler/runtime locations stay in external evidence."""
+def observed_runtime(identity):
+    """Keep a serviced Framework observation without its machine-local paths."""
+    runtime = identity["runtime"]
+    return {**{key: runtime[key] for key in ["kind", "architecture", "release", "version"]},
+            "assets": {name: {key: value[key] for key in ["sha256", "version"]}
+                       for name, value in runtime["assets"].items()}}
+
+
+def measurement_identity(context, suite_id, framework_target=None):
+    """Bind the complete pin matrix; executions retain their own selected assets."""
     files = dict(context.identity["suite_files"])
     files.update({relative: sha(inside(ROOT, relative)) for relative in
                   ["configs/compilers/csc.json", "configs/targets/dotnet.json", "configs/targets/net481.json", suite_id + "/source-registry.json"]})
-    for relative in ["runner/tools/compute-versions.py", "runner/tools/suite_measurements.py", "runner/tools/suite_version_schedule.py"]:
+    for relative in ["runner/tools/compute-versions.py", "runner/tools/suite_measurements.py",
+                     "runner/tools/suite_version_schedule.py", "runner/tools/suite_netframework.py"]:
         implementation = ROOT / relative
         if implementation.is_file():
             files[relative] = sha(implementation)
-    assets = lambda identity: {name: value["sha256"] for name, value in identity["assets"].items()}
     targets = {}
-    for current in (context, *other_contexts):
-        files.update(current.identity["suite_files"])
-        identity = current.identity["target_identity"]
-        target = {"assets": assets(identity), "config_sha256": identity["config_sha256"],
-                  "capabilities": current.target_config["capabilities"]}
-        if "runtime" in identity:
-            runtime = identity["runtime"]
-            target["runtime"] = {k: runtime[k] for k in ["kind", "architecture", "release", "version"]}
-            target["runtime"]["assets"] = {name: {k: value[k] for k in ["sha256", "version"]}
-                                          for name, value in runtime["assets"].items()}
-        targets[current.target_config["id"]] = target
+    for path in [context.target_path, framework_target or ROOT / "configs/targets/net481.json"]:
+        config = read_config(path, "target", check_host=False)
+        target = {"assets": config["files"], "config_sha256": sha(path),
+                  "capabilities": config["capabilities"], "platforms": config["platforms"]}
+        if "runtime" in config:
+            # Framework rows bind the actual serviced runtime separately. Its
+            # Windows-only observation is never represented as a portable run.
+            target["runtime_requirement"] = config["runtime"]
+        targets[config["id"]] = target
     return {"compiler_id": context.config["id"], "compiler_commit": context.config["commit"],
-            "compiler_version": context.config["version"], "compiler_assets": assets(context.identity["compiler_identity"]),
-            "target_id": context.target_config["id"], "target_assets": assets(context.identity["target_identity"]), "targets": targets,
+            "compiler_version": context.config["version"], "compiler_assets": context.config["files"],
+            "asset_policy": "configured-platform-matrix", "target_id": context.target_config["id"],
+            "target_assets": targets[context.target_config["id"]]["assets"], "targets": targets,
             "compile_timeout": context.compile_timeout, "run_timeout": context.run_timeout, "suite_files": files}
 
 
@@ -169,9 +180,9 @@ def validate_metadata(metadata):
     if metadata.get("schema_version") == 1:
         required.add("rate_check")
     checked_object(metadata, required | {"implementation_revalidation"}, required)
-    if metadata["schema_version"] not in {1, 2} or not isinstance(metadata["rows"], dict):
+    if metadata["schema_version"] not in {1, 2, 3} or not isinstance(metadata["rows"], dict):
         raise ValueError("Unsupported version metadata")
-    if metadata["schema_version"] == 2 and "suite_commit" in metadata["provenance"]:
+    if metadata["schema_version"] >= 2 and "suite_commit" in metadata["provenance"]:
         raise ValueError("Version provenance identifies implementation by content hashes")
     levels = metadata["levels"]
     if not isinstance(levels, list) or not levels or len(levels) != len(set(levels)):
@@ -186,13 +197,33 @@ def validate_metadata(metadata):
             raise ValueError("Invalid source-hash-keyed version rows")
         for test_id, row in tests.items():
             checked_object(row, {"since", "until", "fixture_sha256", "declared_witness_sha256", "witness_sha256", "basis",
-                                 "method", "measurement_target", "below_since", "other_passing_levels", "observations", "evidence_sha256"},
+                                 "method", "measurement_target", "measurement_runtime", "below_since", "other_passing_levels", "observations", "evidence_sha256"},
                            {"since", "fixture_sha256", "declared_witness_sha256", "witness_sha256", "basis", "method",
                             "measurement_target", "below_since", "other_passing_levels", "observations", "evidence_sha256"})
-            if row["since"] not in levels or row["basis"] not in BASES or row["method"] not in METHODS:
+            methods = METHODS if metadata["schema_version"] >= 3 else LEGACY_METHODS
+            if row["since"] not in levels or row["basis"] not in BASES or row["method"] not in methods:
                 raise ValueError("Invalid bounds/basis/method: " + test_id)
             if row["measurement_target"] not in metadata["identity"].get("targets", {}):
                 raise ValueError("Version row has no recorded measurement target: " + test_id)
+            if metadata["schema_version"] >= 3 and row["measurement_target"] == "net481":
+                if row["basis"] != "original" or row["method"] != "exhaustive":
+                    raise ValueError("Framework bounds require exhaustive original runtime observations: " + test_id)
+                runtime = row.get("measurement_runtime", {})
+                fields = {"kind", "architecture", "release", "version", "assets"}
+                checked_object(runtime, fields, fields)
+                if (runtime["kind"] != "netframework" or runtime["architecture"] != "x64"
+                        or type(runtime["release"]) is not int or runtime["release"] < 533320
+                        or not isinstance(runtime["version"], str) or not runtime["version"]
+                        or not isinstance(runtime["assets"], dict)
+                        or set(runtime["assets"]) != {"mscorlib.dll", "clr.dll", "clrjit.dll"}):
+                    raise ValueError("Framework bounds omit the observed Windows runtime: " + test_id)
+                for asset in runtime["assets"].values():
+                    checked_object(asset, {"sha256", "version"}, {"sha256", "version"})
+                    if (not isinstance(asset["sha256"], str) or not re.fullmatch(r"[0-9a-f]{64}", asset["sha256"])
+                            or not isinstance(asset["version"], str) or not asset["version"]):
+                        raise ValueError("Invalid observed Framework runtime asset: " + test_id)
+            elif "measurement_runtime" in row:
+                raise ValueError("Only Framework rows carry a serviced runtime observation: " + test_id)
             if row.get("until") and (row["until"] not in levels or level_tuple(row["until"]) < level_tuple(row["since"])):
                 raise ValueError("Invalid upper bound: " + test_id)
             below = row["below_since"]
@@ -232,6 +263,8 @@ def validate_metadata(metadata):
 
 @lru_cache(maxsize=None)
 def version_file(suite_id):
+    if suite_id in _PILOT_VERSIONS:
+        return _PILOT_VERSIONS[suite_id]
     path = standard_root(suite_id) / "versions"
     return read_version_files(path) if (path / "index.json").is_file() else None
 
@@ -289,6 +322,46 @@ def joined_tests(suite_id):
             test["since"], test["until"] = row["since"], row.get("until", "")
             test["versions_row_sha256"] = digest(row)
     return tests
+
+
+def use_pilot_versions(path, tests):
+    """Use a complete external pilot for exactly this selection, without publishing it."""
+    if not tests or len({test["suite_id"] for test in tests}) != 1:
+        raise ValueError("Pilot bounds require a nonempty selection from one standard")
+    metadata = validate_metadata(json.loads(Path(path).read_bytes(), object_pairs_hook=unique_object))
+    if not identity_current(metadata):
+        raise ValueError("Pilot measurement identity is stale")
+    expected = {(test["source_sha256"], test["test_id"]) for test in tests}
+    recorded = {(source, test_id) for source, values in metadata["rows"].items() for test_id in values}
+    if recorded != expected:
+        raise ValueError("Pilot bounds differ from the selected source inventory")
+    sample = metadata["sample"]
+    sampled_ids = sample.get("test_ids", [])
+    if (not sample.get("complete") or not sample.get("independent") or sample.get("mismatches")
+            or sample.get("levels") != metadata["levels"] or sample.get("tests", 0) < min(200, len(tests))
+            or len(sampled_ids) != sample.get("tests") or len(set(sampled_ids)) != len(sampled_ids)
+            or not set(sampled_ids) <= {test["test_id"] for test in tests}):
+        raise ValueError("Pilot bounds lack a complete independent all-level sample")
+    suite_id = tests[0]["suite_id"]
+    previous = _PILOT_VERSIONS.get(suite_id)
+    _PILOT_VERSIONS[suite_id] = metadata
+    version_file.cache_clear()
+    try:
+        selected = []
+        for test in tests:
+            row, status = version_row(test)
+            if status != "current":
+                raise ValueError("Pilot bounds are " + status + ": " + test["test_id"])
+            selected.append({**test, "version_status": status, "since": row["since"],
+                             "until": row.get("until", ""), "versions_row_sha256": digest(row)})
+        return selected
+    except Exception:
+        if previous is None:
+            _PILOT_VERSIONS.pop(suite_id, None)
+        else:
+            _PILOT_VERSIONS[suite_id] = previous
+        version_file.cache_clear()
+        raise
 
 
 def applicability(test, level):

@@ -1,0 +1,15 @@
+// ECMA-334 1st ed 24.1.3, p. 311 (PDF p. 325), lines 6-8. Refuse use of sbyte, ushort,
+// uint, or ulong as a scalar positional or named attribute parameter type.
+
+public class GrainAttribute : System.Attribute
+{
+    public GrainAttribute(int amount) { }
+}
+
+[Grain(19)]
+class MarkedEntity { }
+
+class ScalarEntry
+{
+    public static int Main() { return 0; }
+}

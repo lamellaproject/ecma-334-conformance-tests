@@ -31,6 +31,25 @@
         "numeric_label_in_foreword_or_scope": false,
         "corroboration_url": "https://learn.microsoft.com/en-us/dotnet/csharp/language-reference/compiler-options/language"
       }
+    },
+    {
+      "id": "ecma-334-ed1",
+      "standard": "ECMA-334",
+      "edition": "1st",
+      "role": "primary",
+      "authority_prefix": "ECMA-334 1st ed",
+      "language_version": "ISO-1",
+      "asset": "ECMA-334_1st_edition_december_2001.pdf",
+      "sha256": "ac93571b47aa424a31316a30ac7c9b99424b7347b81469847b738f9af8b51c39",
+      "url": "https://ecma-international.org/wp-content/uploads/ECMA-334_1st_edition_december_2001.pdf",
+      "text": {
+        "asset": "ed1-raw.txt",
+        "sha256": "7d08601e5b2121bd5f054fd430a59a2b39695d326d5a4f5b107b556948aaedf5"
+      },
+      "version_proof": {
+        "locator": "Cover: Standard ECMA-334, 1st Edition / December 2001 (PDF p. 1)",
+        "method": "Register the first-edition dialect as ISO-1, the suite's spelling for explicit level 1."
+      }
     }
   ],
   "references": [
@@ -175,6 +194,70 @@
         {
           "path": "proposals/unsafe-evolution.md",
           "sha256": "eb8008d7096758ff96b687c786b8e13d4c40f32735c3334a3202b672759c29a3"
+        },
+        {
+          "path": "proposals/csharp-8.0/using.md",
+          "sha256": "85be627f42d371f521b9fa56fbd08b4a324964adbe6895318428deaaf4a2c355"
+        },
+        {
+          "path": "proposals/csharp-9.0/top-level-statements.md",
+          "sha256": "91f3ce98257178772543f2cb94374c2409cacebe2bcbb4c6af7aa7acf4ba10ff"
+        },
+        {
+          "path": "proposals/csharp-10.0/file-scoped-namespaces.md",
+          "sha256": "295f3dfb8c3ed3cb311976c80bc824b94fc1154243c3dcea523fd351f41ed1bd"
+        },
+        {
+          "path": "proposals/csharp-9.0/records.md",
+          "sha256": "a3198542cb3ddbad72e522fdf5442c5762254d2e6d571bf1dfba2a11110f15e6"
+        },
+        {
+          "path": "proposals/csharp-9.0/patterns3.md",
+          "sha256": "cbca25304cf783787111a0e9b433fcbcab03c22eb0a3ace4c9d5ae39b34e1a81"
+        },
+        {
+          "path": "proposals/csharp-8.0/shadowing-in-nested-functions.md",
+          "sha256": "3fdca4a84cd81afd28644ee5a6f3d9e76d5174502f155d1bcbf0d5c210d35feb"
+        },
+        {
+          "path": "proposals/csharp-9.0/init.md",
+          "sha256": "299746635180451088968dc21830e0e4ef886be903357c63780a90434b5034e5"
+        },
+        {
+          "path": "proposals/csharp-8.0/nullable-reference-types-specification.md",
+          "sha256": "bf70c663712b133fb18a3fc446a827d1162d68b877543ad19af4f028ec10d3d1"
+        },
+        {
+          "path": "proposals/csharp-8.0/static-local-functions.md",
+          "sha256": "5e621b3af9bdb0ceb054ad21648550ab16085fab3c98adf58490d0e854948a0d"
+        },
+        {
+          "path": "proposals/csharp-10.0/record-structs.md",
+          "sha256": "6648b21cf551cda46a37801f487f82de1b87eb9ee39f08904ad5b5707ee0ae58"
+        },
+        {
+          "path": "proposals/csharp-9.0/nullable-constructor-analysis.md",
+          "sha256": "1ec805406bfdcf3fa11df6bb95fb0ca59f872c4903e349979908bf457d91badd"
+        },
+        {
+          "path": "proposals/csharp-8.0/default-interface-methods.md",
+          "sha256": "feebc11b0983ad0c24c2017ac76706a9f3ff81b9cf1cc2703ec12d4829f24c42"
+        },
+        {
+          "path": "proposals/csharp-8.0/null-coalescing-assignment.md",
+          "sha256": "957f0ada0c05f6cc83e2208129f9105ce08578fd701290c84c6e61ced74bb68a"
+        },
+        {
+          "path": "proposals/csharp-8.0/alternative-interpolated-verbatim.md",
+          "sha256": "e1b381b5c8f0f32705eccac535bc9c5e4d24919b6943669a691ee292f948e954"
+        },
+        {
+          "path": "proposals/csharp-10.0/parameterless-struct-constructors.md",
+          "sha256": "8449fc73d19ead4997183738e4fb6162c4155a1325207005bfd3751aeb9eadc0"
+        },
+        {
+          "path": "proposals/csharp-8.0/ranges.md",
+          "sha256": "9419e0ac1a7ac5309d11cf3ee4ea64a38c2abbf82e8197f5211e7d93ec077363"
         }
       ]
     },
@@ -204,12 +287,27 @@
     }
   ],
   "raw_source_rules": [
-    "E6-1-transformation", "E6-1-utf8", "E6-2-1-terminal-codepoints", "E6-2-3-unicode-terminals",
-    "E6-3-2-append-final-cr", "E6-3-2-grammar-new-line-2", "E6-3-2-remove-final-control-z",
-    "E6-3-3-grammar-new-line-character-1", "E6-3-3-grammar-new-line-character-3",
-    "E6-3-3-grammar-new-line-character-4", "E6-3-3-grammar-new-line-character-5",
-    "E6-3-4-grammar-whitespace-2", "E6-4-3-grammar-combining-character-1",
-    "E6-4-3-grammar-formatting-character-1"
+    "E6-1-transformation",
+    "E6-1-utf8",
+    "E6-2-1-terminal-codepoints",
+    "E6-2-3-unicode-terminals",
+    "E6-3-2-append-final-cr",
+    "E6-3-2-grammar-new-line-2",
+    "E6-3-2-remove-final-control-z",
+    "E6-3-3-grammar-new-line-character-1",
+    "E6-3-3-grammar-new-line-character-3",
+    "E6-3-3-grammar-new-line-character-4",
+    "E6-3-3-grammar-new-line-character-5",
+    "E6-3-4-grammar-whitespace-2",
+    "E6-4-3-grammar-combining-character-1",
+    "E6-4-3-grammar-formatting-character-1",
+    "E6-3-2-ed1-nel-not-line-terminator",
+    "E6-3-3-ed1-nel-comment-content",
+    "E6-4-5-5-ed1-raw-nel-character",
+    "E6-4-5-6-ed1-raw-nel-string",
+    "E6-5-1-ed1-directive-nel-not-terminator",
+    "E6-5-6-ed1-message-consumes-nel",
+    "E6-5-8-ed1-raw-nel-filename"
   ],
   "compiler_authority": {
     "id": "csc",

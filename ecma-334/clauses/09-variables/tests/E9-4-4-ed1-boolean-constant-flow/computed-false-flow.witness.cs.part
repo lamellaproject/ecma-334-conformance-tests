@@ -1,0 +1,12 @@
+// ECMA-334 1st ed 12.3.3, p. 108 (PDF p. 122), lines 17-40. An unassigned local in the
+// right operand of a false conditional-and expression still causes a definite-assignment
+// error.
+class Entry
+{
+    static void Main()
+    {
+        int token = 0;
+        bool signal = (2 > 3) && token == 7;
+        System.Console.WriteLine(signal ? 0 : 1);
+    }
+}

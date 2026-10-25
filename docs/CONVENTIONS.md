@@ -78,7 +78,7 @@ that record the clause's rules and how they are covered.
 | `coverage.tsv` | A map from each inventoried text block to rules, or to an explained disposition. |
 | `untested.tsv` | The reason for each rule that has no test. |
 | `retired-rules.tsv` | Optional. Retired rules: each row has the columns of `rules.tsv` plus a `retirement_reason`. |
-| `version-witnesses.tsv` | Optional; today only `10-conversions` has one. It pairs later-feature rules with an existing test that serves as a positive witness, and records the language version before the rule's version (`previous_version`), a `mode` (`feature-unavailable`, `predecessor-rejection` or `accepted-predecessor`) and a `reason` that cites the source. No published tool reads it. |
+| `version-witnesses.tsv` | Optional. It pairs later-feature rules with an existing test that serves as a positive witness, and records the language version before the rule's version (`previous_version`), a `mode` (`feature-unavailable`, `predecessor-rejection` or `accepted-predecessor`) and a `reason` that cites the source. No tool in the suite reads it. |
 
 For example, the rule `E10-1-representation` in
 `clauses/10-conversions/rules.tsv` quotes "change in representation" from
@@ -151,9 +151,9 @@ The header keys, in their required order:
 | --- | --- | --- |
 | `Rules` | Yes | Existing IDs separated by `; `, primary first. |
 | `Authority` | Yes | Registered standard edition and subclause, or the registered csc feature authority. See [Authority and Version](#authority-and-version). |
-| `Version` | Yes | Default language level for a run. It does not claim the feature's earliest level. |
+| `Version` | Yes | Declared language level and anchor of the measured interval. It does not claim the feature's earliest level. |
 | `Expected` | Yes | `run` or `reject`. |
-| `Stdout` | For `run` | `OK <count>`; execution must append exactly one LF. Omit it for `reject`. |
+| `Stdout` | For `run` | `OK <count>`, or a JSON string of exact uppercase marker lines followed by `OK <count>`; execution must append exactly one LF. Omit it for `reject`. |
 | `Diagnostic` | No | Only on `run`: `warning` requires a program warning; `none` forbids one. |
 | `Requirements` | No | Neutral names separated by `; `: `unsafe-disabled` or `updated-memory-safety`. |
 | `Fixture` | No | Compact JSON compilation graph, arguments and target capabilities. See [Fixtures](#fixtures). |
@@ -173,6 +173,12 @@ Notes on the table:
   how they are used.
 - Unknown keys, invalid order and ambiguous mutation replacements are errors.
 
+Marker lines make intermediate progress observable when a host may terminate
+before the final counted result. For example, `Stdout: "BASE\nOK 2"` requires
+the marker, LF, the counted result, and LF, in that order. Markers contain only
+uppercase ASCII letters, digits, spaces, underscores or hyphens, begin with a
+letter, and cannot be failed-check lines.
+
 ### Authority and Version
 
 An `Authority` header takes one of two forms:
@@ -182,11 +188,24 @@ An `Authority` header takes one of two forms:
 | A standard edition | The edition's registered prefix, followed by the primary subclause | `ECMA-334 7th ed 10.8` | The edition's registered language level (`7.3` for the 7th edition) |
 | A later feature | `csc <version> (C# <level>)`, matching the source registry and the test's `Version` | `csc 5.11.0-1.26425.128 (C# 9.0)` | `<level>` |
 
-These headers are defaults for a run, not claims about the earliest version in
-which a construct applies. `Since` and `Until` are not header keys: they
+These headers record the declared level, not the earliest version in which a
+construct applies. Runs select their language levels explicitly. `Since` and
+`Until` are not header keys: they
 belong in source-keyed generated metadata (see [Bounds](#bounds)). A source
 edit, fixture edit, witness edit or measurement-identity change requires new
 bounds.
+
+Where an older edition does not decide a question, the suite follows the reading
+stated in later editions unless the older edition's own text rules it out.
+
+The 1st edition's conformance clause (clause 2) requires a diagnostic for a
+violated requirement worded `must`, `cannot`, `shall` or `shall not`, and permits
+an implementation to compile the program after that diagnostic. The suite tests
+such requirements as `reject`. If the reference compiler already warns for
+exactly that construct and the edition does not require a `compile-time error`,
+the warning supplies the diagnostic. The rule then remains untested because
+the test contract cannot require either an error or a warning independently
+of whether compilation succeeds.
 
 ### Language level spellings
 
@@ -230,9 +249,10 @@ supports it. No `-subset` spellings are accepted.
 
 ### Counted checks
 
-A run test passes only when it exits with code 0 and prints exactly the
-`OK <count>` line its `Stdout` header declares. Count each check, and print
-that line only when every check succeeds.
+A run test passes only when it exits with code 0 and prints exactly the output
+its `Stdout` header declares, including any markers before the final
+`OK <count>` line. Count each check, and print that final line only when every
+check succeeds.
 
 Run tests accumulate counted checks and failures:
 
@@ -293,7 +313,10 @@ with these keys:
 | `libraries` | Libraries with distinct names. They compile before the program. |
 | `program` | The main program. It may specify `entry_point`. |
 | `arguments` | Literal strings passed to the program. |
-| `target_requires` | Required target capabilities, which include `framework-runtime` and `process-launch`. |
+| `target_requires` | Required target capabilities, which include `framework-runtime`, `process-launch` and `reflection`. |
+
+Tests that need runtime reflection to observe attribute values declare
+`reflection`; a target without it reports a target capability gap.
 
 Inside `libraries` and `program`:
 

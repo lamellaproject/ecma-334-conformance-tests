@@ -362,6 +362,24 @@ def fixture_info(fixture, suite_id, clause, is_raw, source_diagnostics):
     return digest({"fixture": fixture, "dependencies": dependencies})
 
 
+@lru_cache(maxsize=None)
+def edition_authority_rules(suite_id):
+    """Bind renumbered edition IDs to their owning ledger's registered authority."""
+    return read_rules(suite_id)
+
+
+def expected_stdout(value):
+    """Decode counted output, optionally preceded by exact progress markers."""
+    if value.startswith('"'):
+        value = json.loads(value)
+    if not isinstance(value, str) or not re.fullmatch(
+            r"(?:[A-Z][A-Z0-9 _-]*\n)*OK (?:0|[1-9][0-9]*)", value):
+        raise ValueError("Run Stdout must pin the count after any marker lines")
+    if any(line.startswith("FAIL ") for line in value.split("\n")[:-1]):
+        raise ValueError("Run Stdout cannot expect a failed check")
+    return value + "\n"
+
+
 def parse_test(path, suite_id="ecma-334"):
     path = canonical(path)
     relative = path.relative_to(standard_root(suite_id))
@@ -384,8 +402,7 @@ def parse_test(path, suite_id="ecma-334"):
     expected = metadata["Expected"]
     if expected not in {"run", "reject"}:
         raise ValueError("Expected must be run or reject")
-    if expected == "run" and not re.fullmatch(r"OK (?:0|[1-9][0-9]*)", metadata.get("Stdout", "")):
-        raise ValueError("Run Stdout must pin the count: " + str(relative))
+    stdout = expected_stdout(metadata.get("Stdout", "")) if expected == "run" else ""
     if expected == "reject" and "Stdout" in metadata:
         raise ValueError("A reject test cannot have Stdout")
     diagnostic = metadata.get("Diagnostic", "")
@@ -405,7 +422,16 @@ def parse_test(path, suite_id="ecma-334"):
     compiler = re.fullmatch(r"csc ([^ ]+) \(C# ([^)]+)\)", authority)
     if edition:
         subclause = authority.removeprefix(edition["authority_prefix"] + " ")
-        if not re.fullmatch(r"\d+(?:\.\d+)*", subclause) or not ids[0].startswith("E" + subclause.replace(".", "-") + "-"):
+        if not re.fullmatch(r"\d+(?:\.\d+)*", subclause):
+            raise ValueError("Authority does not locate the primary rule")
+        qualifier = re.search(r"-ed[1-9][0-9]*-", ids[0])
+        if qualifier:
+            rule = edition_authority_rules(suite_id).get(ids[0])
+            marker = "-" + edition["id"].removeprefix(suite_id + "-") + "-"
+            if (qualifier[0] != marker or not rule or rule["source_id"] != edition["id"]
+                    or not re.match(re.escape(subclause) + r"(?=[,; ]|$)", rule["locator"])):
+                raise ValueError("Authority does not locate the primary rule")
+        elif not ids[0].startswith("E" + subclause.replace(".", "-") + "-"):
             raise ValueError("Authority does not locate the primary rule")
         if public_level(metadata["Version"]) != public_level(edition["language_version"]):
             raise ValueError("Standard test has the wrong header Version")
@@ -453,7 +479,7 @@ def parse_test(path, suite_id="ecma-334"):
         if not witness.endswith(".cs.part") or not inside(standard_root(suite_id) / "clauses" / relative.parts[1], witness).is_file():
             raise ValueError("Version-Witness must be an existing clause-relative .cs.part")
     return dict(zip(MANIFEST_FIELDS, [suite_id, "--".join([relative.parts[1], ids[0], path.stem]), relative.as_posix(),
-        ";".join(ids), authority, metadata["Version"], expected, json.dumps(metadata["Stdout"] + "\n" if expected == "run" else ""),
+        ";".join(ids), authority, metadata["Version"], expected, json.dumps(stdout),
         "generated" if generated else "handwritten", old, new, csc, generator, sha(path), diagnostic,
         json.dumps(requirements), json.dumps(fixture, sort_keys=True), json.dumps(observations, sort_keys=True), witness,
         fixture_hash, "missing", "", "", ""]))

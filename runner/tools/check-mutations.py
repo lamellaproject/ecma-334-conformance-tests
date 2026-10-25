@@ -27,7 +27,7 @@ def classify(test, original, mutant, confirmed):
         return "inconclusive-original", original["status"] + ":" + original["reason"]
     if mutant["status"] in {"unsupported", "infrastructure", "compiler-error"}:
         return "inconclusive-mutant", mutant["status"] + ":" + mutant["reason"]
-    if test["diagnostic"]:
+    if test["diagnostic"] == "warning":
         accepted = mutant["compile_exit"] == 0 and mutant["status"] == "pass"
         changed = warning_present(original) != warning_present(mutant)
         return ("killed", "warning-cause-changed") if accepted and changed else ("survived", "warning-cause-not-proved")
@@ -94,7 +94,7 @@ def main():
         raw = mutated_source(test, context.source_path(test).read_bytes())
         mutant_test = dict(test)
         mode = "mutation"
-        if test["expected"] == "reject" or test["diagnostic"]:
+        if test["expected"] == "reject" or test["diagnostic"] == "warning":
             # A reject's causal witness must compile; warning changes must preserve compilation.
             mutant_test["expected"] = "run"
             mode = "compile-only"

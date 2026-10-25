@@ -57,25 +57,71 @@
     "files": {
       "type": "object",
       "additionalProperties": {
-        "type": "object",
-        "properties": {
-          "root": {
-            "type": "string"
+        "oneOf": [
+          {
+            "type": "object",
+            "properties": {
+              "root": {
+                "type": "string"
+              },
+              "path": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-f]{64}$"
+              }
+            },
+            "required": [
+              "root",
+              "path",
+              "sha256"
+            ],
+            "additionalProperties": false
           },
-          "path": {
-            "type": "string"
-          },
-          "sha256": {
-            "type": "string",
-            "pattern": "^[0-9a-f]{64}$"
+          {
+            "type": "object",
+            "properties": {
+              "root": {
+                "type": "string"
+              },
+              "variants": {
+                "type": "object",
+                "propertyNames": {
+                  "enum": [
+                    "win-x64",
+                    "linux-x64",
+                    "osx-arm64",
+                    "linux-arm64"
+                  ]
+                },
+                "additionalProperties": {
+                  "type": "object",
+                  "properties": {
+                    "path": {
+                      "type": "string"
+                    },
+                    "sha256": {
+                      "type": "string",
+                      "pattern": "^[0-9a-f]{64}$"
+                    }
+                  },
+                  "required": [
+                    "path",
+                    "sha256"
+                  ],
+                  "additionalProperties": false
+                },
+                "minProperties": 1
+              }
+            },
+            "required": [
+              "root",
+              "variants"
+            ],
+            "additionalProperties": false
           }
-        },
-        "required": [
-          "root",
-          "path",
-          "sha256"
-        ],
-        "additionalProperties": false
+        ]
       },
       "minProperties": 1
     },
@@ -92,11 +138,29 @@
       },
       "uniqueItems": true
     },
-    "architectures": {"type": "array", "items": {"const": "x64"}, "minItems": 1, "uniqueItems": true},
+    "architectures": {
+      "type": "array",
+      "items": {
+        "const": "x64"
+      },
+      "minItems": 1,
+      "uniqueItems": true
+    },
     "runtime": {
       "type": "object",
-      "properties": {"kind": {"const": "netframework"}, "minimum_release": {"type": "integer", "minimum": 533320}},
-      "required": ["kind", "minimum_release"],
+      "properties": {
+        "kind": {
+          "const": "netframework"
+        },
+        "minimum_release": {
+          "type": "integer",
+          "minimum": 533320
+        }
+      },
+      "required": [
+        "kind",
+        "minimum_release"
+      ],
       "additionalProperties": false
     },
     "build": {

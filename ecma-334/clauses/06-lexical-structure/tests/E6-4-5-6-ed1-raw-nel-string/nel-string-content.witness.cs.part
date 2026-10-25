@@ -1,0 +1,19 @@
+// ECMA-334 1st ed 9.4.4.5, p. 60 (PDF p. 74), line 27 permits raw NEL in a regular string.
+using System;
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool condition, string name)
+    {
+        checks++;
+        if (!condition) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    public static int Main()
+    {
+        string value = "a\u0085b";
+        Check(value.Length == 3 && value[1] == (char)133, "string-value");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

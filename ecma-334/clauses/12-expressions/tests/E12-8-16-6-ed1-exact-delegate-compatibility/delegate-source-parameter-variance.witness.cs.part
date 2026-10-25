@@ -1,0 +1,31 @@
+// ECMA-334 1st ed 14.5.10.3, p. 150 (PDF p. 164), lines 11-14. A delegate-valued
+// constructor argument must match the target delegate signature exactly.
+using System;
+delegate int Wide(object value);
+delegate int Exact(object value);
+delegate int Narrow(object value);
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool result, string label)
+    {
+        checks++;
+        if (!result)
+        {
+            failures++;
+            Console.WriteLine("FAIL " + label);
+        }
+    }
+    static int Read(object value) { return 37; }
+    static int Main()
+    {
+        Wide source = new Wide(Read);
+        Exact same = new Exact(source);
+        Narrow converted = new Narrow(source);
+        Check(same("tile") == 37, "distinct-exact-types");
+        Check(converted("tile") == 37, "exact-parameter-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

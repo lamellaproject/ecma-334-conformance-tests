@@ -1,0 +1,23 @@
+// ECMA-334 1st ed 10.1, p. 69 (PDF p. 83), lines 24-25. The repair leaves one qualifying
+// Main in the type; the application entry point is selected in another type.
+struct CaseCarrier
+{
+    static void Main()
+    {
+        System.Console.WriteLine("OK 0");
+    }
+
+    static int Spare(string[] channels)
+    {
+        return 0;
+    }
+}
+
+class CaseApplication
+{
+    static int Main()
+    {
+        System.Console.WriteLine("OK 0");
+        return 0;
+    }
+}

@@ -32,18 +32,21 @@ Every row has one of these fixed categories:
 | --- | --- |
 | `pass` | The required outcome was observed: the required rejection, a successful execution, or the refusal that a version-gating check requires. Declared diagnostic obligations were met as well. |
 | `unsupported` | The compiler or target cannot provide a required feature, level, requirement or capability. |
-| `unexpected-reject` | A program required to compile was rejected, a fixture prerequisite was rejected, or a rejection had no coded source error. |
+| `unexpected-reject` | A program required to compile was rejected, an ordinary test's fixture prerequisite was rejected, or a rejection had no coded source error. |
 | `unexpected-accept` | A program required to be rejected was accepted. |
 | `runtime-fail` | An accepted program produced wrong output, a nonzero exit, an unhandled exception or a timeout. |
 | `diagnostic-fail` | A declared diagnostic check failed: warning presence or absence, or a source diagnostic's location or payload. Source checks also apply to required rejections. |
 | `compiler-error` | The compiler crashed, timed out, failed to produce an artifact or supplied no valid verdict. |
 | `infrastructure` | The invocation produced a configured command-line error, or the target could not launch the program. Such a run needs repair before its counts establish results. |
-| `not-applicable` | The test lies outside its measured interval and does not require a gating check at this level. |
+| `not-applicable` | The test lies outside its measured interval and does not require a gating check at this level, or a required fixture library was refused below `Since`. |
 
 These categories are a versioned public contract. Adding or changing one
 requires a documented version change of the
 [result schema](../configs/schemas/result.schema.json), rather than a
 compiler-specific alias.
+
+Ordinary tests require every fixture library to compile; refusal of a
+prerequisite does not establish the program's outcome.
 
 ### Unsupported reasons
 
@@ -88,10 +91,13 @@ literal directive payload, not compiler-specific wording.
 
 ## Explicit language levels
 
-Without `--langversion`, a test compiles at its `Version`. An unsupported
-header level becomes an `unsupported` row.
+Every version run names `--langversion`. It accepts one or more levels, an
+inclusive range such as `5..7.3`, `all`, or `earliest-per-test`, which runs each
+test at the first level of its measured range. Without a selector the invocation
+stops before loading tests or creating results. Version runs exclude every test
+whose authority is a non-latest standard edition.
 
-With `--langversion`, an explicitly requested unsupported level aborts the
+An explicitly requested unsupported level aborts the
 invocation. At supported explicit levels, the test's measured bounds, `Since`
 and `Until` (see [Bounds](CONVENTIONS.md#bounds)), decide what happens:
 
@@ -99,6 +105,7 @@ and `Until` (see [Bounds](CONVENTIONS.md#bounds)), decide what happens:
 | --- | --- |
 | From `Since` through `Until`, inclusive | The test runs as an ordinary test. |
 | Below `Since`, where the measurement found a refusal | A version-gating check of the positive construct runs. |
+| Below `Since`, where a required fixture library is itself refused | The test is `not-applicable`. |
 | Below `Since`, where the measurement found a meaning change | The test is `not-applicable`. |
 | Above `Until` | The test is `not-applicable`. |
 | A recorded disconnected passing level | The test is `not-applicable`. |
@@ -106,6 +113,23 @@ and `Until` (see [Bounds](CONVENTIONS.md#bounds)), decide what happens:
 A version-gating check passes when the compiler refuses the positive
 construct. A disconnected passing level is a level where the test also
 passed, outside the interval that contains its `Version`.
+
+## Edition runs
+
+`--edition N` chooses a registered non-latest edition and its registered
+language level. It cannot be combined with `--langversion`. The compiler must
+support that level, and all candidate tests need current bounds.
+
+- Every test with the requested edition's authority runs as an ordinary test
+  at the edition's level, even if its measured interval differs.
+- Other tests run by continuity when their current measured interval contains
+  that level.
+- The edition's conflict table excludes tests that it replaces or leaves out.
+
+Tests outside the interval or excluded by the table have no result rows and
+produce no version-gating checks. `run.json` records the candidate inventory,
+the table's path and hash, and the test IDs included or excluded for each
+reason. `run.json` and both summaries name the edition and resolved level.
 
 ## Summaries and run records
 
@@ -126,6 +150,7 @@ Clause scope and in-progress markers come from `ledger-scope.json`.
 - the target identity;
 - the controls;
 - the selected inventory;
+- the edition, its language level and its conflict-table selection, when used;
 - the completion state;
 - the version-row states.
 

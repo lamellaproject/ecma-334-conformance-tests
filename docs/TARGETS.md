@@ -20,21 +20,36 @@ compiler profile is a compiler configuration, such as
 | | `dotnet` | `net481` |
 | --- | --- | --- |
 | Configuration | `configs/targets/dotnet.json` | `configs/targets/net481.json` |
+| Hosts | Windows x64, Linux x64, macOS arm64 and Linux arm64 | Windows x64 |
 | How programs run | One process per program, in parallel up to `--jobs` | Compiled to `.exe` files and launched directly, one process per program, in parallel up to `--jobs` |
-| Capabilities | `process-launch`, but not `framework-runtime` | `framework-runtime` and `process-launch` |
+| Capabilities | `process-launch` and `reflection`, but not `framework-runtime` | `framework-runtime`, `process-launch` and `reflection` |
 
 ## The dotnet target
 
-The `dotnet` target discovers the pinned SDK, runtime and reference assemblies.
+The `dotnet` target supports Windows x64, Linux x64, macOS arm64 and Linux
+arm64, using a 64-bit Python process. It discovers the pinned SDK, runtime
+and reference assemblies.
 It looks in this order:
 
 1. `CONFORMANCE_DOTNET_ROOT`;
 2. `DOTNET_ROOT`;
 3. `dotnet` on `PATH`.
 
-Its exact versions and hashes are in `configs/targets/dotnet.json`. It runs
-one process per program, in parallel up to `--jobs`. It does not provide
-`framework-runtime`.
+Install SDK `11.0.100-rc.1.26425.128` for your host and set
+`CONFORMANCE_DOTNET_ROOT` to its directory. Check the archive's SHA-512 against
+[Microsoft's release data](https://builds.dotnet.microsoft.com/dotnet/release-metadata/11.0/releases.json).
+The compiler is csc `5.11.0-1.26425.128`, and the runtime is
+`11.0.0-rc.1.26425.128`. No installation on the system PATH is required.
+
+The exact versions and per-platform file hashes are in
+`configs/compilers/csc.json` and `configs/targets/dotnet.json`. Asset variants
+are keyed by `win-x64`, `linux-x64`, `osx-arm64` and `linux-arm64`; a missing
+variant or a mismatched hash stops the run. The same configurations and run
+arguments work on every supported host. The runner keeps compiler and runtime
+scratch files inside the chosen results directory.
+
+It runs one process per program, in parallel up to `--jobs`. It does not
+provide `framework-runtime`.
 
 ## The net481 target
 
@@ -69,7 +84,7 @@ target, and it requires a separate configuration.
 
 Framework programs are compiled to `.exe` files and launched directly, one
 process per program, in parallel up to `--jobs`. The target provides
-`framework-runtime` and `process-launch`.
+`framework-runtime`, `process-launch` and `reflection`.
 
 ### Runtime identity
 
@@ -84,10 +99,10 @@ The target refuses a runtime below the minimum Framework 4.8.1 release value.
 
 ### Running the suite on net481
 
-To run every test at its own `Version` on the Framework target:
+To run tests at C# 7.3 on the Framework target:
 
 ```text
-python runner/run-suite.py --compiler configs/compilers/csc.json --target configs/targets/net481.json --results ../results/csc-net481 --jobs 12
+python runner/run-suite.py --compiler configs/compilers/csc.json --target configs/targets/net481.json --results ../results/csc-net481 --langversion 7.3 --jobs 12
 ```
 
 Use `--select` to limit the scope.
@@ -104,13 +119,14 @@ compiler would satisfy the standard on that runtime.
 
 Bounds for tests requiring `framework-runtime` are measured by running the
 original program on `net481` at every supported csc level. Their source-keyed
-version rows record the measurement target. On `dotnet`, those tests remain
-`unsupported` for `target-capability`.
+version rows record the measurement target and the observed serviced Windows
+runtime. Those rows describe Windows observations. On `dotnet`, those tests
+remain `unsupported` for `target-capability`.
 
 ## Older compiler profiles
 
-The `csc-framework` and `mcs` profiles cover older compiler language levels
-on the `net481` target.
+The `csc-framework` and `mcs` profiles are Windows-only. They cover older
+compiler language levels on the `net481` target.
 
 | | `csc-framework` | `mcs` |
 | --- | --- | --- |

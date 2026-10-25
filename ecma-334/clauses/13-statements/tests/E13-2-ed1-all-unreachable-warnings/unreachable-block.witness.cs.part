@@ -1,0 +1,17 @@
+// ECMA-334 1st ed 15.1, p. 180 (PDF p. 194), lines 3-4. Every statement found unreachable
+// requires a warning, including a throw statement, empty block or empty statement.
+using System;
+class Entry
+{
+    static void Inspect()
+    {
+        return;
+        Console.WriteLine("UNREACHABLE");
+    }
+    static int Main()
+    {
+        Inspect();
+        Console.WriteLine("OK 0");
+        return 0;
+    }
+}

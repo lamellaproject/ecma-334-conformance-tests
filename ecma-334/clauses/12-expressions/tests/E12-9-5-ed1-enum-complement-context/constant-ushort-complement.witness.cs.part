@@ -1,0 +1,25 @@
+// ECMA-334 1st ed 14.6.4, p. 155 (PDF p. 169), lines 33-36. Enum complement follows the
+// full (E)(~(U)x) formula in the containing overflow context.
+using System;
+enum Narrow : ushort { Seed = 37 }
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool result, string label)
+    {
+        checks++;
+        if (!result)
+        {
+            failures++;
+            Console.WriteLine("FAIL " + label);
+        }
+    }
+    const Narrow Value = unchecked(~(Narrow)37);
+    static int Main()
+    {
+        Check(Value == (Narrow)65498, "unchecked-constant-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

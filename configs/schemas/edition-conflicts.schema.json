@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Edition conflict table v1",
+  "type": "object",
+  "properties": {
+    "schema_version": {"const": 1},
+    "edition": {"type": "integer", "minimum": 1},
+    "base_edition": {"type": "integer", "minimum": 1},
+    "conflicts": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "properties": {
+          "action": {"enum": ["replace", "leave-out"]},
+          "test_id": {"type": "string", "minLength": 1},
+          "replacement_test_id": {"type": "string", "minLength": 1},
+          "authority": {
+            "type": "string",
+            "pattern": "^ECMA-[0-9]+ [1-9][0-9]*(?:st|nd|rd|th) ed [0-9]+(?:\\.[0-9]+)*, p\\. [0-9]+ \\(PDF p\\. [0-9]+\\)(?:, [^\\r\\n]+)?$"
+          }
+        },
+        "required": ["action", "test_id", "authority"],
+        "additionalProperties": false,
+        "if": {"properties": {"action": {"const": "replace"}}},
+        "then": {"required": ["replacement_test_id"]},
+        "else": {"not": {"required": ["replacement_test_id"]}}
+      }
+    }
+  },
+  "required": ["schema_version", "edition", "base_edition", "conflicts"],
+  "additionalProperties": false
+}

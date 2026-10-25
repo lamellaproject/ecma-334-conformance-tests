@@ -90,3 +90,4 @@ E19-b088	ecma-334-ed7	19.6, p. 515 (PDF p. 543)	E19-6-operator-complement	rules
 E19-b089	ecma-334-ed7	19.6, p. 515 (PDF p. 543)	E19-6-operator-increment;E19-6-operator-decrement	rules	
 E19-b090	ecma-334-ed7	19.6, p. 515 (PDF p. 543)	E19-6-operator-sizeof	rules	
 E19-b091	ecma-334-ed7	19.6, p. 515 (PDF p. 543)	E19-5-base-enum;E19-5-system-enum-valuetype;E19-5-valuetype-object;E19-5-inherited-members	covered-by E19-5-base-enum	Repeats enum inheritance and availability of inherited methods and properties.
+ed1-21.1-004	ecma-334-ed1	21.1, printed p. 297 (PDF p. 311)	E19-2-ed1-underlying-keyword-tokens	rules	A diagnostic (reject) for `enum PacketMode : System.Int16` and for `enum PacketMode : StorageWidth` with `using StorageWidth = System.UInt16;`; the keyword controls `: short` and `: ushort` compile and print BASE:907 and BASE:60001. csc's silent acceptance is a recorded departure.

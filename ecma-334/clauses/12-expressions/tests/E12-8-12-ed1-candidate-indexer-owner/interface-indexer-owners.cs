@@ -1,0 +1,41 @@
+/*
+Rules: E12-8-12-ed1-candidate-indexer-owner
+Authority: ECMA-334 1st ed 14.5.6.2
+Version: ISO-1
+Expected: reject
+Version-Witness: tests/E12-8-12-ed1-candidate-indexer-owner/interface-indexer-owners.witness.cs.part
+Mutate: catalog["tile"]
+Into: ((INarrow)catalog)["tile"]
+*/
+// ECMA-334 1st ed 14.5.6.2, p. 145 (PDF p. 159), lines 1-7. After applicability and hiding
+// reduction, candidate indexers must all be declared in one type.
+using System;
+interface IWide { int this[object key] { get; } }
+interface INarrow { int this[string key] { get; } }
+interface ICombined : IWide, INarrow { }
+class Catalog : ICombined
+{
+    public int this[object key] { get { return 9; } }
+    public int this[string key] { get { return 41; } }
+}
+class Entry
+{
+    static int checks;
+    static int failures;
+    static void Check(bool result, string label)
+    {
+        checks++;
+        if (!result)
+        {
+            failures++;
+            Console.WriteLine("FAIL " + label);
+        }
+    }
+    static int Main()
+    {
+        ICombined catalog = new Catalog();
+        Check(catalog["tile"] == 41, "single-owner-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

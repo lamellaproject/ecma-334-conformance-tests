@@ -1,0 +1,29 @@
+// ECMA-334 1st ed 24.1.3, p. 311 (PDF p. 325), lines 11-12. Refuse use of an enum as a
+// positional or named attribute parameter when the enum's declared accessibility is not
+// public.
+
+public class Enclosure
+{
+    public enum Pulse { Quiet = 0 }
+
+    private class SealAttribute : System.Attribute
+    {
+        public SealAttribute() { }
+        private Pulse chosen;
+        public Pulse Pick
+        {
+            get { return chosen; }
+            set { chosen = value; }
+        }
+    }
+
+    [Seal(Pick = 0)]
+    private class Decorated { }
+
+    public static void Exercise() { }
+}
+
+class EnumEntry
+{
+    public static int Main() { return 0; }
+}
