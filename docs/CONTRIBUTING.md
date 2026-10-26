@@ -30,18 +30,27 @@ program, generator or departure record.
 
 The [test contract](CONVENTIONS.md) defines each of these files.
 
+A library member receives a suite test only where a C# construct's meaning
+depends on that member.
+
 ### Larger additions
 
 - A new clause gets its own directory and an explicit scope inventory.
 - A new edition gets a primary source entry and rules that distinguish its
   text where necessary. Add `edition-conflicts/<N>.json` beneath the standard
   directory, following the [edition table contract](ARCHITECTURE.md#edition-selection).
-  Pair each replaced latest-edition test with its replacement, or use
-  `leave-out` when the older edition permits behavior the existing test
-  excludes and no replacement is justified. Use public clause/page citations.
-  Include an empty table if there are no conflicts, and run
-  `check-editions.py`. Adding a new latest edition also requires updating the
-  older tables against that new base.
+  Review conflicts with every other registered edition. Pair each replaced
+  test with a replacement from the requested edition or another older
+  edition admitted by continuity. A replacement must be selected, must not
+  itself be excluded, and must form no cycle. Use `leave-out` when no
+  replacement is justified. Every row cites the requested edition's clause
+  and printed/PDF pages, including cross-edition pairs. Include an empty
+  table if there are no conflicts, and run `check-editions.py`.
+  Maintain the other older editions' tables for conflicting requirements.
+  Compare each affected edition's selected inventory before and after the
+  table data, naming each exclusion. Verify continuity in both directions
+  for programs with compatible predicates and intervals. Adding a new latest
+  edition also requires updating the older tables against that base.
 - Later language features use the registered feature authority and
   feature-version IDs (`P<version>-<predicate-slug>`, or
   `Ppreview-<predicate-slug>` for a preview feature).

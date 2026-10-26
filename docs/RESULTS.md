@@ -122,9 +122,16 @@ support that level, and all candidate tests need current bounds.
 
 - Every test with the requested edition's authority runs as an ordinary test
   at the edition's level, even if its measured interval differs.
-- Other tests run by continuity when their current measured interval contains
-  that level.
+- Other tests, including tests with another older edition's authority, run by
+  continuity when their current measured interval contains that level.
 - The edition's conflict table excludes tests that it replaces or leaves out.
+
+A conflict can target any other registered edition's test. A replacement
+belongs to the requested edition or to another older edition admitted by
+continuity. It must be selected, must not itself be excluded, and must form
+no cycle. Each row cites the requested edition's clause and printed/PDF
+pages. These decisions are table data; a compiler verdict does not change
+edition membership.
 
 Tests outside the interval or excluded by the table have no result rows and
 produce no version-gating checks. `run.json` records the candidate inventory,

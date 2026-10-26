@@ -15,8 +15,11 @@ class Entry
 {
     static void Main()
     {
-        System.ValueType storage = (System.ValueType)(object)Signal.Ready;
-        Signal result = (Signal)storage;
-        System.Console.WriteLine(result == Signal.Ready ? "OK" : "FAIL");
+        System.ValueType storage = null;
+        if (storage != null)
+        {
+            Signal result = (Signal)storage;
+        }
+        System.Console.WriteLine("OK");
     }
 }

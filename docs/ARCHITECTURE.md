@@ -417,9 +417,10 @@ excluded. `--langversion declared-per-test` keeps every test.
 An edition run uses `--edition N` instead of `--langversion`. It resolves the
 edition's registered `language_version` through the compiler configuration.
 Every test with that edition's authority runs at that level, even if its
-measured interval differs. Other tests join by continuity only when their
-current measured interval contains the level. The edition's conflict table
-then removes the tests it replaces or leaves out. Excluded tests produce no
+measured interval differs. Tests with other authorities, including other
+older editions, join by continuity only when their current measured interval
+contains the level. The edition's conflict table removes the tests it
+replaces or leaves out. Excluded tests produce no
 version-gating checks. Every candidate requires current bounds; an external
 pilot is validated against the complete selection before edition filtering.
 
@@ -428,13 +429,23 @@ empty table when it has no conflicts. The latest edition is the registered
 primary edition with the highest number. A table names its `edition` and
 `base_edition`, which must be that latest edition. Its `conflicts` contain:
 
-- `replace`: a latest-edition `test_id`, its older-edition
-  `replacement_test_id` and the older edition's public `authority` citation;
-- `leave-out`: a latest-edition `test_id` and the older edition's public
-  `authority` citation, without a replacement.
+- `replace`: a `test_id` with another registered edition's authority, its
+  `replacement_test_id` and the requested edition's public `authority`
+  citation;
+- `leave-out`: a `test_id` with another registered edition's authority and
+  the requested edition's public `authority` citation, without a replacement.
+
+The target may belong to the latest edition or to another older edition.
+A replacement belongs to the requested edition or to another older edition
+admitted by continuity. It must be selected, must not itself be replaced or
+left out, and must form no cycle. A citation names the requested edition's
+clause and printed/PDF pages, including when the replacement has a different
+edition's authority. A replacement with the requested edition's authority
+also agrees with its header's clause.
 
 Several replacements may supersede the same test. Duplicate pairs, opposing
-actions for one test, unknown IDs and mismatched authorities are errors. The
+actions for one test, unknown IDs, ineligible replacements and mismatched
+authorities are errors. The
 [schema](../configs/schemas/edition-conflicts.schema.json) and
 `runner/tools/check-editions.py` describe and enforce the contract.
 

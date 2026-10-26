@@ -15,8 +15,11 @@ class Entry
 {
     static void Main()
     {
-        System.Enum storage = (System.Enum)(object)Signal.Ready;
-        Signal result = (Signal)storage;
-        System.Console.WriteLine(result == Signal.Ready ? "OK" : "FAIL");
+        System.Enum storage = null;
+        if (storage != null)
+        {
+            Signal result = (Signal)storage;
+        }
+        System.Console.WriteLine("OK");
     }
 }

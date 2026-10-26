@@ -6,7 +6,7 @@ class Entry
 {
     static void Main()
     {
-        System.Enum storage = (System.Enum)(object)Signal.Ready;
+        object storage = Signal.Ready;
         Signal result = (Signal)(object)storage;
         System.Console.WriteLine(result == Signal.Ready ? "OK" : "FAIL");
     }

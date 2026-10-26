@@ -1,0 +1,675 @@
+{
+  "schema_version": 1,
+  "edition": 2,
+  "base_edition": 7,
+  "conflicts": [
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-9-5-current-property-required--field-no-fallback",
+      "replacement_test_id": "13-statements--E13-9-5-ed1-enumerable-is-collection--current-field",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-9-5-current-instance-required--static-no-fallback",
+      "replacement_test_id": "13-statements--E13-9-5-ed1-enumerable-is-collection--current-static",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-9-5-current-public-required--private-no-fallback",
+      "replacement_test_id": "13-statements--E13-9-5-ed1-enumerable-is-collection--current-private",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-9-5-current-readable-required--setter-only-no-fallback",
+      "replacement_test_id": "13-statements--E13-9-5-ed1-enumerable-is-collection--current-write-only",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-9-5-enumerator-return-type-required--void-no-fallback",
+      "replacement_test_id": "13-statements--E13-9-5-ed1-enumerable-is-collection--getenumerator-void",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-9-5-movenext-applicable-required--argument-required-no-fallback",
+      "replacement_test_id": "13-statements--E13-9-5-ed1-enumerable-is-collection--movenext-argument",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-9-5-movenext-bool-required--boolean-like-no-fallback",
+      "replacement_test_id": "13-statements--E13-9-5-ed1-enumerable-is-collection--movenext-boolean-like",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-9-5-movenext-instance-required--static-no-fallback",
+      "replacement_test_id": "13-statements--E13-9-5-ed1-enumerable-is-collection--movenext-static",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-9-5-movenext-method-group-required--property-no-fallback",
+      "replacement_test_id": "13-statements--E13-9-5-ed1-enumerable-is-collection--movenext-property",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-9-5-movenext-public-required--private-no-fallback",
+      "replacement_test_id": "13-statements--E13-9-5-ed1-enumerable-is-collection--movenext-private",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-18-predefined-constant-int--predefined-size-table",
+      "replacement_test_id": "12-expressions--E12-8-18-ed1-sizeof-unsafe-context--int-outside-context",
+      "authority": "ECMA-334 2nd ed 25.5, p. 323 (PDF p. 339)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-1-sizeof-form--size-expression",
+      "replacement_test_id": "12-expressions--E12-8-18-ed1-sizeof-unsafe-context--int-outside-context",
+      "authority": "ECMA-334 2nd ed 25.5, p. 323 (PDF p. 339)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-18-predefined-constant-int--predefined-size-table",
+      "replacement_test_id": "12-expressions--E12-8-18-ed1-other-sizeof-nonconstant--decimal-constant",
+      "authority": "ECMA-334 2nd ed 25.5.8, p. 328 (PDF p. 344)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-18-enum-size--enum-underlying-widths",
+      "replacement_test_id": "12-expressions--E12-8-18-ed1-other-sizeof-nonconstant--enum-constant",
+      "authority": "ECMA-334 2nd ed 25.5.8, p. 328 (PDF p. 344)"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-3-10-4-reserve-item-name--field",
+      "replacement_test_id": "15-classes--E15-3-10-4-ed1-item-name-permitted--item-field",
+      "authority": "ECMA-334 2nd ed 17.2.7.3, p. 219 (PDF p. 235)"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-5-4-volatile-intptr--read-and-write",
+      "replacement_test_id": "15-classes--E15-5-4-ed1-volatile-native-integer-forbidden--intptr",
+      "authority": "ECMA-334 2nd ed 17.4.3, p. 223 (PDF p. 239)"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-5-4-volatile-uintptr--read-and-write",
+      "replacement_test_id": "15-classes--E15-5-4-ed1-volatile-native-integer-forbidden--uintptr",
+      "authority": "ECMA-334 2nd ed 17.4.3, p. 223 (PDF p. 239)"
+    },
+    {
+      "action": "replace",
+      "test_id": "06-lexical-structure--E6-4-5-4-decimal-scale--preserved-scale",
+      "replacement_test_id": "06-lexical-structure--E6-4-5-4-ed1-zero-decimal-literal-normalized--zero-with-scale",
+      "authority": "ECMA-334 2nd ed 9.4.4.3, p. 59 (PDF p. 75)"
+    },
+    {
+      "action": "replace",
+      "test_id": "22-attributes--E22-2-4-parameter-sbyte--roundtrip",
+      "replacement_test_id": "22-attributes--E22-2-4-ed1-scalar-parameter-types-restricted--sbyte-positional",
+      "authority": "ECMA-334 2nd ed 24.1.3, p. 307 (PDF p. 323)"
+    },
+    {
+      "action": "replace",
+      "test_id": "22-attributes--E22-2-4-parameter-uint--roundtrip",
+      "replacement_test_id": "22-attributes--E22-2-4-ed1-scalar-parameter-types-restricted--uint-positional",
+      "authority": "ECMA-334 2nd ed 24.1.3, p. 307 (PDF p. 323)"
+    },
+    {
+      "action": "replace",
+      "test_id": "22-attributes--E22-2-4-parameter-ulong--roundtrip",
+      "replacement_test_id": "22-attributes--E22-2-4-ed1-scalar-parameter-types-restricted--ulong-positional",
+      "authority": "ECMA-334 2nd ed 24.1.3, p. 307 (PDF p. 323)"
+    },
+    {
+      "action": "replace",
+      "test_id": "22-attributes--E22-2-4-parameter-ushort--roundtrip",
+      "replacement_test_id": "22-attributes--E22-2-4-ed1-scalar-parameter-types-restricted--ushort-positional",
+      "authority": "ECMA-334 2nd ed 24.1.3, p. 307 (PDF p. 323)"
+    },
+    {
+      "action": "replace",
+      "test_id": "22-attributes--E22-2-4-parameter-enum--roundtrip",
+      "replacement_test_id": "22-attributes--E22-2-4-ed1-scalar-enum-public-required--scalar-internal-enum-positional",
+      "authority": "ECMA-334 2nd ed 24.1.3, p. 307 (PDF p. 323)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-21-4-small-integral-cast-permission--predefined-results",
+      "replacement_test_id": "12-expressions--E12-21-4-ed1-shift-rhs-implicit-conversion--byte-compound-int-shift",
+      "authority": "ECMA-334 2nd ed 14.13.2, p. 174 (PDF p. 190)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-9-4-delegate-evaluate--order-and-short-circuit",
+      "replacement_test_id": "12-expressions--E12-8-9-4-ed1-null-delegate-before-arguments--null-delegate-argument-order",
+      "authority": "ECMA-334 2nd ed 14.5.5.2, p. 143 (PDF p. 159)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-6-2-1-local-own-initializer--self-assignment",
+      "replacement_test_id": "13-statements--E13-6-2-1-ed1-own-initializer-assignment-permitted--own-local-assignment",
+      "authority": "ECMA-334 2nd ed 15.5.1, p. 181 (PDF p. 197)"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-6-5-override-cross-assembly-protected--wrong-access",
+      "replacement_test_id": "15-classes--E15-6-5-ed1-cross-assembly-declared-access-preserved--cross-assembly-method",
+      "authority": "ECMA-334 2nd ed 17.5.4, p. 235 (PDF p. 251)"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-7-6-override-property-cross-assembly-protected--declaration",
+      "replacement_test_id": "15-classes--E15-7-6-ed1-cross-assembly-modifiers-preserved--cross-assembly-property",
+      "authority": "ECMA-334 2nd ed 17.6.3, p. 245 (PDF p. 261)"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-10-2-increment-return-type--derived",
+      "replacement_test_id": "15-classes--E15-10-2-ed1-increment-return-containing-type--derived-return",
+      "authority": "ECMA-334 2nd ed 17.9.1, p. 255 (PDF p. 271)"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-10-2-decrement-return-type--derived",
+      "replacement_test_id": "15-classes--E15-10-2-ed1-decrement-return-containing-type--derived-return",
+      "authority": "ECMA-334 2nd ed 17.9.1, p. 255 (PDF p. 271)"
+    },
+    {
+      "action": "replace",
+      "test_id": "20-delegates--E20-4-parameter-variance--reference-parameter-conversion",
+      "replacement_test_id": "20-delegates--E20-4-ed1-parameter-type-identity--method-parameter-identity",
+      "authority": "ECMA-334 2nd ed 22.1, p. 297 (PDF p. 313)"
+    },
+    {
+      "action": "replace",
+      "test_id": "20-delegates--E20-4-parameter-variance--compatible-delegate-parameter",
+      "replacement_test_id": "20-delegates--E20-4-ed1-parameter-type-identity--value-parameter-identity",
+      "authority": "ECMA-334 2nd ed 22.1, p. 297 (PDF p. 313)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-16-6-value-compatibility--compatible-parameter-and-return-variance",
+      "replacement_test_id": "20-delegates--E20-4-ed1-parameter-type-identity--value-parameter-identity",
+      "authority": "ECMA-334 2nd ed 22.1, p. 297 (PDF p. 313)"
+    },
+    {
+      "action": "replace",
+      "test_id": "20-delegates--E20-4-return-variance--reference-return-conversion",
+      "replacement_test_id": "20-delegates--E20-4-ed1-return-type-identity--method-return-identity",
+      "authority": "ECMA-334 2nd ed 22.1, p. 297 (PDF p. 313)"
+    },
+    {
+      "action": "replace",
+      "test_id": "20-delegates--E20-4-return-variance--reference-return-conversion",
+      "replacement_test_id": "20-delegates--E20-4-ed1-return-type-identity--value-return-identity",
+      "authority": "ECMA-334 2nd ed 22.1, p. 297 (PDF p. 313)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-16-6-value-compatibility--compatible-parameter-and-return-variance",
+      "replacement_test_id": "20-delegates--E20-4-ed1-return-type-identity--value-return-identity",
+      "authority": "ECMA-334 2nd ed 22.1, p. 297 (PDF p. 313)"
+    },
+    {
+      "action": "replace",
+      "test_id": "23-unsafe-code--E23-3-safe-typeof-pointer--safe-typeof",
+      "replacement_test_id": "23-unsafe-code--E23-3-ed1-typeof-pointer-requires-unsafe-context--pointer-type",
+      "authority": "ECMA-334 2nd ed 25.1, p. 317 (PDF p. 333)"
+    },
+    {
+      "action": "replace",
+      "test_id": "06-lexical-structure--E6-4-5-3-int-minimum-type--immediate-minus",
+      "replacement_test_id": "06-lexical-structure--E6-4-5-3-ed1-hex-minimum-int-is-long--hex-minimum-int",
+      "authority": "ECMA-334 2nd ed 9.4.4.2, p. 58 (PDF p. 74)"
+    },
+    {
+      "action": "replace",
+      "test_id": "17-arrays--E17-7-zero-following-dimensions--empty-nesting",
+      "replacement_test_id": "17-arrays--E17-7-ed1-full-initializer-depth--local-rank-three",
+      "authority": "ECMA-334 2nd ed 19.6, p. 277 (PDF p. 293)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-16-6-value-copy-source--multicast-source-single-entry-copy",
+      "replacement_test_id": "12-expressions--E12-8-16-6-ed1-delegate-copy-list--delegate-copy-equality",
+      "authority": "ECMA-334 2nd ed 14.5.10.3, p. 149 (PDF p. 165)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-6-2-1-volatile-warning--reference-field",
+      "authority": "ECMA-334 2nd ed 14.4.1, p. 132 (PDF p. 148)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-12-9-distinct-delegate-types--static-types",
+      "replacement_test_id": "12-expressions--E12-12-9-ed1-distinct-delegate-static-types--distinct-static-delegate-comparison",
+      "authority": "ECMA-334 2nd ed 14.9.8, p. 167 (PDF p. 183)"
+    },
+    {
+      "action": "replace",
+      "test_id": "06-lexical-structure--E6-3-2-ed1-nel-not-line-terminator--nel-token-boundary",
+      "replacement_test_id": "06-lexical-structure--E6-3-2-ed2-nel-line-terminator--nel-between-type-and-name",
+      "authority": "ECMA-334 2nd ed 9.3.1, p. 52 (PDF p. 68)"
+    },
+    {
+      "action": "replace",
+      "test_id": "06-lexical-structure--E6-3-3-ed1-nel-comment-content--nel-comment-extent",
+      "replacement_test_id": "06-lexical-structure--E6-3-3-ed2-nel-comment-terminator--nel-releases-statement",
+      "authority": "ECMA-334 2nd ed 9.3.2, p. 53 (PDF p. 69)"
+    },
+    {
+      "action": "replace",
+      "test_id": "06-lexical-structure--E6-4-5-5-ed1-raw-nel-character--nel-character-content",
+      "replacement_test_id": "06-lexical-structure--E6-4-5-5-ed2-nel-character-excluded--raw-nel-character",
+      "authority": "ECMA-334 2nd ed 9.4.4.4, p. 59 (PDF p. 75)"
+    },
+    {
+      "action": "replace",
+      "test_id": "06-lexical-structure--E6-4-5-6-ed1-raw-nel-string--nel-string-content",
+      "replacement_test_id": "06-lexical-structure--E6-4-5-6-ed2-nel-string-excluded--raw-nel-string",
+      "authority": "ECMA-334 2nd ed 9.4.4.5, p. 60 (PDF p. 76)"
+    },
+    {
+      "action": "replace",
+      "test_id": "06-lexical-structure--E6-5-1-ed1-directive-nel-not-terminator--nel-directive-boundary",
+      "replacement_test_id": "06-lexical-structure--E6-5-1-ed2-nel-directive-terminator--nel-splits-symbol-directives",
+      "authority": "ECMA-334 2nd ed 9.5.3, p. 64 (PDF p. 80)"
+    },
+    {
+      "action": "replace",
+      "test_id": "06-lexical-structure--E6-5-6-ed1-message-consumes-nel--nel-warning-message",
+      "replacement_test_id": "06-lexical-structure--E6-5-6-ed2-nel-message-terminator--nel-ends-warning-payload",
+      "authority": "ECMA-334 2nd ed 9.5.5, p. 67 (PDF p. 83)"
+    },
+    {
+      "action": "replace",
+      "test_id": "06-lexical-structure--E6-5-8-ed1-raw-nel-filename--nel-line-filename",
+      "replacement_test_id": "06-lexical-structure--E6-5-8-ed2-nel-filename-excluded--nel-inside-line-filename",
+      "authority": "ECMA-334 2nd ed 9.5.7, p. 68 (PDF p. 84)"
+    },
+    {
+      "action": "replace",
+      "test_id": "07-basic-concepts--E7-6-ed1-constructor-ref-out-overloads-permitted--constructor-class",
+      "replacement_test_id": "07-basic-concepts--E7-6-ed2-ref-out-only-overloads--class-constructor-modes",
+      "authority": "ECMA-334 2nd ed 10.6, p. 78 (PDF p. 94)"
+    },
+    {
+      "action": "replace",
+      "test_id": "07-basic-concepts--E7-6-ed1-constructor-ref-out-overloads-permitted--constructor-struct",
+      "replacement_test_id": "07-basic-concepts--E7-6-ed2-ref-out-only-overloads--struct-constructor-modes",
+      "authority": "ECMA-334 2nd ed 10.6, p. 78 (PDF p. 94)"
+    },
+    {
+      "action": "replace",
+      "test_id": "07-basic-concepts--E7-6-ed1-method-ref-out-overloads-permitted--method-class",
+      "replacement_test_id": "07-basic-concepts--E7-6-ed2-ref-out-only-overloads--class-method-modes",
+      "authority": "ECMA-334 2nd ed 10.6, p. 78 (PDF p. 94)"
+    },
+    {
+      "action": "replace",
+      "test_id": "07-basic-concepts--E7-6-ed1-method-ref-out-overloads-permitted--method-interface",
+      "replacement_test_id": "07-basic-concepts--E7-6-ed2-ref-out-only-overloads--interface-method-modes",
+      "authority": "ECMA-334 2nd ed 10.6, p. 78 (PDF p. 94)"
+    },
+    {
+      "action": "replace",
+      "test_id": "07-basic-concepts--E7-6-ed1-method-ref-out-overloads-permitted--method-struct",
+      "replacement_test_id": "07-basic-concepts--E7-6-ed2-ref-out-only-overloads--struct-method-modes",
+      "authority": "ECMA-334 2nd ed 10.6, p. 78 (PDF p. 94)"
+    },
+    {
+      "action": "replace",
+      "test_id": "10-conversions--E10-2-9-ed1-boxing-targets--box-enum-valuetype",
+      "replacement_test_id": "10-conversions--E10-2-9-ed2-valuetype-boxing--direct-valuetype-boxes",
+      "authority": "ECMA-334 2nd ed 13.1.5, p. 114 (PDF p. 130)"
+    },
+    {
+      "action": "replace",
+      "test_id": "10-conversions--E10-2-9-ed1-boxing-targets--box-struct-valuetype",
+      "replacement_test_id": "10-conversions--E10-2-9-ed2-valuetype-boxing--direct-valuetype-boxes",
+      "authority": "ECMA-334 2nd ed 13.1.5, p. 114 (PDF p. 130)"
+    },
+    {
+      "action": "replace",
+      "test_id": "10-conversions--E10-3-2-ed1-checked-floating-source-range--checked-source-range",
+      "replacement_test_id": "10-conversions--E10-3-2-ed2-checked-floating-truncated-range--checked-fractional-boundaries",
+      "authority": "ECMA-334 2nd ed 13.2.1, p. 116 (PDF p. 132)"
+    },
+    {
+      "action": "replace",
+      "test_id": "10-conversions--E10-3-7-ed1-null-unboxing-invalidcast--null-unboxing",
+      "replacement_test_id": "10-conversions--E10-3-7-ed2-null-unboxing-nullreference--null-box-exception-family",
+      "authority": "ECMA-334 2nd ed 11.3.2, p. 97 (PDF p. 113)"
+    },
+    {
+      "action": "replace",
+      "test_id": "10-conversions--E10-3-7-ed1-unboxing-sources--unbox-enum-valuetype",
+      "replacement_test_id": "10-conversions--E10-3-7-ed2-valuetype-unboxing--direct-valuetype-unboxes",
+      "authority": "ECMA-334 2nd ed 13.2.4, p. 117 (PDF p. 133)"
+    },
+    {
+      "action": "replace",
+      "test_id": "10-conversions--E10-3-7-ed1-unboxing-sources--unbox-struct-valuetype",
+      "replacement_test_id": "10-conversions--E10-3-7-ed2-valuetype-unboxing--direct-valuetype-unboxes",
+      "authority": "ECMA-334 2nd ed 13.2.4, p. 117 (PDF p. 133)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-10-3-ed1-checked-minimum-overflow--int-minimum",
+      "replacement_test_id": "12-expressions--E12-10-3-ed2-checked-minimum-arithmetic--checked-minimum-division-family",
+      "authority": "ECMA-334 2nd ed 14.7.2, p. 157 (PDF p. 173)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-10-3-ed1-checked-minimum-overflow--long-minimum",
+      "replacement_test_id": "12-expressions--E12-10-3-ed2-checked-minimum-arithmetic--checked-minimum-division-family",
+      "authority": "ECMA-334 2nd ed 14.7.2, p. 157 (PDF p. 173)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-10-3-ed1-unchecked-division-wrap--minimum-unchecked-division",
+      "replacement_test_id": "12-expressions--E12-10-3-ed2-unchecked-minimum-choice--unchecked-minimum-division-set",
+      "authority": "ECMA-334 2nd ed 14.7.2, p. 157 (PDF p. 173)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-10-4-ed1-decimal-remainder-divisor-scale--exact-remainder-scale",
+      "replacement_test_id": "12-expressions--E12-10-4-ed2-decimal-remainder-scale--dividend-has-larger-scale",
+      "authority": "ECMA-334 2nd ed 14.7.3, p. 159 (PDF p. 175)"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-6-ed1-abstract-sealed-override--abstract-sealed-override",
+      "replacement_test_id": "15-classes--E15-6-1-ed2-abstract-sealed-forbidden--abstract-sealed-override",
+      "authority": "ECMA-334 2nd ed 17.5, p. 227 (PDF p. 243)"
+    },
+    {
+      "action": "replace",
+      "test_id": "16-structs--E16-4-10-ed1-default-construction-trigger--default-construction-static-trigger",
+      "replacement_test_id": "16-structs--E16-4-10-ed2-default-creation-not-trigger--default-value-does-not-start",
+      "authority": "ECMA-334 2nd ed 18.3.10, p. 271 (PDF p. 287)"
+    },
+    {
+      "action": "replace",
+      "test_id": "22-attributes--E22-5-3-2-ed1-class-conditional-method--instance-method",
+      "replacement_test_id": "22-attributes--E22-5-3-2-ed2-conditional-struct-method--conditional-instance-struct-method",
+      "authority": "ECMA-334 2nd ed 24.4.2, p. 312 (PDF p. 328)"
+    },
+    {
+      "action": "replace",
+      "test_id": "22-attributes--E22-5-3-2-ed1-class-conditional-method--static-method",
+      "replacement_test_id": "22-attributes--E22-5-3-2-ed2-conditional-struct-method--conditional-instance-struct-method",
+      "authority": "ECMA-334 2nd ed 24.4.2, p. 312 (PDF p. 328)"
+    },
+    {
+      "action": "replace",
+      "test_id": "23-unsafe-code--E23-2-ed1-static-constructor-modifier-order--static-unsafe-order",
+      "replacement_test_id": "23-unsafe-code--E23-2-ed2-static-unsafe-order--static-before-unsafe",
+      "authority": "ECMA-334 2nd ed 25.1, p. 318 (PDF p. 334)"
+    },
+    {
+      "action": "replace",
+      "test_id": "16-structs--E16-4-10-explicit-constructor-trigger--constructor-trigger",
+      "replacement_test_id": "16-structs--E16-4-10-ed2-instance-member-trigger--instance-field-startup",
+      "authority": "ECMA-334 2nd ed 18.3.10, p. 271 (PDF p. 287)"
+    },
+    {
+      "action": "replace",
+      "test_id": "06-lexical-structure--E6-4-3-grammar-underscore-character-2--escaped-underscores",
+      "replacement_test_id": "06-lexical-structure--E6-4-3-ed1-escaped-initial-underscore--short-escape",
+      "authority": "ECMA-334 2nd ed 9.4.2, p. 55 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "08-types--E8-2-2-predefined-enum-base--enum-base",
+      "authority": "ECMA-334 2nd ed 13.1.5, p. 114 (PDF p. 130), and 13.2.4, p. 117 (PDF p. 133)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "08-types--E8-3-2-value-type-base--valuetype-reference",
+      "authority": "ECMA-334 2nd ed 14.9.10, p. 169 (PDF p. 185)"
+    },
+    {
+      "action": "replace",
+      "test_id": "08-types--E8-3-7-double-format--generated-double-format",
+      "replacement_test_id": "12-expressions--E12-8-18-ed1-sizeof-unsafe-context--int-outside-context",
+      "authority": "ECMA-334 2nd ed 25.5, p. 323 (PDF p. 339)"
+    },
+    {
+      "action": "replace",
+      "test_id": "08-types--E8-3-7-float-format--generated-float-format",
+      "replacement_test_id": "12-expressions--E12-8-18-ed1-sizeof-unsafe-context--int-outside-context",
+      "authority": "ECMA-334 2nd ed 25.5, p. 323 (PDF p. 339)"
+    },
+    {
+      "action": "replace",
+      "test_id": "08-types--E8-3-8-decimal-width--decimal-minimum-domain",
+      "replacement_test_id": "12-expressions--E12-8-18-ed1-sizeof-unsafe-context--int-outside-context",
+      "authority": "ECMA-334 2nd ed 25.5, p. 323 (PDF p. 339)"
+    },
+    {
+      "action": "replace",
+      "test_id": "09-variables--E9-4-4-21-constant-rule-priority--folded-boolean-substates",
+      "replacement_test_id": "09-variables--E9-4-4-ed1-boolean-constant-flow--computed-false-flow",
+      "authority": "ECMA-334 2nd ed 12.3.3.19, p. 108 (PDF p. 124)"
+    },
+    {
+      "action": "replace",
+      "test_id": "09-variables--E9-4-4-25-left-entry--left-then-right-state",
+      "replacement_test_id": "09-variables--E9-4-4-25-ed1-assignment-right-entry--receiver-out-flow",
+      "authority": "ECMA-334 2nd ed 12.3.3.22, p. 109 (PDF p. 125)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-2-9-enum--pilot-001",
+      "authority": "ECMA-334 2nd ed 13.1.5, p. 114 (PDF p. 130), and 13.2.4, p. 117 (PDF p. 133)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-10-3-decimal-result-scale--exact-quotients",
+      "replacement_test_id": "12-expressions--E12-10-3-ed1-decimal-division-smallest-scale--exact-quotient-scale",
+      "authority": "ECMA-334 2nd ed 14.7.2, p. 158 (PDF p. 174)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-10-4-integer-minimum-exception--corresponding-division",
+      "replacement_test_id": "12-expressions--E12-10-4-ed1-integer-remainder-no-overflow--minimum-remainder-contexts",
+      "authority": "ECMA-334 2nd ed 14.7.3, p. 158 (PDF p. 174)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-12-1-null-literals-no-resolution--constants",
+      "replacement_test_id": "12-expressions--E12-12-ed1-null-literal-overload-ambiguity--null-literal-equality",
+      "authority": "ECMA-334 2nd ed 14.9, p. 164 (PDF p. 180)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-5-1-invoked-filter--noninvocable-field",
+      "replacement_test_id": "12-expressions--E12-5-1-ed1-hidden-member-invocation--hidden-field",
+      "authority": "ECMA-334 2nd ed 14.3, p. 129 (PDF p. 145)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-5-2-enum-bases--enum-base-members",
+      "authority": "ECMA-334 2nd ed 13.1.5, p. 114 (PDF p. 130)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-6-4-3-prefer-fewer-expanded--fixed-prefix-breaks-tie",
+      "replacement_test_id": "12-expressions--E12-6-4-3-ed1-better-conversion-required--expanded-params-tie",
+      "authority": "ECMA-334 2nd ed 14.4.2.2, p. 135 (PDF p. 151)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-15-operator-selection--inherited-operator-saves-old-reference",
+      "replacement_test_id": "15-classes--E15-10-2-ed1-increment-return-containing-type--derived-return",
+      "authority": "ECMA-334 2nd ed 17.9.1, p. 255 (PDF p. 271)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-10-6-throw-expression-evaluation--conversion-object",
+      "replacement_test_id": "13-statements--E13-10-6-ed1-throw-exception-class-required--implicit-struct-throw",
+      "authority": "ECMA-334 2nd ed 15.9.5, p. 194 (PDF p. 210)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-10-6-throw-null-exception--null-conversion",
+      "replacement_test_id": "13-statements--E13-10-6-ed1-throw-exception-class-required--implicit-struct-throw",
+      "authority": "ECMA-334 2nd ed 15.9.5, p. 194 (PDF p. 210)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "13-statements--E13-14-value-resource-disposal-no-boxing--same-storage",
+      "authority": "ECMA-334 2nd ed 15.13, p. 199 (PDF p. 215)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-8-3-switch-local-constant-scope--across-sections",
+      "replacement_test_id": "12-expressions--E12-8-4-ed1-invariant-simple-name--invariant-block",
+      "authority": "ECMA-334 2nd ed 14.5.2.1, p. 138 (PDF p. 154), through p. 139 (PDF p. 155)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-8-3-switch-local-variable-scope--across-sections",
+      "replacement_test_id": "12-expressions--E12-8-4-ed1-invariant-simple-name--invariant-block",
+      "authority": "ECMA-334 2nd ed 14.5.2.1, p. 138 (PDF p. 154), through p. 139 (PDF p. 155)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "13-statements--E13-9-5-value-disposal-no-boxing--same-storage",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205)"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-9-5-value-iteration-conversion-required--no-explicit-conversion",
+      "replacement_test_id": "13-statements--E13-9-5-ed1-array-enumerator-object--array-string-iteration",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205), through p. 190 (PDF p. 206)"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-6-5-override-cross-assembly-protected--external-dispatch",
+      "replacement_test_id": "15-classes--E15-6-5-ed1-cross-assembly-declared-access-preserved--cross-assembly-method",
+      "authority": "ECMA-334 2nd ed 17.5.4, p. 235 (PDF p. 251)"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-7-6-override-property-cross-assembly-protected--protected",
+      "replacement_test_id": "15-classes--E15-7-6-ed1-cross-assembly-modifiers-preserved--cross-assembly-property",
+      "authority": "ECMA-334 2nd ed 17.6.3, p. 245 (PDF p. 261)"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-9-2-indexer-property-accessor-rules--cross-assembly-protected-internal",
+      "replacement_test_id": "15-classes--E15-7-6-ed1-cross-assembly-modifiers-preserved--cross-assembly-property",
+      "authority": "ECMA-334 2nd ed 17.6.3, p. 245 (PDF p. 261)"
+    },
+    {
+      "action": "replace",
+      "test_id": "16-structs--E16-4-7-direct-override-no-boxing--direct-receiver",
+      "replacement_test_id": "12-expressions--E12-6-6-1-ed1-object-override-boxes-value-receiver--struct-object-override-copy",
+      "authority": "ECMA-334 2nd ed 14.4.3, p. 136 (PDF p. 152)"
+    },
+    {
+      "action": "replace",
+      "test_id": "19-enums--E19-2-named-base-form--integral-alias",
+      "replacement_test_id": "19-enums--E19-2-ed1-underlying-keyword-tokens--alias-underlying-name",
+      "authority": "ECMA-334 2nd ed 21.1, p. 293 (PDF p. 309)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "19-enums--E19-5-box-to-enum--base-conversions",
+      "authority": "ECMA-334 2nd ed 13.1.5, p. 114 (PDF p. 130), and 13.2.4, p. 117 (PDF p. 133)"
+    },
+    {
+      "action": "replace",
+      "test_id": "19-enums--E19-6-operator-complement--narrow-complement",
+      "replacement_test_id": "12-expressions--E12-9-5-ed1-enum-complement-context--constant-byte-complement",
+      "authority": "ECMA-334 2nd ed 14.6.4, p. 154 (PDF p. 170)"
+    },
+    {
+      "action": "replace",
+      "test_id": "19-enums--E19-6-operator-sizeof--underlying-sizes",
+      "replacement_test_id": "12-expressions--E12-8-18-ed1-other-sizeof-nonconstant--enum-constant",
+      "authority": "ECMA-334 2nd ed 25.5.8, p. 328 (PDF p. 344)"
+    },
+    {
+      "action": "replace",
+      "test_id": "20-delegates--E20-5-nested-delegate-entry--wrapped-multicast",
+      "replacement_test_id": "12-expressions--E12-8-16-6-ed1-delegate-copy-list--delegate-copy-equality",
+      "authority": "ECMA-334 2nd ed 14.5.10.3, p. 149 (PDF p. 165), through p. 150 (PDF p. 166)"
+    },
+    {
+      "action": "replace",
+      "test_id": "20-delegates--E20-6-null-invocation-exception--arguments-before-null-check",
+      "replacement_test_id": "12-expressions--E12-8-9-4-ed1-null-delegate-before-arguments--null-delegate-argument-order",
+      "authority": "ECMA-334 2nd ed 14.5.5.2, p. 143 (PDF p. 159)"
+    },
+    {
+      "action": "replace",
+      "test_id": "23-unsafe-code--E23-5-2-array-to-system-array-interface--interface-roundtrips",
+      "replacement_test_id": "10-conversions--E10-2-8-ed1-array-interface-targets--array-ilist",
+      "authority": "ECMA-334 2nd ed 13.1.4, p. 114 (PDF p. 130)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-5-2-foreach-dimension-zero--nonzero-lower-bounds",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205), and 25.2, p. 320 (PDF p. 336)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-5-2-foreach-dimension-zero--rectangular-order",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205), and 25.2, p. 320 (PDF p. 336)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-5-2-foreach-iteration-value--explicit-pointer-conversion",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205), and 25.2, p. 320 (PDF p. 336)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-5-2-foreach-null-array--null-array",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205), and 25.2, p. 320 (PDF p. 336)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-5-2-foreach-temporaries-hidden--names-do-not-collide",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205), and 25.2, p. 320 (PDF p. 336)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-5-2-pointer-array-foreach-expansion--evaluate-once",
+      "authority": "ECMA-334 2nd ed 15.8.4, p. 189 (PDF p. 205), and 25.2, p. 320 (PDF p. 336)"
+    },
+    {
+      "action": "replace",
+      "test_id": "23-unsafe-code--E23-6-5-address-no-readonly-local--foreach-variable",
+      "replacement_test_id": "23-unsafe-code--E23-6-5-ed1-readonly-local-address-permitted--foreach-variable",
+      "authority": "ECMA-334 2nd ed 25.5.4, p. 325 (PDF p. 341), through p. 326 (PDF p. 342), and 15.8.4, p. 189 (PDF p. 205)"
+    },
+    {
+      "action": "replace",
+      "test_id": "23-unsafe-code--E23-6-9-predefined-sizeof-constant--constants",
+      "replacement_test_id": "12-expressions--E12-8-18-ed1-sizeof-unsafe-context--int-outside-context",
+      "authority": "ECMA-334 2nd ed 25.5, p. 323 (PDF p. 339), and 25.5.8, p. 328 (PDF p. 344)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-7-empty-array-address--empty-arrays",
+      "authority": "ECMA-334 2nd ed 25.6, p. 329 (PDF p. 345)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-7-null-array-address--null-array",
+      "authority": "ECMA-334 2nd ed 25.6, p. 329 (PDF p. 345)"
+    }
+  ]
+}

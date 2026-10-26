@@ -1,0 +1,10 @@
+class NameLedger
+{
+    static int Readout() { return 67; }
+    static void Main()
+    {
+        int total = Readout();
+        { int Reading = 8; }
+        System.Console.WriteLine(total);
+    }
+}

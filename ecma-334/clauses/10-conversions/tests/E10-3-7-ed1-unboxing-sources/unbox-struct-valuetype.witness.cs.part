@@ -10,7 +10,7 @@ class Entry
 {
     static void Main()
     {
-        System.ValueType storage = (System.ValueType)(object)new Parcel(53);
+        object storage = new Parcel(53);
         Parcel result = (Parcel)(object)storage;
         System.Console.WriteLine(result.Number == 53 ? "OK" : "FAIL");
     }

@@ -259,6 +259,11 @@ class EditionChecks(unittest.TestCase):
     config = RunnerChecks.config
 
     def setUp(self):
+        editions = registered_editions("ecma-334")
+        self.editions = {number: copy.deepcopy(editions[number]) for number in [1, 7]}
+        registry = patch("suite_editions.registered_editions", return_value=self.editions)
+        registry.start()
+        self.addCleanup(registry.stop)
         self.tests = [{"suite_id": "ecma-334", "test_id": name, "authority": authority,
                        "version_status": "current", "version": "1", "origin": "handwritten"}
                       for name, authority in [("own", "ECMA-334 1st ed 10.1"), ("own-2", "ECMA-334 1st ed 10.1"),
@@ -285,6 +290,13 @@ class EditionChecks(unittest.TestCase):
 
     def bounds(self, test):
         return self.rows[test["test_id"]], "current"
+
+    def add_second_edition(self):
+        self.editions[2] = {**self.editions[1], "id": "ecma-334-ed2", "authority_prefix": "ECMA-334 2nd ed"}
+        test = {**self.tests[0], "test_id": "second", "authority": "ECMA-334 2nd ed 10.1"}
+        self.tests.append(test)
+        self.rows["second"] = {"since": "1", "until": "7.3"}
+        return test
 
     def test_conflict_schema_ids_roles_and_duplicate_actions(self):
         validate_conflicts(self.table, "ecma-334", self.tests)
@@ -334,7 +346,7 @@ class EditionChecks(unittest.TestCase):
         self.rows["continuity"]["until"] = "1"
         other = {**self.tests[0], "test_id": "other-edition", "authority": "ECMA-334 2nd ed 10.1"}
         self.rows["other-edition"] = {"since": "1", "until": "2"}
-        editions = registered_editions("ecma-334")
+        editions = copy.deepcopy(self.editions)
         editions[2] = {**editions[1], "authority_prefix": "ECMA-334 2nd ed"}
         with patch("suite_editions.registered_editions", return_value=editions), \
                 patch("suite_versions.version_row", side_effect=self.bounds):
@@ -342,6 +354,110 @@ class EditionChecks(unittest.TestCase):
             self.assertIn("other-edition", [test["test_id"] for test in tests])
             self.assertNotIn("continuity", [test["test_id"] for test in tests])
             self.assertNotIn("other-edition", [test["test_id"] for test in version_inventory([other, *self.tests])])
+
+    def test_older_editions_join_by_continuity_in_both_directions(self):
+        second = self.add_second_edition()
+        first = self.tests[0]
+        self.rows["own"] = {"since": "1", "until": "7.3"}
+        for requested, own, continuing in [(1, first, second), (2, second, first)]:
+            table = {**self.table, "edition": requested, "conflicts": []}
+            definition = {**self.definition, "edition": requested, "table": table}
+            with self.subTest(edition=requested), patch("suite_versions.version_row", side_effect=self.bounds):
+                validate_conflicts(table, "ecma-334", self.tests)
+                tests, decisions = edition_inventory([first, second], {"ecma-334": definition})
+            self.assertEqual([test["test_id"] for test in tests], ["own", "second"])
+            self.assertEqual(decisions["ecma-334"]["own_test_ids"], [own["test_id"]])
+            self.assertEqual(decisions["ecma-334"]["continuity_test_ids"], [continuing["test_id"]])
+
+    def test_older_edition_conflicts_are_symmetric(self):
+        second = self.add_second_edition()
+        first = self.tests[0]
+        for requested, own, target in [(1, first, second), (2, second, first)]:
+            for action in ["replace", "leave-out"]:
+                row = {"action": action, "test_id": target["test_id"],
+                       "authority": own["authority"] + ", p. 69 (PDF p. 83)"}
+                if action == "replace":
+                    row["replacement_test_id"] = own["test_id"]
+                table = {**self.table, "edition": requested, "conflicts": [row]}
+                definition = {**self.definition, "edition": requested, "table": table}
+                with self.subTest(edition=requested, action=action), \
+                        patch("suite_versions.version_row", side_effect=self.bounds):
+                    validate_conflicts(table, "ecma-334", self.tests)
+                    tests, decisions = edition_inventory([first, second], {"ecma-334": definition})
+                self.assertEqual([test["test_id"] for test in tests], [own["test_id"]])
+                category = "replaced_test_ids" if action == "replace" else "left_out_test_ids"
+                self.assertEqual(decisions["ecma-334"][category], [target["test_id"]])
+
+    def test_cross_edition_canonical_replacement_and_requested_citation(self):
+        self.add_second_edition()
+        self.rows["own"] = {"since": "1", "until": "7.3"}
+        row = {**self.table["conflicts"][0], "authority": "ECMA-334 2nd ed 10.1, p. 71 (PDF p. 87)"}
+        table = {**self.table, "edition": 2, "conflicts": [row]}
+        definition = {**self.definition, "edition": 2, "table": table}
+        validate_conflicts(table, "ecma-334", self.tests)
+        with patch("suite_versions.version_row", side_effect=self.bounds):
+            tests, decisions = edition_inventory(self.tests, {"ecma-334": definition})
+        self.assertIn("own", [test["test_id"] for test in tests])
+        self.assertIn("own", decisions["ecma-334"]["continuity_test_ids"])
+        self.assertEqual(decisions["ecma-334"]["replaced_test_ids"], ["replaced"])
+        mutations = [lambda row: row.update(test_id="second"),
+                     lambda row: row.update(test_id="feature"),
+                     lambda row: row.update(replacement_test_id="continuity"),
+                     lambda row: row.update(replacement_test_id="feature"),
+                     lambda row: row.update(authority="ECMA-334 1st ed 10.1, p. 69 (PDF p. 83)")]
+        for index, change in enumerate(mutations):
+            invalid = copy.deepcopy(table)
+            change(invalid["conflicts"][0])
+            with self.subTest(mutation=index), self.assertRaises(ValueError):
+                validate_conflicts(invalid, "ecma-334", self.tests)
+
+    def test_replacement_requires_selected_continuity_and_current_bounds(self):
+        self.add_second_edition()
+        row = {**self.table["conflicts"][0], "replacement_test_id": "second"}
+        table = {**self.table, "conflicts": [row]}
+        definition = {**self.definition, "table": table}
+        validate_conflicts(table, "ecma-334", self.tests)
+        for bounds in [{"since": "2", "until": "7.3", "below_since": {"behavior": "refuses"}},
+                       {"since": "2", "until": "7.3", "other_passing_levels": ["1"]}]:
+            self.rows["second"] = bounds
+            with self.subTest(bounds=bounds), patch("suite_versions.version_row", side_effect=self.bounds), \
+                    self.assertRaisesRegex(ValueError, "Replacement is not selected"):
+                edition_inventory(self.tests, {"ecma-334": definition})
+        self.rows["second"] = {"since": "1", "until": "7.3"}
+        with patch("suite_versions.version_row", side_effect=self.bounds):
+            self.assertIn("second", [test["test_id"] for test in
+                          edition_inventory(self.tests, {"ecma-334": definition})[0]])
+        self.tests[-1]["version_status"] = "stale"
+        with patch("suite_versions.version_row", side_effect=self.bounds), \
+                self.assertRaisesRegex(ValueError, "Current bounds required"):
+            edition_inventory(self.tests, {"ecma-334": definition})
+
+    def test_active_conflict_requires_replacement_in_filtered_selection(self):
+        with patch("suite_versions.version_row", side_effect=self.bounds):
+            with self.assertRaisesRegex(ValueError, "Replacement is not selected"):
+                self.prepare_edition([self.tests[2]])
+            tests = self.prepare_edition([self.tests[0]])[0]
+        self.assertEqual([test["test_id"] for test in tests], ["own"])
+
+    def test_replacements_cannot_be_excluded_or_form_cycles(self):
+        second = self.add_second_edition()
+        other = {**second, "test_id": "second-other"}
+        self.tests.append(other)
+        citation = "ECMA-334 1st ed 10.1, p. 69 (PDF p. 83)"
+        for action in ["replace", "leave-out"]:
+            excluded = {"action": action, "test_id": "second", "authority": citation}
+            if action == "replace":
+                excluded["replacement_test_id"] = "own"
+            table = {**self.table, "conflicts": [
+                {**self.table["conflicts"][0], "replacement_test_id": "second"}, excluded]}
+            with self.subTest(action=action), self.assertRaisesRegex(ValueError, "itself replaced or left out"):
+                validate_conflicts(table, "ecma-334", self.tests)
+        for links in [[("second", "second")], [("second", "second-other"), ("second-other", "second")]]:
+            table = {**self.table, "conflicts": [
+                {"action": "replace", "test_id": target, "replacement_test_id": replacement,
+                 "authority": citation} for target, replacement in links]}
+            with self.subTest(links=links), self.assertRaisesRegex(ValueError, "itself replaced or left out"):
+                validate_conflicts(table, "ecma-334", self.tests)
 
     def test_version_modes_exclude_older_authorities_and_declared_keeps_all(self):
         self.tests[0]["version_status"] = "stale"

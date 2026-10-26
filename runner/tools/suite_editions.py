@@ -62,13 +62,15 @@ def validate_conflicts(table, suite_id, tests):
         for test_id in [row["test_id"], *([replacement] if row["action"] == "replace" else [])]:
             if not isinstance(test_id, str) or test_id not in inventory:
                 raise ValueError("Unknown edition conflict test ID: " + str(test_id))
-        if authority_edition(inventory[row["test_id"]], editions) != base:
-            raise ValueError("Conflict target must have latest-edition authority: " + row["test_id"])
-        if row["action"] == "replace" and authority_edition(inventory[replacement], editions) != number:
-            raise ValueError("Replacement must have the requested edition's authority: " + replacement)
+        target_edition = authority_edition(inventory[row["test_id"]], editions)
+        if target_edition is None or target_edition == number:
+            raise ValueError("Conflict target must have another registered edition's authority: " + row["test_id"])
+        replacement_edition = authority_edition(inventory[replacement], editions) if replacement else None
+        if row["action"] == "replace" and replacement_edition in {None, base}:
+            raise ValueError("Replacement must have a registered older edition's authority: " + replacement)
         if not isinstance(row["authority"], str) or not citation.fullmatch(row["authority"]):
             raise ValueError("Conflict authority needs a registered clause and printed/PDF pages")
-        if replacement and row["authority"].split(",", 1)[0] != inventory[replacement]["authority"]:
+        if replacement_edition == number and row["authority"].split(",", 1)[0] != inventory[replacement]["authority"]:
             raise ValueError("Conflict citation disagrees with replacement authority: " + replacement)
         pair = (row["test_id"], replacement)
         if pair in pairs:
@@ -77,6 +79,9 @@ def validate_conflicts(table, suite_id, tests):
             raise ValueError("A test cannot be both replaced and left out")
         pairs.add(pair)
         actions[row["test_id"]] = row["action"]
+    for _, replacement in pairs:
+        if replacement in actions:
+            raise ValueError("Replacement cannot be itself replaced or left out: " + replacement)
     return table
 
 
@@ -136,6 +141,14 @@ def edition_inventory(tests, definitions):
             selected.append(test)
         else:
             decision["outside_interval_test_ids"].append(test["test_id"])
+    candidates = {(test["suite_id"], test["test_id"]) for test in tests}
+    selected_ids = {(test["suite_id"], test["test_id"]) for test in selected}
+    for suite_id, definition in definitions.items():
+        for row in definition["table"]["conflicts"]:
+            if (row["action"] == "replace" and (suite_id, row["test_id"]) in candidates
+                    and (suite_id, row["replacement_test_id"]) not in selected_ids):
+                raise ValueError("Replacement is not selected for edition " + str(definition["edition"])
+                                 + ": " + row["replacement_test_id"])
     return selected, decisions
 
 
