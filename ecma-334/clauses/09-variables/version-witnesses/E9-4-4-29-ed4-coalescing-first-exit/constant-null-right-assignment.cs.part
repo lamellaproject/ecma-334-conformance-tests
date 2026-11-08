@@ -1,0 +1,24 @@
+// ECMA-334 4th ed 12.3.3.29, p. 133 (PDF p. 155).
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static string Assign(out int value)
+    {
+        value = 59;
+        return "cedar";
+    }
+    static int Main()
+    {
+        int value;
+        string result = Assign(out value) ?? "fallback";
+        Check(value == 59 && result == "cedar", "right-operand-assignment");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

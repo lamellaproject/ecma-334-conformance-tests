@@ -7,22 +7,30 @@ from pathlib import Path
 
 from suite_common import digest, inside, mutated_source, sha, standard_root, write_json
 from suite_config import resolve_level
-from suite_engine import CONTROL_OUTCOMES, Context, control_level, departure_rows, load_controls
+from suite_engine import CONTROL_OUTCOMES, Context, control_level, departure_rows, load_controls, superseded_observation_rows
 from suite_evidence import CONTRACT_EXCLUSIONS, verify_record
-from suite_versions import observed_runtime
+from suite_versions import observed_runtime, positive_refusal
 
 
-def witness_for(test, context, departures):
+def witness_for(test, context, departures, superseded=None):
     raw = context.source_path(test).read_bytes()
     declared = test["version_witness"]
     witness = inside(standard_root(test["suite_id"]) / "clauses" / test["path"].split("/")[1], declared) if declared else None
     declared_hash = sha(witness) if witness else ""
-    if test["test_id"] in departures:
+    observations = [row for row in [departures.get(test["test_id"]), (superseded or {}).get(test["test_id"])] if row]
+    header = resolve_level(context.config, test["version"])["level"] if observations else None
+    # A disagreement only outside the header's level does not require replacing
+    # an ordinary conforming program's measurement basis with a departure witness.
+    if observations and (witness is not None or any(header in json.loads(row["levels_json"]) for row in observations)):
         if witness is None:
-            raise ValueError("A departure needs a declared positive construct witness: " + test["test_id"])
+            raise ValueError("An observed disagreement needs a declared positive construct witness: " + test["test_id"])
         return "departure-witness", witness.read_bytes(), declared_hash
     if test["expected"] == "run":
         return "original", raw, declared_hash
+    if test["expected"] == "run-or-reject":
+        if witness is None:
+            raise ValueError("A run-or-reject test needs a positive construct witness: " + test["test_id"])
+        return "repair", witness.read_bytes(), declared_hash
     if test["origin"] == "generated":
         return "feature-free-rejection", raw, declared_hash
     return "repair", witness.read_bytes() if witness else mutated_source(test, raw), declared_hash
@@ -45,10 +53,7 @@ def predecessor(observation, level, basis):
     if observation is None:
         return {"level": "", "behavior": "none", "diagnostic_codes": []}
     positive = basis in {"repair", "departure-witness"}
-    status = observation["witness_status"] if positive else observation["original_status"]
-    refuses = status in {"unexpected-reject", "compiler-error", "infrastructure", "unsupported"}
-    if basis == "feature-free-rejection":
-        refuses = status == "pass"
+    refuses = positive_refusal(observation, basis)
     return {"level": level, "behavior": "refuses" if refuses else "meaning-change",
             "diagnostic_codes": observation["witness_diagnostic_codes"] if positive else observation["diagnostic_codes"]}
 
@@ -154,6 +159,7 @@ class Measurement:
         self.header_context, self.fresh, self.registry = header_context, fresh, registry
         self.reuse_contexts = tuple(reuse_contexts)
         self.departures = departure_rows(tests[0]["suite_id"])
+        self.superseded = superseded_observation_rows(tests[0]["suite_id"])
         self.feature_codes = set(context.config["diagnostics"]["version_feature_codes"]) | {"CS8652"}
         self.resolutions = {v: resolve_level(context.config, "preview" if v.endswith("-preview") else v) for v in levels}
 
@@ -208,7 +214,7 @@ class Measurement:
 
     def replay(self, test, stored, *, historical=False, independent=False):
         """Reconstruct a row without executing, replacing records, or trusting its booleans."""
-        basis, witness, declared = witness_for(test, self.context, self.departures)
+        basis, witness, declared = witness_for(test, self.context, self.departures, self.superseded)
         row = stored["row"]
         if (stored["test_id"] != test["test_id"] or stored["source_sha256"] != test["source_sha256"]
                 or stored["contract"] != self.contract(test) or (not historical and stored["identity"] != self.identity)
@@ -261,7 +267,7 @@ class Measurement:
             if result["row"]["method"] != method:
                 raise ValueError("A resumed row has another measurement method")
             return result
-        basis, witness, declared = witness_for(test, self.context, self.departures)
+        basis, witness, declared = witness_for(test, self.context, self.departures, self.superseded)
         positive_test = {**test, "expected": "run"}
         header = resolve_level(self.context.config, test["version"])
         observations, evidence = {}, {}

@@ -37,20 +37,50 @@ depends on that member.
 
 - A new clause gets its own directory and an explicit scope inventory.
 - A new edition gets a primary source entry and rules that distinguish its
-  text where necessary. Add `edition-conflicts/<N>.json` beneath the standard
+  text where necessary. The registry's `iso_editions` names one primary
+  edition at each ISO level: the 2nd edition for ISO-1 and the 4th for ISO-2.
+  Add `edition-conflicts/<N>.json` beneath the standard
   directory, following the [edition table contract](ARCHITECTURE.md#edition-selection).
   Review conflicts with every other registered edition. Pair each replaced
-  test with a replacement from the requested edition or another older
-  edition admitted by continuity. A replacement must be selected, must not
+  test with a replacement from the table edition or another older
+  registered edition. A cited `replace` row admits an older replacement
+  outside its current measured interval when the cited requirement requires
+  its expected result at the table edition's level. The replacement runs
+  as an ordinary test at that level with unchanged measured bounds. A
+  replacement must be selected, must not
   itself be excluded, and must form no cycle. Use `leave-out` when no
-  replacement is justified. Every row cites the requested edition's clause
+  replacement is justified. An ordinary exclusion can also name a test with
+  the registry's pinned compiler authority. Audit the predicate and all setup
+  syntax against the cited edition; compiler acceptance alone supplies no ISO
+  authority. Preserve each required primary predicate in a compatible test.
+  Replacement targets and superseded claims retain their registered
+  standard-edition authority requirements. Every row cites the table edition's clause
   and printed/PDF pages, including cross-edition pairs. Include an empty
   table if there are no conflicts, and run `check-editions.py`.
+  Record a contradictory pinned-compiler result as a confirmed departure
+  citing the table edition; it remains a departure failure in that run.
   Maintain the other older editions' tables for conflicting requirements.
   Compare each affected edition's selected inventory before and after the
   table data, naming each exclusion. Verify continuity in both directions
   for programs with compatible predicates and intervals. Adding a new latest
   edition also requires updating the older tables against that base.
+  At an ISO level, apply the table of the registry's governing edition:
+  `2.json` for editions 1 and 2, and `4.json` for editions 3 and 4.
+  For every older requirement the governing edition changes, use a
+  `leave-out` row with a `superseded` object in that governing table.
+  Its `test` and `level` arrays cite both editions with registered source IDs,
+  clauses, exact quotes and printed/PDF pages. Keep the older test and add
+  coverage for the newer requirement, or give its ledger's untested reason.
+  A superseded target must have an older standard authority and cannot also
+  be replaced. Keep the same decisions in edition and ISO language plans,
+  header audits, summaries and mutation results. Exercise both valid and
+  refused rows with runner tests. Raw certification measures every source,
+  superseded sources included, without changing their measured bounds to
+  express table membership.
+  Exercise `earliest-per-test` with a cited replacement whose earliest level
+  differs from the replaced test's. The replacement runs at the ISO level it
+  serves and can also retain its own earliest row. Keep both tests in the
+  candidate selection and one plan per test and level.
 - Later language features use the registered feature authority and
   feature-version IDs (`P<version>-<predicate-slug>`, or
   `Ppreview-<predicate-slug>` for a preview feature).
@@ -100,7 +130,9 @@ Some additions need more:
 - A confirmed compiler departure needs exact observations on the pinned
   compiler and target, and a positive version witness. It remains visible as a
   failure: review never silently changes the required behavior to make a
-  compiler pass.
+  compiler pass. A disagreement observed only outside a conforming test's
+  header level can keep the ordinary measurement basis and causal repair;
+  a departure at the header requires a declared positive witness.
 - Generated programs need a reproducible generator and case map.
 - Inventoried raw-source changes need byte and line-ending review.
 
@@ -116,7 +148,7 @@ python runner/tools/check-generated.py --report ../results/generated-check.json
 
 python runner/tools/build-manifest.py --report ../results/manifest-build.json
 
-python runner/tools/check-editions.py --report ../results/editions-check.json
+python runner/tools/check-editions.py --source-map ../sources/source-map.json --report ../results/editions-check.json
 
 python runner/tools/check-ledger.py --source-map ../sources/source-map.json --require-confirmed --report ../results/ledger-check.json
 
@@ -152,8 +184,8 @@ the real compiler and runtime controls.
 | 2 | `build-manifest.py` | Derives the manifest from the test headers and joins any existing version data. |
 | 3 | `check-editions.py` | Checks each older edition's conflict table, its schema, registered authorities and every referenced test ID. |
 | 4 | `check-ledger.py` | Validates ledger ownership, text-block inventories, test coverage and the quotations against the registered sources. With `--require-confirmed`, a pending departure is an error. |
-| 5 | `run-suite.py` | Runs every test at its header `Version`, using `--langversion declared-per-test`, with the pinned csc on the `dotnet` target. |
-| 6 | `check-csc.py` | Replays the pinned csc evidence and checks the informational `Csc` headers at each test's `Version`. |
+| 5 | `run-suite.py` | Resolves header `Version` plans with `--langversion declared-per-test`, applies governing ISO tables, and runs the active claims with the pinned csc on the `dotnet` target. Superseded claims have cited static rows. |
+| 6 | `check-csc.py` | Replays the pinned csc evidence and checks the informational `Csc` headers on active claims at `Version`; validates superseded citations without execution or diagnostic obligations. |
 | 7 | `check-mutations.py` | Proves the handwritten tests' causal changes. |
 | 8 | `compute-versions.py` | Measures the bounds and the independent all-level sample. |
 | 9 | `build-manifest.py` | Rebuilds the manifest, joining the bounds from step 8. |
@@ -193,7 +225,7 @@ report records its hash and the matching pattern's line number.
 
 ### The source map
 
-Two of the commands take `--source-map ../sources/source-map.json`. The
+Three of the commands take `--source-map ../sources/source-map.json`. The
 source map tells the audit tools where your copies of the registered sources
 are. Obtain the registered assets and the exact text extraction outside the
 repository.
@@ -205,6 +237,9 @@ repository.
 - Every file must match its registry hash.
 - Quote auditing checks the registered page or feature file. An incomplete
   map fails rather than guessing a source.
+- Include the older and governing editions used by superseded citations,
+  even when their source programs do not execute in a claim run. Keep full
+  source extracts outside the published tree.
 
 For example, with the registered files placed next to the map, two entries
 look like this. The example is incomplete on purpose: a working map names
@@ -225,7 +260,9 @@ every registered source that the ledgers quote.
 - Every suite run names either `--edition N` or `--langversion`: one or more
   levels, an inclusive range such as `5..7.3`, `all`, or `earliest-per-test`.
   The selectors cannot be combined. Edition runs use the registered level and
-  conflict table; [Results](RESULTS.md#edition-runs) describes their selection.
+  governing table. Any language plan resolving to ISO-1 or ISO-2 uses the same
+  governing edition, including header plans and `earliest-per-test`;
+  [Results](RESULTS.md#edition-runs) describes their selection.
 - Use a fresh result directory for changed inputs.
 - `--resume` on version computation accepts only the same measurement
   identity, selection and policy, and it replays its saved prefix.

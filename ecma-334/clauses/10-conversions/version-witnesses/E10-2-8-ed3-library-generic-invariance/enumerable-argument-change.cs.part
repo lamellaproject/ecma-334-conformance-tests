@@ -1,0 +1,22 @@
+// ECMA-334 3rd ed 13.1.4, p. 134 (PDF p. 154).
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    static System.Collections.Generic.IEnumerable<string> Read() { yield return "alder"; }
+    static int Main()
+    {
+        System.Collections.Generic.IEnumerable<string> source = Read();
+        System.Collections.Generic.IEnumerable<string> view = source;
+        int seen = 0;
+        foreach (object value in view) { if ((string)value == "alder") seen++; }
+        Check(seen == 1, "generic-enumerable-conversion");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

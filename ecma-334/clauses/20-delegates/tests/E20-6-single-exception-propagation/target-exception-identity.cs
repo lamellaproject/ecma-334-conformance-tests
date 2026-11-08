@@ -18,7 +18,7 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Notice notice = Raise;
+        Notice notice = new Notice(Raise);
         bool caught = false;
         try { notice(); }
         catch (Problem observed) { caught = true; Check(observed == problem, "target-exception-instance-preserved"); }

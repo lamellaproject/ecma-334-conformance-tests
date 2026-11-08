@@ -20,7 +20,7 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Notice a = A, b = B, c = C;
+        Notice a = new Notice(A), b = new Notice(B), c = new Notice(C);
         Notice part = a + b;
         Notice whole = part + c + part;
         Notice alias = whole;

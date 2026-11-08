@@ -4,8 +4,8 @@ Authority: ECMA-334 7th ed 12.8.7.1
 Version: 7.3
 Expected: run
 Stdout: OK 2
-Mutate: Worker.Value;
-Into: other.Value;
+Mutate: new Pick(Worker.Value);
+Into: new Pick(other.Value);
 */
 using System;
 delegate int Pick();
@@ -18,7 +18,7 @@ class Program
     static void Main()
     {
         Other other = new Other();
-        Pick call = Worker.Value;
+        Pick call = new Pick(Worker.Value);
         Check(call.Target == null, "type-method-group-has-no-instance-expression");
         Check(call() == 3, "type-method-group-binds-static-method");
         if (failures == 0) Console.WriteLine("OK " + checks);

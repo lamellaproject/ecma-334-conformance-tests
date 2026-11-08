@@ -16,7 +16,7 @@ class Program
     static int Next(int value) { return value + 1; }
     static void Main()
     {
-        Owner.Transform action = Next;
+        Owner.Transform action = new Owner.Transform(Next);
         Check(action(28) == 29, "class-nested-delegate");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

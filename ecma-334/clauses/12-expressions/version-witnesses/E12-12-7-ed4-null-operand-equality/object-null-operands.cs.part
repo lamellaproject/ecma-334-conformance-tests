@@ -1,0 +1,27 @@
+// ECMA-334 4th ed 14.9.6, p. 209 (PDF p. 231).
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Main()
+    {
+        object other = null;
+        object empty = null;
+        object present = new object();
+        Check(empty == other, "empty-right-equality");
+        Check(other == empty, "empty-left-equality");
+        Check(!(empty != other), "empty-right-inequality");
+        Check(!(other != empty), "empty-left-inequality");
+        Check(!(present == other), "present-right-equality");
+        Check(!(other == present), "present-left-equality");
+        Check(present != other, "present-right-inequality");
+        Check(other != present, "present-left-inequality");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

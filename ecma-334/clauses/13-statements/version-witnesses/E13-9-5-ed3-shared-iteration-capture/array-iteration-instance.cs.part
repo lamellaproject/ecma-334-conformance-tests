@@ -1,0 +1,29 @@
+// ECMA-334 3rd ed 15.8.4, p. 234 (PDF p. 254).
+using System;
+delegate int Readback();
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    static int Main()
+    {
+        int[] values = new int[] { 7, 18, 43 };
+        Readback[] saved = new Readback[3];
+        int index = 0;
+        foreach (int marker in values)
+        {
+            int frozen = marker;
+            saved[index++] = delegate { return frozen; };
+        }
+        for (int i = 0; i < saved.Length; i++)
+        {
+            Check(saved[i]() == values[i], "iteration-capture-construct");
+        }
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

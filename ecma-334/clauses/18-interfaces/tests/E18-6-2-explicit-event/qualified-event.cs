@@ -26,10 +26,10 @@ class Program
     {
         Source source = new Source();
         ISource view = source;
-        view.Ready += Hit;
+        view.Ready += new Notice(Hit);
         source.Raise();
         Check(calls == 1, "explicit-event-add");
-        view.Ready -= Hit;
+        view.Ready -= new Notice(Hit);
         source.Raise();
         Check(calls == 1, "explicit-event-remove");
         if (failures == 0) Console.WriteLine("OK " + checks);

@@ -1,0 +1,18 @@
+// ECMA-334 4th ed 9.4.2, p. 70 (PDF p. 92).
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Read(int letter) { return letter; }
+    static int Main()
+    {
+        Check(Read(47) == 47, "unicode-letter-parameter");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

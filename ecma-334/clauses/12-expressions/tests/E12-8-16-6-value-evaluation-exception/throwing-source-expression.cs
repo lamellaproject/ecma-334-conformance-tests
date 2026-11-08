@@ -14,12 +14,12 @@ class Program
 {
     static int reads, calls;
     static void Work() { calls++; }
-    static Callback Read(bool stop) { reads++; if (stop) throw new Marker(); return Work; }
+    static Callback Read(bool stop) { reads++; if (stop) throw new Marker(); return new Callback(Work); }
     static int checks, failures;
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Callback old = Work, copy = old;
+        Callback old = new Callback(Work), copy = old;
         bool caught = false;
         try { copy = new Callback(Read(true)); }
         catch (Marker) { caught = true; }

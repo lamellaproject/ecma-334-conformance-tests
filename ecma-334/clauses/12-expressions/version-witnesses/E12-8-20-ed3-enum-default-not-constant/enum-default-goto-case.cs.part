@@ -1,0 +1,27 @@
+// ECMA-334 3rd ed 14.5.14, p. 185 (PDF p. 205).
+using System;
+enum Gate { Vacant, Marked = 29 }
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    static int Read(Gate slot)
+    {
+        switch (slot)
+        {
+            case Gate.Marked: goto case (Gate)0;
+            case Gate.Vacant: return 37;
+            default: return -9;
+        }
+    }
+    static int Main()
+    {
+        Check(Read(Gate.Marked) == 37, "enum-zero-label");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

@@ -21,8 +21,8 @@ class Program
     static void ReadSecondThenFirst() { SecondReaderSecond = Second; SecondReaderFirst = First; }
     static void Main()
     {
-        Thread firstWriter = new Thread(WriteFirst), secondWriter = new Thread(WriteSecond);
-        Thread firstReader = new Thread(ReadFirstThenSecond), secondReader = new Thread(ReadSecondThenFirst);
+        Thread firstWriter = new Thread(new System.Threading.ThreadStart(WriteFirst)), secondWriter = new Thread(new System.Threading.ThreadStart(WriteSecond));
+        Thread firstReader = new Thread(new System.Threading.ThreadStart(ReadFirstThenSecond)), secondReader = new Thread(new System.Threading.ThreadStart(ReadSecondThenFirst));
         firstWriter.Start();
         secondWriter.Start();
         firstReader.Start();

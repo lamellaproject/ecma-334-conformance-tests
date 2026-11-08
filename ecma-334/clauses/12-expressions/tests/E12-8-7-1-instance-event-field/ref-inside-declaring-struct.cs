@@ -27,7 +27,7 @@ class Program
     static void Handler() { }
     static void Main()
     {
-        Pulse handler = Handler;
+        Pulse handler = new Pulse(Handler);
         Cell cell = new Cell();
         Check(cell.Store(handler) == handler, "instance-field-like-event-is-variable-inside-declaring-struct");
         if (failures == 0) Console.WriteLine("OK " + checks);

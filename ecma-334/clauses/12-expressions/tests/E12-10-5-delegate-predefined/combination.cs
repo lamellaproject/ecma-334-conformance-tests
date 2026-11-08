@@ -18,7 +18,7 @@ class Program
     static void B() { trace += "B"; }
     static void Main()
     {
-        D left = A, right = B, none = null;
+        D left = new D(A), right = new D(B), none = null;
         Check((object)(none + left) == (object)left, "null-left-identity");
         Check((object)(left + none) == (object)left, "null-right-identity");
         Check(none + none == null, "both-null");

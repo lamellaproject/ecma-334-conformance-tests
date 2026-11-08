@@ -27,7 +27,7 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Edit first = A, second = B;
+        Edit first = new Edit(A), second = new Edit(B);
         Edit composed = first + second;
         composed(ref stored);
         Check(stored == 17, "caller-variable-retains-last-reference-change");

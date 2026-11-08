@@ -19,8 +19,8 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Root.Read root = ReadValue;
-        Branch.Read branch = Hit;
+        Root.Read root = new Root.Read(ReadValue);
+        Branch.Read branch = new Branch.Read(Hit);
         branch();
         Check(root() == 41, "base-qualified-delegate");
         Check(calls == 1, "derived-name-hides-base-delegate");

@@ -8,7 +8,7 @@ Diagnostic: none
 Mutate: decimal divisor = 2m;
 Into: decimal divisor = 1m;
 */
-// ECMA-334 1st ed 11.1.6, p. 94 (PDF p. 108) fixes the fractional ceiling at28 and
+// ECMA-334 1st ed 11.1.6, p. 94 (PDF p. 108) fixes the fractional ceiling at 28 and
 // requires nearest/even arithmetic rounding; the 7th edition's 8.3.8 may provide more
 // places.
 using System;

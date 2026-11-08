@@ -55,18 +55,31 @@ This runs the version selection at each version you list: here C# 1, 2 and 3,
 C# 7.3 (the version the latest ECMA-334 edition describes), and `latest`, which each
 compiler configuration maps to a version. Each test has a measured range of
 versions: the unbroken run of versions, including its own, at which the
-reference compiler passes it. At a version inside that range, the test runs
+reference compiler passes it.
+
+At a version inside that range, the test runs
 normally. Below the range, where the reference compiler refuses the feature, the
-test checks that your compiler refuses it too. Otherwise the test is reported as
-`not-applicable`. `--langversion 5..7.3` selects an inclusive range, in the
+explicit-level run checks refusal of its positive construct. At ISO-1 and ISO-2,
+the governing table (the 2nd edition's at ISO-1, the 4th's at ISO-2) decides
+claims first: superseded, replaced and left-out tests
+produce no refusal check. An unlisted test below `Since` gets the check when the
+reference measurement records refusal of its positive source at the requested
+level.
+
+Other outside-range tests are reported as
+`not-applicable` or omitted by the governing ISO selection. `--langversion 5..7.3` selects an inclusive range, in the
 compiler configuration's level order. `--langversion all` selects every version
 the configuration lists, including its supported preview mode.
-`--langversion earliest-per-test` runs each test once, at the first level of
-its measured range. These runs require current measured ranges. If you name a
-version the compiler does not support, the run stops.
+`--langversion earliest-per-test` starts with the first level of each
+eligible test's measured range, then applies the governing ISO tables. A table
+can omit that plan or add a cited replacement at another level, so a test can
+have no row or rows at more than one level. These runs require current measured
+ranges. If you name a version the compiler does not support, the run stops.
 
-Version runs use the latest standard edition's answers and compiler-authority
-tests. They exclude tests whose authority is an older standard edition.
+At ISO-1 and ISO-2, version plans use the governing edition's table and retain
+the older requirements it keeps. At other levels, version runs use the latest
+standard edition's answers and compiler-authority tests, excluding older standard
+authorities.
 
 ### Run an older edition
 
@@ -74,12 +87,17 @@ tests. They exclude tests whose authority is an older standard edition.
 python runner/run-suite.py --compiler configs/compilers/csc.json --target configs/targets/dotnet.json --results ../results/csc-edition-1 --edition 1 --jobs 12
 ```
 
-An edition run checks a registered older edition at its fixed language level.
-`--edition 1` runs the ECMA-334 1st edition at ISO-1 (C# 1). It includes
-every test with that edition's authority, plus other tests whose current
-measured interval contains that level. The edition's conflict table removes
-tests it replaces or leaves out. These runs require current bounds, and results
-name the edition and level. `--edition` and `--langversion` cannot be combined.
+`--edition N` runs the ECMA-334 Nth edition at its language level: the 1st and
+2nd editions at ISO-1 (C# 1), and the 3rd and 4th at ISO-2 (C# 2).
+
+It runs that edition's tests, and tests of other authorities only for rules the
+edition shares. Where the edition that governs the level (the 2nd at ISO-1, the
+4th at ISO-2) changed a rule, the older edition's test is reported as
+`superseded`, never as a pass or a failure.
+
+`--edition 2` and `--edition 4` are the conformance claim runs for ISO-1 and
+ISO-2. `--edition` and `--langversion` cannot be combined. See
+[Edition runs](docs/RESULTS.md#edition-runs).
 
 ### Running part of the suite
 

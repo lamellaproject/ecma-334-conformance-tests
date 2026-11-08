@@ -1,0 +1,21 @@
+// ECMA-334 4th ed 25.7.1, p. 410 (PDF p. 432).
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static void Use<T, U>() where T : U
+    {
+        Check(true, "satisfied-type-parameter-constraint");
+    }
+    static int Main()
+    {
+        Use<int, object>();
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

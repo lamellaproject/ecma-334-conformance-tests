@@ -1,0 +1,19 @@
+using System;
+namespace Remote { class Dial { } }
+class Dial { public static int operator <<(Dial item, int count) { return count + 3; } }
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Main()
+    {
+        Dial item = new Dial();
+        Check(item != null, "containing-type-repair");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

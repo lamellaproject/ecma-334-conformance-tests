@@ -17,7 +17,7 @@ class Program
     static void A() { calls++; }
     static void Main()
     {
-        D left = A, equal = new D(A), none = null;
+        D left = new D(A), equal = new D(A), none = null;
         Check(none - left == null, "null-left");
         Check(none - none == null, "both-null");
         Check((object)(left - none) == (object)left, "null-right-identity");

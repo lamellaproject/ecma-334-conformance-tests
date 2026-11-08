@@ -9,9 +9,12 @@ from pathlib import Path
 from suite_common import (KINDS, ROOT, RULE_FIELDS, RULE_ID, checked_object, header_body, inside,
                           load_manifest, raw_sources, read_rules, read_tsv, sha, source_registry,
                           standard_root, suite_path, validate_raw_source)
-from suite_config import level_tuple, public_level, resolve_level
-from suite_engine import CONTROL_OUTCOMES, DEPARTURE_FIELDS, Context, control_level, departure_rows, load_controls
+from suite_config import level_tuple, public_level, read_config, resolve_level, select_levels
+from suite_editions import authority_edition, iso_edition, registered_editions, superseded_claims
+from suite_engine import (CONTROL_OUTCOMES, DEPARTURE_FIELDS, Context, control_level, departure_rows, load_controls,
+                          superseded_observation_rows)
 from suite_evidence import verify_record
+from suite_source_locators import EditionText, parse_locator
 
 COVERAGE_FIELDS = ["block_id", "source_id", "locator", "rule_ids", "disposition", "notes"]
 RETIRED_FIELDS = [*RULE_FIELDS, "retirement_reason"]
@@ -29,6 +32,7 @@ class Sources:
     """Read explicitly supplied external sources, checking their registered immutable pins."""
     def __init__(self, registry, map_file):
         self.registry, self.texts, self.identities = registry, {}, []
+        self.edition_indices = {}
         self.pins = {e["id"]: e for e in registry["editions"]}
         self.pins.update({r["id"] + ":" + a["path"]: dict(a, role=r["role"], commit=r["commit"])
                           for r in registry["references"] for a in r.get("assets", [])})
@@ -61,6 +65,39 @@ class Sources:
             self.texts[source_id] = text.read_text(encoding="utf-8")
             self.identities.append(record)
 
+    def edition_excerpt(self, source_id, clause, printed, pdf):
+        if source_id not in self.texts:
+            raise ValueError("external source map is incomplete")
+        text = self.texts[source_id]
+        cached = self.edition_indices.get(source_id)
+        if cached is None or cached[0] is not text:
+            cached = text, EditionText(text)
+            self.edition_indices[source_id] = cached
+        return cached[1].excerpt(clause, printed, pdf)
+
+    def locator(self, source_id, locator, errors, identity, quote=None):
+        """Validate a clause/page intersection, with an optional exact quotation."""
+        try:
+            text = self.edition_excerpt(source_id, *parse_locator(locator))
+            if quote is not None and normalized(quote) not in normalized(text):
+                raise ValueError("quotation is not exact at its pinned source locator")
+        except ValueError as error:
+            errors.append(identity + ": " + str(error))
+
+    def citation(self, citation, errors, identity):
+        """Check a short requirement against its pinned clause and page intersection."""
+        quote = citation["quote"]
+        if not isinstance(quote, str) or not quote.strip() or len(quote.split()) > 30:
+            errors.append(identity + ": quote must be a nonempty short JSON string")
+            return
+        try:
+            text = self.edition_excerpt(citation["source_id"], citation["clause"],
+                                        citation["printed_pages"], citation["pdf_pages"])
+            if normalized(quote) not in normalized(text):
+                raise ValueError("quotation is not exact at its pinned source locator")
+        except ValueError as error:
+            errors.append(identity + ": " + str(error))
+
     def quote(self, row, errors, identity):
         source_id, locator = row["source_id"], row["locator"]
         pin = self.pins.get(source_id)
@@ -85,12 +122,8 @@ class Sources:
             return
         text = self.texts[source_id]
         if "edition" in pin:
-            parts = text.split("\f")
-            numbers = [int(n.strip()) for n in pages[1].split(",")]
-            if any(n < 1 or n > len(parts) for n in numbers):
-                errors.append(identity + ": PDF page is outside the pinned extraction")
-                return
-            text = " ".join(parts[n - 1] for n in numbers)
+            self.locator(source_id, locator, errors, identity, quote)
+            return
         if normalized(quote) not in normalized(text):
             errors.append(identity + ": quotation is not exact at its pinned source locator")
 
@@ -98,6 +131,22 @@ class Sources:
 def ledger_audit(suite_id, source_map=None, require_confirmed=False):
     root, rules, tests = standard_root(suite_id), read_rules(suite_id), load_manifest(suite_id=suite_id)
     registry, errors = source_registry(suite_id), []
+    configured_levels = [level["level"] for level in select_levels(
+        read_config(ROOT / "configs/compilers/csc.json", "compiler", check_host=False), ["all"])[1]]
+
+    def check_observed_levels(levels, identity):
+        if (not isinstance(levels, list) or not levels
+                or len({public_level(level) for level in levels}) != len(levels)):
+            errors.append(identity + ": missing or repeated observed levels")
+            return
+        labels = [public_level(level) for level in levels]
+        if any(level not in configured_levels for level in labels):
+            errors.append(identity + ": observed level is not configured")
+            return
+        positions = sorted(configured_levels.index(level) for level in labels)
+        if positions != list(range(positions[0], positions[-1] + 1)):
+            errors.append(identity + ": observed levels contain a gap")
+
     sources = Sources(registry, source_map)
     scope = json.loads((root / "ledger-scope.json").read_text(encoding="utf-8"))
     checked_object(scope, {"schema_version", "coverage_proof", "clauses"}, {"schema_version", "coverage_proof", "clauses"})
@@ -124,7 +173,7 @@ def ledger_audit(suite_id, source_map=None, require_confirmed=False):
         source = body.decode("utf-8")
         if "CultureInfo" in source or "using System.Linq;" in source:
             errors.append(test["test_id"] + ": unnecessary culture/LINQ library surface")
-        if test["expected"] == "run" and json.loads(test["stdout_json"]) != "OK 0\n":
+        if test["expected"] in {"run", "run-or-reject"} and json.loads(test["stdout_json"]) != "OK 0\n":
             if not (re.search(r"\bchecks\+\+", source) and re.search(r"\bfailures\+\+", source)
                     and re.search(r'if\s*\(failures\s*==\s*0\)\s*Console\.WriteLine\("OK "\s*\+\s*checks\)', source)):
                 errors.append(test["test_id"] + ": missing accumulating counted-check protocol")
@@ -186,35 +235,66 @@ def ledger_audit(suite_id, source_map=None, require_confirmed=False):
     errors.extend("Active standard rule is absent from its coverage inventory: " + rid
                   for rid in sorted(set(rules) - mapped) if rid.startswith("E"))
     by_id, departures = {t["test_id"]: t for t in tests}, departure_rows(suite_id)
+    observations = superseded_observation_rows(suite_id)
+    changed, editions = superseded_claims(suite_id, tests), registered_editions(suite_id)
+    superseded_details = []
     notes_path = root / "reference-notes.tsv"
     references = read_tsv(notes_path, DEPARTURE_FIELDS) if notes_path.is_file() else []
-    for label, rows in (("departure", list(departures.values())), ("reference note", references)):
+    for label, rows in (("departure", list(departures.values())), ("reference note", references),
+                        ("superseded observation", list(observations.values()))):
         for row in rows:
             test = by_id.get(row["test_id"])
             if not test or row["source_sha256"] != test["source_sha256"] or row["rule_ids"] != test["rule_ids"]:
                 errors.append(row["test_id"] + ": stale or absent " + label)
-            if not row["notes"].strip():
-                errors.append(row["test_id"] + ": missing " + label + " explanation")
-            if label == "departure" and (not row["source_id"].startswith(suite_id + "-ed") or (test and test["authority"].startswith("csc "))):
-                errors.append(row["test_id"] + ": compiler-authority discrepancies belong in reference notes")
+            citations = row.get("level_citations", [row])
+            for citation in citations:
+                if not citation["notes"].strip():
+                    errors.append(row["test_id"] + ": missing " + label + " explanation")
+                citation_levels = json.loads(citation["levels_json"])
+                check_observed_levels(citation_levels, row["test_id"])
+                if label != "reference note" and (not citation["source_id"].startswith(suite_id + "-ed")
+                                                  or (test and test["authority"].startswith("csc "))):
+                    errors.append(row["test_id"] + ": compiler-authority discrepancies belong in reference notes")
+                if label == "departure":
+                    for level in citation_levels:
+                        governing = iso_edition(suite_id, level) or editions[max(editions)]
+                        if citation["source_id"] != governing["id"]:
+                            errors.append(row["test_id"] + ": departure level " + level
+                                          + " must cite governing edition " + governing["id"])
+                sources.quote(citation, errors, row["test_id"] + " " + label)
             if row["compiler_id"] != "csc" or row["compiler_commit"] != registry["csc_commit"]:
                 errors.append(row["test_id"] + ": observation does not name the pinned authority")
             levels = json.loads(row["levels_json"])
-            if not isinstance(levels, list) or not levels or len(set(levels)) != len(levels):
-                errors.append(row["test_id"] + ": missing or repeated observed levels")
+            check_observed_levels(levels, row["test_id"])
             for level in levels:
-                public_level(level)
+                claim = changed.get(public_level(level), {}).get(row["test_id"])
+                if label == "departure" and claim:
+                    errors.append(row["test_id"] + ": departure level " + level + " is superseded by the governing edition")
+                if label == "superseded observation":
+                    if not claim:
+                        errors.append(row["test_id"] + ": observation level " + level + " needs a cited superseded claim")
+                    else:
+                        superseded_details.append({"test_id": row["test_id"], "level": level,
+                                                   "status": row["status"], "superseded": claim["superseded"]})
+                        if sources.texts:
+                            for citation in claim["superseded"]["level"]:
+                                sources.citation(citation, errors, row["test_id"] + " governing requirement")
+            if label == "superseded observation":
+                own = authority_edition(test, editions) if test else None
+                if own is None or row["source_id"] != editions[own]["id"] or row["conforms_since"]:
+                    errors.append(row["test_id"] + ": superseded observation must cite its own edition without conforms_since")
             json.loads(row["observation_json"])
             if row["conforms_since"]:
                 public_level(row["conforms_since"])
-            if require_confirmed and row["status"] != "confirmed":
+            if require_confirmed and label != "superseded observation" and row["status"] != "confirmed":
                 errors.append(row["test_id"] + ": pending " + label)
-            sources.quote(row, errors, row["test_id"] + " " + label)
-    if len({r["test_id"] for r in references}) != len(references) or set(departures) & {r["test_id"] for r in references}:
+    if len({r["test_id"] for r in references}) != len(references) or (set(departures) | set(observations)) & {r["test_id"] for r in references}:
         errors.append("Repeated or overlapping departure/reference note")
     return {"suite_id": suite_id, "rules": len(rules), "tests": len(tests), "tested_rules": len(covered),
             "untested_rules": len(untested), "uncovered_rules": len(uncovered), "coverage_blocks": blocks,
             "retired_rules": len(retired), "departures": len(departures), "departure_status": dict(Counter(r["status"] for r in departures.values())),
+            "departure_citations": sum(len(row.get("level_citations", [row])) for row in departures.values()),
+            "superseded_observations": len(observations), "superseded_observation_levels": superseded_details,
             "reference_notes": len(references), "in_progress_clauses": [c for c, d in scope["clauses"].items() if d["status"] != "available"],
             "quotes_checked_against_sources": bool(source_map), "sources": sources.identities, "errors": errors}
 
@@ -271,17 +351,20 @@ def csc_audit(suite_ids, compiler, target, results, select=None):
     selected = {(r[0], r[1]) for r in run["selected_test_ids"]}
     if selected != set(by_key):
         errors.append("Csc result inventory differs from run selection")
-    tests = [t for suite_id in suite_ids for t in load_manifest(suite_id=suite_id)
-             if select is None or re.search(select, t["test_id"])]
+    from suite_editions import header_plans
+    inventory = [t for suite_id in suite_ids for t in load_manifest(suite_id=suite_id)]
+    candidates = [t for t in inventory if select is None or re.search(select, t["test_id"])]
+    plans, _ = header_plans(candidates, context.config, inventory)
+    if {(test["suite_id"], test["test_id"]) for test, _, _ in plans} != selected:
+        errors.append("Csc selection differs from the governing header-level inventory")
     observations, csc_headers, counts = [], 0, Counter()
-    for test in tests:
+    for test, level, mode in plans:
         try:
-            level = resolve_level(context.config, test["version"])
             table = by_key[(test["suite_id"], test["test_id"])]
             record = json.loads(Path(table["result_path"]).read_text(encoding="utf-8"))
             observed = (header_contexts[test["suite_id"] + "|" + test["test_id"]]
                         if isinstance(header_contexts, dict) else header_contexts)
-            verify_record(observed, test, record, level)
+            verify_record(observed, test, record, level, mode)
             claimed_departure = record["departure"], record["departure_kind"]
             record["departure"], record["departure_kind"] = False, ""
             observed.mark_departure(record)
@@ -291,12 +374,12 @@ def csc_audit(suite_ids, compiler, target, results, select=None):
                 flat = json.dumps(value, sort_keys=True) if isinstance(value, (dict, list)) else "" if value is None else str(value)
                 if table.get(key) != flat:
                     raise ValueError("results.tsv differs from its verified record: " + key)
-            if record["status"] != "pass" and not record["departure"]:
+            if record["status"] not in {"pass", "superseded"} and not record["departure"]:
                 allowed_gap = (record["status"] == "unsupported" and record["unsupported_reason"] == "target-capability"
                                and json.loads(test["fixture_json"]).get("target_requires") == ["framework-runtime"])
                 if not allowed_gap:
                     errors.append(test["test_id"] + ": unconfirmed csc outcome " + record["status"] + ":" + record["reason"])
-            if test["csc_codes"]:
+            if test["csc_codes"] and mode != "superseded":
                 csc_headers += 1
                 codes = {d["code"] for d in record["diagnostics"] if d["stage"] == "program" and d["severity"] == "error"}
                 if not {c.strip() for c in test["csc_codes"].split(";")} <= codes:
@@ -307,7 +390,7 @@ def csc_audit(suite_ids, compiler, target, results, select=None):
                                  "result_sha256": sha(table["result_path"])})
         except (OSError, ValueError, KeyError, TypeError) as error:
             errors.append(test["test_id"] + ": " + str(error))
-    return {"tests_checked": len(tests), "csc_headers_checked": csc_headers, "controls_checked": len(controls),
+    return {"tests_checked": len(plans), "csc_headers_checked": csc_headers, "controls_checked": len(controls),
             "status_counts": dict(counts), "run_sha256": sha(results / "run.json"),
             "results_sha256": sha(results / "results.tsv"), "rows": observations, "errors": errors,
             "provenance": context.provenance()}

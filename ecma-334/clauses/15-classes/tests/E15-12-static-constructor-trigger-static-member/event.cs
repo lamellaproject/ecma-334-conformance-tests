@@ -18,7 +18,7 @@ class Program
     static void Main()
     {
         Check(Calls == 0, "event-trigger-not-earlier");
-        Gauge.Signal += OnSignal;
+        Gauge.Signal += new System.Action(OnSignal);
         Check(Calls == 1, "first-event-reference-trigger");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

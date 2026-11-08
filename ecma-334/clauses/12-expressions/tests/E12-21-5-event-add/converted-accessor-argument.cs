@@ -28,7 +28,7 @@ class Program
 {
     public static string trace = "";
     static Device target = new Device();
-    static Handler expected = Handle;
+    static Handler expected = new Handler(Handle);
     static int checks, failures;
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Handle() { }

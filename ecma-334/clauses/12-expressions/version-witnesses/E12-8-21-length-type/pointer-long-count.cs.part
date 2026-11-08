@@ -1,0 +1,19 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static unsafe int Main()
+    {
+        long count = 3L;
+        int* memory = stackalloc int[(int)count];
+        memory[0] = 17;
+        Check(memory[0] == 17, "cast-count-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

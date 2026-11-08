@@ -18,7 +18,7 @@ class Program
     static void Main()
     {
         Holder value = new Holder();
-        Reader input = Read;
+        Reader input = new Reader(Read);
         value.Value = input;
         Check((object)value.Value == (object)input, "volatile-delegate-reference-identity");
         if (failures == 0) Console.WriteLine("OK " + checks);

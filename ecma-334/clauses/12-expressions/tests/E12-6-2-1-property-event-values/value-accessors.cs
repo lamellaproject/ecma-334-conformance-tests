@@ -26,7 +26,7 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Box box = new Box(); int number = 17; Action handler = Handler;
+        Box box = new Box(); int number = 17; Action handler = new System.Action(Handler);
         box.Value = number; box.Signal += handler; box.Signal -= handler;
         Check(number == 17 && box.stored == 17, "property-value-parameter-copy");
         Check(handler != null && box.last == handler, "event-value-parameter-copy");

@@ -19,7 +19,7 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Callback old = Work, copy = old;
+        Callback old = new Callback(Work), copy = old;
         bool caught = false;
         try { copy = new Callback(Read(null)); }
         catch (NullReferenceException) { caught = true; }

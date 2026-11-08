@@ -28,7 +28,7 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Read first = A, second = B;
+        Read first = new Read(A), second = new Read(B);
         Read composed = first + second;
         int result = composed(out stored);
         Check(stored == 29, "last-target-output-value");

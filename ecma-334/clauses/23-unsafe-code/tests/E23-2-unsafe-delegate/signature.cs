@@ -19,7 +19,7 @@ class Program
         unsafe
         {
             int value = 7;
-            Pass action = Item.Identity;
+            Pass action = new Pass(Item.Identity);
             Check(action(&value) == &value, "pointer-delegate-signature");
         }
         if (failures == 0) Console.WriteLine("OK " + checks);

@@ -26,7 +26,7 @@ class Program
     static void Main()
     {
         Tap item = new Tap();
-        Pulse handler = Touch;
+        Pulse handler = new Pulse(Touch);
         item.Changed += handler;
         Check(item.Balance == 1, "event-add");
         item.Changed -= handler;

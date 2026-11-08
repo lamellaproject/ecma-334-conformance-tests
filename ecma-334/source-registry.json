@@ -6,6 +6,10 @@
   "feature_commit": "0df79080bfbd3d0120ad1904ed0a662fd69be6b9",
   "csc_version": "5.11.0-1.26425.128",
   "csc_commit": "3551975be08744f0418857c5bed8ab1545c5dd47",
+  "iso_editions": {
+    "ISO-1": "ecma-334-ed2",
+    "ISO-2": "ecma-334-ed4"
+  },
   "editions": [
     {
       "id": "ecma-334-ed7",
@@ -68,6 +72,42 @@
       "version_proof": {
         "locator": "Cover: Standard ECMA-334, 2nd edition - December 2002 (PDF p. 1)",
         "method": "Register the second-edition dialect as ISO-1, the explicit level 1 language family."
+      }
+    },
+    {
+      "id": "ecma-334-ed3",
+      "standard": "ECMA-334",
+      "edition": "3rd",
+      "role": "primary",
+      "authority_prefix": "ECMA-334 3rd ed",
+      "language_version": "ISO-2",
+      "asset": "ECMA-334_3rd_edition_june_2005.pdf",
+      "sha256": "5dfc58e3ffc53c54042dcc543fb1e9c9dc144e21bc5a131d649ddb6910b77f86",
+      "text": {
+        "asset": "ed3-raw.txt",
+        "sha256": "ef88e635860765e68afa00fc42c7623427819e3d4da215c231ba012a0e2ff119"
+      },
+      "version_proof": {
+        "locator": "Cover: Standard ECMA-334, 3rd Edition / June 2005 (PDF p. 1)",
+        "method": "Register the third-edition dialect as ISO-2, the explicit level 2 language family."
+      }
+    },
+    {
+      "id": "ecma-334-ed4",
+      "standard": "ECMA-334",
+      "edition": "4th",
+      "role": "primary",
+      "authority_prefix": "ECMA-334 4th ed",
+      "language_version": "ISO-2",
+      "asset": "ECMA-334_4th_edition_june_2006.pdf",
+      "sha256": "de596c178a4a80a8d86e91877544025822ec0749d8c04ecca25af60c75937652",
+      "text": {
+        "asset": "ed4-raw.txt",
+        "sha256": "90130c4932c39852a65342ee296856399708d5d6a6c24a104392c72260658b0a"
+      },
+      "version_proof": {
+        "locator": "Cover: ECMA-334, 4th Edition / June 2006 (PDF p. 1); Foreword, printed p. xvii (PDF p. 19)",
+        "method": "The foreword identifies alignment with ISO/IEC 23270:2006, the ISO-2 language level."
       }
     }
   ],
@@ -334,7 +374,9 @@
     "E6-5-1-ed2-nel-directive-terminator",
     "E6-5-6-ed2-nel-message-terminator",
     "E6-5-8-ed2-nel-filename-excluded",
-    "E6-5-5-ed2-nel-skipped-line-terminator"
+    "E6-5-5-ed2-nel-skipped-line-terminator",
+    "E6-3-4-ed3-unicode-3-space-category",
+    "E6-3-4-ed4-unicode-4-space-category"
   ],
   "compiler_authority": {
     "id": "csc",

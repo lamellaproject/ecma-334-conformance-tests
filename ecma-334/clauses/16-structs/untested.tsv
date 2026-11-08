@@ -1,3 +1,4 @@
 rule_id	reason
 E16-2-3-stack-allocation	A portable standalone C# program cannot observe whether a ref struct's physical storage is on the execution stack; its observable lifetime and use restrictions have separate tests.
 E16-4-11-backing-field-access	The standard supplies no source-level name for an auto-property's hidden backing field, so a source program cannot name that field to test its access independently of name lookup.
+E16-4-7-ed3-constrained-member-no-boxing	The additional cases concern members inherited from System.Object or System.ValueType. Their specified results do not expose whether the receiver was boxed, and no specified mutation of the receiver distinguishes the calls. Allocation counters and memory exhaustion are not portable deterministic C# observations. Members implemented within the value type have separate tests.

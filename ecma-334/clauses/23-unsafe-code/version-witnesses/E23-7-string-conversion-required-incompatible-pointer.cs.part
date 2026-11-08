@@ -1,0 +1,10 @@
+// A valid array initializer witnesses the fixed-statement construct.
+using System;
+class Program
+{
+    static unsafe void Main()
+    {
+        char[] text = new char[] { 'r', 'e', 'e', 'd' };
+        fixed (char* pointer = text) { }
+    }
+}

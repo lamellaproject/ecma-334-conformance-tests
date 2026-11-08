@@ -1,0 +1,18 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static unsafe int Main()
+    {
+        int* pointer = null;
+        object result = (object)(long)pointer;
+        Check(result != null && (long)result == 0, "integral-boxing-repair");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

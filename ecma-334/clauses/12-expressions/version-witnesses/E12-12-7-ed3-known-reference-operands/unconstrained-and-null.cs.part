@@ -1,0 +1,18 @@
+// ECMA-334 3rd ed 14.9.6, p. 207 (PDF p. 227).
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    static bool Missing<T>(T value) { return (object)value == (object)null; }
+    static int Main()
+    {
+        Check(!Missing(47), "nonnull-generic-value");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

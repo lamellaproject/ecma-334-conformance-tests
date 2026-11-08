@@ -1,0 +1,19 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Main()
+    {
+        string typed = null;
+        Check((typed ?? "juniper") == "juniper", "typed-null-control");
+        string result = typed ?? "juniper";
+        Check(result == "juniper", "null-literal-coalescing");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

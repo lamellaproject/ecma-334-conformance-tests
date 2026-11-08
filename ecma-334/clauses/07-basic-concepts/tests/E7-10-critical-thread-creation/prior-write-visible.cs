@@ -17,7 +17,7 @@ class Program
     static void Main()
     {
         payload = 181;
-        Thread child = new Thread(Read); child.Start(); child.Join();
+        Thread child = new Thread(new System.Threading.ThreadStart(Read)); child.Start(); child.Join();
         Check(observed == 181, "new-thread-observes-effects-before-creation-and-start");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

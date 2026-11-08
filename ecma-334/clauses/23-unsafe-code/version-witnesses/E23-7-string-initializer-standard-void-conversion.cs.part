@@ -1,0 +1,14 @@
+// A valid array initializer witnesses the fixed-statement construct.
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static unsafe void Main()
+    {
+        char[] text = new char[] { 'r', 'e', 'e', 'd' };
+        char[] other = new char[] { 's', 'e', 'e', 'd' };
+        fixed (void* pointer = text) Check(*(char*)pointer == 'r', "string-initializer-void-conversion");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

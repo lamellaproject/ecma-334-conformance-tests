@@ -20,11 +20,11 @@ class Program
     static int checks, failures;
     public static string Trace = "";
     static int holders, arguments;
-    static Holder holder = new Holder(A);
+    static Holder holder = new Holder(new Notice(A));
     static void A() { Trace += "A"; }
     static void B() { Trace += "B"; }
     static Holder GetHolder() { holders++; Trace += "L"; return holder; }
-    static Notice GetDelegate() { arguments++; Trace += "R"; return B; }
+    static Notice GetDelegate() { arguments++; Trace += "R"; return new Notice(B); }
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {

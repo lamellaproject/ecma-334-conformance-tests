@@ -1,0 +1,20 @@
+// ECMA-334 3rd ed 9.5.7, p. 84 (PDF p. 104).
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    #line 613 "mapped-name.cs"
+    #line default
+    #warning restored-origin-marker
+    static int Main()
+    {
+        Check(19 + 28 == 47, "program-body");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

@@ -18,7 +18,7 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Device device = new Device(); device.Changed += OnChange; device.Raise();
+        Device device = new Device(); device.Changed += new Callback(OnChange); device.Raise();
         Check(calls == 1, "class-event-member");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

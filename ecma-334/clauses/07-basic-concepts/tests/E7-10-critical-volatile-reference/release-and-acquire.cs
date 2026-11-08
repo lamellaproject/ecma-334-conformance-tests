@@ -22,7 +22,7 @@ class Program
     }
     static void Main()
     {
-        Thread reader = new Thread(Read), writer = new Thread(Publish);
+        Thread reader = new Thread(new System.Threading.ThreadStart(Read)), writer = new Thread(new System.Threading.ThreadStart(Publish));
         reader.Start(); writer.Start();
         // The reader observes the payload before either Join supplies another synchronization point.
         reader.Join(); writer.Join();

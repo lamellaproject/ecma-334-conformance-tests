@@ -8,7 +8,7 @@ Diagnostic: none
 Mutate: decimal maximum = 79228162514264337593543950335m;
 Into: decimal maximum = 79228162514264337593543950333m;
 */
-// ECMA-334 1st ed 11.1.6, p. 94 (PDF p. 108), lines 1-6 fixes the coefficient at96 bits.
+// ECMA-334 1st ed 11.1.6, p. 94 (PDF p. 108), lines 1-6 fixes the coefficient at 96 bits.
 // The later bound is parameterized.
 using System;
 class Entry

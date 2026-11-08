@@ -25,7 +25,7 @@ class Program
         // This hosted observer needs a child process because permitted host termination can prevent in-process observation.
         if (args.Length != 0)
         {
-            Thread worker = new Thread(Worker);
+            Thread worker = new Thread(new System.Threading.ThreadStart(Worker));
             worker.Start();
             worker.Join();
             return;

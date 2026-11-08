@@ -46,13 +46,14 @@ A clause directory is named after a clause of ECMA-334: the two-digit clause
 number, then a short form of the clause title. For example,
 `clauses/10-conversions/` holds clause 10, Conversions. The ledgers cover
 clauses 6 to 23, from `06-lexical-structure` to `23-unsafe-code`, and
-`ledger-scope.json` records that scope. The standard's clauses 1 to 5 are
-outside it. In the 7th edition, their titles are Scope, Normative references,
-Terms and definitions, General description and Conformance.
+documentary predicates in clauses 2, 3 and 5: Normative references, Terms and
+definitions, and Conformance. Clauses 1 and 4, Scope and General description,
+have no ledgers. `ledger-scope.json` records each clause's status and text-block
+inventory; an inventory does not establish complete behavioral coverage.
 
-A clause owns its rules, coverage, untested reasons, departure records, tests,
-generators and optional fixture parts. The [test contract](CONVENTIONS.md)
-describes each of them.
+A clause owns its rules, coverage, untested reasons, departure records,
+superseded observations, tests, generators and optional fixture parts. The
+[test contract](CONVENTIONS.md) describes each of them.
 
 When the suite grows:
 
@@ -243,6 +244,12 @@ generated version data, one row per test. Among other fields, a row records:
 - the observation at each measured level, and hashes of the evidence behind
   the observations.
 
+Below `since`, each requested level's positive observation decides whether a
+version-gating check runs. The predecessor summarizes only its own level.
+A coded rejection of the original run source or its measured positive witness
+establishes refusal; an invalid generated rejection without a positive witness
+cannot establish it.
+
 The rows are measured with the registered pinned csc.
 `runner/tools/compute-versions.py` generates the files, and
 `runner/tools/check-versions.py` validates them. The runner uses them for
@@ -273,8 +280,9 @@ A worked example:
 4. Its `below_since` records that at level `6`, csc refuses the construct the
    test needs (diagnostic `CS8059`).
 5. In an explicit-level run, the test is therefore checked as an ordinary test
-   at level 7 and above. At level 6 and below, the run makes a version-gating
-   check instead (see
+   at level 7 and above. A level below 7 gets a version-gating check when its
+   own positive observation records refusal and no governing ISO table
+   disposition excludes it (see
    [Explicit language levels](RESULTS.md#explicit-language-levels)).
 
 `versions/index.json` lists every bucket file with its hash and row count.
@@ -313,14 +321,27 @@ passes when:
 | --- | --- |
 | Ordinary run test | The program runs successfully. |
 | Rejection test with a repair | The original is rejected and the positive repair compiles. |
+| Unresolved compilation reading (`run-or-reject`) | The original is rejected or runs with its declared output, and its positive construct witness compiles. |
 | Generated rejection without a repair | It is rejected without any configured feature-version error. |
-| Confirmed departure | Its declared positive construct witness compiles. |
+| Departure or superseded observation | Its declared positive construct witness compiles. |
 
-A repair is a reject test's mutated program (see
-[Causal mutations](CONVENTIONS.md#causal-mutations)). A positive construct
+A repair is a reject test's mutated or declared positive program (see
+[Causal mutations](CONVENTIONS.md#causal-mutations)). The `repair` basis for
+`run-or-reject` uses its declared positive program, so a permitted rejection
+alone does not establish availability of the construct. A positive construct
 witness is a program that uses the construct in a valid way (see
 [Departures](CONVENTIONS.md#departures)). Tests requiring `framework-runtime`
 run on `net481` at every measured level.
+
+The raw measurement compiles and runs every original, including a superseded
+claim, and keeps its verdict against the original expectation. The declared
+positive witness supplies the `departure-witness` basis for both departures
+and superseded observations. A superseded observation is stored separately
+in the clause's `superseded-observations.tsv` with status `conforming`: the
+compiler or hosted runtime satisfies the governing edition's rule. It never
+supplies an active departure annotation. The ledger audit requires a cited
+superseded table row at each observation level and rejects departures at
+those levels.
 
 The measurement scheduler works like this:
 
@@ -374,9 +395,12 @@ states:
 | `stale` | A row exists, but one of those has changed. |
 | `missing` | No row exists for the test. |
 
-`--langversion declared-per-test` runs every test at its own `Version` header.
-Those runs report these states and may run before bounds exist. Other runs,
-including `earliest-per-test`, and publishing require current rows.
+`--langversion declared-per-test` resolves each test's own `Version` header
+and applies the governing ISO table where that level has one. Superseded
+claims produce cited result rows without execution; other table exclusions
+produce no row. These header runs report the version-row states and may run
+before bounds exist. Other runs, including `earliest-per-test`, and publishing
+require current rows.
 
 ### Revalidating after an implementation change
 
@@ -410,19 +434,56 @@ external measurement evidence.
 
 ## Edition selection
 
-A version run uses the latest registered primary edition's tests and the
-compiler-authority tests. Tests whose authority is an older edition are
-excluded. `--langversion declared-per-test` keeps every test.
+The source registry's `iso_editions` maps each ISO language level to one
+primary edition: ISO-1 follows the 2nd edition (ISO/IEC 23270:2003), and
+ISO-2 follows the 4th edition (ISO/IEC 23270:2006). The runner reads this map
+and records the level's source and whether the requested edition is its
+claim run. `--edition 2` is ISO-1's claim run; `--edition 4` is ISO-2's.
+The 1st and 3rd editions remain registered sources. `--edition 1` and
+`--edition 3` run those editions at their ISO levels, each under its own
+conflict table.
+
+A language plan that resolves to an ISO level uses that level's governing
+edition table. This applies to explicit levels, `earliest-per-test` and
+`declared-per-test`. At other levels, measured version runs use the latest
+registered primary edition's tests and the compiler-authority tests, excluding
+older authorities. Header runs retain their declared authorities.
+Explicit ISO groups also admit unlisted tests outside the claim selection as
+version-gating checks when their measured `Since` is higher and the reference
+measurement records refusal. Own-authority claims and cited replacement
+admissions retain their ordinary expectations. Superseded, replaced and
+left-out tests produce no version-gating check. Selection metadata lists
+`version_gating_test_ids` separately from ordinary claims and outside-interval
+omissions. `earliest-per-test`, header plans and edition runs add no such checks.
+An ISO conformance claim names both the edition claim run and the explicit-level
+run: the first checks the edition's rules, and the second also checks refusal
+of newer constructs.
+
+An `earliest-per-test` ISO group schedules a cited replacement at that group's
+level when the replaced test is in the group and both tests are candidates.
+The replacement's own earliest plan can also produce a row at another level.
+Its measured bounds stay unchanged, and each test has at most one plan per
+level. A replacement excluded by the candidate filter is an error.
 
 An edition run uses `--edition N` instead of `--langversion`. It resolves the
 edition's registered `language_version` through the compiler configuration.
-Every test with that edition's authority runs at that level, even if its
-measured interval differs. Tests with other authorities, including other
-older editions, join by continuity only when their current measured interval
-contains the level. The edition's conflict table removes the tests it
-replaces or leaves out. Excluded tests produce no
-version-gating checks. Every candidate requires current bounds; an external
-pilot is validated against the complete selection before edition filtering.
+An edition run tests the requested edition and no other. Every test with the
+edition's authority runs at that level, even if its measured interval differs.
+A test with another authority joins only for a rule the edition shares, as the
+edition's own conflict table admits it: by continuity when its current measured
+interval contains the level, or as an explicitly cited older replacement. A test
+of a rule the edition does not have never joins. Where the level's governing
+edition (the 2nd edition at ISO-1, the 4th at ISO-2) changed a rule, the
+requested edition's test of that rule is `superseded`. Selection records the edition's own
+table and the governing table. Every candidate
+requires current bounds; an external pilot is validated against the complete
+selection before edition filtering.
+
+A cited superseded claim stays in the result inventory regardless of its
+measured interval. It produces `superseded` without compiling or running the
+source. Other tests replaced or left out by the table produce no result row.
+Neither disposition produces a version-gating check. Header plans use the
+same table decisions without requiring measured bounds.
 
 Each non-latest primary edition has `edition-conflicts/<N>.json`, including an
 empty table when it has no conflicts. The latest edition is the registered
@@ -430,24 +491,66 @@ primary edition with the highest number. A table names its `edition` and
 `base_edition`, which must be that latest edition. Its `conflicts` contain:
 
 - `replace`: a `test_id` with another registered edition's authority, its
-  `replacement_test_id` and the requested edition's public `authority`
+  `replacement_test_id` and the table edition's public `authority`
   citation;
-- `leave-out`: a `test_id` with another registered edition's authority and
-  the requested edition's public `authority` citation, without a replacement.
+- `leave-out`: a `test_id` with another registered edition's authority or
+  the registry's pinned compiler authority, and the table edition's public
+  `authority` citation, without a replacement. A governing ISO table can
+  attach a `superseded` object to an older standard-edition claim.
+
+An ordinary `leave-out` can exclude a pinned compiler-authority test when the
+cited edition's text does not support its assertion or setup syntax at that
+level. Measured compiler acceptance supplies no ISO authority. A `replace`
+target and a superseded claim require registered standard-edition authority.
+
+`superseded` belongs only to a `leave-out` row in the governing ISO edition's
+table. The target's authority must be an older registered edition. The object
+has nonempty `test` and `level` citation arrays. Each citation names its
+registered `source_id`, `clause`, positive distinct `printed_pages` and
+matching `pdf_pages`, and an exact `quote`. The test citations match the
+test's own authority; the level citations match the governing edition and
+the row's authority. The quotations establish that the governing requirement
+changes the older claim. A superseded target cannot also be replaced or
+left out by another row. Uncited markers, compiler-authority targets and
+targets at or above the governing edition are errors.
 
 The target may belong to the latest edition or to another older edition.
-A replacement belongs to the requested edition or to another older edition
-admitted by continuity. It must be selected, must not itself be replaced or
-left out, and must form no cycle. A citation names the requested edition's
+A replacement belongs to the requested edition or to another registered
+older edition. For a target in the candidate selection, a `replace` row admits
+its older replacement even when the current measured interval does not
+contain the requested level. The cited requirement must require the
+replacement's expected result at that level. The replacement runs as an
+ordinary test at the requested level; its measured interval and bounds stay
+unchanged. It must be selected, must not itself be replaced or left out, and
+must form no cycle. A citation names the table edition's
 clause and printed/PDF pages, including when the replacement has a different
-edition's authority. A replacement with the requested edition's authority
+edition's authority. A replacement with the table edition's authority
 also agrees with its header's clause.
 
-Several replacements may supersede the same test. Duplicate pairs, opposing
+When the pinned compiler's result contradicts an admitted replacement, the
+confirmed departure cites the table edition's requirement. Each ISO-level
+departure quotes its governing edition, including when the test has a
+different edition's authority. Disjoint records carry the separate citations
+for a test spanning editions; their observation and measurement basis agree.
+The ledger check rejects a citation from the wrong governing edition. The
+result remains a departure failure. A disagreement observed only outside a
+conforming test's header level can keep its ordinary measurement basis and
+causal repair; a departure at the header requires a declared positive witness.
+
+Several replacement rows may name the same target. Duplicate pairs, opposing
 actions for one test, unknown IDs, ineligible replacements and mismatched
 authorities are errors. The
 [schema](../configs/schemas/edition-conflicts.schema.json) and
 `runner/tools/check-editions.py` describe and enforce the contract.
+
+Result rows, `run.json` and both summaries preserve the superseded claim's
+two sets of citations. Superseded claims count separately, never as passes,
+failures or applicable executions. Header audits replay their static evidence
+without imposing a `Csc` diagnostic obligation; mutation checks produce
+`superseded` without an original or mutant execution. Raw bound measurement
+still compiles and runs every source program, superseded sources included:
+the table changes a conformance claim, while the measurement records an
+observation of the source.
 
 ## Evidence
 

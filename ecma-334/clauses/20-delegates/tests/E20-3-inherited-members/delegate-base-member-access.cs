@@ -4,8 +4,8 @@ Authority: ECMA-334 7th ed 20.3
 Version: 7.3
 Expected: run
 Stdout: OK 4
-Mutate: Notice notice = first.Touch;
-Into: Notice notice = second.Touch;
+Mutate: Notice notice = new Notice(first.Touch);
+Into: Notice notice = new Notice(second.Touch);
 */
 using System;
 delegate void Notice();
@@ -17,7 +17,7 @@ class Program
     static void Main()
     {
         Counter first = new Counter(), second = new Counter();
-        Notice notice = first.Touch;
+        Notice notice = new Notice(first.Touch);
         Delegate baseValue = notice;
         object alias = notice;
         Notice recovered = alias as Notice;

@@ -167,12 +167,6 @@
     },
     {
       "action": "replace",
-      "test_id": "13-statements--E13-6-2-1-local-own-initializer--self-assignment",
-      "replacement_test_id": "13-statements--E13-6-2-1-ed1-own-initializer-assignment-permitted--own-local-assignment",
-      "authority": "ECMA-334 1st ed 15.5.1, p. 183 (PDF p. 197), lines 16-25"
-    },
-    {
-      "action": "replace",
       "test_id": "15-classes--E15-6-5-override-cross-assembly-protected--wrong-access",
       "replacement_test_id": "15-classes--E15-6-5-ed1-cross-assembly-declared-access-preserved--cross-assembly-method",
       "authority": "ECMA-334 1st ed 17.5.4, p. 238 (PDF p. 252), lines 23-24"
@@ -1049,34 +1043,40 @@
       "authority": "ECMA-334 1st ed 13.1.4, p. 114 (PDF p. 128)"
     },
     {
-      "action": "leave-out",
+      "action": "replace",
       "test_id": "23-unsafe-code--E23-5-2-foreach-dimension-zero--nonzero-lower-bounds",
-      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205), lines 7-9, 15-16 and 19-20, and 25.2, p. 324 (PDF p. 338), lines 32-34"
+      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205), lines 7-9, 15-16 and 19-20, and 25.2, p. 324 (PDF p. 338), lines 32-34",
+      "replacement_test_id": "23-unsafe-code--E23-5-2-ed3-pointer-array-foreach-forbidden--pointer-element-array"
     },
     {
-      "action": "leave-out",
+      "action": "replace",
       "test_id": "23-unsafe-code--E23-5-2-foreach-dimension-zero--rectangular-order",
-      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205), lines 7-9, 15-16 and 19-20, and 25.2, p. 324 (PDF p. 338), lines 32-34"
+      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205), lines 7-9, 15-16 and 19-20, and 25.2, p. 324 (PDF p. 338), lines 32-34",
+      "replacement_test_id": "23-unsafe-code--E23-5-2-ed3-pointer-array-foreach-forbidden--pointer-element-array"
     },
     {
-      "action": "leave-out",
+      "action": "replace",
       "test_id": "23-unsafe-code--E23-5-2-foreach-iteration-value--explicit-pointer-conversion",
-      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205), lines 7-9, 15-16 and 19-20, and 25.2, p. 324 (PDF p. 338), lines 32-34"
+      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205), lines 7-9, 15-16 and 19-20, and 25.2, p. 324 (PDF p. 338), lines 32-34",
+      "replacement_test_id": "23-unsafe-code--E23-5-2-ed3-pointer-array-foreach-forbidden--pointer-element-array"
     },
     {
-      "action": "leave-out",
+      "action": "replace",
       "test_id": "23-unsafe-code--E23-5-2-foreach-null-array--null-array",
-      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205), lines 7-9, 15-16 and 19-20, and 25.2, p. 324 (PDF p. 338), lines 32-34"
+      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205), lines 7-9, 15-16 and 19-20, and 25.2, p. 324 (PDF p. 338), lines 32-34",
+      "replacement_test_id": "23-unsafe-code--E23-5-2-ed3-pointer-array-foreach-forbidden--pointer-element-array"
     },
     {
-      "action": "leave-out",
+      "action": "replace",
       "test_id": "23-unsafe-code--E23-5-2-foreach-temporaries-hidden--names-do-not-collide",
-      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205), lines 7-9, 15-16 and 19-20, and 25.2, p. 324 (PDF p. 338), lines 32-34"
+      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205), lines 7-9, 15-16 and 19-20, and 25.2, p. 324 (PDF p. 338), lines 32-34",
+      "replacement_test_id": "23-unsafe-code--E23-5-2-ed3-pointer-array-foreach-forbidden--pointer-element-array"
     },
     {
-      "action": "leave-out",
+      "action": "replace",
       "test_id": "23-unsafe-code--E23-5-2-pointer-array-foreach-expansion--evaluate-once",
-      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205), lines 7-9, 15-16 and 19-20, and 25.2, p. 324 (PDF p. 338), lines 32-34"
+      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205), lines 7-9, 15-16 and 19-20, and 25.2, p. 324 (PDF p. 338), lines 32-34",
+      "replacement_test_id": "23-unsafe-code--E23-5-2-ed3-pointer-array-foreach-forbidden--pointer-element-array"
     },
     {
       "action": "replace",
@@ -1116,6 +1116,1258 @@
       "action": "leave-out",
       "test_id": "06-lexical-structure--E6-5-5-ed2-nel-skipped-line-terminator--nel-releases-else",
       "authority": "ECMA-334 1st ed 9.5.4, p. 65 (PDF p. 79)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-3-4-ed3-unicode-3-space-category--later-space-excluded",
+      "authority": "ECMA-334 1st ed 2, p. 3 (PDF p. 17)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-3-4-ed3-unicode-3-space-category--zero-width-space",
+      "authority": "ECMA-334 1st ed 2, p. 3 (PDF p. 17)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-3-ed3-unicode-3-identifier-category--post-unicode-3-parameter",
+      "authority": "ECMA-334 1st ed 2, p. 3 (PDF p. 17)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-5-2-ed3-verbatim-conditional-symbol--verbatim-definition",
+      "authority": "ECMA-334 1st ed 9.5.1, p. 63 (PDF p. 77)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-5-8-ed3-canonical-default-line-indicator--escaped-default-restores-origin",
+      "authority": "ECMA-334 1st ed 9.5.7, p. 68 (PDF p. 82)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-5-8-ed3-identifier-line-indicator--named-indicator",
+      "authority": "ECMA-334 1st ed 9.5.7, p. 68 (PDF p. 82)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-8-ed3-return-check-after-selection--incompatible-best-return",
+      "authority": "ECMA-334 1st ed 13.1, p. 113 (PDF p. 127)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-10-4-ed3-minimum-remainder-choice--minimum-outcomes",
+      "authority": "ECMA-334 1st ed 14.7.3, p. 159 (PDF p. 173)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-12-7-ed3-bidirectional-reference-conversions--object-and-null-type",
+      "authority": "ECMA-334 1st ed 14.9.6, p. 167 (PDF p. 181)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-12-9-ed3-contextual-delegate-equality--method-group-operand",
+      "authority": "ECMA-334 1st ed 13.1, p. 113 (PDF p. 127)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-8-20-ed3-enum-default-not-constant--enum-default-goto-case",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-10-3-ed3-shift-count-int-required--left-count",
+      "authority": "ECMA-334 1st ed 17.9.2, p. 259 (PDF p. 273)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-10-3-ed3-shift-count-int-required--right-count",
+      "authority": "ECMA-334 1st ed 17.9.2, p. 259 (PDF p. 273)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-6-1-ed3-actual-pointer-operand-required--converted-only-addition",
+      "authority": "ECMA-334 1st ed 25.5.6, p. 331 (PDF p. 345)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-3-4-ed4-unicode-4-space-category--medium-mathematical-space",
+      "authority": "ECMA-334 1st ed 2, p. 3 (PDF p. 17)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-3-ed4-unicode-4-identifier-category--unicode-4-letter",
+      "authority": "ECMA-334 1st ed 2, p. 3 (PDF p. 17)"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-12-ed4-inherited-indexer-selection--inherited-best-indexer",
+      "replacement_test_id": "12-expressions--E12-8-12-ed1-candidate-indexer-owner--interface-indexer-owners",
+      "authority": "ECMA-334 1st ed 14.5.6.2, p. 145 (PDF p. 159)"
+    },
+    {
+      "action": "replace",
+      "test_id": "23-unsafe-code--E23-6-5-ed4-volatile-fixed-address--local-volatile-field",
+      "replacement_test_id": "23-unsafe-code--E23-6-5-ed1-volatile-address-forbidden--local-struct-field",
+      "authority": "ECMA-334 1st ed 25.5.4, p. 330 (PDF p. 344)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-5-3-encompassed-expression--constant-byte-operator",
+      "authority": "ECMA-334 1st ed 13.4.3, p. 120 (PDF p. 134)"
+    },
+    {
+      "action": "replace",
+      "test_id": "09-variables--E9-4-4-24-omitted-conditional-call-state--omitted-conditional-assignment",
+      "authority": "ECMA-334 1st ed 12.3.3.21, p. 109 (PDF p. 123)",
+      "replacement_test_id": "09-variables--E9-4-4-24-ed1-conditional-argument-assignment--omitted-call-argument-state"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-6-2-6-array-expanded-signature-precedence--applicability",
+      "authority": "ECMA-334 1st ed 17.5.1.4, p. 234 (PDF p. 248)",
+      "replacement_test_id": "15-classes--E15-6-2-6-ed1-expanded-signature-suppression--inaccessible-scalar-overload"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-11-2-constructor-no-cycle--two",
+      "authority": "ECMA-334 1st ed 17.10.1, p. 262 (PDF p. 276)",
+      "replacement_test_id": "15-classes--E15-11-2-ed1-direct-constructor-recursion-only--two-constructor-cycle"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-11-2-constructor-no-cycle--three",
+      "authority": "ECMA-334 1st ed 17.10.1, p. 262 (PDF p. 276)",
+      "replacement_test_id": "15-classes--E15-11-2-ed1-direct-constructor-recursion-only--three-constructor-cycle"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "22-attributes--E22-3-ed3-global-extension-target--identifier-global-target",
+      "authority": "ECMA-334 1st ed 24.2, p. 311 (PDF p. 325)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "22-attributes--E22-3-ed3-global-extension-target--keyword-global-target",
+      "authority": "ECMA-334 1st ed 24.2, p. 311 (PDF p. 325)"
+    },
+    {
+      "action": "replace",
+      "test_id": "15-classes--E15-6-2-6-array-expanded-signature-precedence--inaccessible-applicable-scalar",
+      "authority": "ECMA-334 1st ed 17.5.1.4, p. 234 (PDF p. 248)",
+      "replacement_test_id": "15-classes--E15-6-2-6-ed1-expanded-signature-suppression--inaccessible-scalar-overload"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-21-length-type--pointer-length-controls",
+      "authority": "ECMA-334 1st ed 25.7, p. 336 (PDF p. 350)",
+      "replacement_test_id": "23-unsafe-code--E23-8-ed1-stackalloc-int-expression--converted-stack-size"
+    },
+    {
+      "action": "replace",
+      "test_id": "23-unsafe-code--E23-5-2-pointer-array-foreach-expansion--integer-elements",
+      "authority": "ECMA-334 1st ed 15.8.4, p. 191 (PDF p. 205)",
+      "replacement_test_id": "23-unsafe-code--E23-5-2-ed3-pointer-array-foreach-forbidden--pointer-element-array"
+    },
+    {
+      "action": "replace",
+      "test_id": "13-statements--E13-14-resource-address-error--unmanaged-resource",
+      "authority": "ECMA-334 1st ed 25.5.4, p. 330 (PDF p. 344)",
+      "replacement_test_id": "23-unsafe-code--E23-6-5-ed1-readonly-local-address-permitted--using-resource-address"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-8-null-instance--null-receiver",
+      "authority": "ECMA-334 1st ed 14.1, p. 123 (PDF p. 137), method groups require invocation or explicit delegate creation"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "16-structs--E16-3-fixed-buffer-unsafe-only--safe-buffer",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "16-structs--E16-3-member-fixed-buffer--fixed-buffer",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-7-buffer-conversion-required--incompatible-pointer",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-7-buffer-simple-initializer--simple-buffer-name",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-buffer-attributes--attributed-declarator-list",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-constant-length-required--nonconstant-length",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-bool--storage",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-byte--storage",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-char--storage",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-double--storage",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-float--storage",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-int--storage",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-long--storage",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-sbyte--storage",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-short--storage",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-types-only--decimal-element",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-types-only--enum-element",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-types-only--pointer-element",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-types-only--reference-element",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-types-only--struct-element",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-uint--storage",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-ulong--storage",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-element-ushort--storage",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-form-declaration--no-modifiers",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-form-element-type--aliased-element-type",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-form-modifier-internal--internal-buffer",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-form-modifier-new--hides-inherited-name",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-form-modifier-private--private-buffer",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-form-modifier-unsafe--unsafe-buffer-modifier",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-length-int-conversion--long-constant",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-length-meaning--constant-expression",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-length-positive--negative-length",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-length-positive--zero-length",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-no-repeated-modifier--duplicate-public",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-no-static--static-buffer",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-struct-only--class-buffer",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-2-unsafe-context-only--safe-declaration",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-3-buffer-element-access-unsafe--safe-buffer-element",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-3-buffer-element-no-range-check--inside-pinned-allocation",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-3-field-member-lookup--private-field-lookup",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-3-fixed-receiver-first-element--local-buffer-pointer",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-3-fixed-receiver-value--buffer-pointer-is-value",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-3-member-unsafe-required--safe-buffer-member",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-3-moveable-element-base-pointer--receiver-and-index-once",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-3-moveable-fixed-initializer-pointer--heap-buffer-pointer",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-3-no-other-moveable-buffer-access--bare-heap-buffer",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-3-no-value-receiver--returned-struct",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-3-reference-simple-name--simple-name-and-this",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-4-buffer-no-definite-assignment--unassigned-buffer-access",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-4-default-initialized-array-element--outermost-containing-variable",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-4-default-initialized-class-instance--outermost-containing-variable",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-4-default-initialized-static--outermost-containing-variable",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-4-other-buffer-initial-content--unrestricted-byte-content",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-4-struct-assignment-ignores-buffer--struct-copy-assignment",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-1-entry-partial-implementation--unimplemented-main",
+      "authority": "ECMA-334 1st ed 17.5, p. 229 (PDF p. 243), The method modifier list excludes partial; partial-method entry and definition predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-6-object-dynamic-only-overload-forbidden--method-parameters",
+      "authority": "ECMA-334 1st ed 11.2, p. 95 (PDF p. 109), There is no predefined dynamic type or dynamic binding. The undeclared name cannot witness its later type/signature predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "08-types--E8-7-dynamic-attribute-argument-forbidden--attribute-dynamic-type",
+      "authority": "ECMA-334 1st ed 11.2, p. 95 (PDF p. 109), There is no predefined dynamic type or dynamic binding. The undeclared name cannot witness its later type/signature predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "08-types--E8-7-dynamic-class-interface-argument-forbidden--dynamic-class-interface",
+      "authority": "ECMA-334 1st ed 11.2, p. 95 (PDF p. 109), There is no predefined dynamic type or dynamic binding. The undeclared name cannot witness its later type/signature predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "08-types--E8-7-dynamic-constraint-forbidden--dynamic-constraint",
+      "authority": "ECMA-334 1st ed 11.2, p. 95 (PDF p. 109), There is no predefined dynamic type or dynamic binding. The undeclared name cannot witness its later type/signature predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "08-types--E8-7-dynamic-object-signature--duplicate-constructed-signature",
+      "authority": "ECMA-334 1st ed 11.2, p. 95 (PDF p. 109), There is no predefined dynamic type or dynamic binding. The undeclared name cannot witness its later type/signature predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "08-types--E8-7-dynamic-object-signature--duplicate-dynamic-signature",
+      "authority": "ECMA-334 1st ed 11.2, p. 95 (PDF p. 109), There is no predefined dynamic type or dynamic binding. The undeclared name cannot witness its later type/signature predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "08-types--E8-7-dynamic-predefined-member-access-forbidden--dynamic-static-member",
+      "authority": "ECMA-334 1st ed 11.2, p. 95 (PDF p. 109), There is no predefined dynamic type or dynamic binding. The undeclared name cannot witness its later type/signature predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "08-types--E8-7-dynamic-struct-interface-argument-forbidden--dynamic-struct-interface",
+      "authority": "ECMA-334 1st ed 11.2, p. 95 (PDF p. 109), There is no predefined dynamic type or dynamic binding. The undeclared name cannot witness its later type/signature predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "09-variables--E9-7-2-9-ref-local-yield-context--alias-across-yield",
+      "authority": "ECMA-334 1st ed 15.5.1, p. 183 (PDF p. 197), The local declaration requires a type and ordinary initializer; ref locals and implicit typing predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-4-2-only-listed--pilot-001",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda syntax is absent; rejection cannot establish its arity, parameter, result or conversion predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-7-1-arity--pilot-001",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda syntax is absent; rejection cannot establish its arity, parameter, result or conversion predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-7-1-inferred-ref-out--pilot-001",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda syntax is absent; rejection cannot establish its arity, parameter, result or conversion predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-7-1-typed-mismatch--pilot-001",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda syntax is absent; rejection cannot establish its arity, parameter, result or conversion predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-7-1-typed-mismatch--pilot-002",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda syntax is absent; rejection cannot establish its arity, parameter, result or conversion predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-7-1-value-expression-invalid--pilot-001",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda syntax is absent; rejection cannot establish its arity, parameter, result or conversion predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-7-1-void-expression-invalid--pilot-001",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda syntax is absent; rejection cannot establish its arity, parameter, result or conversion predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--P09-new-array--pilot-200001",
+      "authority": "ECMA-334 1st ed 14.5.10.1, p. 147 (PDF p. 161), Object creation requires an explicit type; the target-typed form and its constraints are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--P09-new-no-target--pilot-200002",
+      "authority": "ECMA-334 1st ed 14.5.10.1, p. 147 (PDF p. 161), Object creation requires an explicit type; the target-typed form and its constraints are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--P10-handler-missing-constructor--pilot-200001",
+      "authority": "ECMA-334 1st ed 9.4.4.5, p. 60 (PDF p. 74), String literals have regular and verbatim forms; interpolation and handler conversion predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--P10-natural-explicit-return--pilot-200001",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda syntax is absent; rejection cannot establish its arity, parameter, result or conversion predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--P12-collection-element-invalid--pilot-200001",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), The expression grammar has no bracket-led collection expression or collection construction argument."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--P12-collection-element-invalid--pilot-200002",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), The expression grammar has no bracket-led collection expression or collection construction argument."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--P14-simple-lambda-mixed--pilot-200001",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda syntax is absent; rejection cannot establish its arity, parameter, result or conversion predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--P15-collection15-other--pilot-200001",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), The expression grammar has no bracket-led collection expression or collection construction argument."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--P15-collection15-other--pilot-200002",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), The expression grammar has no bracket-led collection expression or collection construction argument."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--P15-collection15-other--pilot-200003",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), The expression grammar has no bracket-led collection expression or collection construction argument."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--P15-collection15-other--pilot-200004",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), The expression grammar has no bracket-led collection expression or collection construction argument."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-12-1-default-as--no-type",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), There is no untyped default literal. A typed default expression, where available, requires parenthesized type syntax."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-12-1-default-is--no-type",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), There is no untyped default literal. A typed default expression, where available, requires parenthesized type syntax."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-12-1-default-relational--greater",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), There is no untyped default literal. A typed default expression, where available, requires parenthesized type syntax."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-12-1-default-relational--greater-equal",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), There is no untyped default literal. A typed default expression, where available, requires parenthesized type syntax."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-12-1-default-relational--less",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), There is no untyped default literal. A typed default expression, where available, requires parenthesized type syntax."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-12-1-default-relational--less-equal",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), There is no untyped default literal. A typed default expression, where available, requires parenthesized type syntax."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-21-3-left-target-kinds--struct-this",
+      "authority": "ECMA-334 1st ed 14.13, p. 173 (PDF p. 187), Assignment has no ref right-hand form; the later ref-assignment target classification is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-6-4-3-comparison-reorder--reordered-equivalent-lists",
+      "authority": "ECMA-334 1st ed 14.4.1, p. 132 (PDF p. 146), Arguments have expression, ref and out forms; named-argument overload comparison is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-8-11-2-named-arguments--array-named-index",
+      "authority": "ECMA-334 1st ed 14.5.6, p. 143 (PDF p. 157), Element access takes an expression list; named argument syntax is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-8-17-dynamic-operand--dynamic-type-operand",
+      "authority": "ECMA-334 1st ed 11.2, p. 95 (PDF p. 109), There is no predefined dynamic type or dynamic binding. The undeclared name cannot witness its later type/signature predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-8-3-value-classification--ref-requires-variable",
+      "authority": "ECMA-334 1st ed 9.4.4.5, p. 60 (PDF p. 74), String literals have regular and verbatim forms; interpolation and handler conversion predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-8-9-3-eligible-nongeneric-class--generic-extension-declaration",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-8-9-3-eligible-nonnested-class--nested-extension-declaration",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "13-statements--E13-10-4-goto-case-matching-label-required--guarded-case",
+      "authority": "ECMA-334 1st ed 15.7.2, p. 185 (PDF p. 199), A case label takes a constant expression followed by a colon; the guarded label is unsupported setup."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "13-statements--E13-10-5-ref-return-in-no-value-method-error--ref-return",
+      "authority": "ECMA-334 1st ed 15.9.4, p. 195 (PDF p. 209), Return has only an optional expression; the ref-return form is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "13-statements--E13-10-5-ref-return-in-value-method-error--ref-return",
+      "authority": "ECMA-334 1st ed 15.9.4, p. 195 (PDF p. 209), Return has only an optional expression; the ref-return form is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "13-statements--E13-6-2-4-iterator-no-ref-local--iterator-ref",
+      "authority": "ECMA-334 1st ed 15.5.1, p. 183 (PDF p. 197), The local declaration requires a type and ordinary initializer; ref locals and implicit typing predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-10-1-external-operator-semicolon--expression",
+      "authority": "ECMA-334 1st ed 17.9, p. 258 (PDF p. 272), An operator body is a block or semicolon; an arrow body is unsupported setup for the extern predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-11-1-external-constructor-semicolon--expression",
+      "authority": "ECMA-334 1st ed 17.10, p. 261 (PDF p. 275), A constructor body is a block or semicolon; an arrow body is unsupported setup for the extern predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-12-external-static-constructor-semicolon--expression",
+      "authority": "ECMA-334 1st ed 17.11, p. 266 (PDF p. 280), A static constructor body is a block or semicolon; an arrow body is unsupported setup for the extern predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-13-external-finalizer-semicolon--expression",
+      "authority": "ECMA-334 1st ed 17.12, p. 267 (PDF p. 281), A finalizer body is a block or semicolon; an arrow body is unsupported setup for the extern predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-1-abstract-semicolon-body--expression",
+      "authority": "ECMA-334 1st ed 17.5.8, p. 241 (PDF p. 255), The method body is a block or semicolon; an arrow body is unsupported setup for the semicolon predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-1-extern-semicolon-body--expression",
+      "authority": "ECMA-334 1st ed 17.5.8, p. 241 (PDF p. 255), The method body is a block or semicolon; an arrow body is unsupported setup for the semicolon predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-10-extension-no-pointer-receiver--pointer",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-10-extension-nonnested-class--container",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-2-1-this-first-parameter--position",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-2-1-this-nongeneric-class--generic",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-2-1-this-nonnested-class--nested",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-2-1-this-static-class--ordinary-class",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-2-1-this-static-method--instance",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-7-abstract-semicolon-body--expression",
+      "authority": "ECMA-334 1st ed 17.5.8, p. 241 (PDF p. 255), The method body is a block or semicolon; an arrow body is unsupported setup for the semicolon predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-8-external-semicolon-body--expression",
+      "authority": "ECMA-334 1st ed 17.5.8, p. 241 (PDF p. 255), The method body is a block or semicolon; an arrow body is unsupported setup for the semicolon predicate."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-9-partial-implementation-needs-definition--missing",
+      "authority": "ECMA-334 1st ed 17.5, p. 229 (PDF p. 243), The method modifier list excludes partial; partial-method entry and definition predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-9-1-indexer-expression-readonly--write",
+      "authority": "ECMA-334 1st ed 17.8, p. 254 (PDF p. 268), An indexer declaration requires braces and accessors; expression-bodied indexers are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--P09-unconstrained-default-context--iot-unconstrained-default-type",
+      "authority": "ECMA-334 1st ed 17.1, p. 211 (PDF p. 225), The closed class/constraint grammar has no default constraint."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-2-3-1-variance-types-only--class-annotation",
+      "authority": "ECMA-334 1st ed 17.1, p. 211 (PDF p. 225), The type declaration has no variance annotation; its later allowed-position predicate is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-2-3-2-input-unsafe-array--array-parameter",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-2-3-2-input-unsafe-covariant--value-parameter",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-2-3-2-output-unsafe-array--array-return",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-2-3-2-output-unsafe-contravariant--return-position",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-4-2-input-safe-class-constraint--constructed-class-bound",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-4-2-input-safe-parameter-constraint--parameter-bound",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-4-2-output-safe-out-parameter--output-parameter",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-4-2-output-safe-ref-parameter--reference-parameter",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-4-3-input-safe-set-type--covariant-set",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-4-3-output-safe-get-type--contravariant-get",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-4-5-input-safe-parameters--covariant-index",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-4-5-input-safe-set-type--covariant-indexer-set",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "18-interfaces--E18-4-5-output-safe-get-type--contravariant-indexer-get",
+      "authority": "ECMA-334 1st ed 20.1, p. 283 (PDF p. 297), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "20-delegates--E20-2-input-safe-parameters--covariant-parameter",
+      "authority": "ECMA-334 1st ed 22.1, p. 301 (PDF p. 315), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "20-delegates--E20-2-output-safe-out-parameter--contravariant-output",
+      "authority": "ECMA-334 1st ed 22.1, p. 301 (PDF p. 315), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "20-delegates--E20-2-output-safe-ref-parameter--contravariant-reference",
+      "authority": "ECMA-334 1st ed 22.1, p. 301 (PDF p. 315), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "20-delegates--E20-2-output-safe-return--contravariant-return",
+      "authority": "ECMA-334 1st ed 22.1, p. 301 (PDF p. 315), The type parameter is an identifier, with no variance annotation; its later input/output safety predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-3-no-pointer-extension-receiver--extension-receiver",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-5-7-null-untyped--no-inferred-type",
+      "authority": "ECMA-334 1st ed 15.5.1, p. 183 (PDF p. 197), The local declaration requires a type and ordinary initializer; ref locals and implicit typing predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-1-entry-nongeneric-enclosing-types--generic-envelope",
+      "authority": "ECMA-334 1st ed 17.1, p. 211 (PDF p. 225), The class declaration has no type parameter list; the later generic class predicate is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-1-entry-nongeneric-method--generic-method",
+      "authority": "ECMA-334 1st ed 17.5, p. 229 (PDF p. 243), The method declaration has no type parameter list; the later generic method predicate is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-1-entry-nongeneric-type--generic-type",
+      "authority": "ECMA-334 1st ed 17.1, p. 211 (PDF p. 225), The class declaration has no type parameter list; the later generic class predicate is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-6-byref-matching-distinct--override-ref-in",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-6-byref-only-overload-forbidden--ref-in",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-8-1-namespace-name-no-type-arguments--generic-import",
+      "authority": "ECMA-334 1st ed 10.8, p. 83 (PDF p. 97), Namespace and type names have no type argument lists; the constructed generic target is unsupported."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "09-variables--E9-7-2-9-input-parameter-iterator-argument--iterator-in-parameter",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "09-variables--E9-7-2-9-output-parameter-async-argument--async-out-parameter",
+      "authority": "ECMA-334 1st ed 17.5, p. 229 (PDF p. 243), The method modifier list has no async modifier; async parameter, return and body predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "09-variables--E9-7-2-9-ref-struct-parameter-iterator-argument--iterator-ref-struct-parameter",
+      "authority": "ECMA-334 1st ed 18.1, p. 271 (PDF p. 285), The struct modifier list has no ref form; ref-struct lifetime, boxing and containment predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "09-variables--E9-7-2-9-reference-parameter-async-argument--async-ref-parameter",
+      "authority": "ECMA-334 1st ed 17.5, p. 229 (PDF p. 243), The method modifier list has no async modifier; async parameter, return and body predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-5-2-different--pilot-001",
+      "authority": "ECMA-334 1st ed 10.8, p. 83 (PDF p. 97), Namespace and type names have no type argument lists; the constructed generic target is unsupported."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-21-1-no-direct-declaration--single-target",
+      "authority": "ECMA-334 1st ed 15.5.1, p. 183 (PDF p. 197), The local declaration requires a type and ordinary initializer; ref locals and implicit typing predicates are absent."
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-21-catch-initializer--initialized-allocation-in-catch",
+      "replacement_test_id": "12-expressions--E12-8-21-ed2-handler-stackalloc--catch-block",
+      "authority": "ECMA-334 1st ed 25.7, p. 336 (PDF p. 350), stack allocation initializers are forbidden in catch and finally blocks"
+    },
+    {
+      "action": "replace",
+      "test_id": "12-expressions--E12-8-21-finally-initializer--initialized-allocation-in-finally",
+      "replacement_test_id": "12-expressions--E12-8-21-ed2-handler-stackalloc--finally-block",
+      "authority": "ECMA-334 1st ed 25.7, p. 336 (PDF p. 350), stack allocation initializers are forbidden in catch and finally blocks"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "13-statements--E13-6-2-2-implicit-single-variable--multiple-declarators",
+      "authority": "ECMA-334 1st ed 15.5.1, p. 183 (PDF p. 197), The local declaration requires a type and ordinary initializer; ref locals and implicit typing predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "14-namespaces--E14-4-extern-definition-required--missing-definition",
+      "authority": "ECMA-334 1st ed 16.1, p. 203 (PDF p. 217), The compilation-unit grammar has no extern alias declaration."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "14-namespaces--E14-8-1-missing-left-alias--ordinary-type-is-not-alias",
+      "authority": "ECMA-334 1st ed 10.8, p. 83 (PDF p. 97), Namespace/type qualification uses a dot; the alias-qualified double-colon form is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "14-namespaces--E14-8-1-type-left-alias--type-alias",
+      "authority": "ECMA-334 1st ed 10.8, p. 83 (PDF p. 97), Namespace/type qualification uses a dot; the alias-qualified double-colon form is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-14-1-iterator-no-in-parameters--parameter",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-15-1-async-return-type-limit--integer",
+      "authority": "ECMA-334 1st ed 17.5, p. 229 (PDF p. 243), The method modifier list has no async modifier; async parameter, return and body predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-2-4-2-generic-attribute-base--direct",
+      "authority": "ECMA-334 1st ed 17.1, p. 211 (PDF p. 225), The class declaration has no type parameter list; the later generic class predicate is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-2-4-2-generic-attribute-base--indirect",
+      "authority": "ECMA-334 1st ed 17.1, p. 211 (PDF p. 225), The class declaration has no type parameter list; the later generic class predicate is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-3-1-method-byref-only-overload--in-ref",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-1-async-return-form--value",
+      "authority": "ECMA-334 1st ed 17.5, p. 229 (PDF p. 243), The method modifier list has no async modifier; async parameter, return and body predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-1-method-mode-only-overload--in-out",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-1-method-mode-only-overload--in-ref",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-1-semicolon-no-async--abstract",
+      "authority": "ECMA-334 1st ed 17.5, p. 229 (PDF p. 243), The method modifier list has no async modifier; async parameter, return and body predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-1-semicolon-no-async--extern",
+      "authority": "ECMA-334 1st ed 17.5, p. 229 (PDF p. 243), The method modifier list has no async modifier; async parameter, return and body predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-2-3-input-no-modification--assignment",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-2-3-input-no-modification--increment",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-2-3-input-no-modification--out-escape",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-2-3-input-no-modification--ref-escape",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-2-3-input-no-modification--struct-field",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-2-3-iterator-no-input--parameter",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-6-8-external-not-generic--type-parameter",
+      "authority": "ECMA-334 1st ed 17.5, p. 229 (PDF p. 243), The method declaration has no type parameter list; the later generic method predicate is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-3-accessor-modifier-needs-both--get-only",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-3-accessor-modifier-needs-both--set-only",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-3-explicit-interface-no-accessor-modifier--implementation",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-3-interface-no-accessor-modifier--declaration",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-3-private-no-accessor-modifier--restriction",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-5-accessor-modifier-no-member-lookup-effect--hidden-base",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-5-interface-implementing-accessor-no-modifier--get",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-5-nonref-assignment-set-accessible--private-set",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-5-nonref-compound-get-accessible--private-get",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-5-nonref-compound-set-accessible--private-set",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-5-nonref-decrement-get-accessible--private",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-5-nonref-decrement-set-accessible--private",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-5-nonref-increment-get-accessible--private",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-5-nonref-increment-set-accessible--private",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-5-nonref-value-get-accessible--private-get",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-6-abstract-no-private-accessor--set",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-9-2-indexer-property-accessor-rules--explicit-interface-access",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-9-2-indexer-property-accessor-rules--inaccessible-set",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-9-2-indexer-property-accessor-rules--unrestricted-accessor",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), Accessor declarations have optional attributes, get/set and body; accessor accessibility modifiers and their predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--P12-readonly-parameter-write--iot-readonly-assignment-reject",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--P12-readonly-parameter-write--iot-readonly-field-assignment-reject",
+      "authority": "ECMA-334 1st ed 17.5.1, p. 231 (PDF p. 245), The parameter modifier alternatives are ref and out; extension receivers and readonly input parameter predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "16-structs--E16-2-1-ref-no-interfaces--interface-list",
+      "authority": "ECMA-334 1st ed 18.1, p. 271 (PDF p. 285), The struct modifier list has no ref form; ref-struct lifetime, boxing and containment predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "16-structs--E16-2-3-no-array-element--array",
+      "authority": "ECMA-334 1st ed 18.1, p. 271 (PDF p. 285), The struct modifier list has no ref form; ref-struct lifetime, boxing and containment predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "16-structs--E16-2-3-no-class-field--class-field",
+      "authority": "ECMA-334 1st ed 18.1, p. 271 (PDF p. 285), The struct modifier list has no ref form; ref-struct lifetime, boxing and containment predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "16-structs--E16-2-3-no-iterator-use--iterator-parameter",
+      "authority": "ECMA-334 1st ed 18.1, p. 271 (PDF p. 285), The struct modifier list has no ref form; ref-struct lifetime, boxing and containment predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "16-structs--E16-2-3-no-object-box--object-conversion",
+      "authority": "ECMA-334 1st ed 18.1, p. 271 (PDF p. 285), The struct modifier list has no ref form; ref-struct lifetime, boxing and containment predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "16-structs--E16-2-3-no-valuetype-box--valuetype-conversion",
+      "authority": "ECMA-334 1st ed 18.1, p. 271 (PDF p. 285), The struct modifier list has no ref form; ref-struct lifetime, boxing and containment predicates are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "20-delegates--E20-3-invoke-required--invoke-is-nongeneric",
+      "authority": "ECMA-334 1st ed 14.5.4, p. 140 (PDF p. 154), Member access has no method type argument list; the later generic invocation predicate is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "22-attributes--E22-2-1-no-generic-attribute-class--direct",
+      "authority": "ECMA-334 1st ed 17.1, p. 211 (PDF p. 225), The class declaration has no type parameter list; the later generic class predicate is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "22-attributes--E22-2-1-no-generic-attribute-class--indirect",
+      "authority": "ECMA-334 1st ed 17.1, p. 211 (PDF p. 225), The class declaration has no type parameter list; the later generic class predicate is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-5-2-no-explicit-array-to-ilist--ilist",
+      "authority": "ECMA-334 1st ed 10.8, p. 83 (PDF p. 97), Namespace and type names have no type argument lists; the constructed generic target is unsupported."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-5-2-no-explicit-array-to-ilist-base--icollection",
+      "authority": "ECMA-334 1st ed 10.8, p. 83 (PDF p. 97), Namespace and type names have no type argument lists; the constructed generic target is unsupported."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-5-2-no-explicit-array-to-ilist-base--ienumerable",
+      "authority": "ECMA-334 1st ed 10.8, p. 83 (PDF p. 97), Namespace and type names have no type argument lists; the constructed generic target is unsupported."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-5-2-no-implicit-array-to-ilist--ilist",
+      "authority": "ECMA-334 1st ed 10.8, p. 83 (PDF p. 97), Namespace and type names have no type argument lists; the constructed generic target is unsupported."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-5-2-no-implicit-array-to-ilist-base--icollection",
+      "authority": "ECMA-334 1st ed 10.8, p. 83 (PDF p. 97), Namespace and type names have no type argument lists; the constructed generic target is unsupported."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-5-2-no-implicit-array-to-ilist-base--ienumerable",
+      "authority": "ECMA-334 1st ed 10.8, p. 83 (PDF p. 97), Namespace and type names have no type argument lists; the constructed generic target is unsupported."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-5-8-grammar-pp-line-indicator-4--hidden-one-alpha-error",
+      "authority": "ECMA-334 1st ed 9.5.7, p. 68 (PDF p. 82), The line indicator alternatives are decimal digits with optional filename, or the literal default; hidden is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-5-8-grammar-pp-line-indicator-4--hidden-one-alpha-warning",
+      "authority": "ECMA-334 1st ed 9.5.7, p. 68 (PDF p. 82), The line indicator alternatives are decimal digits with optional filename, or the literal default; hidden is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-5-8-grammar-pp-line-indicator-4--hidden-one-punctuation-error",
+      "authority": "ECMA-334 1st ed 9.5.7, p. 68 (PDF p. 82), The line indicator alternatives are decimal digits with optional filename, or the literal default; hidden is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-5-8-grammar-pp-line-indicator-4--hidden-one-punctuation-warning",
+      "authority": "ECMA-334 1st ed 9.5.7, p. 68 (PDF p. 82), The line indicator alternatives are decimal digits with optional filename, or the literal default; hidden is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-5-8-grammar-pp-line-indicator-4--hidden-padded-one-alpha-error",
+      "authority": "ECMA-334 1st ed 9.5.7, p. 68 (PDF p. 82), The line indicator alternatives are decimal digits with optional filename, or the literal default; hidden is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-5-8-grammar-pp-line-indicator-4--hidden-padded-one-alpha-warning",
+      "authority": "ECMA-334 1st ed 9.5.7, p. 68 (PDF p. 82), The line indicator alternatives are decimal digits with optional filename, or the literal default; hidden is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-5-8-grammar-pp-line-indicator-4--hidden-padded-one-punctuation-error",
+      "authority": "ECMA-334 1st ed 9.5.7, p. 68 (PDF p. 82), The line indicator alternatives are decimal digits with optional filename, or the literal default; hidden is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-5-8-grammar-pp-line-indicator-4--hidden-padded-one-punctuation-warning",
+      "authority": "ECMA-334 1st ed 9.5.7, p. 68 (PDF p. 82), The line indicator alternatives are decimal digits with optional filename, or the literal default; hidden is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-5-3-private-protected-domain--same-program-nonderived",
+      "authority": "ECMA-334 1st ed 10.5.1, p. 74 (PDF p. 88), The declared-accessibility alternatives have no private protected combination. Its intersection domain is absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-2-2-4-1-static-private-protected-member--reject",
+      "authority": "ECMA-334 1st ed 10.5.1, p. 74 (PDF p. 88), The private protected combination is unsupported setup. Static-class protection remains tested with the protected and protected internal members."
     }
   ]
 }

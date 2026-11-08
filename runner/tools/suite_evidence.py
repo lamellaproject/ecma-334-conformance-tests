@@ -14,6 +14,8 @@ CONTRACT_EXCLUSIONS = {"since", "until", "version_status", "versions_row_sha256"
 
 def verify_record(context, test, record, level, mode="test", executed_bytes=None, skip_status=None):
     """Raise on changed evidence, an invalid command, or a verdict unsupported by its observations."""
+    if mode != "superseded" and test.get("edition_membership", {}).get("superseded"):
+        raise ValueError("A superseded claim cannot be replayed as an execution")
     source = context.source_path(test)
     if sha(source) != test["source_sha256"]:
         raise ValueError("Evidence source is stale")
@@ -24,7 +26,7 @@ def verify_record(context, test, record, level, mode="test", executed_bytes=None
         raise ValueError("Evidence fixture is stale")
     if (record["identity_sha256"] != context.identity_sha256
             or record["fingerprint"] != context.fingerprint(test, level, mode, executed_bytes)
-            or record["executed_source_sha256"] != hashlib.sha256(raw).hexdigest()
+            or record["executed_source_sha256"] != ("" if mode == "superseded" else hashlib.sha256(raw).hexdigest())
             or record["expected_stdout_json"] != test["stdout_json"]
             or any(record.get(k) != v for k, v in test.items() if k not in CONTRACT_EXCLUSIONS | {"stdout_json"})
             or record["mode"] != mode or record["level"] != (level["level"] if level else test["version"])):
@@ -42,8 +44,13 @@ def verify_record(context, test, record, level, mode="test", executed_bytes=None
     program = directory / "artifacts" / ("program" + context.artifact_extension)
     if artifacts != record["artifacts"] or record["artifact_sha256"] != (sha(program) if program.is_file() else None):
         raise ValueError("Artifact inventory differs")
-    status, reason, missing = context.preflight(test, level, fixture, mode)
-    if skip_status:
+    if mode == "superseded":
+        if not test.get("edition_membership", {}).get("superseded") or executed_bytes is not None or skip_status:
+            raise ValueError("Superseded evidence needs its cited nonexecuting decision")
+        status, reason, missing = "superseded", "edition-rule-changed", []
+    else:
+        status, reason, missing = context.preflight(test, level, fixture, mode)
+    if skip_status and mode != "superseded":
         status, reason, missing = skip_status, "outside-applicability", []
     if missing != record["missing_capabilities"]:
         raise ValueError("Preflight capability result differs")
@@ -100,6 +107,8 @@ def verify_record(context, test, record, level, mode="test", executed_bytes=None
                 status, reason = ("pass", "") if verdict == "accepted" else ("unexpected-reject", "compile-only")
             elif test["expected"] == "reject" or mode == "version-gating":
                 status, reason = ("pass", "") if verdict == "rejected" else ("unexpected-accept", "required-rejection")
+            elif verdict == "rejected" and test["expected"] == "run-or-reject":
+                status, reason = "pass", "permitted-rejection"
             elif verdict == "rejected":
                 status, reason = "unexpected-reject", "required-compilation"
             else:

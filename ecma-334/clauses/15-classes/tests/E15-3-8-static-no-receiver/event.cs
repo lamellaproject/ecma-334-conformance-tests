@@ -21,9 +21,9 @@ class Program
     static void OnSignal() { }
     static void Main()
     {
-        Register.Changed += OnSignal;
+        Register.Changed += new Register.Signal(OnSignal);
         Check(Register.Adds == 1, "static-event-add-without-instance");
-        Register.Changed -= OnSignal;
+        Register.Changed -= new Register.Signal(OnSignal);
         Check(Register.Removes == 1, "static-event-remove-without-instance");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

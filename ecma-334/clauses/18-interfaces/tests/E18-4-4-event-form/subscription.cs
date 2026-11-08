@@ -27,11 +27,11 @@ class Program
     {
         Source source = new Source();
         ISource view = source;
-        view.Ready += Notice;
+        view.Ready += new Notice(Notice);
         source.Raise(103);
         Check(calls == 1, "interface-event-add");
         Check(saved == 103, "event-parameter");
-        view.Ready -= Notice;
+        view.Ready -= new Notice(Notice);
         source.Raise(107);
         Check(calls == 1 && saved == 103, "interface-event-remove");
         if (failures == 0) Console.WriteLine("OK " + checks);

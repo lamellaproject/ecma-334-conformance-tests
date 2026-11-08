@@ -22,10 +22,10 @@ class Program
     static void Main()
     {
         Source value = new Source();
-        value.Changed += Receive;
+        value.Changed += new Notice(Receive);
         value.Send(113);
         Check(received == 113 && calls == 1, "event-generates-notification");
-        value.Changed -= Receive;
+        value.Changed -= new Notice(Receive);
         value.Send(127);
         Check(received == 113 && calls == 1, "removed-listener-not-notified");
         if (failures == 0) Console.WriteLine("OK " + checks);

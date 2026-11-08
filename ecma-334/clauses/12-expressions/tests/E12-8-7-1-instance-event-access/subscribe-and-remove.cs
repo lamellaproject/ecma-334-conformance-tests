@@ -28,7 +28,7 @@ class Program
     static void Main()
     {
         Worker worker = new Worker();
-        Pulse handler = Handler;
+        Pulse handler = new Pulse(Handler);
         worker.Fired += handler;
         worker.Raise();
         worker.Fired -= handler;

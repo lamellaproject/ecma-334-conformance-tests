@@ -17,15 +17,50 @@
           "replacement_test_id": {"type": "string", "minLength": 1},
           "authority": {
             "type": "string",
-            "pattern": "^ECMA-[0-9]+ [1-9][0-9]*(?:st|nd|rd|th) ed [0-9]+(?:\\.[0-9]+)*, p\\. [0-9]+ \\(PDF p\\. [0-9]+\\)(?:, [^\\r\\n]+)?$"
-          }
+            "pattern": "^ECMA-[0-9]+ [1-9][0-9]*(?:st|nd|rd|th) ed [1-9][0-9]*(?:\\.[0-9]+)*, p\\. [1-9][0-9]* \\(PDF p\\. [1-9][0-9]*\\)(?:, [^\\r\\n]+)?$"
+          },
+          "superseded": {"$ref": "#/$defs/supersession"}
         },
         "required": ["action", "test_id", "authority"],
         "additionalProperties": false,
         "if": {"properties": {"action": {"const": "replace"}}},
-        "then": {"required": ["replacement_test_id"]},
+        "then": {"required": ["replacement_test_id"], "not": {"required": ["superseded"]}},
         "else": {"not": {"required": ["replacement_test_id"]}}
       }
+    }
+  },
+  "$defs": {
+    "supersession": {
+      "type": "object",
+      "properties": {
+        "test": {"$ref": "#/$defs/citations"},
+        "level": {"$ref": "#/$defs/citations"}
+      },
+      "required": ["test", "level"],
+      "additionalProperties": false
+    },
+    "citations": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "properties": {
+          "source_id": {"type": "string", "minLength": 1},
+          "clause": {"type": "string", "pattern": "^[1-9][0-9]*(?:\\.[0-9]+)*$"},
+          "printed_pages": {"$ref": "#/$defs/pages"},
+          "pdf_pages": {"$ref": "#/$defs/pages"},
+          "quote": {"type": "string", "pattern": "\\S"}
+        },
+        "required": ["source_id", "clause", "printed_pages", "pdf_pages", "quote"],
+        "additionalProperties": false
+      }
+    },
+    "pages": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {"type": "integer", "minimum": 1}
     }
   },
   "required": ["schema_version", "edition", "base_edition", "conflicts"],

@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 23.7
 Version: 7.3
 Expected: run
 Stdout: OK 2
+Version-Witness: version-witnesses/E23-7-string-initializer-pins-string-pin-collection.cs.part
 Mutate: fixed (char* pointer = text)
 Into: fixed (char* pointer = other)
 */

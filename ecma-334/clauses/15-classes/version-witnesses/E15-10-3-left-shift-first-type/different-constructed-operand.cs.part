@@ -1,0 +1,21 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    class Dial<T>
+    {
+        public static int operator <<(Dial<T> item, int count) { return count + 3; }
+    }
+    static int Main()
+    {
+        Dial<string> item = new Dial<string>();
+        Check(item != null, "containing-instantiation-repair");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

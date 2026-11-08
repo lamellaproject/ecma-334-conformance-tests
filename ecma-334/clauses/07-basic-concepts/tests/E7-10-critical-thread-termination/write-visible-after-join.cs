@@ -16,7 +16,7 @@ class Program
     static void Write() { payload = 191; }
     static void Main()
     {
-        Thread child = new Thread(Write); child.Start(); child.Join();
+        Thread child = new Thread(new System.Threading.ThreadStart(Write)); child.Start(); child.Join();
         Check(payload == 191, "terminated-thread-effects-visible-after-join");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

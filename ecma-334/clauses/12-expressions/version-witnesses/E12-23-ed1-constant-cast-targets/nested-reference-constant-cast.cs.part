@@ -1,0 +1,12 @@
+// ECMA-334 1st ed 14.15, p. 177 (PDF p. 191).
+using System;
+class ConstantTarget
+{
+    const object Missing = null;
+    static int Main()
+    {
+        if ((object)Missing != (object)null) return 1;
+        Console.WriteLine("OK 1");
+        return 0;
+    }
+}

@@ -1,3 +1,4 @@
 rule_id	reason
 E14-2-multiple-physical-modules	No standalone C# source selects physical module partitioning; it is an assembly-packaging choice supplied outside the language.
 E14-3-ed2-system-namespace-reservation	A compilation unit cannot identify whether it belongs to the implementation Standard Library. The clause supplies no library-provenance input or mandatory compile-time-error oracle that would distinguish the same namespace declaration in library and user sources.
+E14-3-ed4-system-name-reservation	A conforming program avoids names reserved for the Standard Library. The reservation requires no particular diagnostic or runtime result for a violating declaration, so neither acceptance nor rejection supplies an oracle for a program test.

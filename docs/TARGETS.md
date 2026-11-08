@@ -148,8 +148,12 @@ Both profiles compile against the references pinned by `net481` and run their
 output on the Framework target. Mono libraries are dependencies of the mcs
 compiler process; they are not references of the compiled test programs.
 
-Run the same inventory at each explicit level, including rejection checks for
-newer constructs:
+Run each explicit level's selection, including positive refusal checks for
+newer constructs. At ISO-1 and ISO-2, the governing table decides claims first;
+an unlisted test below `Since` gets a refusal check when the reference measurement
+records refusal. Superseded, replaced and left-out tests get none. An ISO
+conformance claim names both the edition claim run and this explicit-level run:
+`--edition 2` with `--langversion 1`, or `--edition 4` with `--langversion 2`.
 
 ```text
 python runner/run-suite.py --compiler configs/compilers/csc-framework.json --target configs/targets/net481.json --langversion 1,2,3,4,5 --suite ecma-334 --results ../results/csc-framework-chosen-versions --jobs 12

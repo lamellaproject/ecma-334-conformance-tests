@@ -21,7 +21,7 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Calculate first = A, second = B, third = C;
+        Calculate first = new Calculate(A), second = new Calculate(B), third = new Calculate(C);
         Calculate composed = first + second + third;
         int result = composed(Argument());
         Check(trace == "ABC", "synchronous-list-order");

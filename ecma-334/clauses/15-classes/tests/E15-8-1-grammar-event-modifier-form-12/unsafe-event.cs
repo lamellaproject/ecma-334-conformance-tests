@@ -26,7 +26,7 @@ class Program
     static unsafe void Main()
     {
         Source source = new Source();
-        source.Signal += Set;
+        source.Signal += new Handler(Set);
         Check(source.Trace == 14, "unsafe-event-accessor-context");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

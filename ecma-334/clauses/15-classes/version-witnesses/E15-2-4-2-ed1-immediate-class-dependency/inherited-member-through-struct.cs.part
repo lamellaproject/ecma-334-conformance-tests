@@ -1,0 +1,31 @@
+// ECMA-334 1st ed 17.1.2.1, p. 213 (PDF p. 227).
+using System;
+class Backup
+{
+    public int Read() { return 43; }
+}
+class Vehicle : Backup
+{
+    public struct Coupling
+    {
+        public class Base
+        {
+            public int Read() { return 43; }
+        }
+    }
+}
+class Dependency
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    static int Main()
+    {
+        Check(new Vehicle().Read() == 43, "inherited-member");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

@@ -23,7 +23,7 @@ class Program
     static void Main()
     {
         Meter meter = new Meter();
-        meter.Pulse += Receive;
+        meter.Pulse += new Signal(Receive);
         meter.Fire();
         Check(hits == 1, "class-event");
         if (failures == 0) Console.WriteLine("OK " + checks);

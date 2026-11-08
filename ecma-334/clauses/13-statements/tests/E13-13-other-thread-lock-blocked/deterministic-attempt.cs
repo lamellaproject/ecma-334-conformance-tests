@@ -25,7 +25,7 @@ class Program
     }
     static void Main()
     {
-        Thread worker = new Thread(Worker);
+        Thread worker = new Thread(new System.Threading.ThreadStart(Worker));
         lock (gate)
         {
             worker.Start();

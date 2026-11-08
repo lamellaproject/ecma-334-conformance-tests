@@ -25,6 +25,15 @@
     "csc_commit": {
       "type": "string"
     },
+    "iso_editions": {
+      "type": "object",
+      "properties": {
+        "ISO-1": {"type": "string"},
+        "ISO-2": {"type": "string"}
+      },
+      "required": ["ISO-1", "ISO-2"],
+      "additionalProperties": false
+    },
     "editions": {
       "type": "array",
       "items": {
@@ -177,7 +186,8 @@
     "csc_commit",
     "editions",
     "references",
-    "compiler_authority"
+    "compiler_authority",
+    "iso_editions"
   ],
   "additionalProperties": false
 }

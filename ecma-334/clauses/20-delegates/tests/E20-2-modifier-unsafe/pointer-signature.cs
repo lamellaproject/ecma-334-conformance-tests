@@ -17,7 +17,7 @@ class Program
     static unsafe void Main()
     {
         int value = 43;
-        Read reader = Dereference;
+        Read reader = new Read(Dereference);
         Check(reader(&value) == 43, "unsafe-delegate-parameter");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

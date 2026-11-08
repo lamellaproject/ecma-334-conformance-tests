@@ -1,0 +1,19 @@
+// ECMA-334 3rd ed 11.3.1, p. 114 (PDF p. 134).
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    static int Main()
+    {
+        int? seed = 47;
+        object boxed = seed;
+        Check(boxed != (object)null, "nullable-box-construct");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

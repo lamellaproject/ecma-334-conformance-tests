@@ -1,0 +1,22 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static bool Select(bool flag)
+    {
+        int assigned;
+        return (flag || (assigned = 29) > 0) || assigned == 29;
+    }
+    static int Main()
+    {
+        Check(Select(false), "true-only-substate-cannot-enter-right");
+        Check(Select(true), "assigned-true-path");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

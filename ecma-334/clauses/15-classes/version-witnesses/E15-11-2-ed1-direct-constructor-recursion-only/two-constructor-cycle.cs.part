@@ -1,0 +1,26 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    class Ring
+    {
+        public Ring() : this(0) { }
+        public Ring(int key) : base() { }
+    }
+    class Control
+    {
+        public int Value;
+        public Control(int value) { Value = value; }
+    }
+    static int Main()
+    {
+        Check(new Control(17).Value == 17, "acyclic-construction-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

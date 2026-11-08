@@ -21,7 +21,7 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Notice notice = (Notice)A + B + C;
+        Notice notice = (Notice)new Notice(A) + new Notice(B) + new Notice(C);
         bool caught = false;
         try { notice(); }
         catch (Problem observed) { caught = true; Check(observed == problem, "multicast-exception-instance"); }

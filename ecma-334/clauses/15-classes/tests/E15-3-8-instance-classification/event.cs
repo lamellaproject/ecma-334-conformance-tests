@@ -25,8 +25,8 @@ class Program
     {
         Packet first = new Packet();
         Packet second = new Packet();
-        first.Changed += OnFirst;
-        second.Changed += OnSecond;
+        first.Changed += new Packet.Signal(OnFirst);
+        second.Changed += new Packet.Signal(OnSecond);
         first.Fire();
         Check(firstCalls == 1 && secondCalls == 0, "first-event-uses-first-instance");
         second.Fire();

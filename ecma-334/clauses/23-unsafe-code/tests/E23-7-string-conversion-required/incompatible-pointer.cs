@@ -3,6 +3,7 @@ Rules: E23-7-string-conversion-required
 Authority: ECMA-334 7th ed 23.7
 Version: 7.3
 Expected: reject
+Version-Witness: version-witnesses/E23-7-string-conversion-required-incompatible-pointer.cs.part
 Mutate: fixed (byte* pointer = text)
 Into: fixed (char* pointer = text)
 */

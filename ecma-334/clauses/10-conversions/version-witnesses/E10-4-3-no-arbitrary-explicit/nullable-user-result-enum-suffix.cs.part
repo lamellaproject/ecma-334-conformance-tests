@@ -1,0 +1,23 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    enum Signal { Marked = 37 }
+    struct Measure
+    {
+        public static explicit operator int(Measure? item) { return item.HasValue ? 37 : 19; }
+    }
+    static int Main()
+    {
+        Measure? source = new Measure();
+        Signal result = (Signal)(int)source;
+        Check(result == Signal.Marked, "separate-user-and-enum-cast-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

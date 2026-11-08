@@ -27,7 +27,7 @@ class Program
     static void Handler() { calls++; }
     static void Main()
     {
-        Pulse handler = Handler;
+        Pulse handler = new Pulse(Handler);
         Worker.Fired += handler;
         Worker.Raise();
         Worker.Fired -= handler;

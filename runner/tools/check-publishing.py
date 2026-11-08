@@ -54,7 +54,9 @@ def text_audit(suite_ids, extra_patterns=()):
                 errors.append(relative + ": public text must be ASCII with LF line ends")
                 continue
             text = data.decode("ascii")
-            if re.search(r"(?<![A-Za-z0-9_])[A-Za-z]:[/\\]|(?<![\w:])/(?:home|Users|tmp|usr|opt|mnt|private)/", text):
+            if re.search(r"(?<![A-Za-z0-9_])[A-Za-z]:[/\\]|"
+                         r"(?<![\w:])/(?:home|Users|tmp|usr|opt|mnt|private|root|Volumes)/|"
+                         r"(?<![\w\\])\\\\wsl(?:\$|\.localhost)[/\\]", text, re.IGNORECASE):
                 errors.append(relative + ": absolute machine path")
             if re.search(r"Copyright[^\n]*\b[12][0-9]{3}\b[^\n]*Lamella|Copyright[^\n]*Lamella[^\n]*\b[12][0-9]{3}\b", text):
                 errors.append(relative + ": suite copyright line states a year")
@@ -89,7 +91,7 @@ def main():
     spec.loader.exec_module(versions)
     for suite_id in suites:
         for name, audit in [("ledger", lambda: ledger_audit(suite_id, args.source_map, True)),
-                            ("editions", lambda: edition_audit(suite_id, scan_tests(suite_id))),
+                            ("editions", lambda: edition_audit(suite_id, scan_tests(suite_id), args.source_map)),
                             ("raw-source", lambda: raw_audit(suite_id)),
                             ("versions", lambda: versions.version_audit(suite_id))]:
             key = suite_id + ":" + name

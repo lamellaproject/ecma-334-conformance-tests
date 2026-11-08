@@ -23,7 +23,7 @@ class Program
         Check(a == sameA && !(a != sameA), "same-static-method"); Check(a != b, "different-static-method");
         Check(none == null && a != none && none != a, "null-operands");
         Delegate x = a, y = new Other(A); Check(x != y && !(x == y), "different-runtime-delegate-type");
-        Receiver receiver = new Receiver(); D instance = receiver.Touch, equalInstance = new D(receiver.Touch);
+        Receiver receiver = new Receiver(); D instance = new D(receiver.Touch), equalInstance = new D(receiver.Touch);
         Check(instance == equalInstance, "same-instance-method-and-target");
         Check(instance != new D(new Receiver().Touch) && instance != new D(receiver.Different), "different-target-or-method");
         D left = a + instance + b, equal = sameA + equalInstance + new D(B);

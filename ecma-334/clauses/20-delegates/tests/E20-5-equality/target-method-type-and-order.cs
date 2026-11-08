@@ -4,8 +4,8 @@ Authority: ECMA-334 7th ed 20.5
 Version: 7.3
 Expected: run
 Stdout: OK 9
-Mutate: Notice same = first.Touch;
-Into: Notice same = second.Touch;
+Mutate: Notice same = new Notice(first.Touch);
+Into: Notice same = new Notice(second.Touch);
 */
 using System;
 delegate void Notice();
@@ -20,11 +20,11 @@ class Program
     static void Main()
     {
         Counter first = new Counter(), second = new Counter();
-        Notice one = first.Touch;
-        Notice same = first.Touch;
-        Notice otherTarget = second.Touch, otherMethod = first.Other;
-        Notice a = A, sameA = A, b = B, none = null;
-        OtherNotice otherType = A;
+        Notice one = new Notice(first.Touch);
+        Notice same = new Notice(first.Touch);
+        Notice otherTarget = new Notice(second.Touch), otherMethod = new Notice(first.Other);
+        Notice a = new Notice(A), sameA = new Notice(A), b = new Notice(B), none = null;
+        OtherNotice otherType = new OtherNotice(A);
         Check(one == same && !(one != same), "same-instance-and-method");
         Check(one != otherTarget, "different-target-instance");
         Check(one != otherMethod, "different-instance-method");

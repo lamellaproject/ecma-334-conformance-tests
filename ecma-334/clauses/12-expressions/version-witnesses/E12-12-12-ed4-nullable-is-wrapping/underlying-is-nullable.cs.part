@@ -1,0 +1,20 @@
+// ECMA-334 4th ed 14.9.10, p. 211 (PDF p. 233).
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Main()
+    {
+        int value = 31;
+        int? empty = null;
+        Check(value is int, "underlying-wrapping-is");
+        Check(!(empty is object), "empty-nullable-is-object");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

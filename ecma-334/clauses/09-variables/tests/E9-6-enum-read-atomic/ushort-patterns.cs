@@ -21,7 +21,7 @@ class Program
     }
     static void Main()
     {
-        Thread writer = new Thread(Write);
+        Thread writer = new Thread(new System.Threading.ThreadStart(Write));
         writer.Start();
         bool valid = true;
         for (int i = 0; i < 200000; i++)

@@ -2,26 +2,29 @@
 Rules: E23-7-no-captured-local-variable
 Authority: ECMA-334 7th ed 23.7
 Version: 7.3
-Expected: run
-Stdout: OK 1
+Expected: reject
+Version-Witness: version-witnesses/E23-7-no-captured-local-variable/captured-array-local.cs.part
 Mutate: fixed (int* pointer = items)
-Into: fixed (int* pointer = new int[1])
+Into: fixed (int* pointer = independent)
 */
 using System;
 class Program
 {
     static int checks, failures;
-    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
-    static unsafe void Main()
+    static void Check(bool ok, string name)
     {
-        int[] items = new int[1];
-        Func<int> read = () => items[0];
-        // ECMA-334 7th ed 23.7, p. 561 says "use"; its literal text appears
-        // incorrect if read as forbidding array-form pinning. The note ending
-        // 23.6.5, p. 559 restricts taking the captured variable's own address.
-        // This test follows that intent instead, pinning the array object.
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    delegate int ReadValue();
+    static unsafe int Main()
+    {
+        int[] items = new int[] { 11, 13 };
+        int[] independent = items;
+        ReadValue callback = delegate { return items[0]; };
         fixed (int* pointer = items) { *pointer = 37; }
-        Check(read() == 37, "captured-local-array-pin");
+        Check(callback() == 37, "captured-array-initializer");
         if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
     }
 }

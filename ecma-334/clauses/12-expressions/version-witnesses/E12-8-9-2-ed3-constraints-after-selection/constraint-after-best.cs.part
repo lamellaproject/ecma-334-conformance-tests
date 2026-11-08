@@ -1,0 +1,21 @@
+// ECMA-334 3rd ed 14.5.5.1, p. 170 (PDF p. 190).
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    static int Choose<T>(T value) where T : struct { return 1; }
+    static int Choose(object value) { return 2; }
+    static int Main()
+    {
+        string seed = "flint";
+        int value = Choose((object)seed);
+        Check(value == 2, "constraint-selection");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

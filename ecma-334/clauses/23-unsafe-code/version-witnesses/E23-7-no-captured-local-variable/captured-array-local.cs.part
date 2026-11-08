@@ -1,0 +1,21 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    delegate int ReadValue();
+    static unsafe int Main()
+    {
+        int[] items = new int[] { 11, 13 };
+        int[] independent = items;
+        ReadValue callback = delegate { return items[0]; };
+        fixed (int* pointer = independent) { *pointer = 37; }
+        Check(callback() == 37, "captured-array-initializer");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

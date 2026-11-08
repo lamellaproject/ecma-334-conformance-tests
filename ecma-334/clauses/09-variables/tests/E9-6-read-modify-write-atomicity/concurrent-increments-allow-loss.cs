@@ -16,7 +16,7 @@ class Program
     static void Increment() { for (int i = 0; i < 20000; i++) shared++; }
     static void Main()
     {
-        Thread a = new Thread(Increment), b = new Thread(Increment);
+        Thread a = new Thread(new System.Threading.ThreadStart(Increment)), b = new Thread(new System.Threading.ThreadStart(Increment));
         a.Start(); b.Start();
         a.Join(); b.Join();
         shared--;

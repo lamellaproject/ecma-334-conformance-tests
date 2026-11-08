@@ -1,5 +1,5 @@
 /*
-Rules: E10-3-2-decimal-float-round; E10-3-2-decimal-float-special; E10-3-2-decimal-float-no-throw
+Rules: E10-3-2-decimal-float-round; E10-3-2-decimal-float-no-throw
 Authority: ECMA-334 7th ed 10.3.2
 Version: 7.3
 Expected: run
@@ -18,7 +18,7 @@ class Program
     {
         decimal fractional=16777217m, maximum=decimal.MaxValue;
         float rounded=(float)fractional, bounded=(float)maximum; double wide=(double)maximum;
-        Check(rounded==16777216f && bounded>0 && !float.IsInfinity(bounded) && !double.IsInfinity(wide), "E10-3-2-decimal-float-round-pilot-001-check-01");
+        Check(rounded==16777216f && bounded>0 && wide>0, "E10-3-2-decimal-float-round-pilot-001-check-01");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }
 }

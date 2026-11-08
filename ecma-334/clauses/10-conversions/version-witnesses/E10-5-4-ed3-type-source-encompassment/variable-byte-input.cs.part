@@ -1,0 +1,24 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    struct Parcel
+    {
+        public int Number;
+        public Parcel(int number) { Number = number; }
+        public static implicit operator Parcel(byte value) { return new Parcel(value); }
+    }
+    static int Main()
+    {
+        int source = 53;
+        Parcel result = (byte)source;
+        Check(result.Number == 53, "variable-byte-operator-input");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

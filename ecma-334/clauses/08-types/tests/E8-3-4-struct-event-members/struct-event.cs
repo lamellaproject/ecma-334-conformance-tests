@@ -18,7 +18,7 @@ class Program
     static void Touch() { calls++; }
     static void Main()
     {
-        Sample sample = new Sample(); sample.Handler += Touch; sample.Raise();
+        Sample sample = new Sample(); sample.Handler += new Callback(Touch); sample.Raise();
         Check(calls == 1, "struct-event");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

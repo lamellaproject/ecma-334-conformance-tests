@@ -1,0 +1,29 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    enum Signal { Marked = 37 }
+    struct Bundle
+    {
+        public int Mark;
+        public static implicit operator Bundle(int? value)
+        {
+            Bundle result = new Bundle();
+            result.Mark = value.HasValue ? value.Value : 19;
+            return result;
+        }
+    }
+    static int Main()
+    {
+        Signal source = Signal.Marked;
+        Bundle result = (Bundle)(int)source;
+        Check(result.Mark == 37, "separate-enum-and-user-cast-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

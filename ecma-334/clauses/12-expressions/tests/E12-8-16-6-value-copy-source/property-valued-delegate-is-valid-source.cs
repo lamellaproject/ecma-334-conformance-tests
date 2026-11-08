@@ -12,7 +12,7 @@ delegate int Reader();
 class Receiver
 {
     public int Reads;
-    public Reader Selected { get { Reads++; return Work; } }
+    public Reader Selected { get { Reads++; return new Reader(Work); } }
     int Work() { return 23; }
 }
 class Program

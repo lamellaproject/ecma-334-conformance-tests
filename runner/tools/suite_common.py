@@ -123,7 +123,7 @@ def write_tsv(path, rows, fields):
 def source_registry(suite_id="ecma-334"):
     registry = json.loads((standard_root(suite_id) / "source-registry.json").read_text(encoding="utf-8"))
     fields = {"schema_version", "standard", "standard_version", "standard_sha256", "feature_commit", "csc_version",
-              "csc_commit", "editions", "references", "compiler_authority"}
+              "csc_commit", "editions", "references", "compiler_authority", "iso_editions"}
     checked_object(registry, fields | {"raw_source_rules"}, fields)
     if registry["schema_version"] != 1 or registry["standard"].lower() != suite_id:
         raise ValueError("Unsupported source registry version/standard")
@@ -160,6 +160,12 @@ def source_registry(suite_id="ecma-334"):
                     if asset["path"] in paths or ".." in Path(asset["path"]).parts or "\\" in asset["path"] or ":" in asset["path"] or Path(asset["path"]).is_absolute() or not re.fullmatch(r"[0-9a-f]{64}", asset["sha256"]):
                         raise ValueError("Invalid or duplicate reference asset pin")
                     paths.add(asset["path"])
+    checked_object(registry["iso_editions"], {"ISO-1", "ISO-2"}, {"ISO-1", "ISO-2"})
+    primary = {entry["id"]: entry for entry in registry["editions"] if entry["role"] == "primary"}
+    for level, source_id in registry["iso_editions"].items():
+        if (not isinstance(source_id, str) or source_id not in primary
+                or public_level(primary[source_id]["language_version"]) != public_level(level)):
+            raise ValueError("ISO level must name a registered primary edition at that level: " + level)
     checked_object(registry["compiler_authority"], {"id", "version", "commit"}, {"id", "version", "commit"})
     if registry["compiler_authority"] != {"id": "csc", "version": registry["csc_version"], "commit": registry["csc_commit"]}:
         raise ValueError("Compiler authority disagrees with its recorded identity")
@@ -400,9 +406,9 @@ def parse_test(path, suite_id="ecma-334"):
     if keys != [k for k in HEADER_KEYS if k in metadata] or keys[:4] != HEADER_KEYS[:4]:
         raise ValueError("Header order is invalid: " + str(relative))
     expected = metadata["Expected"]
-    if expected not in {"run", "reject"}:
-        raise ValueError("Expected must be run or reject")
-    stdout = expected_stdout(metadata.get("Stdout", "")) if expected == "run" else ""
+    if expected not in {"run", "reject", "run-or-reject"}:
+        raise ValueError("Expected must be run, reject or run-or-reject")
+    stdout = expected_stdout(metadata.get("Stdout", "")) if expected in {"run", "run-or-reject"} else ""
     if expected == "reject" and "Stdout" in metadata:
         raise ValueError("A reject test cannot have Stdout")
     diagnostic = metadata.get("Diagnostic", "")
@@ -475,6 +481,8 @@ def parse_test(path, suite_id="ecma-334"):
     fixture = json.loads(metadata.get("Fixture", "{}"))
     fixture_hash = fixture_info(fixture, suite_id, relative.parts[1], bool(entry), observations)
     witness = metadata.get("Version-Witness", "")
+    if expected == "run-or-reject" and (not witness or observations):
+        raise ValueError("A run-or-reject test requires a positive Version-Witness and no Source-Diagnostic")
     if witness:
         if not witness.endswith(".cs.part") or not inside(standard_root(suite_id) / "clauses" / relative.parts[1], witness).is_file():
             raise ValueError("Version-Witness must be an existing clause-relative .cs.part")

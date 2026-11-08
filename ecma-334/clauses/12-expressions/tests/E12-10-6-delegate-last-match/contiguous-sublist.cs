@@ -19,7 +19,7 @@ class Program
     static void C() { Trace += "C"; }
     static void Main()
     {
-        Receiver receiver = new Receiver(); D a = A, b = receiver.B, c = C;
+        Receiver receiver = new Receiver(); D a = new D(A), b = new D(receiver.B), c = new D(C);
         D left = a + b + c + a + b;
         // New but equal entries prove sublist matching uses delegate equality, rather than instance identity.
         D right = new D(A) + new D(receiver.B); D result = left - right;
@@ -28,7 +28,7 @@ class Program
         Trace = ""; right(); Check(Trace == "AB", "right-input-unchanged");
         D noncontiguous = a + c;
         Check((object)(left - noncontiguous) == (object)left, "noncontiguous-is-not-sublist");
-        D otherTarget = new Receiver().B;
+        D otherTarget = new D(new Receiver().B);
         Check((object)(left - otherTarget) == (object)left, "target-identity-part-of-entry-equality");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

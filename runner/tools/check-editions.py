@@ -10,11 +10,12 @@ from suite_editions import edition_audit
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--suite", action="append")
+    parser.add_argument("--source-map", type=Path, help="Verify superseded quotations against pinned external sources")
     parser.add_argument("--report", type=Path, required=True)
     args = parser.parse_args()
     errors, checks = [], {}
     for suite_id in args.suite or installed_suites():
-        result = edition_audit(suite_id, scan_tests(suite_id))
+        result = edition_audit(suite_id, scan_tests(suite_id), args.source_map)
         checks[suite_id] = result
         errors.extend(suite_id + ": " + error for error in result["errors"])
     emit_audit(args.report, {"checks": checks, "errors": errors, "error_count": len(errors)})

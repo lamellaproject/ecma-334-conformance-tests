@@ -1,5 +1,5 @@
 /*
-Rules: E20-5-concatenate-lists; E20-5-combination-creation; E20-5-operator-add; E20-5-immutable-invocation-list
+Rules: E20-5-concatenate-lists; E20-5-combination-creation; E20-5-operator-add; E20-5-immutable-invocation-list; E20-4-void; E20-2-returns-no-value
 Authority: ECMA-334 7th ed 20.5
 Version: 7.3
 Expected: run
@@ -19,7 +19,7 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Notice a = A, b = B;
+        Notice a = new Notice(A), b = new Notice(B);
         Notice left = a + b;
         Notice saved = left;
         Notice joined = left + a;

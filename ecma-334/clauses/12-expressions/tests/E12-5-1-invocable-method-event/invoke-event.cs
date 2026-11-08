@@ -20,7 +20,7 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Box box = new Box(); box.Signal += Handler; box.Raise();
+        Box box = new Box(); box.Signal += new System.Action(Handler); box.Raise();
         Check(calls == 1, "event-and-method-invocable");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

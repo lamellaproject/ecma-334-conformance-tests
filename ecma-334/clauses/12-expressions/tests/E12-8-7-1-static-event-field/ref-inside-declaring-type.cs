@@ -27,7 +27,7 @@ class Program
     static void Handler() { }
     static void Main()
     {
-        Pulse handler = Handler;
+        Pulse handler = new Pulse(Handler);
         Check(Worker.Store(handler) == handler, "static-field-like-event-is-variable-inside-declaring-type");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

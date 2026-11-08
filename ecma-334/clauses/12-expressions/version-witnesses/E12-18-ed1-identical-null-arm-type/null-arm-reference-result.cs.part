@@ -1,0 +1,21 @@
+// ECMA-334 1st ed 14.12, p. 173 (PDF p. 187).
+using System;
+class NullArms
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    static int Main()
+    {
+        for (int index = 0; index < 2; index++)
+        {
+            object result = index == 0 ? (object)null : null;
+            Check((object)result == (object)null, "null-result");
+        }
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

@@ -17,7 +17,8 @@
         "ed1-3-015",
         "ed2-3-001-06",
         "ed2-D-001-03",
-        "ed2-3-001-14"
+        "ed2-3-001-14",
+        "rule-E2-ed3-cli-library-authority"
       ]
     },
     "03-terms-and-definitions": {
@@ -34,7 +35,8 @@
         "ed1-2-014",
         "ed1-2-015",
         "ed1-2-016",
-        "ed1-2-022"
+        "ed1-2-022",
+        "rule-E5-ed3-character-conformance-authorities"
       ]
     },
     "06-lexical-structure": {
@@ -599,7 +601,17 @@
         "ed2-9.3.2-004-01",
         "ed2-9.5.4-010-01",
         "ed2-9.5.4-011-01",
-        "ed2-9.5.4-012-01"
+        "ed2-9.5.4-012-01",
+        "rule-E6-2-5-ed3-generic-lookahead-tokens",
+        "rule-E6-4-3-ed3-unicode-3-identifier-category",
+        "rule-E6-5-2-ed3-verbatim-conditional-symbol",
+        "rule-E6-5-8-ed3-identifier-line-indicator",
+        "rule-E6-5-8-ed3-canonical-default-line-indicator",
+        "rule-E6-5-8-ed3-unrecognized-line-identifier-warning",
+        "rule-E6-3-4-ed3-unicode-3-space-category",
+        "ed4-9.3.3-predicate-unicode-4-space-category",
+        "ed4-9.4.2-predicate-unicode-4-identifier-category",
+        "ed2-9.5.7-line-indicators"
       ]
     },
     "07-basic-concepts": {
@@ -1130,7 +1142,7 @@
         "ed1-10.1-011",
         "ed1-10.2-005",
         "ed1-10.4.5-001",
-        "ed1-10.1-012",
+        "entry-point-overload-signatures",
         "ed1-10.4.7-001",
         "ed1-10.5.2-003",
         "ed1-10.5.2-015",
@@ -1474,7 +1486,9 @@
         "ed1-11.1.6-015",
         "iot:P08-nullable-assignment-warning",
         "iot:feature-native-integers",
-        "iot:feature-unconstrained-type-parameter-annotations"
+        "iot:feature-unconstrained-type-parameter-annotations",
+        "rule-E8-4-5-ed3-nullable-boxing-constraint",
+        "ed4-25.7.1-predicate-nonnullable-boxing-constraint"
       ]
     },
     "09-variables": {
@@ -2032,7 +2046,10 @@
         "ed1-12.3.3.22-002",
         "iot:P08-nullable-null-test-flow",
         "ed2-12.3.1-008-01",
-        "ed2-12.3.2-004-01"
+        "ed2-12.3.2-004-01",
+        "ed4-12.3.3.29-predicate-coalescing-first-exit",
+        "ed3-12.3.3.24-predicate-or-second-entry",
+        "ed1-12.3.3.21-predicate-conditional-argument-assignment"
       ]
     },
     "10-conversions": {
@@ -2389,7 +2406,28 @@
         "ed2-13.2.1-023-01",
         "ed2-13.2.1-023-02",
         "ed2-13.2.1-026-01",
-        "ed2-13.2.1-026-02"
+        "ed2-13.2.1-026-02",
+        "rule-E10-2-9-ed3-nullable-null-box-instance",
+        "rule-E10-2-9-ed3-nullable-box-dynamic-type",
+        "rule-E10-2-9-ed3-nullable-own-interface-boxing",
+        "rule-E10-3-7-ed3-nullable-null-unboxing",
+        "rule-E10-3-7-ed3-nullable-unboxing-exact-type",
+        "rule-E10-3-7-ed3-nullable-interface-unboxing-source",
+        "rule-E10-8-ed3-return-check-after-selection",
+        "rule-E10-2-8-ed3-library-generic-invariance",
+        "rule-E10-4-2-ed3-null-to-nullable-not-standard",
+        "rule-E10-3-2-ed3-decimal-floating-overflow",
+        "rule-E10-5-4-ed3-direct-type-candidates",
+        "rule-E10-5-5-ed3-direct-type-candidates",
+        "ed4-11.3.1-predicate-nullable-underlying-targets",
+        "ed4-13.4.3-predicate-effective-base-candidates",
+        "ed4-13.4.4-predicate-effective-base-candidates",
+        "ed3-13.6-predicate-fresh-method-group-conversion",
+        "ed3-13.4.3-predicate-type-source-encompassment",
+        "ed3-13.4.3-predicate-both-nullable-lifted-candidates",
+        "ed3-13.4.4-predicate-both-nullable-lifted-candidates",
+        "ed3-13.2.1-predicate-floating-decimal-finite-overflow",
+        "ed2-14.1-method-group-context"
       ]
     },
     "11-patterns": {
@@ -5332,7 +5370,36 @@
         "ed2-14.5.2.1-001-01",
         "ed2-14.7.2-002-05",
         "ed2-14.7.2-002-06",
-        "ed2-14.7.3-006-04"
+        "ed2-14.7.3-006-04",
+        "rule-E12-12-12-ed3-nullable-is-value-true",
+        "rule-E12-12-12-ed3-is-no-nullable-unwrapping",
+        "rule-E12-12-13-ed3-as-reference-target",
+        "rule-E12-6-3-ed3-consistent-type-inference",
+        "rule-E12-6-3-ed3-no-anonymous-method-inference",
+        "rule-E12-6-3-ed3-no-method-group-inference",
+        "rule-E12-8-9-2-ed3-constraints-after-selection",
+        "rule-E12-6-4-7-ed3-no-nullable-signed-tie-break",
+        "rule-E12-6-4-5-ed3-no-anonymous-return-preference",
+        "rule-E12-13-5-ed3-nullable-boolean-condition",
+        "rule-E12-14-1-ed3-nullable-conditional-and",
+        "rule-E12-6-3-ed3-array-parameter-inference-failure",
+        "rule-E12-6-3-ed3-constructed-parameter-inference-failure",
+        "rule-E12-8-20-ed3-enum-default-not-constant",
+        "rule-E12-6-6-1-ed3-reference-member-variable-receiver",
+        "rule-E12-10-4-ed3-minimum-remainder-choice",
+        "rule-E12-12-7-ed3-bidirectional-reference-conversions",
+        "rule-E12-12-7-ed3-known-reference-operands",
+        "rule-E12-12-9-ed3-distinct-anonymous-entries",
+        "rule-E12-12-9-ed3-anonymous-method-group-entries",
+        "rule-E12-12-9-ed3-contextual-delegate-equality",
+        "ed4-14.5.6.2-predicate-inherited-indexer-selection",
+        "ed4-14.9.6-predicate-null-operand-equality",
+        "ed4-14.9.10-predicate-nullable-is-wrapping",
+        "ed4-14.9.11-predicate-nullable-as",
+        "ed4-14.17-predicate-nonnullable-boolean-condition",
+        "ed3-14.12-predicate-left-type-required",
+        "library-type-base",
+        "ed2-25.7-handler-stackalloc"
       ]
     },
     "13-statements": {
@@ -6071,7 +6138,7 @@
         "ed1-15.7.2-014",
         "ed1-15.7.2-031",
         "ed1-15.7.2-037",
-        "ed1-15.5.1-015",
+        "local-variable-initializer-assignment",
         "ed1-15.8.4-010",
         "ed1-15.8.4-011",
         "ed1-15.13-015",
@@ -6080,7 +6147,13 @@
         "ed1-15.8.4-007",
         "ed1-15.8.4-020",
         "iot:feature-using-declarations",
-        "iot:feature-static-local-functions"
+        "iot:feature-static-local-functions",
+        "rule-E13-9-5-ed3-shared-iteration-capture",
+        "rule-E13-9-5-ed3-unconditional-enumerator-disposal",
+        "rule-E13-8-3-ed3-no-nullable-governing-type",
+        "rule-E13-14-ed3-nullable-resource-interface-required",
+        "ed3-15.8.3-predicate-for-scope-declarator-start",
+        "feature:using-pattern-disposal"
       ]
     },
     "14-namespaces": {
@@ -6443,7 +6516,8 @@
         "ed1-16.3.1-004",
         "iot:feature-top-level-statements",
         "iot:feature-file-scoped-namespaces",
-        "ed2-16.2-005-13"
+        "ed2-16.2-005-13",
+        "ed4-16.2-standard-library-name-reservation"
       ]
     },
     "15-classes": {
@@ -8602,7 +8676,13 @@
         "iot:feature-unconstrained-type-parameter-annotations",
         "iot:feature-record-structs-shared-record-members",
         "iot:feature-ref-readonly-parameters-declarations",
-        "ed2-17.5-014-01"
+        "ed2-17.5-014-01",
+        "rule-E15-2-5-ed3-enum-constraint-forbidden",
+        "rule-E15-8-2-ed3-instance-event-associated-monitor",
+        "rule-E15-8-2-ed3-static-event-associated-monitor",
+        "rule-E15-10-3-ed3-shift-count-int-required",
+        "ed1-17.5.1.4-predicate-expanded-signature-suppression",
+        "ed1-17.10.1-predicate-direct-constructor-recursion-only"
       ]
     },
     "16-structs": {
@@ -8856,7 +8936,8 @@
         "iot:feature-struct-constructors-and-initializers",
         "ed2-18.3.10-001-02",
         "ed2-18.3.10-002-01",
-        "ed2-18.3.10-004-01"
+        "ed2-18.3.10-004-01",
+        "rule-E16-4-7-ed3-constrained-member-no-boxing"
       ]
     },
     "17-arrays": {
@@ -10140,7 +10221,10 @@
         "iot:feature-member-not-null-attributes",
         "iot:feature-member-not-null-attributes-caller",
         "iot:feature-constant-interpolated-strings-attribute-argument",
-        "ed2-24.4.2-002-01"
+        "ed2-24.4.2-002-01",
+        "rule-E22-5-3-2-ed3-conditional-output-parameter",
+        "ed3-24.2-predicate-global-extension-target",
+        "ed3-24.2-predicate-unrecognized-global-target-warning"
       ]
     },
     "23-unsafe-code": {
@@ -10573,7 +10657,13 @@
         "ed1-25.4-008",
         "ed1-25.5.8-004",
         "ed1-25.7-007",
-        "ed2-25.1-018-01"
+        "ed2-25.1-018-01",
+        "rule-E23-6-1-ed3-actual-pointer-operand-required",
+        "ed4-27.5.4-predicate-volatile-fixed-address",
+        "ed4-27.6-predicate-captured-body-read",
+        "ed3-27.6-predicate-captured-fixed-statement-use",
+        "ed3-15.8.4-predicate-pointer-array-foreach-forbidden",
+        "ed2-17.4-struct-field-declarators"
       ]
     }
   }

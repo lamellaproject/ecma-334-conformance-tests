@@ -1,0 +1,30 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static bool? rightValue;
+    static int leftCalls, rightCalls;
+    static bool? Left() { leftCalls++; return null; }
+    static bool? Right() { rightCalls++; return rightValue; }
+    static bool? Combine() { return Left() | Right(); }
+    static void Verify(bool? right, bool? expected)
+    {
+        rightValue = right;
+        leftCalls = rightCalls = 0;
+        bool? result = Combine();
+        Check(result == expected && leftCalls == 1 && rightCalls == 1, "null-left-or");
+    }
+    static int Main()
+    {
+        Verify(true, true);
+        Verify(false, null);
+        Verify(null, null);
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

@@ -4,8 +4,8 @@ Authority: ECMA-334 7th ed 16.3
 Version: 7.3
 Expected: run
 Stdout: OK 2
-Mutate: publisher.Notice += Observe;
-Into: publisher.Notice -= Observe;
+Mutate: publisher.Notice += new Notice(Observe);
+Into: publisher.Notice -= new Notice(Observe);
 */
 using System;
 delegate void Notice();
@@ -22,10 +22,10 @@ class Program
     static void Observe() { calls++; }
     static void Main()
     {
-        Publisher publisher = new Publisher(); publisher.Notice += Observe;
+        Publisher publisher = new Publisher(); publisher.Notice += new Notice(Observe);
         publisher.Send();
         Check(calls == 1, "event-add");
-        publisher.Notice -= Observe; publisher.Send();
+        publisher.Notice -= new Notice(Observe); publisher.Send();
         Check(calls == 1, "event-remove");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

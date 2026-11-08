@@ -1,0 +1,2 @@
+rule_id	source_id	locator	quote_json	kind	requirement	version	notes	retirement_reason
+E13-6-2-1-local-own-initializer	ecma-334-ed7	13.6.2.1, p. 303 (PDF p. 331)	"""within any initializing expression within its declarator"""	forbids	A local variable cannot be referenced by name inside an initializing expression of its own declarator.			Subclause 7.7.1 explicitly permits assignment to an explicitly typed local in its own initializer. An unassigned read remains forbidden by 9.4 and 13.6.2.1; 13.6.2.2 separately forbids self-reference for an implicitly typed local.

@@ -12,12 +12,12 @@ import uuid
 from pathlib import Path
 
 from suite_common import ROOT, MANIFEST_FIELDS, canonical, digest, fixture_info, inside, raw_sources, read_tsv, sha, standard_root, utc, write_bytes, write_json, write_text
-from suite_config import expand, level_tuple, load_config, resolve_level
+from suite_config import expand, level_tuple, load_config, public_level, resolve_level
 from suite_diagnostics import compilation_verdict, parse_diagnostics, runtime_verdict, source_checks
 from suite_targets import Target
 
 CATEGORIES = ["pass", "unsupported", "unexpected-reject", "unexpected-accept", "runtime-fail", "diagnostic-fail",
-              "compiler-error", "infrastructure", "not-applicable"]
+              "compiler-error", "infrastructure", "not-applicable", "superseded"]
 UNSUPPORTED_REASONS = ["feature-refusal", "level", "requirement", "target-capability"]
 CONTROL_OUTCOMES = {
     "positive": ("pass", 0, 0), "failed-check": ("runtime-fail", 0, 0),
@@ -93,18 +93,40 @@ def control_level(config, test):
     return resolve_level(config, max(candidates, key=level_tuple))
 
 
-def departure_rows(suite_id):
+def observation_rows(suite_id, filename, statuses):
+    """Index observations, retaining disjoint departure citations for each test."""
     result = {}
     if suite_id == "controls":
         return result
-    for path in sorted((standard_root(suite_id) / "clauses").glob("*/departures.tsv")):
+    for path in sorted((standard_root(suite_id) / "clauses").glob("*/" + filename)):
         for row in read_tsv(path, DEPARTURE_FIELDS):
-            if row["test_id"] in result:
-                raise ValueError("Duplicate departure: " + row["test_id"])
-            if row["kind"] not in {"compiler", "hosted-runtime"} or row["status"] not in {"confirmed", "pending"}:
-                raise ValueError("Invalid departure kind/status")
-            result[row["test_id"]] = row
+            if row["kind"] not in {"compiler", "hosted-runtime"} or row["status"] not in statuses:
+                raise ValueError("Invalid observation kind/status in " + filename)
+            previous = result.get(row["test_id"])
+            if previous is None:
+                result[row["test_id"]] = row
+                continue
+            if filename != "departures.tsv":
+                raise ValueError("Duplicate observation in " + filename + ": " + row["test_id"])
+            shared = set(DEPARTURE_FIELDS) - {"source_id", "locator", "quote_json", "levels_json", "notes"}
+            if any(previous[field] != row[field] for field in shared):
+                raise ValueError("Inconsistent split departure: " + row["test_id"])
+            old, new = json.loads(previous["levels_json"]), json.loads(row["levels_json"])
+            if {public_level(level) for level in old} & {public_level(level) for level in new}:
+                raise ValueError("Overlapping split departure levels: " + row["test_id"])
+            citations = previous.get("level_citations", [dict(previous)])
+            result[row["test_id"]] = {**previous, "levels_json": json.dumps(old + new),
+                                      "level_citations": [*citations, row]}
     return result
+
+
+def departure_rows(suite_id):
+    return observation_rows(suite_id, "departures.tsv", {"confirmed", "pending"})
+
+
+def superseded_observation_rows(suite_id):
+    """Older-expectation verdicts whose governing ISO requirement is satisfied."""
+    return observation_rows(suite_id, "superseded-observations.tsv", {"conforming"})
 
 
 class Context:
@@ -235,9 +257,11 @@ class Context:
                     return "unsupported", "target-capability", ["reference:" + reference["asset"]]
         return "", "", []
 
-    def compile(self, test, level=None, mode="test", executed_bytes=None, skip_status=None):
+    def _prepare(self, test, level=None, mode="test", executed_bytes=None, skip_status=None):
         if self.evidence_only:
             raise ValueError("Evidence contexts cannot compile or replace observations")
+        if mode != "superseded" and test.get("edition_membership", {}).get("superseded"):
+            raise ValueError("A superseded claim cannot execute under another mode")
         level = level or resolve_level(self.config, test["version"])
         source_path = self.source_path(test)
         if sha(source_path) != test["source_sha256"]:
@@ -250,8 +274,13 @@ class Context:
         if test["suite_id"] != "controls" and fixture_info(fixture, test["suite_id"], test["path"].split("/")[1],
                 test["path"] in raw_sources(test["suite_id"]), json.loads(test["source_diagnostic_json"])) != test["fixture_sha256"]:
             raise ValueError("Fixture changed since manifest validation: " + test["test_id"])
-        status, reason, missing = self.preflight(test, level, fixture, mode)
-        if skip_status:
+        if mode == "superseded":
+            if not test.get("edition_membership", {}).get("superseded") or executed_bytes is not None or skip_status:
+                raise ValueError("Superseded needs its cited edition decision and no executed source")
+            status, reason, missing = "superseded", "edition-rule-changed", []
+        else:
+            status, reason, missing = self.preflight(test, level, fixture, mode)
+        if skip_status and mode != "superseded":
             status, reason, missing = skip_status, "outside-applicability", []
         record = {**test, "schema_version": 2, "level": level["level"] if level else test["version"], "level_argument": level["argument"] if level else "",
             "mode": mode, "status": status, "reason": reason, "unsupported_reason": reason if status == "unsupported" else "",
@@ -264,10 +293,25 @@ class Context:
             "fingerprint": self.fingerprint(test, level, mode, executed_bytes), "executed_source_sha256": "",
             "evidence_sha256": {}, "artifacts": {}, "artifact_sha256": None, "artifact_directory": str(attempt),
             "result_path": str(directory / "result.json"), "departure": False, "departure_kind": ""}
-        record["executed_source_sha256"] = hashlib.sha256(raw).hexdigest()
-        pending = {"record": record, "request": None}
-        if status:
+        record["executed_source_sha256"] = "" if mode == "superseded" else hashlib.sha256(raw).hexdigest()
+        return {"record": record, "request": None}
+
+    def superseded(self, test, level):
+        """Record a cited changed rule without compiler or runtime preflight."""
+        return self.finish(self._prepare(test, level, "superseded"))
+
+    def compile(self, test, level=None, mode="test", executed_bytes=None, skip_status=None):
+        if mode == "superseded":
+            raise ValueError("Use the nonexecuting superseded outcome")
+        level = level or resolve_level(self.config, test["version"])
+        pending = self._prepare(test, level, mode, executed_bytes, skip_status)
+        record = pending["record"]
+        if record["status"]:
             return pending
+        source_path = self.source_path(test)
+        raw = source_path.read_bytes() if executed_bytes is None else executed_bytes
+        attempt = Path(record["artifact_directory"])
+        fixture = json.loads(test["fixture_json"])
         requirements = json.loads(test["requirements_json"])
         outputs, information, all_diagnostics = {}, set(), []
         stages = [*fixture.get("libraries", []), fixture.get("program", {})]
@@ -319,6 +363,8 @@ class Context:
                 record.update(status="pass" if verdict == "accepted" else "unexpected-reject", reason="" if verdict == "accepted" else "compile-only")
             elif test["expected"] == "reject" or mode == "version-gating":
                 record.update(status="pass" if verdict == "rejected" else "unexpected-accept", reason="" if verdict == "rejected" else "required-rejection")
+            elif verdict == "rejected" and test["expected"] == "run-or-reject":
+                record.update(status="pass", reason="permitted-rejection")
             elif verdict == "rejected":
                 record.update(status="unexpected-reject", reason="required-compilation")
             else:
@@ -407,7 +453,8 @@ class Context:
                     test["path"] in raw_sources(test["suite_id"]), json.loads(test["source_diagnostic_json"])) != test["fixture_sha256"]:
                 return None
             record = json.loads(path.read_text(encoding="utf-8"))
-            if record["fingerprint"] != self.fingerprint(test, level, mode, executed_bytes) or (not completed and record["status"] != "pass"):
+            if (record["fingerprint"] != self.fingerprint(test, level, mode, executed_bytes)
+                    or (not completed and record["status"] not in {"pass", "superseded"})):
                 return None
             if record["compile_exit"] in {"timeout", "launch-error"} or record["run_exit"] in {"timeout", "launch-error"}:
                 return None

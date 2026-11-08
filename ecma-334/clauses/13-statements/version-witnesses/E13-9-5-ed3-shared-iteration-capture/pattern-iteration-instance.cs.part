@@ -1,0 +1,38 @@
+// ECMA-334 3rd ed 15.8.4, p. 234 (PDF p. 254).
+using System;
+delegate int Readback();
+class Range
+{
+    public Cursor GetEnumerator() { return new Cursor(); }
+}
+struct Cursor
+{
+    int position;
+    public bool MoveNext() { position++; return position <= 3; }
+    public int Current { get { return position * 17; } }
+}
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    static int Main()
+    {
+        Readback[] saved = new Readback[3];
+        int index = 0;
+        foreach (int marker in new Range())
+        {
+            int frozen = marker;
+            saved[index++] = delegate { return frozen; };
+        }
+        for (int i = 0; i < saved.Length; i++)
+        {
+            Check(saved[i]() == (i + 1) * 17, "iteration-capture-construct");
+        }
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

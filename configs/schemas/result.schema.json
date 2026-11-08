@@ -97,7 +97,8 @@
         "diagnostic-fail",
         "compiler-error",
         "infrastructure",
-        "not-applicable"
+        "not-applicable",
+        "superseded"
       ]
     },
     "reason": {
@@ -312,8 +313,7 @@
       "pattern": "^[0-9a-f]{64}$"
     },
     "executed_source_sha256": {
-      "type": "string",
-      "pattern": "^[0-9a-f]{64}$"
+      "type": "string"
     },
     "evidence_sha256": {
       "type": "object",
@@ -358,6 +358,69 @@
     },
     "completed_utc": {
       "type": "string"
+    },
+    "edition_membership": {
+      "type": "object",
+      "properties": {
+        "edition": {"type": "integer", "minimum": 1},
+        "level_source_id": {"type": "string", "minLength": 1},
+        "conflict_table": {
+          "type": "object",
+          "properties": {
+            "path": {"type": "string", "minLength": 1},
+            "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          },
+          "required": ["path", "sha256"],
+          "additionalProperties": false
+        },
+        "superseded": {
+          "anyOf": [
+            {"type": "null"},
+            {"$ref": "edition-conflicts.schema.json#/$defs/supersession"}
+          ]
+        }
+      },
+      "required": ["edition", "level_source_id", "conflict_table", "superseded"],
+      "additionalProperties": false
+    }
+  },
+  "if": {"properties": {"status": {"const": "superseded"}}},
+  "then": {
+    "required": ["edition_membership"],
+    "properties": {
+      "mode": {"const": "superseded"},
+      "reason": {"const": "edition-rule-changed"},
+      "edition_membership": {
+        "properties": {"superseded": {"$ref": "edition-conflicts.schema.json#/$defs/supersession"}}
+      },
+      "executed_source_sha256": {"const": ""},
+      "stages": {"maxItems": 0},
+      "diagnostics": {"maxItems": 0},
+      "diagnostic_codes": {"const": ""},
+      "error_diagnostic_codes": {"const": ""},
+      "uncoded_error_diagnostics": {"const": false},
+      "missing_capabilities": {"maxItems": 0},
+      "failed_checks": {"maxItems": 0},
+      "compile_exit": {"const": ""},
+      "run_exit": {"const": ""},
+      "compile_command_json": {"const": "[]"},
+      "run_command_json": {"const": "[]"},
+      "stdout_json": {"const": "\"\""},
+      "stderr_json": {"const": "\"\""},
+      "failed_cases_json": {"const": "[]"},
+      "compile_seconds": {"const": 0},
+      "run_seconds": {"const": 0},
+      "artifacts": {"maxProperties": 0},
+      "artifact_sha256": {"type": "null"},
+      "departure": {"const": false},
+      "departure_kind": {"const": ""}
+    }
+  },
+  "else": {
+    "properties": {
+      "mode": {"not": {"const": "superseded"}},
+      "edition_membership": {"properties": {"superseded": {"type": "null"}}},
+      "executed_source_sha256": {"pattern": "^[0-9a-f]{64}$"}
     }
   },
   "required": [

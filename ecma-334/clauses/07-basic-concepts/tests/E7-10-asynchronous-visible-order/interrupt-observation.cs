@@ -33,7 +33,7 @@ class Program
     {
         // Thread.Abort is the selected host's asynchronous-interruption API.
         // No relation between the two observed effects or interruption point is required.
-        Thread worker = new Thread(Work); worker.Start();
+        Thread worker = new Thread(new System.Threading.ThreadStart(Work)); worker.Start();
         while (!ready) Thread.Yield();
         worker.Abort(); worker.Join();
         Check(seenFirst == 0 || seenFirst == 1, "asynchronous-observer-accepts-either-whole-first-value");

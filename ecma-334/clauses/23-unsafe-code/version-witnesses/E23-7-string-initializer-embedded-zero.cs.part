@@ -1,0 +1,21 @@
+// A valid array initializer witnesses the fixed-statement construct.
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
+    static unsafe void Main()
+    {
+        char[] text = new char[] { 's', '\0', 't', '!', '\0' };
+        char[] other = new char[] { 'x', '\0', 't', '!', '\0' };
+        fixed (char* pointer = text)
+        {
+            Check(pointer[0] == 's', "string-first-character");
+            Check(pointer[1] == '\0', "string-embedded-zero");
+            Check(pointer[2] == 't', "string-after-embedded-zero");
+            Check(pointer[3] == '!', "string-final-character");
+            Check(*(pointer + 4) == '\0', "string-terminator");
+        }
+        if (failures == 0) Console.WriteLine("OK " + checks);
+    }
+}

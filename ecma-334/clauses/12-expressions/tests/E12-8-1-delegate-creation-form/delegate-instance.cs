@@ -1,5 +1,5 @@
 /*
-Rules: E12-8-1-delegate-creation-form
+Rules: E12-8-1-delegate-creation-form; E12-2-1-method-group-delegate-creation
 Authority: ECMA-334 7th ed 12.8.1
 Version: 7.3
 Expected: run

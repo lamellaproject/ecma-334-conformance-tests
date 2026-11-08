@@ -4,8 +4,8 @@ Authority: ECMA-334 7th ed 12.2.1
 Version: 7.3
 Expected: run
 Stdout: OK 2
-Mutate: Receiver().Signal += Handler;
-Into: other.Signal += Handler;
+Mutate: Receiver().Signal += new System.Action(Handler);
+Into: other.Signal += new System.Action(Handler);
 */
 using System;
 class Box
@@ -27,10 +27,10 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Receiver().Signal += Handler;
-        Receiver().Signal -= Handler;
+        Receiver().Signal += new System.Action(Handler);
+        Receiver().Signal -= new System.Action(Handler);
         Check(chosen.adds == 1 && chosen.removes == 1 && other.adds == 0, "event-instance-accessors");
-        Check(receivers == 2 && chosen.last == (Action)Handler, "event-type-and-evaluation");
+        Check(receivers == 2 && chosen.last == (Action)new System.Action(Handler), "event-type-and-evaluation");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }
 }

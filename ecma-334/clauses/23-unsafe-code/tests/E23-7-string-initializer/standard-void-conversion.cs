@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 23.7
 Version: 7.3
 Expected: run
 Stdout: OK 1
+Version-Witness: version-witnesses/E23-7-string-initializer-standard-void-conversion.cs.part
 Mutate: fixed (void* pointer = text)
 Into: fixed (void* pointer = other)
 */

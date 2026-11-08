@@ -1,0 +1,54 @@
+/*
+Rules: E10-5-5-ed4-effective-base-candidates
+Authority: ECMA-334 4th ed 13.4.4
+Version: ISO-2
+Expected: run
+Stdout: OK 3
+Version-Witness: version-witnesses/E10-5-5-ed4-effective-base-candidates/target-parameter.cs.part
+Mutate: T result = (T)source;
+Into: T result = default(T);
+*/
+// ECMA-334 4th ed 13.4.4, p. 144 (PDF p. 166).
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    class Token
+    {
+        public int Number;
+        public Token(int value) { Number = value; }
+    }
+    class Root
+    {
+        public int Number;
+        public static int Calls;
+        public Root(int value) { Number = value; }
+        public static explicit operator Root(Token value)
+        {
+            Calls++;
+            return new Leaf(value.Number + 6);
+        }
+    }
+    class Leaf : Root { public Leaf(int value) : base(value) { } }
+    static T Convert<T>(Token source) where T : Root
+    {
+        T result = (T)source;
+        return result;
+    }
+    static int Main()
+    {
+        Root control = (Root)new Token(11);
+        Check(control.Number == 17, "concrete-target-control");
+        Root.Calls = 0;
+        Leaf result = Convert<Leaf>(new Token(29));
+        Check(result != null && result.Number == 35, "target-base-payload");
+        Check(Root.Calls == 1, "target-base-invocation");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

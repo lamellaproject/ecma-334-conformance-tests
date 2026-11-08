@@ -17,7 +17,7 @@ class Program
     static void Read() { lock (gate) { observed = payload; payload++; } }
     static void Main()
     {
-        Thread reader = new Thread(Read);
+        Thread reader = new Thread(new System.Threading.ThreadStart(Read));
         lock (gate)
         {
             reader.Start();

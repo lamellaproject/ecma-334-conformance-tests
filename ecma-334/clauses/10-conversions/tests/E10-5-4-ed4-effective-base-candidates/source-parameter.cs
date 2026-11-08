@@ -1,0 +1,54 @@
+/*
+Rules: E10-5-4-ed4-effective-base-candidates
+Authority: ECMA-334 4th ed 13.4.3
+Version: ISO-2
+Expected: run
+Stdout: OK 3
+Version-Witness: version-witnesses/E10-5-4-ed4-effective-base-candidates/source-parameter.cs.part
+Mutate: Product result = source;
+Into: Product result = new Product(0);
+*/
+// ECMA-334 4th ed 13.4.3, p. 144 (PDF p. 166).
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    class Seed
+    {
+        public int Number;
+        public static int Calls;
+        public Seed(int value) { Number = value; }
+        public static implicit operator Product(Seed value)
+        {
+            Calls++;
+            return new Product(value.Number + 2);
+        }
+    }
+    class Branch : Seed { public Branch(int value) : base(value) { } }
+    class Product
+    {
+        public int Number;
+        public Product(int value) { Number = value; }
+    }
+    static Product Convert<T>(T source) where T : Seed
+    {
+        Product result = source;
+        return result;
+    }
+    static int Main()
+    {
+        Product control = new Seed(17);
+        Check(control.Number == 19, "concrete-base-control");
+        Seed.Calls = 0;
+        Product result = Convert(new Branch(23));
+        Check(result.Number == 25, "effective-base-payload");
+        Check(Seed.Calls == 1, "effective-base-invocation");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

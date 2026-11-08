@@ -16,7 +16,7 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Callback action = Signals.Signal;
+        Callback action = new Callback(Signals.Signal);
         Delegate view = action;
         Check(view == action, "predefined-delegate-base");
         if (failures == 0) Console.WriteLine("OK " + checks);

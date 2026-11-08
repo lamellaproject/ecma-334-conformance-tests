@@ -364,6 +364,17 @@ def use_pilot_versions(path, tests):
         raise
 
 
+def positive_refusal(observation, basis):
+    """Only a coded rejection of a positive program establishes refusal."""
+    if basis == "original":
+        status, codes = "original_status", "diagnostic_codes"
+    elif basis in {"repair", "departure-witness"}:
+        status, codes = "witness_status", "witness_diagnostic_codes"
+    else:
+        return False
+    return observation.get(status) == "unexpected-reject" and bool(observation.get(codes))
+
+
 def applicability(test, level):
     """Explicit runs require a current row; header-Version runs never call this function."""
     row, status = version_row(test)
@@ -373,18 +384,29 @@ def applicability(test, level):
         return "not-applicable"
     current = level_tuple(level["level"])
     if current < level_tuple(row["since"]):
-        return "version-gating" if row["below_since"]["behavior"] == "refuses" else "not-applicable"
+        observation = row["observations"].get(level["level"], {})
+        return "version-gating" if positive_refusal(observation, row["basis"]) else "not-applicable"
     if row.get("until") and current > level_tuple(row["until"]):
         return "not-applicable"
     return "test"
 
 
 def gating_source(test):
-    """Invalid originals cannot witness feature gating: use the declared/causal repair."""
+    """Execute the same positive program whose observation establishes refusal."""
+    row, status = version_row(test)
+    if status != "current":
+        raise ValueError("Current bounds required for " + test["test_id"])
     root = standard_root(test["suite_id"])
     raw = inside(root, test["path"]).read_bytes()
-    if test.get("version_witness"):
-        return inside(root / "clauses" / test["path"].split("/")[1], test["version_witness"]).read_bytes()
-    if test["expected"] == "reject" and test["origin"] != "generated":
-        return mutated_source(test, raw)
+    if row["basis"] in {"repair", "departure-witness"}:
+        if test.get("version_witness"):
+            raw = inside(root / "clauses" / test["path"].split("/")[1], test["version_witness"]).read_bytes()
+        elif test["expected"] == "reject" and test["origin"] != "generated":
+            raw = mutated_source(test, raw)
+        else:
+            raise ValueError("Version gating needs a measured positive source: " + test["test_id"])
+    elif row["basis"] != "original":
+        raise ValueError("Version gating needs a measured positive source: " + test["test_id"])
+    if hashlib.sha256(raw).hexdigest() != row["witness_sha256"]:
+        raise ValueError("Version gating differs from the measured positive source: " + test["test_id"])
     return raw

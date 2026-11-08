@@ -26,8 +26,8 @@ class Program
     }
     static void Main()
     {
-        Thread publisher = new Thread(Publish);
-        Thread observer = new Thread(Observe);
+        Thread publisher = new Thread(new System.Threading.ThreadStart(Publish));
+        Thread observer = new Thread(new System.Threading.ThreadStart(Observe));
         publisher.Start();
         observer.Start();
         publisher.Join();

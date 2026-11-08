@@ -15,12 +15,12 @@ class Root
     private delegate int PrivateRead();
     protected delegate int ProtectedRead();
     static int Read() { return 29; }
-    public int PrivateValue() { PrivateRead reader = Read; return reader(); }
+    public int PrivateValue() { PrivateRead reader = new Root.PrivateRead(Read); return reader(); }
 }
 class Branch : Root
 {
     static int Read() { return 31; }
-    public int ProtectedValue() { ProtectedRead reader = Read; return reader(); }
+    public int ProtectedValue() { ProtectedRead reader = new Root.ProtectedRead(Read); return reader(); }
 }
 class Program
 {
@@ -29,8 +29,8 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        PublicRead publicValue = Read;
-        InternalRead internalValue = Read;
+        PublicRead publicValue = new PublicRead(Read);
+        InternalRead internalValue = new InternalRead(Read);
         Check(publicValue() == 37, "public-delegate");
         Check(internalValue() == 37, "internal-delegate");
         Check(new Root().PrivateValue() == 29, "private-delegate");

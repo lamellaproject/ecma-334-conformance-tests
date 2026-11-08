@@ -1,0 +1,20 @@
+// ECMA-334 3rd ed 25.6.4, p. 398 (PDF p. 418).
+using System;
+delegate void Sink<T>(T value);
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    static int Receive<T>(Sink<T> sink) { sink(default(T)); return 1; }
+    static int Main()
+    {
+        int value = Receive<short>(delegate(short amount) {});
+        Check(value == 1, "anonymous-parameter-context");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

@@ -1,0 +1,19 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    struct Plain { }
+    static int Main()
+    {
+        Plain? source = new Plain();
+        IDisposable result = (object)source as IDisposable;
+        Check(result == null, "unrelated-reference-after-object-repair");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

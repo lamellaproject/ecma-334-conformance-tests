@@ -1,0 +1,20 @@
+// ECMA-334 3rd ed 13.1.5, p. 135 (PDF p. 155).
+using System;
+struct Marker { public int Number; public Marker(int number) { Number = number; } }
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    static int Main()
+    {
+        int? seed = 71;
+        IComparable boxed = seed;
+        Check(boxed != (object)null, "nullable-interface-box-construct");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

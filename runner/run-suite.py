@@ -13,9 +13,9 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).resolve().parent / "tools"))
 from suite_common import ROOT, installed_suites, load_manifest, main_guard, sha, standard_root, utc, write_json, write_text, write_tsv
 from suite_config import load_config, resolve_level, select_levels
-from suite_editions import edition_definition, edition_inventory, version_inventory
+from suite_editions import edition_definition, edition_details, edition_inventory, edition_plan, resolve_language_plans
 from suite_engine import CATEGORIES, UNSUPPORTED_REASONS, Context, run_controls
-from suite_versions import applicability, gating_source, use_pilot_versions, version_row
+from suite_versions import gating_source, use_pilot_versions, version_row
 
 
 class SelectionUsageError(ValueError):
@@ -42,8 +42,7 @@ def language_plans(tests, config, selection, explicit):
                 raise ValueError("Earliest measured level is unsupported for " + test["test_id"] + ": " + name)
             levels = [level]
         for level in levels:
-            mode = applicability(test, level) if selection == "explicit" else "test"
-            plans.append((test, level, mode))
+            plans.append((test, level, "test"))
     return plans
 
 
@@ -70,20 +69,24 @@ def prepare_run(inventory, suites, config, args):
         if args.select is None or selection == "declared-per-test":
             raise SelectionUsageError("--pilot-versions requires --select and a measured language or edition selection")
         candidates = use_pilot_versions(args.pilot_versions, candidates)
-    tests = candidates if selection in {"edition", "declared-per-test"} else version_inventory(candidates)
-    if selection != "declared-per-test" and any(test["version_status"] != "current" for test in tests):
-        raise ValueError("Measured runs require current version metadata for every selected test")
+    tests, language_details = candidates, {}
     if selection == "edition":
+        if any(test["version_status"] != "current" for test in tests):
+            raise ValueError("Measured runs require current version metadata for every selected test")
         tests, decisions = edition_inventory(tests, definitions)
-        plans = [(test, definitions[test["suite_id"]]["level"], "test") for test in tests]
+        plans = [edition_plan(test, definitions[test["suite_id"]]) for test in tests]
     else:
-        plans = language_plans(tests, config, selection, explicit)
-    if not tests:
+        plans, language_details = resolve_language_plans(language_plans(tests, config, selection, explicit),
+                                                       inventory, config, selection)
+        selected_ids = {(test["suite_id"], test["test_id"]) for test, _, _ in plans}
+        tests = [test for test in tests if (test["suite_id"], test["test_id"]) in selected_ids]
+    if not plans:
         raise SelectionUsageError("No tests selected for this run mode")
     details = {"candidate_test_ids": [[test["suite_id"], test["test_id"]] for test in candidates],
                "edition": args.edition,
-               "edition_selection": {suite_id: {**{key: value for key, value in definition.items() if key != "table"},
-                                                    **decisions[suite_id]} for suite_id, definition in definitions.items()}}
+               "edition_selection": {suite_id: edition_details(definition, decisions[suite_id])
+                                     for suite_id, definition in definitions.items()},
+               "language_edition_selection": language_details}
     return tests, plans, selection, explicit, details
 
 
@@ -98,10 +101,11 @@ def summarize(records, provenance):
         group["categories"][record["status"]] += 1
         if record["status"] == "unsupported":
             group["unsupported_reasons"][record["unsupported_reason"]] += 1
-        group["departures"] += int(record["departure"])
+        group["departures"] += int(record["departure"] and record["status"] != "superseded")
     for group in groups.values():
         counts = group["categories"]
-        group["applicable"] = group["all"] - counts["unsupported"] - counts["not-applicable"] - counts["infrastructure"]
+        group["applicable"] = (group["all"] - counts["unsupported"] - counts["not-applicable"]
+                               - counts["infrastructure"] - counts["superseded"])
     scope = {}
     for suite_id in sorted({r["suite_id"] for r in records}):
         path = standard_root(suite_id) / "ledger-scope.json"
@@ -112,6 +116,8 @@ def summarize(records, provenance):
             "in_progress_clauses": {suite_id: [clause for clause, status in clauses.items() if status != "available"]
                                     for suite_id, clauses in scope.items()},
             "status_counts": {category: sum(g["categories"][category] for g in groups.values()) for category in CATEGORIES},
+            "superseded_tests": [{"suite_id": r["suite_id"], "test_id": r["test_id"], "level": r["level"],
+                                  **r["edition_membership"]} for r in records if r["status"] == "superseded"],
             "unsupported_reasons": {reason: sum(g["unsupported_reasons"][reason] for g in groups.values()) for reason in UNSUPPORTED_REASONS},
             "infrastructure_present": any(r["status"] == "infrastructure" for r in records)}
 
@@ -133,6 +139,15 @@ def summary_markdown(summary):
     for suite_id, clauses in summary["in_progress_clauses"].items():
         if clauses:
             lines += ["", suite_id + " clauses in progress: " + ", ".join(clauses) + "."]
+    for test in summary["superseded_tests"]:
+        lines += ["", "Superseded: `" + test["suite_id"] + "/" + test["test_id"] + "` at " + test["level"],
+                  "", "Table: `" + test["conflict_table"]["path"] + "` (`" + test["conflict_table"]["sha256"] + "`)."]
+        for side, citations in test["superseded"].items():
+            for citation in citations:
+                lines += ["", side + ": " + citation["source_id"] + " " + citation["clause"]
+                          + ", printed pp. " + ", ".join(map(str, citation["printed_pages"]))
+                          + " (PDF pp. " + ", ".join(map(str, citation["pdf_pages"])) + ")", "",
+                          *["> " + line for line in citation["quote"].splitlines()]]
     lines += ["", "Provenance: see run.json for the command, suite/compiler commits and pinned target assets."]
     return "\n".join(lines) + "\n"
 
@@ -187,12 +202,16 @@ def main():
     if args.edition is not None:
         provenance["edition_tables"] = {suite_id: detail["conflict_table"]
                                         for suite_id, detail in selection_details["edition_selection"].items()}
+    if selection_details["language_edition_selection"]:
+        provenance["language_edition_tables"] = {
+            suite_id: {level: detail["conflict_table"] for level, detail in levels.items()}
+            for suite_id, levels in selection_details["language_edition_selection"].items()}
 
     def publish():
         ordered = [records[result_key(*plan)] for plan in plans if result_key(*plan) in records]
         if ordered:
             flat = [{k: json.dumps(v, sort_keys=True) if isinstance(v, (dict, list)) else v for k, v in row.items()} for row in ordered]
-            write_tsv(context.output / "results.tsv", flat, list(flat[0]))
+            write_tsv(context.output / "results.tsv", flat, list(dict.fromkeys(key for row in flat for key in row)))
         else:
             write_tsv(context.output / "results.tsv", [], ["suite_id", "test_id", "level", "mode", "status"])
         counts = dict(sorted(Counter(r["status"] for r in ordered).items()))
@@ -201,6 +220,9 @@ def main():
             "selected_test_ids": [[r["suite_id"], r["test_id"]] for r in tests], "selected_tests": len(tests),
             "scheduled_tests": len(plans), "tests": len(ordered), "passes": counts.get("pass", 0),
             "unsupported": counts.get("unsupported", 0), "complete": controls is not None and controls["valid"] and len(ordered) == len(plans),
+            "superseded": counts.get("superseded", 0),
+            "superseded_tests": [{"suite_id": r["suite_id"], "test_id": r["test_id"], "level": r["level"],
+                                  **r["edition_membership"]} for r in ordered if r["status"] == "superseded"],
             "void": controls is not None and not controls["valid"], "controls": controls,
             "new_executions": submitted, "resume_verified_results_sha256": reused, "status_counts": counts,
             "version_status_counts": dict(sorted(Counter(r["version_status"] for r in tests).items())),
@@ -249,6 +271,9 @@ def main():
                 records[result_key(*plan)] = previous
                 reused["|".join(result_key(*plan))] = sha(previous["result_path"])
                 continue
+            if mode == "superseded":
+                records[result_key(*plan)] = context.superseded(test, level)
+                continue
             if (args.max_new is not None and submitted >= args.max_new) or (args.stop_file and args.stop_file.exists()):
                 continue
             pending.append(plan)
@@ -259,7 +284,7 @@ def main():
             flush(pool)
     metadata = publish()
     print(json.dumps({k: metadata[k] for k in ["tests", "passes", "unsupported", "complete", "new_executions", "departures", "status_counts", "elapsed_seconds"]}), flush=True)
-    return 2 if not metadata["complete"] else 1 if any(r["status"] not in {"pass", "unsupported", "not-applicable"} for r in records.values()) else 0
+    return 2 if not metadata["complete"] else 1 if any(r["status"] not in {"pass", "unsupported", "not-applicable", "superseded"} for r in records.values()) else 0
 
 
 if __name__ == "__main__":

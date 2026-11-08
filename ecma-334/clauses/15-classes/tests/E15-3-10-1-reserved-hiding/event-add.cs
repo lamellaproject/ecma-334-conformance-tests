@@ -26,7 +26,7 @@ class Program
     static void Main()
     {
         Leaf leaf = new Leaf();
-        leaf.add_Changed(OnSignal);
+        leaf.add_Changed(new Root.Signal(OnSignal));
         Check(leaf.Adds == 1, "new-method-hides-inherited-event-add-signature");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

@@ -1,0 +1,23 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Read(bool skip)
+    {
+        ;
+        int local = 41;
+    Done:
+        return local;
+    }
+    static int Main()
+    {
+        Check(Read(true) == 41 && Read(false) == 41, "initializer-must-execute");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

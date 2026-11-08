@@ -1,0 +1,19 @@
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int source = 17;
+    static int Main()
+    {
+        int observed = 0;
+        for (int copied = Program.source, source = 2; source < 3; source++) observed = copied;
+        Check(observed == 17, "qualified-field-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

@@ -15,8 +15,8 @@ standard's `source-registry.json` pins (see
 
 - Never copy or adapt another compiler's tests, another suite's tests, or the
   standard's examples.
-- Use short, unchanged quotations to identify predicates. A predicate is one
-  testable rule taken from the source's text; see [Rule ledgers](#rule-ledgers).
+- Use quotation spans of at most 30 words to identify predicates. A predicate is
+  one testable rule taken from the source's text; see [Rule ledgers](#rule-ledgers).
 - Comments cite subclauses and printed pages, with PDF pages where useful, or
   a committee markdown file at its pinned commit. One such file is
   `proposals/csharp-9.0/native-integers.md` in the registered `csharplang`
@@ -25,14 +25,58 @@ standard's `source-registry.json` pins (see
   primary authority.
 - Do not include full standards or text extracts.
 
-When sources disagree or are unclear:
+Each quotation is a continuous span of the source's words and punctuation,
+without printed margin numbers or extraction artifacts. Use separate spans
+when the deciding text does not fit one short quotation. The source check
+compares the quotation with the intersection of the named clause and cited
+pages of the pinned extraction, including the clause's descendants. Printed
+and PDF page pairs must match the edition's page offset. Conflict authorities
+without quotations must also name a real clause on their cited pages. The check
+collapses whitespace and ignores whitespace next to commas, periods, square
+brackets, parentheses, angle brackets and question marks. All other characters
+and word boundaries must match; the comparison does not repair words, remove
+margin numbers or restore mathematical notation.
 
-- Where a standard and csc disagree, the standard wins, and the disagreement
-  is a recorded departure (see [Departures](#departures)).
-- Where literal wording is evidently mistaken, test its intended meaning.
-  Explain the interpretation in a source comment with registered evidence.
-- For later features not yet covered by an ECMA edition, the registered pinned
-  csc is the authority, and feature specifications supply the rule text.
+Each ISO language level follows one registered primary edition:
+
+| Language level | Governing edition | Claim run |
+| --- | --- | --- |
+| ISO-1 | ECMA-334 2nd edition, ISO/IEC 23270:2003 | `--edition 2` |
+| ISO-2 | ECMA-334 4th edition, ISO/IEC 23270:2006 | `--edition 4` |
+
+The 1st and 3rd editions remain sources for their own tests. `--edition 1` and
+`--edition 3` run those editions at those levels, reporting `superseded` where
+the level's governing edition changed a rule.
+Versions 3 through 7.3 use the latest registered standard edition's tests;
+later features use the registered compiler authority and feature text.
+
+An open reading of the standard is settled by these rules, in order; the
+first that decides, decides.
+
+1. The test's own edition decides when its normative text does:
+   - (1a) grammar and prose are read together;
+   - (1b) a specific rule wins over a general summary or overview;
+   - (1c) normative text wins over informative notes, examples and annexes.
+2. An evident misprint is tested at its intended meaning, and the erratum is recorded.
+3. Where the test's edition is silent, the reading the later editions state is followed (for a 3rd-edition test, the
+   7th edition's), unless the older edition's own text rules it out.
+4. Unspecified or implementation-defined behavior accepts every permitted result.
+5. csc never decides. Where it disagrees, that is a recorded departure.
+6. If nothing decides, the committee's current draft (`dotnet/csharpstandard`) included, the test accepts both outcomes,
+   and the question is reported to the C# standard's committee.
+
+These rules settle readings of ECMA-334. For later features not yet covered
+by an ECMA edition, the registered pinned csc is the authority, and feature
+specifications supply the rule text.
+
+A test retains its own source authority. At an ISO level, an older edition's
+test of a requirement changed by the governing edition is `superseded`.
+A cited `leave-out` row in the governing edition's conflict table records
+both requirements, with exact quotations and printed/PDF pages. The result
+is reported separately and counts as neither a pass nor a failure. It has
+no execution or version-gating check. Where the governing edition keeps the
+requirement, the older test can run and count under the
+[edition selection rules](ARCHITECTURE.md#edition-selection).
 
 ## Names and ledger ownership
 
@@ -43,12 +87,16 @@ When sources disagree or are unclear:
 | Standard directory | `ecma-<number>` | `ecma-334` |
 | Clause directory | `<NN>-<slug>` | `10-conversions` |
 | Rule ID | `E<clause>[-<subclause>...]-<predicate-slug>` | `E10-1-representation` |
+| Edition-specific rule ID | `E<clause>[-<subclause>...]-ed<edition>-<predicate-slug>` | `E6-3-2-ed2-nel-line-terminator` |
 | Later-feature rule ID | `P<version>-<predicate-slug>` | `P09-native-sbyte-nint` |
 | Later-feature rule ID, preview | `Ppreview-<predicate-slug>` | `Ppreview-unsafe-preview-delegate-context` |
 | Test file | `clauses/<clause>/tests/<primary-rule-id>/<file-stem>.cs` | `clauses/10-conversions/tests/E10-1-representation/implicit-long.cs` |
 | Test ID | `<clause>--<primary-rule-id>--<file-stem>` | `10-conversions--E10-1-representation--implicit-long` |
 
 Slugs are lowercase words separated by hyphens.
+
+Standard directories use neutral names in programs, comments and metadata.
+Implementation names are excluded, including when embedded in identifiers.
 
 Rules:
 
@@ -78,6 +126,7 @@ that record the clause's rules and how they are covered.
 | `coverage.tsv` | A map from each inventoried text block to rules, or to an explained disposition. |
 | `untested.tsv` | The reason for each rule that has no test. |
 | `retired-rules.tsv` | Optional. Retired rules: each row has the columns of `rules.tsv` plus a `retirement_reason`. |
+| `superseded-observations.tsv` | Optional. Raw verdicts against older expectations whose governing ISO requirements are satisfied; see [Departures](#departures). |
 | `version-witnesses.tsv` | Optional. It pairs later-feature rules with an existing test that serves as a positive witness, and records the language version before the rule's version (`previous_version`), a `mode` (`feature-unavailable`, `predecessor-rejection` or `accepted-predecessor`) and a `reason` that cites the source. No tool in the suite reads it. |
 
 For example, the rule `E10-1-representation` in
@@ -152,13 +201,13 @@ The header keys, in their required order:
 | `Rules` | Yes | Existing IDs separated by `; `, primary first. |
 | `Authority` | Yes | Registered standard edition and subclause, or the registered csc feature authority. See [Authority and Version](#authority-and-version). |
 | `Version` | Yes | Declared language level and anchor of the measured interval. It does not claim the feature's earliest level. |
-| `Expected` | Yes | `run` or `reject`. |
-| `Stdout` | For `run` | `OK <count>`, or a JSON string of exact uppercase marker lines followed by `OK <count>`; execution must append exactly one LF. Omit it for `reject`. |
+| `Expected` | Yes | `run`, `reject`, or `run-or-reject` for an unresolved reading under source rule 6. |
+| `Stdout` | For `run` and `run-or-reject` | `OK <count>`, or a JSON string of exact uppercase marker lines followed by `OK <count>`; execution must append exactly one LF. Omit it for `reject`. |
 | `Diagnostic` | No | Only on `run`: `warning` requires a program warning; `none` forbids one. |
 | `Requirements` | No | Neutral names separated by `; `: `unsafe-disabled` or `updated-memory-safety`. |
 | `Fixture` | No | Compact JSON compilation graph, arguments and target capabilities. See [Fixtures](#fixtures). |
 | `Source-Diagnostic` | No | Compact JSON array of required source locations and literal directive payloads. See [Source diagnostics](#source-diagnostics). |
-| `Version-Witness` | For departures | Clause-relative positive `.cs.part` construct for a confirmed departure. See [Departures](#departures). |
+| `Version-Witness` | For observed disagreements and `run-or-reject` | Clause-relative positive `.cs.part` construct for a departure, superseded observation or unresolved compilation reading. See [Departures](#departures). |
 | `Generated` | For generated tests | The generator's path, relative to the standard's directory, such as `clauses/06-lexical-structure/generators/line-locations.py`. It replaces the mutation keys. |
 | `Mutate` | For handwritten tests | The handwritten test's exact body text to replace once. See [Causal mutations](#causal-mutations). |
 | `Into` | For handwritten tests | Replacement text, distinct from `Mutate`. It may be empty. |
@@ -172,6 +221,16 @@ Notes on the table:
 - `Csc` codes are information only; [Results](RESULTS.md#result-rows) explains
   how they are used.
 - Unknown keys, invalid order and ambiguous mutation replacements are errors.
+
+`run-or-reject` accepts a valid rejection of the program stage or a successful
+run with the declared counted output. A fixture prerequisite must compile;
+an unsupported capability, compiler failure or runtime failure does not pass.
+The ledger states the unresolved reading. A positive `Version-Witness`
+establishes availability of the construct independently of permitted rejection;
+measurement uses the `repair` basis. Explicit version-gating still requires
+rejection of that positive witness. The mutation produces a valid program
+that fails the counted checks when it runs. `Diagnostic`, `Csc` and
+`Source-Diagnostic` do not apply to `run-or-reject`.
 
 Marker lines make intermediate progress observable when a host may terminate
 before the final counted result. For example, `Stdout: "BASE\nOK 2"` requires
@@ -415,11 +474,27 @@ in the clause's `departures.tsv`. Each record holds:
 
 Explain the disagreement in neutral words.
 
+- A record at an ISO level quotes that level's governing edition. A test
+  spanning different governing editions uses separate records with disjoint
+  level lists. These records share the source, compiler, target, status and
+  raw observation; each has its own clause, pages and short quotation. The
+  loader combines their levels for annotations and positive witnesses, and
+  the ledger checks every quotation against its cited source.
 - Confirmed records mark observed failures; pending ones prevent publishing.
 - The `Version-Witness` file is a positive construct witness: it uses the
   construct in a valid way. It permits version measurement without claiming
   that the departure passed.
 - Later conformity can end the mark with `conforms_since`.
+
+`superseded-observations.tsv` uses the same columns with status `conforming`.
+It records a raw verdict against the test's older-edition expectation. At
+each listed level, the governing ISO edition's changed requirement applies
+and the compiler or hosted runtime conforms to it. The older quotation stays
+with the observation; the governing table supplies both editions' citations.
+These observations support positive construct witnesses for measurement and
+cannot annotate a failure as a departure. The ledger check rejects a
+departure at a superseded level, and an observation without a cited
+superseded table row at every listed level.
 
 For example, `10-conversions--E10-8-null-instance--null-receiver` is a
 confirmed `compiler` departure. The standard requires a
@@ -441,8 +516,15 @@ generated version data (see [Version data](ARCHITECTURE.md#version-data)).
   `net481` for their original bounds.
 - The predecessor, the level just below `Since`, records either a refusal or
   a meaning change.
-- A refusal below `Since` requires rejection of the positive construct in an
-  explicit-level run.
+- A coded refusal of the measured positive source at a requested level below
+  `Since` requires rejection of that source in an explicit-level run, including
+  ISO-1 and ISO-2 for tests without a governing table disposition. The predecessor
+  does not decide other levels. A generated reject without a positive witness
+  produces no gating check. The edition's own claims and cited replacement admissions
+  retain their ordinary expectations. Superseded, replaced and left-out tests
+  produce no version-gating check. An ISO conformance claim names both the
+  edition claim run, which checks the edition's rules, and the explicit-level
+  run, which also checks refusal of newer constructs.
 - Keep the measurement method and independent sample evidence with the
   generated metadata.
 
@@ -453,7 +535,7 @@ The basis names the program whose outcome at each level decides the bounds:
 | Ordinary run test | `original` |
 | Reject test | `repair` |
 | Generated reject test without a repair | `feature-free-rejection` |
-| Departure | `departure-witness` |
+| Departure or superseded observation | `departure-witness` |
 
 With the `repair` basis, the test passes at a level only when the original is
 also rejected there.

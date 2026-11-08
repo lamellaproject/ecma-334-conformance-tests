@@ -1,0 +1,31 @@
+#define ARGSET
+#define DOLOG
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    [System.Diagnostics.Conditional("ARGSET")]
+    static void Omitted(int value) { }
+    [System.Diagnostics.Conditional("DOLOG")]
+    static void Included(int value) { }
+    // This body checks assignment at compilation; it is not invoked.
+    static int AssignmentState()
+    {
+        int local;
+        Omitted(local = 73);
+        return local;
+    }
+    static int Main()
+    {
+        int control;
+        Included(control = 73);
+        Check(control == 73, "defined-symbol-control");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

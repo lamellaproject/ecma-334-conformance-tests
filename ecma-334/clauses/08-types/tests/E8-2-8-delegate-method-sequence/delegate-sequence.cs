@@ -4,8 +4,8 @@ Authority: ECMA-334 7th ed 8.2.8
 Version: 7.3
 Expected: run
 Stdout: OK 1
-Mutate: Callback pair = left.Touch;
-Into: Callback pair = right.Touch;
+Mutate: Callback pair = new Callback(left.Touch);
+Into: Callback pair = new Callback(right.Touch);
 */
 using System;
 delegate void Callback();
@@ -17,7 +17,7 @@ class Program
     static void Main()
     {
         Receiver left = new Receiver(); Receiver right = new Receiver();
-        Callback pair = left.Touch; pair += right.Touch;
+        Callback pair = new Callback(left.Touch); pair += new Callback(right.Touch);
         pair();
         Check(left.Count == 1 && right.Count == 1, "delegate-methods-and-receivers");
         if (failures == 0) Console.WriteLine("OK " + checks);

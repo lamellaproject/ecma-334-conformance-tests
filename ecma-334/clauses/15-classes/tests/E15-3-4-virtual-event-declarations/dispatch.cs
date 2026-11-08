@@ -26,8 +26,8 @@ class Program
     static void Main()
     {
         Parent value = new Child();
-        value.Signal += Notify;
-        value.Signal -= Notify;
+        value.Signal += new Notice(Notify);
+        value.Signal -= new Notice(Notify);
         Check(value.Adds == 2, "virtual-event-add-accessor-dispatch");
         Check(value.Removes == 2, "virtual-event-remove-accessor-dispatch");
         if (failures == 0) Console.WriteLine("OK " + checks);

@@ -1,0 +1,22 @@
+// ECMA-334 3rd ed 9.5.1, p. 78 (PDF p. 98).
+#define CINDER
+using System;
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string id)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + id); }
+    }
+    static int Main()
+    {
+        #if CINDER
+        Check(true, "verbatim-defined");
+        #else
+        Check(false, "verbatim-defined");
+        #endif
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}
