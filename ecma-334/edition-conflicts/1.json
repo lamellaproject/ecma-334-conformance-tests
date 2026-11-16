@@ -2368,6 +2368,481 @@
       "action": "leave-out",
       "test_id": "15-classes--E15-2-2-4-1-static-private-protected-member--reject",
       "authority": "ECMA-334 1st ed 10.5.1, p. 74 (PDF p. 88), The private protected combination is unsupported setup. Static-class protection remains tested with the protected and protected internal members."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-6-grammar-operator-or-punctuator-25--coalescing-token",
+      "authority": "ECMA-334 1st ed 9.4.5, p. 62 (PDF p. 76)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-8-1-static-class-name-context-restriction--variable-type",
+      "authority": "ECMA-334 1st ed 17.1.1, p. 211 (PDF p. 225)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "09-variables--E9-4-4-29-constant-null-exit--constant-null",
+      "authority": "ECMA-334 1st ed 9.4.5, p. 62 (PDF p. 76)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "09-variables--E9-4-4-29-ed4-coalescing-first-exit--constant-null-right-assignment",
+      "authority": "ECMA-334 1st ed 9.4.5, p. 62 (PDF p. 76)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "09-variables--E9-4-4-29-first-entry--unassigned-coalescing-operand",
+      "authority": "ECMA-334 1st ed 9.4.5, p. 62 (PDF p. 76)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "09-variables--E9-4-4-29-other-coalescing-exit--nonconstant-null",
+      "authority": "ECMA-334 1st ed 9.4.5, p. 62 (PDF p. 76)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "09-variables--E9-4-4-29-second-entry--first-assigns-second",
+      "authority": "ECMA-334 1st ed 9.4.5, p. 62 (PDF p. 76)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-8-ed3-fresh-method-group-conversion--repeated-static-conversion",
+      "authority": "ECMA-334 1st ed 14.1, p. 123 (PDF p. 137)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-15-ed3-left-type-required--null-literal-left",
+      "authority": "ECMA-334 1st ed 9.4.5, p. 62 (PDF p. 76)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-15-to-right-type--untyped-null-left",
+      "authority": "ECMA-334 1st ed 9.4.5, p. 62 (PDF p. 76)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-2-1-method-group-delegate-creation--create-delegate",
+      "authority": "ECMA-334 1st ed 14.1, p. 123 (PDF p. 137)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-24-conditional-grammar-classification--coalescing-condition",
+      "authority": "ECMA-334 1st ed 9.4.5, p. 62 (PDF p. 76)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "13-statements--E13-15-yield-body-required--constructor-break",
+      "authority": "ECMA-334 1st ed 15.1, p. 179 (PDF p. 193)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "13-statements--E13-15-yield-body-required--constructor-return",
+      "authority": "ECMA-334 1st ed 15.1, p. 179 (PDF p. 193)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-14-1-event-not-iterator--add",
+      "authority": "ECMA-334 1st ed 15.1, p. 179 (PDF p. 193)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-14-1-event-not-iterator--remove",
+      "authority": "ECMA-334 1st ed 15.1, p. 179 (PDF p. 193)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-14-1-finalizer-not-iterator--body",
+      "authority": "ECMA-334 1st ed 15.1, p. 179 (PDF p. 193)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-14-1-instance-constructor-not-iterator--body",
+      "authority": "ECMA-334 1st ed 15.1, p. 179 (PDF p. 193)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-14-1-static-constructor-not-iterator--body",
+      "authority": "ECMA-334 1st ed 15.1, p. 179 (PDF p. 193)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-2-2-4-1-static-derivation--reject",
+      "authority": "ECMA-334 1st ed 17.1.1, p. 211 (PDF p. 225)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-2-2-4-1-static-instantiation--reject",
+      "authority": "ECMA-334 1st ed 17.1.1, p. 211 (PDF p. 225)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-2-2-4-1-static-type-use--reject",
+      "authority": "ECMA-334 1st ed 17.1.1, p. 211 (PDF p. 225)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "20-delegates--E20-4-void--no-value-compatible",
+      "authority": "ECMA-334 1st ed 14.1, p. 123 (PDF p. 137)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-10-3-ed2-checked-minimum-arithmetic--checked-minimum-division-family",
+      "authority": "ECMA-334 1st ed 14.7.2, p. 158 (PDF p. 172)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-10-3-ed2-unchecked-minimum-choice--unchecked-minimum-division-set",
+      "authority": "ECMA-334 1st ed 14.7.2, p. 158 (PDF p. 172)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "09-variables--E9-4-4-29-ed3-coalescing-constant-entry--constant-null-right-assignment",
+      "authority": "ECMA-334 1st ed 9.4.5, p. 62 (PDF p. 76)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-3-ed5-long-escaped-initial-underscore--parameter-name",
+      "authority": "ECMA-334 1st ed 9.4.2, p. 55 (PDF p. 69)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-5-3-long-minimum-type--hexadecimal-immediate-minus",
+      "authority": "ECMA-334 1st ed 9.4.4.2, p. 58 (PDF p. 72)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-3-4-grammar-whitespace-1--zero-width-space-not-separator",
+      "authority": "ECMA-334 1st ed 9.3.3, p. 54 (PDF p. 68)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-3-identity-remove-format--zero-width-space-identity",
+      "authority": "ECMA-334 1st ed 9.4.2, p. 55 (PDF p. 69)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-18-value-no-result--untyped-null-reference-return",
+      "authority": "ECMA-334 1st ed 14.12, p. 173 (PDF p. 187)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-2-5-ed5-unlisted-generic-following-token--before-relational",
+      "authority": "ECMA-334 1st ed 14.5.2, p. 138 (PDF p. 152)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-2-5-ed5-unlisted-generic-following-token--before-query-direction",
+      "authority": "ECMA-334 1st ed 14.5.2, p. 138 (PDF p. 152)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-1-ed5-entry-without-async--async-void",
+      "authority": "ECMA-334 1st ed 17.5, p. 229 (PDF p. 243)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-1-entry-external-selection--unselected-overloads",
+      "authority": "ECMA-334 1st ed 10.1, p. 69 (PDF p. 83)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "07-basic-concepts--E7-5-3-type-text-definition--own-attribute-type",
+      "authority": "ECMA-334 1st ed 10.5.2, p. 74 (PDF p. 88), A type's body-brace accessibility domain does not extend to its own attribute section."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "08-types--P09-native-contextual-name--iot-native-alias-lookup",
+      "authority": "ECMA-334 1st ed 11.1.3, p. 91 (PDF p. 105), Native integer contextual keywords are absent. The ordinary alias declarations are legal, but do not witness precedence over a native integer keyword."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "08-types--E8-3-11-tuple-minimum-arity--single-element-tuple",
+      "authority": "ECMA-334 1st ed 11.1, p. 89 (PDF p. 103), Tuple type syntax is absent. A rejection of parenthesized type syntax does not witness a tuple arity or tuple object-creation rule."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "08-types--E8-3-11-tuple-new-syntax-forbidden--new-tuple-type",
+      "authority": "ECMA-334 1st ed 11.1, p. 89 (PDF p. 103), Tuple type syntax is absent. A rejection of parenthesized type syntax does not witness a tuple arity or tuple object-creation rule."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-7-1-ed5-tree-block-forbidden--block-body",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda expressions and their expression-tree conversions are absent from this grammar. A source error does not witness a lambda-body restriction."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-7-1-ed5-tree-assignment-forbidden--simple-assignment",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda expressions and their expression-tree conversions are absent from this grammar. A source error does not witness a lambda-body restriction."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-7-1-ed5-tree-assignment-forbidden--compound-assignment",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda expressions and their expression-tree conversions are absent from this grammar. A source error does not witness a lambda-body restriction."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-7-1-ed5-tree-dynamic-forbidden--dynamic-operation",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda expressions and their expression-tree conversions are absent from this grammar. A source error does not witness a lambda-body restriction."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "10-conversions--E10-7-1-ed5-tree-async-forbidden--async-without-await",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), Lambda expressions and their expression-tree conversions are absent from this grammar. A source error does not witness an async-lambda restriction."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-6-2-1-ed5-named-arguments-trail--in-position-name",
+      "authority": "ECMA-334 1st ed 14.4.1, p. 132 (PDF p. 146), The argument grammar has no named argument."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-8-4-ed5-invariant-local-space--lambda-declarator",
+      "authority": "ECMA-334 1st ed 14.5, p. 138 (PDF p. 152), The primary-expression grammar has no lambda expression."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-8-4-syntax--generic-name-and-local",
+      "authority": "ECMA-334 1st ed 14.5.2, p. 138 (PDF p. 152), Generic simple names are absent."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-8-5-evaluation--method-group-results",
+      "authority": "ECMA-334 1st ed 14.5.3, p. 140 (PDF p. 154)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-8-16-4-ed5-instance-add-required--extension-only",
+      "authority": "ECMA-334 1st ed 14.5.10.1, p. 147 (PDF p. 161), Object creation has no object or collection initializer."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-8-16-3-initializable-members--fields-and-properties",
+      "authority": "ECMA-334 1st ed 14.5.10.1, p. 147 (PDF p. 161), Object creation has no object or collection initializer."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-9-8-1-ed5-no-handler-await--catch-block",
+      "authority": "ECMA-334 1st ed 14.6, p. 154 (PDF p. 168), The unary-expression grammar has no await expression."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-9-8-1-ed5-no-handler-await--finally-block",
+      "authority": "ECMA-334 1st ed 14.6, p. 154 (PDF p. 168), The unary-expression grammar has no await expression."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-9-8-2-pattern-getawaiter--extension-getawaiter",
+      "authority": "ECMA-334 1st ed 14.6, p. 154 (PDF p. 168), The unary-expression grammar has no await expression."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-12-12-ed5-method-group-false--unconverted-method",
+      "authority": "ECMA-334 1st ed 14.1, p. 123 (PDF p. 137)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-23-predefined-binary--null-object-constants",
+      "authority": "ECMA-334 1st ed 14.15, p. 177 (PDF p. 191)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-23-casts--common-forms",
+      "authority": "ECMA-334 1st ed 14.15, p. 176 (PDF p. 190)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-9-ed5-stackalloc-initializer-expression--implicit-local-initializer",
+      "authority": "ECMA-334 1st ed 15.5.1, p. 183 (PDF p. 197), local declarations require an explicit type"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "16-structs--E16-4-9-ed5-auto-property-unassigned-this--setter-before-assignment",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258), nonabstract nonextern property accessors require blocks"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-2-4-2-dependency-enclosing--intervening-structs",
+      "authority": "ECMA-334 1st ed 17.1.2.1, p. 213 (PDF p. 227), The dependency edge uses an immediately enclosing class; an intervening struct prevents that edge."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-7-4-ed5-auto-property-both-accessors--getter-only",
+      "authority": "ECMA-334 1st ed 17.6.2, p. 244 (PDF p. 258)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-8-2-field-like-add-thread-safe--struct-internal-updates",
+      "authority": "ECMA-334 1st ed 14.5.4, p. 141 (PDF p. 155)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-8-2-field-like-remove-thread-safe--struct-internal-updates",
+      "authority": "ECMA-334 1st ed 14.5.4, p. 141 (PDF p. 155)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-9-1-indexer-method-modifier-combinations--abstract-sealed",
+      "authority": "ECMA-334 1st ed 17.8, p. 254 (PDF p. 268), Indexers follow the method modifier rules of 17.5, p. 230; abstract sealed override is permitted."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "15-classes--E15-15-1-ed5-standard-task-return-types--custom-return",
+      "authority": "ECMA-334 1st ed 17.5, p. 229 (PDF p. 243), The method modifier list has no async modifier; async return-type predicates are absent."
+    },
+    {
+      "test_id": "13-statements--E13-8-3-governing-listed-type--constant-listed-types",
+      "action": "leave-out",
+      "authority": "ECMA-334 1st ed 15.7.2, p. 186 (PDF p. 200), the closed switch governing-type list contains neither bool nor nullable types; these companions require those types."
+    },
+    {
+      "test_id": "13-statements--E13-8-3-governing-listed-type--constant-nullable-types",
+      "action": "leave-out",
+      "authority": "ECMA-334 1st ed 15.7.2, p. 186 (PDF p. 200), the closed switch governing-type list contains neither bool nor nullable types; these companions require those types."
+    },
+    {
+      "test_id": "13-statements--E13-8-3-nullable-default-reachable--constant-label-null-path",
+      "action": "leave-out",
+      "authority": "ECMA-334 1st ed 15.7.2, p. 186 (PDF p. 200), the closed switch governing-type list contains neither bool nor nullable types; these companions require those types."
+    },
+    {
+      "test_id": "13-statements--E13-8-3-nullable-switch-end-reachable--constant-label-null-path",
+      "action": "leave-out",
+      "authority": "ECMA-334 1st ed 15.7.2, p. 186 (PDF p. 200), the closed switch governing-type list contains neither bool nor nullable types; these companions require those types."
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-7-buffer-member-initializer--member-buffer-collection",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "23-unsafe-code--E23-8-3-ed5-moveable-buffer-initializer-required--moveable-element",
+      "authority": "ECMA-334 1st ed 17.4, p. 223 (PDF p. 237), fixed-size buffer declarations are outside the field grammar"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-2--alias-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-3--ascending-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-4--async-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-5--await-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-6--by-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-7--descending-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-8--dynamic-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-9--equals-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-10--from-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-12--global-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-13--group-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-14--into-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-15--join-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-16--let-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-17--nameof-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-18--on-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-19--orderby-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-20--partial-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-22--select-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-24--unmanaged-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-26--var-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-27--when-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-28--where-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "06-lexical-structure--E6-4-4-grammar-contextual-keyword-29--yield-identifier-spellings",
+      "authority": "ECMA-334 1st ed 9.4.3, p. 57 (PDF p. 71)"
+    },
+    {
+      "action": "leave-out",
+      "test_id": "12-expressions--E12-6-4-5-ed5-no-group-return-preference--return-compatibility-tie",
+      "authority": "ECMA-334 1st ed 14.1, p. 123 (PDF p. 137)"
     }
   ]
 }

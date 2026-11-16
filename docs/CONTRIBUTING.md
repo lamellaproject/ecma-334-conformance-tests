@@ -37,49 +37,68 @@ depends on that member.
 
 - A new clause gets its own directory and an explicit scope inventory.
 - A new edition gets a primary source entry and rules that distinguish its
-  text where necessary. The registry's `iso_editions` names one primary
-  edition at each ISO level: the 2nd edition for ISO-1 and the 4th for ISO-2.
-  Add `edition-conflicts/<N>.json` beneath the standard
-  directory, following the [edition table contract](ARCHITECTURE.md#edition-selection).
+  text where necessary. The source registry names one matching primary
+  edition at each governed level: the 2nd edition for ISO-1, the 4th for
+  ISO-2 and the 5th for level 5. Registering the 5th edition requires its
+  governing-level entry. Add the edition's conflict table to
+  `ecma-334/edition-conflicts/`, using the edition number as the file name
+  with a `.json` extension, following the
+  [edition table contract](ARCHITECTURE.md#edition-selection).
+
   Review conflicts with every other registered edition. Pair each replaced
   test with a replacement from the table edition or another older
   registered edition. A cited `replace` row admits an older replacement
   outside its current measured interval when the cited requirement requires
   its expected result at the table edition's level. The replacement runs
-  as an ordinary test at that level with unchanged measured bounds. A
-  replacement must be selected, must not
+  as an ordinary test unless governing supersession makes the admitted claim
+  static. Its measured bounds stay unchanged.
+
+  Within the edition's own table, a replacement must be selected, must not
   itself be excluded, and must form no cycle. Use `leave-out` when no
   replacement is justified. An ordinary exclusion can also name a test with
   the registry's pinned compiler authority. Audit the predicate and all setup
-  syntax against the cited edition; compiler acceptance alone supplies no ISO
-  authority. Preserve each required primary predicate in a compatible test.
+  syntax against the cited edition; compiler acceptance alone supplies no
+  standard authority. Preserve each required primary predicate in a compatible test.
+
   Replacement targets and superseded claims retain their registered
-  standard-edition authority requirements. Every row cites the table edition's clause
-  and printed/PDF pages, including cross-edition pairs. Include an empty
+  standard-edition authority requirements. Every row cites the table edition's
+  clause and printed/PDF pages, including cross-edition pairs. Include an empty
   table if there are no conflicts, and run `check-editions.py`.
+
   Record a contradictory pinned-compiler result as a confirmed departure
-  citing the table edition; it remains a departure failure in that run.
-  Maintain the other older editions' tables for conflicting requirements.
+  citing the governing edition; it remains a departure failure in that run.
+  Maintain the other older editions' tables in
+  `ecma-334/edition-conflicts/` for conflicting requirements.
   Compare each affected edition's selected inventory before and after the
   table data, naming each exclusion. Verify continuity in both directions
   for programs with compatible predicates and intervals. Adding a new latest
   edition also requires updating the older tables against that base.
-  At an ISO level, apply the table of the registry's governing edition:
-  `2.json` for editions 1 and 2, and `4.json` for editions 3 and 4.
+
+  Each edition request uses that edition's own table. Admit other-authority
+  tests only for shared requirements, by measured continuity or a cited older
+  replacement. Exclude tests whose assertion or prerequisites require a rule
+  the edition lacks. The governing table supplies supersession for admitted
+  claims. It supplies membership for language-version plans at ISO-1, ISO-2
+  and 5: the 2nd edition's table, the 4th edition's table and the 5th edition's
+  table, respectively.
+
   For every older requirement the governing edition changes, use a
   `leave-out` row with a `superseded` object in that governing table.
   Its `test` and `level` arrays cite both editions with registered source IDs,
   clauses, exact quotes and printed/PDF pages. Keep the older test and add
   coverage for the newer requirement, or give its ledger's untested reason.
   A superseded target must have an older standard authority and cannot also
-  be replaced. Keep the same decisions in edition and ISO language plans,
-  header audits, summaries and mutation results. Exercise both valid and
-  refused rows with runner tests. Raw certification measures every source,
+  be replaced within the same table. Apply governing supersession to admitted
+  edition claims and to governed language plans, header audits, summaries
+  and mutation results.
+
+  Exercise both valid and refused rows with runner tests. Raw certification measures every source,
   superseded sources included, without changing their measured bounds to
   express table membership.
+
   Exercise `earliest-per-test` with a cited replacement whose earliest level
-  differs from the replaced test's. The replacement runs at the ISO level it
-  serves and can also retain its own earliest row. Keep both tests in the
+  differs from the replaced test's. The replacement runs at the governed level
+  it serves and can also retain its own earliest row. Keep both tests in the
   candidate selection and one plan per test and level.
 - Later language features use the registered feature authority and
   feature-version IDs (`P<version>-<predicate-slug>`, or
@@ -184,7 +203,7 @@ the real compiler and runtime controls.
 | 2 | `build-manifest.py` | Derives the manifest from the test headers and joins any existing version data. |
 | 3 | `check-editions.py` | Checks each older edition's conflict table, its schema, registered authorities and every referenced test ID. |
 | 4 | `check-ledger.py` | Validates ledger ownership, text-block inventories, test coverage and the quotations against the registered sources. With `--require-confirmed`, a pending departure is an error. |
-| 5 | `run-suite.py` | Resolves header `Version` plans with `--langversion declared-per-test`, applies governing ISO tables, and runs the active claims with the pinned csc on the `dotnet` target. Superseded claims have cited static rows. |
+| 5 | `run-suite.py` | Resolves header `Version` plans with `--langversion declared-per-test`, applies governing tables, and runs the active claims with the pinned csc on the `dotnet` target. Superseded claims have cited static rows. |
 | 6 | `check-csc.py` | Replays the pinned csc evidence and checks the informational `Csc` headers on active claims at `Version`; validates superseded citations without execution or diagnostic obligations. |
 | 7 | `check-mutations.py` | Proves the handwritten tests' causal changes. |
 | 8 | `compute-versions.py` | Measures the bounds and the independent all-level sample. |
@@ -260,7 +279,8 @@ every registered source that the ledgers quote.
 - Every suite run names either `--edition N` or `--langversion`: one or more
   levels, an inclusive range such as `5..7.3`, `all`, or `earliest-per-test`.
   The selectors cannot be combined. Edition runs use the registered level and
-  governing table. Any language plan resolving to ISO-1 or ISO-2 uses the same
+  the requested edition's table, with governing supersession for admitted
+  claims. Any language plan resolving to ISO-1, ISO-2 or 5 uses the level's
   governing edition, including header plans and `earliest-per-test`;
   [Results](RESULTS.md#edition-runs) describes their selection.
 - Use a fresh result directory for changed inputs.

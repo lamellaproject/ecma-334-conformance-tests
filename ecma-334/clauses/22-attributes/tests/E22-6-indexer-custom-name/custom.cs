@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 22.6
 Version: 7.3
 Expected: run
 Stdout: OK 1
+Fixture: {"target_requires":["reflection"]}
 Mutate: [System.Runtime.CompilerServices.IndexerName("Entry")]
 Into: [System.Runtime.CompilerServices.IndexerName("Other")]
 */

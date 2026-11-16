@@ -7,4 +7,4 @@ Mutate: Nullable<int?>
 Into: Nullable<int>
 */
 using System;
-class Program { static void Main() { Nullable<int?> value = default; } }
+class Program { static void Main() { Nullable<int?> value; } }

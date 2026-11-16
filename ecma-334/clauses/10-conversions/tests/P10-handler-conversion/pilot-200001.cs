@@ -1,6 +1,6 @@
 /*
 Rules: P10-handler-conversion; P10-handler-concatenation; P10-handler-ref; P10-handler-preference; P10-handler-constructor; P10-handler-literal; P10-handler-formatted; P10-handler-result
-Authority: csc 5.11.0-1.26425.128 (C# 10.0)
+Authority: csc 5.12.0-1.26529.118 (C# 10.0)
 Version: 10.0
 Expected: run
 Stdout: OK 3

@@ -6,5 +6,5 @@ Expected: reject
 Mutate: static virtual int Item
 Into: static int Item
 */
-class Box { public static virtual int Item => 7; }
+class Box { public static virtual int Item { get { return 7; } } }
 class Program { static void Main() { } }

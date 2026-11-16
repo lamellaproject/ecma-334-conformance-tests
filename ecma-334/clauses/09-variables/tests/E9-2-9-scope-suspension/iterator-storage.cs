@@ -1,5 +1,5 @@
 /*
-Rules: E9-2-9-scope-suspension; E9-2-9-local-lifetime-minimum
+Rules: E9-2-9-scope-suspension; E9-2-9-local-lifetime-minimum; E9-2-9-local-lifetime-storage
 Authority: ECMA-334 7th ed 9.2.9
 Version: 7.3
 Expected: run

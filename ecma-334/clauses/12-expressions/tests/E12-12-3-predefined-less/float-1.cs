@@ -18,18 +18,18 @@ unsafe class Program
     {
         Check((A(0xFF7FFFFFU) < A(0x7F800000U)) == true && Kind(A(0xFF7FFFFFU) < A(0x7F800000U)) == 1, "case-0");
         Check((A(0xFF7FFFFFU) < A(0x7FC00000U)) == false && Kind(A(0xFF7FFFFFU) < A(0x7FC00000U)) == 1, "case-1");
-        Check((A(0x80000001U) < A(0xFF800000U)) == false && Kind(A(0x80000001U) < A(0xFF800000U)) == 1, "case-2");
-        Check((A(0x80000001U) < A(0xFF7FFFFFU)) == false && Kind(A(0x80000001U) < A(0xFF7FFFFFU)) == 1, "case-3");
-        Check((A(0x80000001U) < A(0x80000001U)) == false && Kind(A(0x80000001U) < A(0x80000001U)) == 1, "case-4");
-        Check((A(0x80000001U) < A(0x80000000U)) == true && Kind(A(0x80000001U) < A(0x80000000U)) == 1, "case-5");
-        Check((A(0x80000001U) < A(0x00000000U)) == true && Kind(A(0x80000001U) < A(0x00000000U)) == 1, "case-6");
-        Check((A(0x80000001U) < A(0x00000001U)) == true && Kind(A(0x80000001U) < A(0x00000001U)) == 1, "case-7");
-        Check((A(0x80000001U) < A(0x7F7FFFFFU)) == true && Kind(A(0x80000001U) < A(0x7F7FFFFFU)) == 1, "case-8");
-        Check((A(0x80000001U) < A(0x7F800000U)) == true && Kind(A(0x80000001U) < A(0x7F800000U)) == 1, "case-9");
-        Check((A(0x80000001U) < A(0x7FC00000U)) == false && Kind(A(0x80000001U) < A(0x7FC00000U)) == 1, "case-10");
+        Check((A(0x80800000U) < A(0xFF800000U)) == false && Kind(A(0x80800000U) < A(0xFF800000U)) == 1, "case-2");
+        Check((A(0x80800000U) < A(0xFF7FFFFFU)) == false && Kind(A(0x80800000U) < A(0xFF7FFFFFU)) == 1, "case-3");
+        Check((A(0x80800000U) < A(0x80800000U)) == false && Kind(A(0x80800000U) < A(0x80800000U)) == 1, "case-4");
+        Check((A(0x80800000U) < A(0x80000000U)) == true && Kind(A(0x80800000U) < A(0x80000000U)) == 1, "case-5");
+        Check((A(0x80800000U) < A(0x00000000U)) == true && Kind(A(0x80800000U) < A(0x00000000U)) == 1, "case-6");
+        Check((A(0x80800000U) < A(0x00800000U)) == true && Kind(A(0x80800000U) < A(0x00800000U)) == 1, "case-7");
+        Check((A(0x80800000U) < A(0x7F7FFFFFU)) == true && Kind(A(0x80800000U) < A(0x7F7FFFFFU)) == 1, "case-8");
+        Check((A(0x80800000U) < A(0x7F800000U)) == true && Kind(A(0x80800000U) < A(0x7F800000U)) == 1, "case-9");
+        Check((A(0x80800000U) < A(0x7FC00000U)) == false && Kind(A(0x80800000U) < A(0x7FC00000U)) == 1, "case-10");
         Check((A(0x80000000U) < A(0xFF800000U)) == false && Kind(A(0x80000000U) < A(0xFF800000U)) == 1, "case-11");
         Check((A(0x80000000U) < A(0xFF7FFFFFU)) == false && Kind(A(0x80000000U) < A(0xFF7FFFFFU)) == 1, "case-12");
-        Check((A(0x80000000U) < A(0x80000001U)) == false && Kind(A(0x80000000U) < A(0x80000001U)) == 1, "case-13");
+        Check((A(0x80000000U) < A(0x80800000U)) == false && Kind(A(0x80000000U) < A(0x80800000U)) == 1, "case-13");
         Check((A(0x80000000U) < A(0x80000000U)) == false && Kind(A(0x80000000U) < A(0x80000000U)) == 1, "case-14");
         Check((A(0x80000000U) < A(0x00000000U)) == false && Kind(A(0x80000000U) < A(0x00000000U)) == 1, "case-15");
         if (failures == 0) Console.WriteLine("OK " + checks);

@@ -4,7 +4,7 @@ Authority: ECMA-334 7th ed 13.11
 Version: 7.3
 Expected: reject
 Mutate: catch (Exception first)
-Into: catch (Exception first) when (false)
+Into: catch (ArgumentException first)
 */
 using System;
 class Program

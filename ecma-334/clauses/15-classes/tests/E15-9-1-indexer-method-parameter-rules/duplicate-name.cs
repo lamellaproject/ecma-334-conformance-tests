@@ -7,5 +7,5 @@ Mutate: this[int index, int index]
 Into: this[int index, int other]
 Csc: CS0100
 */
-class Grid { public int this[int index, int index] => 3; }
+class Grid { public int this[int index, int index] { get { return 3; } } }
 class Program { static void Main() { } }

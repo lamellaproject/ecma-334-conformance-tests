@@ -7,5 +7,5 @@ Mutate: this[int first, int second = Make()]
 Into: this[int first, int second = 5]
 Csc: CS1736
 */
-class Grid { static int Make() { return 5; } public int this[int first, int second = Make()] => first + second; }
+class Grid { static int Make() { return 5; } public int this[int first, int second = Make()] { get { return first + second; } } }
 class Program { static void Main() { } }

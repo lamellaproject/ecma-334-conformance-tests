@@ -6,6 +6,6 @@ Expected: reject
 Mutate: new override int Item
 Into: override int Item
 */
-class Base { public virtual int Item => 9; }
-class Box : Base { public new override int Item => 12; }
+class Base { public virtual int Item { get { return 9; } } }
+class Box : Base { public new override int Item { get { return 12; } } }
 class Program { static void Main() { } }

@@ -5,7 +5,7 @@ Version: 7.3
 Expected: run
 Stdout: OK 2
 Mutate: Left(out cell)
-Into: Left(out _)
+Into: Left(out failures)
 */
 using System;
 class Program

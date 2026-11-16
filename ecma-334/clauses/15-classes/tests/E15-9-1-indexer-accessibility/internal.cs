@@ -8,7 +8,7 @@ Mutate: internal int this[int index]
 Into: private int this[int index]
 */
 using System;
-class Grid { internal int this[int index] => index + 5; }
+class Grid { internal int this[int index] { get { return index + 5; } } }
 class Program
 {
     static int checks, failures;

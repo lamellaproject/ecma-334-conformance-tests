@@ -4,11 +4,11 @@ Authority: ECMA-334 7th ed 15.9.1
 Version: 7.3
 Expected: run
 Stdout: OK 2
-Mutate: public int this[string index] => 19;
-Into: public int this[int index] => 19;
+Mutate: public int this[string index] { get { return 19; } }
+Into: public int this[int index] { get { return 19; } }
 */
 using System;
-class Grid { public int this[int index] => 11; public int this[string index] => 19; }
+class Grid { public int this[int index] { get { return 11; } } public int this[string index] { get { return 19; } } }
 class Program
 {
     static int checks, failures;

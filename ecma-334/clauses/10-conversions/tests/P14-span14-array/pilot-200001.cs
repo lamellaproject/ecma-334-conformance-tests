@@ -1,6 +1,6 @@
 /*
 Rules: P14-span14-array; P14-span14-array-readonly; P14-span14-mutable-readonly; P14-span14-covariant; P14-span14-string; P14-span14-extension
-Authority: csc 5.11.0-1.26425.128 (C# 14.0)
+Authority: csc 5.12.0-1.26529.118 (C# 14.0)
 Version: 14.0
 Expected: run
 Stdout: OK 2

@@ -7,5 +7,5 @@ Mutate: this[params int[] first, int second]
 Into: this[int[] first, int second]
 Csc: CS0231
 */
-class Grid { public int this[params int[] first, int second] => second; }
+class Grid { public int this[params int[] first, int second] { get { return second; } } }
 class Program { static void Main() { } }

@@ -5,7 +5,7 @@ Version: 7.3
 Expected: run
 Stdout: OK 1
 Mutate: new Holder(out cell);
-Into: new Holder(out _);
+Into: new Holder(out failures);
 */
 using System;
 class Holder { public Holder(out int value) { value = 64; } }

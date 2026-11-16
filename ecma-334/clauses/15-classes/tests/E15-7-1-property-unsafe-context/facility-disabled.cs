@@ -8,5 +8,5 @@ Mutate: unsafe int Token
 Into: int Token
 Csc: CS0227
 */
-class Box { public unsafe int Token => 5; }
+class Box { public unsafe int Token { get { return 5; } } }
 class Program { static void Main() { } }

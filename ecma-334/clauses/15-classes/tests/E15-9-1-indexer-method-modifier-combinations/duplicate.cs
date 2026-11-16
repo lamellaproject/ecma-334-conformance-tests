@@ -7,5 +7,5 @@ Mutate: public public int this[int index]
 Into: public int this[int index]
 Csc: CS1004
 */
-class Grid { public public int this[int index] => index; }
+class Grid { public public int this[int index] { get { return index; } } }
 class Program { static void Main() { } }

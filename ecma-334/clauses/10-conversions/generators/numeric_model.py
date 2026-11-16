@@ -7,6 +7,7 @@ The model deliberately returns an unrestricted oracle for unspecified conversion
 from __future__ import annotations
 import math
 import struct
+from fractions import Fraction
 from decimal import Decimal, localcontext, ROUND_HALF_EVEN
 
 TYPES = ["sbyte", "byte", "short", "ushort", "int", "uint", "long", "ulong", "char", "float", "double", "decimal"]
@@ -26,6 +27,19 @@ IMPLICIT = {
     "float":{"double"}, "double":set(), "decimal":set()
 }
 DECIMAL_MAX = (1<<96)-1
+
+
+def decimal_profile_required(source, target, value):
+    if source != "decimal" and not (source in {"float", "double"} and target == "decimal"):
+        return False
+    if isinstance(value, float) and not math.isfinite(value):
+        return True
+    exact = Fraction.from_float(value) if isinstance(value, float) else Fraction(value)
+    for scale in range(29):
+        coefficient = exact * 10**scale
+        if coefficient.denominator == 1 and abs(coefficient) < 10**28:
+            return False
+    return True
 
 
 def implicit(source, target, value=None, constant=False):

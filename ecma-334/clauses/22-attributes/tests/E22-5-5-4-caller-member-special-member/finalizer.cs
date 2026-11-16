@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 22.5.5.4
 Version: 7.3
 Expected: run
 Stdout: OK 1
+Fixture: {"target_requires":["reflection"]}
 Mutate: [System.Runtime.CompilerServices.CallerMemberName] string name
 Into: string name
 */

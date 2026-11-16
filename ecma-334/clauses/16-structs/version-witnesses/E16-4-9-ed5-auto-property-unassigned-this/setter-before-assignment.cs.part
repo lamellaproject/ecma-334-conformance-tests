@@ -1,0 +1,23 @@
+using System;
+struct Gauge
+{
+    public int Score { get; set; }
+    public Gauge(int value) : this() { Score = value; }
+}
+class Program
+{
+    static int checks, failures;
+    static void Check(bool ok, string name)
+    {
+        checks++;
+        if (!ok) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Main()
+    {
+        int input = 31;
+        Gauge value = new Gauge(input);
+        Check(value.Score == input, "initialized-auto-property");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

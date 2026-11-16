@@ -3,9 +3,9 @@ Rules: E15-9-1-indexer-signature-excludes-element-type; E15-9-1-indexer-signatur
 Authority: ECMA-334 7th ed 15.9.1
 Version: 7.3
 Expected: reject
-Mutate: public string this[int index] => "east";
-Into: public string this[string index] => "east";
+Mutate: public string this[int index] { get { return "east"; } }
+Into: public string this[string index] { get { return "east"; } }
 Csc: CS0111
 */
-class Grid { public int this[int index] => index; public string this[int index] => "east"; }
+class Grid { public int this[int index] { get { return index; } } public string this[int index] { get { return "east"; } } }
 class Program { static void Main() { } }

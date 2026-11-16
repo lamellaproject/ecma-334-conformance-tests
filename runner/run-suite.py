@@ -202,6 +202,9 @@ def main():
     if args.edition is not None:
         provenance["edition_tables"] = {suite_id: detail["conflict_table"]
                                         for suite_id, detail in selection_details["edition_selection"].items()}
+        provenance["edition_source_tables"] = {
+            suite_id: detail.get("source_conflict_table", detail["conflict_table"])
+            for suite_id, detail in selection_details["edition_selection"].items()}
     if selection_details["language_edition_selection"]:
         provenance["language_edition_tables"] = {
             suite_id: {level: detail["conflict_table"] for level, detail in levels.items()}

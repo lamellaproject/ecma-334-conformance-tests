@@ -8,7 +8,7 @@ Mutate: protected int this[int index]
 Into: private int this[int index]
 */
 using System;
-class Grid { protected int this[int index] => index + 9; }
+class Grid { protected int this[int index] { get { return index + 9; } } }
 class Derived : Grid { public int Read(int index) { return this[index]; } }
 class Program
 {

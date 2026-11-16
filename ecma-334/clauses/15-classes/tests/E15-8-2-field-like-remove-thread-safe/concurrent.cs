@@ -30,17 +30,27 @@ class Program
                 source.Signal += handler;
                 workers[i] = new Thread(() =>
                 {
-                    try { Interlocked.Increment(ref gate.Ready); while (!gate.Start) Thread.Yield(); source.Signal -= handler; }
+                    try { Interlocked.Increment(ref gate.Ready);
+                        for (int attempt = 0; attempt < 5000 && !gate.Start; attempt++) Thread.Sleep(1);
+                        if (!gate.Start) throw new InvalidOperationException("worker infrastructure"); source.Signal -= handler; }
                     catch (Exception) { errors[index] = true; }
                 });
                 workers[i].IsBackground = true;
                 workers[i].Start();
             }
-            while (Volatile.Read(ref gate.Ready) != workers.Length) Thread.Yield();
+            bool ready = false;
+            for (int attempt = 0; attempt < 5000 && !ready; attempt++)
+            {
+                ready = Volatile.Read(ref gate.Ready) == workers.Length;
+                if (!ready) Thread.Sleep(1);
+            }
             gate.Start = true;
-            bool ok = true;
-            for (int i = 0; i < workers.Length; i++) ok &= workers[i].Join(5000) && !errors[i];
-            Check(ok && source.Empty(), "concurrent-remove-no-retained-handler");
+            bool joined = true;
+            for (int i = 0; i < workers.Length; i++) joined &= workers[i].Join(5000);
+            if (!ready || !joined) throw new InvalidOperationException("worker infrastructure");
+            for (int i = 0; i < errors.Length; i++)
+                if (errors[i]) throw new InvalidOperationException("worker infrastructure");
+            Check(source.Empty(), "concurrent-remove-no-retained-handler");
         }
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

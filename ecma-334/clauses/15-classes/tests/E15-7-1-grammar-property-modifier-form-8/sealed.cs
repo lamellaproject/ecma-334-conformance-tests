@@ -8,8 +8,8 @@ Mutate: sealed override int Token
 Into: sealed int Token
 */
 using System;
-class Base { public virtual int Token => 4; }
-class Derived : Base { public sealed override int Token => 24; }
+class Base { public virtual int Token { get { return 4; } } }
+class Derived : Base { public sealed override int Token { get { return 24; } } }
 class Program
 {
     static int checks, failures;

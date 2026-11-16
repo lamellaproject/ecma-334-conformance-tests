@@ -1,6 +1,6 @@
 /*
 Rules: P10-struct-constructor-default-bypass; E16-4-5-value-field-default; E16-4-5-reference-field-default
-Authority: csc 5.11.0-1.26425.128 (C# 10.0)
+Authority: csc 5.12.0-1.26529.118 (C# 10.0)
 Version: 10.0
 Expected: run
 Stdout: OK 3

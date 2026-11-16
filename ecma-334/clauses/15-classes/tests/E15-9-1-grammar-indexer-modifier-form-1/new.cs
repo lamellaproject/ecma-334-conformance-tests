@@ -8,8 +8,8 @@ Mutate: public new int this[int index]
 Into: public override int this[int index]
 */
 using System;
-class Grid { public int this[int index] => index + 3; }
-class Derived : Grid { public new int this[int index] => index + 8; }
+class Grid { public int this[int index] { get { return index + 3; } } }
+class Derived : Grid { public new int this[int index] { get { return index + 8; } } }
 class Program
 {
     static int checks, failures;

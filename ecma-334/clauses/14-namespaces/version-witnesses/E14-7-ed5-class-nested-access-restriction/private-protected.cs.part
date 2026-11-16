@@ -1,0 +1,16 @@
+using System;
+class Container
+{
+    protected class Part { public static int Next(int value) { return value + 1; } }
+    public static int Read(int value) { return Part.Next(value); }
+}
+class Program
+{
+    static int Main()
+    {
+        int value = Container.Read(28);
+        if (value != 29) { Console.WriteLine("FAIL nested-type"); return 1; }
+        Console.WriteLine("OK 1");
+        return 0;
+    }
+}

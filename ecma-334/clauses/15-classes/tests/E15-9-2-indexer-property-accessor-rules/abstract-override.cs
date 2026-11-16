@@ -8,9 +8,9 @@ Mutate: public abstract override int this[int index]
 Into: public abstract new int this[int index]
 */
 using System;
-class Grid { public virtual int this[int index] => index + 1; }
+class Grid { public virtual int this[int index] { get { return index + 1; } } }
 abstract class Middle : Grid { public abstract override int this[int index] { get; } }
-class Derived : Middle { public override int this[int index] => index + 7; }
+class Derived : Middle { public override int this[int index] { get { return index + 7; } } }
 class Program
 {
     static int checks, failures;

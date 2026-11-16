@@ -4,12 +4,12 @@ Authority: ECMA-334 7th ed 15.7.1
 Version: 7.3
 Expected: run
 Stdout: OK 2
-Mutate: int IBox.Item => 22;
-Into: int IBox.Item => 23;
+Mutate: int IBox.Item { get { return 22; } }
+Into: int IBox.Item { get { return 23; } }
 */
 using System;
 interface IBox { int Item { get; } }
-class Box : IBox { int IBox.Item => 22; public int Item => 41; }
+class Box : IBox { int IBox.Item { get { return 22; } } public int Item { get { return 41; } } }
 class Program
 {
     static int checks, failures;

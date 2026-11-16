@@ -9,7 +9,7 @@ Into: public int Token
 */
 using System;
 abstract class Base { public abstract int Token { get; } }
-class Derived : Base { public override int Token => 43; }
+class Derived : Base { public override int Token { get { return 43; } } }
 class Program
 {
     static int checks, failures;

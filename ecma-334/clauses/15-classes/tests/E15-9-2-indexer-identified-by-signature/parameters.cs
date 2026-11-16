@@ -16,7 +16,7 @@ class Grid
         get { Row = row; Column = column; return row * 10 + column; }
         set { Row = row; Column = column; Stored = value; row = 0; column = 0; value = 0; }
     }
-    public int this[string index] => 37;
+    public int this[string index] { get { return 37; } }
 }
 class Program
 {

@@ -1,6 +1,6 @@
 /*
 Rules: P09-top-level-one-unit
-Authority: csc 5.11.0-1.26425.128 (C# 9.0)
+Authority: csc 5.12.0-1.26529.118 (C# 9.0)
 Version: 9.0
 Expected: reject
 Fixture: {"program":{"units":[{"source":"self"},{"source":"tests/P09-top-level-one-unit/iot-top-level-second.cs.part"}]}}

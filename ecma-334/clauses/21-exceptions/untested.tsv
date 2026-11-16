@@ -2,3 +2,12 @@ rule_id	reason
 E21-4-unhandled-finalizer	The standard allows any outcome for an uncaught finalizer exception, including ending the process, and supplies no portable result oracle for a standalone program.
 E21-4-unhandled-thread-termination	A standalone program cannot report the post-termination state of its initial thread when the explicitly permitted termination impact may end the entire process; an external lifecycle observer is required.
 E21-4-termination-impact	All termination impacts are allowed subject to implementation documentation, so a standalone program cannot check the documentation obligation or exclude any particular process outcome.
+E21-3-message-readonly	Exception handling does not depend on the absence of a Message setter; testing that signature alone would test the library.
+E21-3-message-type	No C# construct depends on the Message property type; a direct property-type check would test the library.
+E21-3-message-description	No C# construct depends on the wording of Message, and a human-readable description supplies no portable exact-output oracle.
+E21-3-constructor-message	No C# construct depends on an exception constructor accepting a description; a direct constructor check would test the library.
+E21-3-inner-readonly	Initialization failure depends on the stored cause, not on the absence of an InnerException setter; a setter check alone would test the library.
+E21-3-inner-catch-context	The parenthetical describes a wrapping context; the specific constructor permission allows a cause outside a catch, so this context is not a separate language constraint.
+E21-3-inner-null	No C# construct requires the uncaused object in this description; checking an independently constructed exception for a null cause would test the library.
+E21-3-arbitrary-chain	The permitted chain length supplies no finite maximum to refute; manually constructing and traversing a cause chain would test the library.
+E21-3-constructor-inner	Initialization failure specifies the preserved cause without prescribing a constructor call; a direct exception-constructor check would test the library.

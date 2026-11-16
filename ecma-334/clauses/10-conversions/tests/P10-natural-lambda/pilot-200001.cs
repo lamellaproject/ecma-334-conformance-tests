@@ -1,6 +1,6 @@
 /*
 Rules: P10-natural-lambda; P10-natural-method; P10-natural-base; P10-natural-var; P10-natural-action; P10-natural-func
-Authority: csc 5.11.0-1.26425.128 (C# 10.0)
+Authority: csc 5.12.0-1.26529.118 (C# 10.0)
 Version: 10.0
 Expected: run
 Stdout: OK 4

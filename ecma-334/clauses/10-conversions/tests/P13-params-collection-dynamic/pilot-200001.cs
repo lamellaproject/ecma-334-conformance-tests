@@ -1,6 +1,6 @@
 /*
 Rules: P13-params-collection-dynamic
-Authority: csc 5.11.0-1.26425.128 (C# 13.0)
+Authority: csc 5.12.0-1.26529.118 (C# 13.0)
 Version: 13.0
 Expected: reject
 Mutate: dynamic n=439;

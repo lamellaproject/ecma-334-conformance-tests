@@ -1,14 +1,15 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
   "standard": "ECMA-334",
   "standard_version": "7.3",
   "standard_sha256": "7797c1d995dd7791683cb4f2dfd758cc1bfd22150b5234487fffe43e9b3e3ab0",
   "feature_commit": "0df79080bfbd3d0120ad1904ed0a662fd69be6b9",
-  "csc_version": "5.11.0-1.26425.128",
-  "csc_commit": "3551975be08744f0418857c5bed8ab1545c5dd47",
-  "iso_editions": {
+  "csc_version": "5.12.0-1.26529.118",
+  "csc_commit": "297acf930fb0f5c07fd4e51d78e521b4ad2e5d1f",
+  "governing_editions": {
     "ISO-1": "ecma-334-ed2",
-    "ISO-2": "ecma-334-ed4"
+    "ISO-2": "ecma-334-ed4",
+    "5": "ecma-334-ed5"
   },
   "editions": [
     {
@@ -108,6 +109,30 @@
       "version_proof": {
         "locator": "Cover: ECMA-334, 4th Edition / June 2006 (PDF p. 1); Foreword, printed p. xvii (PDF p. 19)",
         "method": "The foreword identifies alignment with ISO/IEC 23270:2006, the ISO-2 language level."
+      }
+    },
+    {
+      "id": "ecma-334-ed5",
+      "standard": "ECMA-334",
+      "edition": "5th",
+      "role": "primary",
+      "authority_prefix": "ECMA-334 5th ed",
+      "language_version": "5",
+      "asset": "ECMA-334_5th_edition_december_2017.pdf",
+      "sha256": "61277fd547049013715173d2dee730214d148d410df9fd07b01378f0a943147b",
+      "text": {
+        "asset": "ed5-raw.txt",
+        "sha256": "617d7f20e4731e39932229e48a42ee6063b24c5db23377fa82da81d6e5790597"
+      },
+      "version_proof": {
+        "locator": "Foreword, printed p. xix (PDF p. 21); Scope, printed p. 1 (PDF p. 23)",
+        "method": "The foreword's feature inventory includes asynchronous functions and caller-info attributes, identifying the C# 5.0 language level.",
+        "foreword_markers": [
+          "Asynchronous functions",
+          "Caller-info attributes",
+          "Dynamic binding"
+        ],
+        "numeric_label_in_foreword_or_scope": false
       }
     }
   ],
@@ -376,11 +401,12 @@
     "E6-5-8-ed2-nel-filename-excluded",
     "E6-5-5-ed2-nel-skipped-line-terminator",
     "E6-3-4-ed3-unicode-3-space-category",
-    "E6-3-4-ed4-unicode-4-space-category"
+    "E6-3-4-ed4-unicode-4-space-category",
+    "E6-3-4-grammar-whitespace-1"
   ],
   "compiler_authority": {
     "id": "csc",
-    "version": "5.11.0-1.26425.128",
-    "commit": "3551975be08744f0418857c5bed8ab1545c5dd47"
+    "version": "5.12.0-1.26529.118",
+    "commit": "297acf930fb0f5c07fd4e51d78e521b4ad2e5d1f"
   }
 }

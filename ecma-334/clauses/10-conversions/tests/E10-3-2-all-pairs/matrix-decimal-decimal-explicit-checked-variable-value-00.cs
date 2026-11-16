@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 10.3.2
 Version: 7.3
 Expected: run
 Stdout: OK 9
+Fixture: {"target_requires":["decimal-96-scale-28"]}
 Generated: clauses/10-conversions/generators/standard-matrices.py
 */
 using System;

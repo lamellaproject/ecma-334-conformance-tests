@@ -12,13 +12,16 @@ class Program
 {
     static int checks, failures;
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
-    static void Main()
+    static void Probe(ref int location, int[,] grid)
     {
-        int[,] grid = new int[,] { { 3, 5 }, { 7, 11 } };
-        ref int location = ref grid[1, 0];
         Check(location == 7, "indices-select-corresponding-dimensions");
         location = 19;
         Check(grid[1, 0] == 19 && grid[0, 1] == 5, "element-expression-is-variable-at-selected-location");
+    }
+    static void Main()
+    {
+        int[,] grid = new int[,] { { 3, 5 }, { 7, 11 } };
+        Probe(ref grid[1, 0], grid);
         grid[1, 1] = 23;
         Check(grid[1, 1] == 23, "array-element-assignment");
         if (failures == 0) Console.WriteLine("OK " + checks);

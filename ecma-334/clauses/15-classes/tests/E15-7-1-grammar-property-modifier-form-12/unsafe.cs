@@ -8,7 +8,7 @@ Mutate: public unsafe int* Token
 Into: public int* Token
 */
 using System;
-class Box { public unsafe int* Token => null; }
+class Box { public unsafe int* Token { get { return null; } } }
 class Program
 {
     static int checks, failures;

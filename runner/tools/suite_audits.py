@@ -10,7 +10,7 @@ from suite_common import (KINDS, ROOT, RULE_FIELDS, RULE_ID, checked_object, hea
                           load_manifest, raw_sources, read_rules, read_tsv, sha, source_registry,
                           standard_root, suite_path, validate_raw_source)
 from suite_config import level_tuple, public_level, read_config, resolve_level, select_levels
-from suite_editions import authority_edition, iso_edition, registered_editions, superseded_claims
+from suite_editions import authority_edition, governing_edition, registered_editions, superseded_claims
 from suite_engine import (CONTROL_OUTCOMES, DEPARTURE_FIELDS, Context, control_level, departure_rows, load_controls,
                           superseded_observation_rows)
 from suite_evidence import verify_record
@@ -134,7 +134,7 @@ def ledger_audit(suite_id, source_map=None, require_confirmed=False):
     configured_levels = [level["level"] for level in select_levels(
         read_config(ROOT / "configs/compilers/csc.json", "compiler", check_host=False), ["all"])[1]]
 
-    def check_observed_levels(levels, identity):
+    def check_observed_levels(levels, identity, citations=()):
         if (not isinstance(levels, list) or not levels
                 or len({public_level(level) for level in levels}) != len(levels)):
             errors.append(identity + ": missing or repeated observed levels")
@@ -145,7 +145,14 @@ def ledger_audit(suite_id, source_map=None, require_confirmed=False):
             return
         positions = sorted(configured_levels.index(level) for level in labels)
         if positions != list(range(positions[0], positions[-1] + 1)):
-            errors.append(identity + ": observed levels contain a gap")
+            cited_sources = {citation["source_id"] for citation in citations}
+            missing = [configured_levels[position] for position in range(positions[0], positions[-1] + 1)
+                       if position not in positions]
+            # Each cited list is contiguous. Intervening levels governed by a
+            # different edition can have a different required result.
+            if not citations or any((governing_edition(suite_id, level) or editions[max(editions)])["id"]
+                                    in cited_sources for level in missing):
+                errors.append(identity + ": observed levels contain a gap")
 
     sources = Sources(registry, source_map)
     scope = json.loads((root / "ledger-scope.json").read_text(encoding="utf-8"))
@@ -257,7 +264,7 @@ def ledger_audit(suite_id, source_map=None, require_confirmed=False):
                     errors.append(row["test_id"] + ": compiler-authority discrepancies belong in reference notes")
                 if label == "departure":
                     for level in citation_levels:
-                        governing = iso_edition(suite_id, level) or editions[max(editions)]
+                        governing = governing_edition(suite_id, level) or editions[max(editions)]
                         if citation["source_id"] != governing["id"]:
                             errors.append(row["test_id"] + ": departure level " + level
                                           + " must cite governing edition " + governing["id"])
@@ -265,7 +272,7 @@ def ledger_audit(suite_id, source_map=None, require_confirmed=False):
             if row["compiler_id"] != "csc" or row["compiler_commit"] != registry["csc_commit"]:
                 errors.append(row["test_id"] + ": observation does not name the pinned authority")
             levels = json.loads(row["levels_json"])
-            check_observed_levels(levels, row["test_id"])
+            check_observed_levels(levels, row["test_id"], citations if label == "departure" and len(citations) > 1 else ())
             for level in levels:
                 claim = changed.get(public_level(level), {}).get(row["test_id"])
                 if label == "departure" and claim:

@@ -1,6 +1,6 @@
 /*
 Rules: Ppreview-unsafe-preview-uninitialized-span
-Authority: csc 5.11.0-1.26425.128 (C# preview)
+Authority: csc 5.12.0-1.26529.118 (C# preview)
 Version: preview
 Expected: reject
 Requirements: updated-memory-safety

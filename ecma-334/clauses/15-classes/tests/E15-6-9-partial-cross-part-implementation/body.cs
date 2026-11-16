@@ -1,5 +1,5 @@
 /*
-Rules: E15-6-9-partial-cross-part-implementation; E15-6-9-partial-implementing-body
+Rules: E15-6-9-partial-cross-part-implementation; E15-6-9-partial-implementing-body; E15-6-1-grammar-method-modifiers; E15-6-1-partial-body-options
 Authority: ECMA-334 7th ed 15.6.9
 Version: 7.3
 Expected: run

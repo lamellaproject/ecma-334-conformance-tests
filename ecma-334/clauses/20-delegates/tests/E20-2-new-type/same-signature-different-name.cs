@@ -12,5 +12,5 @@ delegate int Second(int value);
 class Program
 {
     static int Read(int value) { return value; }
-    static void Main() { First source = Read; Second destination = source; }
+    static void Main() { First source = new First(Read); Second destination = source; }
 }

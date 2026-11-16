@@ -1,0 +1,11 @@
+using System;
+class Program
+{
+    static unsafe void* Echo(void* value) { return value; }
+    static unsafe void Main()
+    {
+        int* storage = stackalloc int[2];
+        void* values = Echo(storage);
+        Console.WriteLine("OK 0");
+    }
+}

@@ -7,6 +7,6 @@ Mutate: public new override int this[int index]
 Into: public override int this[int index]
 Csc: CS0113
 */
-class Grid { public virtual int this[int index] => index; }
-class Derived : Grid { public new override int this[int index] => index; }
+class Grid { public virtual int this[int index] { get { return index; } } }
+class Derived : Grid { public new override int this[int index] { get { return index; } } }
 class Program { static void Main() { } }

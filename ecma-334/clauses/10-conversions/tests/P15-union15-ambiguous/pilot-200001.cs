@@ -1,6 +1,6 @@
 /*
 Rules: P15-union15-ambiguous
-Authority: csc 5.11.0-1.26425.128 (C# 15.0)
+Authority: csc 5.12.0-1.26529.118 (C# 15.0)
 Version: 15.0
 Expected: reject
 Mutate: Ambiguous result=null;

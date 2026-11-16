@@ -34,13 +34,13 @@ def authority_edition(test, editions):
                  if test["authority"].startswith(entry["authority_prefix"] + " ")), None)
 
 
-def iso_edition(suite_id, language_version):
-    """The registry assigns one primary edition to each ISO language level."""
+def governing_edition(suite_id, language_version):
+    """The registry assigns one primary edition to each governed language level."""
     if language_version.endswith("-preview"):
         return None
     registry = source_registry(suite_id)
     level = public_level(language_version)
-    source_id = next((source_id for label, source_id in registry["iso_editions"].items()
+    source_id = next((source_id for label, source_id in registry["governing_editions"].items()
                       if public_level(label) == level), None)
     return next((entry for entry in registry["editions"] if entry["id"] == source_id), None)
 
@@ -135,9 +135,9 @@ def validate_conflicts(table, suite_id, tests):
         if replacement_edition == number and row["authority"].split(",", 1)[0] != inventory[replacement]["authority"]:
             raise ValueError("Conflict citation disagrees with replacement authority: " + replacement)
         if "superseded" in row:
-            governing = iso_edition(suite_id, editions[number]["language_version"])
+            governing = governing_edition(suite_id, editions[number]["language_version"])
             if governing is None or governing["id"] != editions[number]["id"]:
-                raise ValueError("Superseded rows belong to the governing ISO edition's table")
+                raise ValueError("Superseded rows belong to the governing edition's table")
             validate_supersession(row, inventory[row["test_id"]], editions, governing)
             if row["test_id"] in actions:
                 raise ValueError("Duplicate disposition of a superseded test")
@@ -166,10 +166,10 @@ def load_conflicts(suite_id, number, tests):
 
 
 def superseded_claims(suite_id, tests):
-    """Return the cited changed claims at each registry-governed ISO level."""
+    """Return the cited changed claims at each registry-governed level."""
     editions = registered_editions(suite_id)
     result = {}
-    for label, source_id in source_registry(suite_id)["iso_editions"].items():
+    for label, source_id in source_registry(suite_id)["governing_editions"].items():
         number = next(n for n, entry in editions.items() if entry["id"] == source_id)
         table = load_conflicts(suite_id, number, tests)
         result[public_level(label)] = {row["test_id"]: row for row in table["conflicts"] if "superseded" in row}
@@ -185,9 +185,10 @@ def edition_definition(suite_id, number, config, tests):
     level = resolve_level(config, entry["language_version"])
     if level is None:
         raise ValueError("Compiler does not support edition " + str(number) + " at " + entry["language_version"])
-    governing = iso_edition(suite_id, entry["language_version"]) or entry
+    governing = governing_edition(suite_id, entry["language_version"]) or entry
     effective_number = next(n for n, source in editions.items() if source["id"] == governing["id"])
-    table = load_conflicts(suite_id, effective_number, tests)
+    table = load_conflicts(suite_id, number, tests)
+    governing_table = table if number == effective_number else load_conflicts(suite_id, effective_number, tests)
     source_path = standard_root(suite_id) / "edition-conflicts" / (str(number) + ".json")
     path = standard_root(suite_id) / "edition-conflicts" / (str(effective_number) + ".json")
     return {"edition": number, "source_id": entry["id"], "language_version": entry["language_version"],
@@ -195,7 +196,7 @@ def edition_definition(suite_id, number, config, tests):
             "claim_run": governing["id"] == entry["id"],
             "level": level, "conflict_table": {"path": path.relative_to(ROOT).as_posix(), "sha256": sha(path)},
             "source_conflict_table": {"path": source_path.relative_to(ROOT).as_posix(), "sha256": sha(source_path)},
-            "table": table}
+            "table": table, "governing_table": governing_table}
 
 
 def version_inventory(tests):
@@ -214,8 +215,10 @@ def edition_inventory(tests, definitions, *, header=False, gating=False, invento
     registries = {suite_id: registered_editions(suite_id) for suite_id in definitions}
     actions = {suite_id: {row["test_id"]: row["action"] for row in definition["table"]["conflicts"]}
                for suite_id, definition in definitions.items()}
-    superseded = {suite_id: {row["test_id"] for row in definition["table"]["conflicts"] if "superseded" in row}
-                  for suite_id, definition in definitions.items()}
+    own_superseded = {suite_id: {row["test_id"] for row in definition["table"]["conflicts"] if "superseded" in row}
+                      for suite_id, definition in definitions.items()}
+    superseded = {suite_id: {row["test_id"] for row in definition.get("governing_table", definition["table"])["conflicts"]
+                            if "superseded" in row} for suite_id, definition in definitions.items()}
     gating_exclusions = {suite_id: set().union(*superseded_claims(
         suite_id, tests if inventory is None else inventory).values()) for suite_id in definitions} if gating else {}
     candidates = {(test["suite_id"], test["test_id"]) for test in tests}
@@ -229,27 +232,28 @@ def edition_inventory(tests, definitions, *, header=False, gating=False, invento
             raise ValueError("Current bounds required for " + test["test_id"])
         definition, decision = definitions[suite_id], decisions[suite_id]
         action = actions[suite_id].get(test["test_id"])
-        if test["test_id"] in superseded[suite_id]:
-            decision["superseded_test_ids"].append(test["test_id"])
-            selected.append(test)
+        if test["test_id"] in own_superseded[suite_id]:
+            category = "superseded_test_ids"
         elif action:
             decision["replaced_test_ids" if action == "replace" else "left_out_test_ids"].append(test["test_id"])
+            continue
         elif authority_edition(test, registries[suite_id]) == definition["edition"]:
-            decision["own_test_ids"].append(test["test_id"])
-            selected.append(test)
+            category = "own_test_ids"
         elif header or applicability(test, definition["level"]) == "test":
-            decision["continuity_test_ids"].append(test["test_id"])
-            selected.append(test)
+            category = "continuity_test_ids"
         elif ((suite_id, test["test_id"]) in replacements
               and authority_edition(test, registries[suite_id]) not in {None, max(registries[suite_id])}):
-            decision["replacement_test_ids"].append(test["test_id"])
-            selected.append(test)
+            category = "replacement_test_ids"
         elif (gating and test["test_id"] not in gating_exclusions[suite_id]
               and applicability(test, definition["level"]) == "version-gating"):
-            decision["version_gating_test_ids"].append(test["test_id"])
-            selected.append(test)
+            category = "version_gating_test_ids"
         else:
             decision["outside_interval_test_ids"].append(test["test_id"])
+            continue
+        if test["test_id"] in superseded[suite_id]:
+            category = "superseded_test_ids"
+        decision[category].append(test["test_id"])
+        selected.append(test)
     selected_ids = {(test["suite_id"], test["test_id"]) for test in selected}
     for suite_id, definition in definitions.items():
         for row in definition["table"]["conflicts"]:
@@ -261,20 +265,22 @@ def edition_inventory(tests, definitions, *, header=False, gating=False, invento
 
 
 def edition_details(definition, decisions):
-    return {**{key: value for key, value in definition.items() if key != "table"}, **decisions}
+    return {**{key: value for key, value in definition.items() if key not in {"table", "governing_table"}}, **decisions}
 
 
 def edition_plan(test, definition):
     """Bind each claim to its table; superseded claims have no execution plan."""
-    marker = next((row["superseded"] for row in definition["table"]["conflicts"]
+    marker = next((row["superseded"] for row in definition.get("governing_table", definition["table"])["conflicts"]
                    if row["test_id"] == test["test_id"] and "superseded" in row), None)
     membership = {"edition": definition["edition"], "level_source_id": definition.get("level_source_id", definition["source_id"]),
-                  "conflict_table": definition["conflict_table"], "superseded": marker}
+                  "conflict_table": definition["conflict_table"],
+                  "source_conflict_table": definition.get("source_conflict_table", definition["conflict_table"]),
+                  "superseded": marker}
     return {**test, "edition_membership": membership}, definition["level"], "superseded" if marker else "test"
 
 
 def resolve_language_plans(plans, inventory, config, selection):
-    """Use governing tables at ISO levels and the version policy at other levels."""
+    """Use governing tables at registered levels and the version policy at other levels."""
     groups, selected, details = {}, {}, {}
     candidates = {(test["suite_id"], test["test_id"]): test for test, _, _ in plans}
     additional = []
@@ -283,7 +289,7 @@ def resolve_language_plans(plans, inventory, config, selection):
         groups.setdefault((test["suite_id"], label), []).append((test, level))
     for (suite_id, label), group in groups.items():
         level = group[0][1]
-        governing = iso_edition(suite_id, level["level"]) if level else None
+        governing = governing_edition(suite_id, level["level"]) if level else None
         if governing:
             number = next(n for n, entry in registered_editions(suite_id).items() if entry["id"] == governing["id"])
             definition = edition_definition(suite_id, number, config, inventory)
@@ -330,7 +336,7 @@ def resolve_language_plans(plans, inventory, config, selection):
 
 
 def header_plans(tests, config, inventory=None):
-    """Header-level checks share the governing ISO decisions without measuring bounds."""
+    """Header-level checks share governing decisions without measuring bounds."""
     plans = [(test, resolve_level(config, test["version"]), "test") for test in tests]
     return resolve_language_plans(plans, tests if inventory is None else inventory, config, "declared-per-test")
 

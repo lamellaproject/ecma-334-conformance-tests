@@ -39,8 +39,10 @@ class DiagnosticMutationTests(unittest.TestCase):
 
     def test_declared_departure_does_not_claim_sensitivity(self):
         test = dict(diagnostic="none", expected="run")
-        self.assertEqual(checks.classify(test, record(), record("runtime-fail"), True)[0],
+        original = dict(record("unexpected-reject"), departure=True)
+        self.assertEqual(checks.classify(test, original, record("runtime-fail"), True)[0],
                          "inconclusive-departure")
+        self.assertEqual(checks.classify(test, record(), record("runtime-fail"), True)[0], "killed")
 
 
 if __name__ == "__main__":

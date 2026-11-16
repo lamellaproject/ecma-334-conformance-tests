@@ -17,7 +17,7 @@ from unittest.mock import Mock, patch
 from suite_common import ROOT, digest, emit_audit, fixture_info, parse_test, sha, source_registry, write_json, write_tsv
 from suite_config import asset_entries, host_rid, read_config, resolve_level, select_levels, validate_compiler
 import suite_editions
-from suite_editions import edition_definition, edition_inventory, iso_edition, registered_editions, validate_conflicts, version_inventory
+from suite_editions import edition_definition, edition_inventory, governing_edition, registered_editions, validate_conflicts, version_inventory
 from suite_engine import Context, DEPARTURE_FIELDS, departure_rows, load_controls
 from suite_evidence import verify_record
 from suite_measurements import Measurement, predecessor, witness_for
@@ -163,39 +163,68 @@ class RunnerChecks(unittest.TestCase):
         for name in ["earliest-per-test", "declared-per-test"]:
             self.assertEqual(select_levels(self.config, [name]), (name, []))
 
-    def test_iso_level_authority_comes_from_the_registry(self):
+    def test_governing_level_authority_comes_from_the_registry(self):
         registry = copy.deepcopy(source_registry())
-        for level, source_id in registry["iso_editions"].items():
-            self.assertEqual(iso_edition("ecma-334", level)["id"], source_id)
-        self.assertIsNone(iso_edition("ecma-334", "3"))
-        registry["iso_editions"]["ISO-1"] = "ecma-334-ed1"
+        for level, source_id in registry["governing_editions"].items():
+            self.assertEqual(governing_edition("ecma-334", level)["id"], source_id)
+        self.assertIsNone(governing_edition("ecma-334", "3"))
+        registry["governing_editions"]["ISO-1"] = "ecma-334-ed1"
         with patch("suite_editions.source_registry", return_value=registry):
-            self.assertEqual(iso_edition("ecma-334", "1")["id"], "ecma-334-ed1")
+            self.assertEqual(governing_edition("ecma-334", "1")["id"], "ecma-334-ed1")
 
-    def test_iso_level_authority_requires_one_primary_source_at_the_same_level(self):
+    def test_governing_level_authority_requires_one_primary_source_at_the_same_level(self):
         original = copy.deepcopy(source_registry())
         directory = self.scratch / "iso-registry"
         directory.mkdir()
-        mutations = [lambda data: data["iso_editions"].pop("ISO-1"),
-                     lambda data: data["iso_editions"].update(extra="ecma-334-ed2"),
-                     lambda data: data["iso_editions"].update({"ISO-1": "missing"}),
-                     lambda data: data["iso_editions"].update({"ISO-1": "ecma-334-ed4"}),
-                     lambda data: data["iso_editions"].update({"ISO-1": ["ecma-334-ed1", "ecma-334-ed2"]}),
+        mutations = [lambda data: data["governing_editions"].pop("ISO-1"),
+                     lambda data: data["governing_editions"].update({"1": "ecma-334-ed2"}),
+                     lambda data: data["governing_editions"].update({"5": "ecma-334-ed4"}),
+                     lambda data: data["governing_editions"].update(extra="ecma-334-ed2"),
+                     lambda data: data["governing_editions"].update({"ISO-1": "missing"}),
+                     lambda data: data["governing_editions"].update({"ISO-1": "ecma-334-ed4"}),
+                     lambda data: data["governing_editions"].update({"ISO-1": ["ecma-334-ed1", "ecma-334-ed2"]}),
                      lambda data: next(entry for entry in data["editions"] if entry["id"] == "ecma-334-ed2").update(role="secondary")]
         for mutate in mutations:
             data = copy.deepcopy(original)
             mutate(data)
             write_json(directory / "source-registry.json", data)
-            with self.subTest(registry=data["iso_editions"]), \
+            with self.subTest(registry=data["governing_editions"]), \
                     patch("suite_common.standard_root", return_value=directory), self.assertRaises(ValueError):
                 source_registry.__wrapped__()
 
-    def test_iso_claim_and_cross_reference_editions_share_the_level_authority(self):
-        for number, source_id, claim in [(1, "ecma-334-ed2", False), (2, "ecma-334-ed2", True),
-                                         (3, "ecma-334-ed4", False), (4, "ecma-334-ed4", True)]:
+    def test_edition_claims_keep_their_own_table_and_share_the_level_authority(self):
+        for number, source_id in [(1, "ecma-334-ed2"), (2, "ecma-334-ed2"),
+                                  (3, "ecma-334-ed4"), (4, "ecma-334-ed4")]:
             with self.subTest(edition=number), patch("suite_editions.load_conflicts", return_value={}):
                 definition = edition_definition("ecma-334", number, self.config, [])
-                self.assertEqual((definition["level_source_id"], definition["claim_run"]), (source_id, claim))
+                self.assertEqual((definition["level_source_id"], definition["claim_run"]), (source_id, number in {2, 4}))
+
+    def test_fifth_registration_requires_a_matching_governing_source(self):
+        registry = copy.deepcopy(source_registry())
+        registry["editions"] = [entry for entry in registry["editions"] if entry["edition"] != "5th"]
+        fifth = {**registry["editions"][0], "id": "ecma-334-ed5", "edition": "5th",
+                 "authority_prefix": "ECMA-334 5th ed", "language_version": "5"}
+        registry["editions"].append(fifth)
+        registry["governing_editions"]["5"] = fifth["id"]
+        directory = self.scratch / "fifth-registry"
+        directory.mkdir()
+        for change, valid in [(lambda data: None, True),
+                              (lambda data: data["governing_editions"].pop("5"), False),
+                              (lambda data: data["governing_editions"].update({"5": "missing"}), False),
+                              (lambda data: data["governing_editions"].update({"5": "ecma-334-ed7"}), False),
+                              (lambda data: data["governing_editions"].update({"5": [fifth["id"]]}), False),
+                              (lambda data: data["editions"][-1].update(role="secondary"), False),
+                              (lambda data: data["governing_editions"].update({"6": fifth["id"]}), False)]:
+            data = copy.deepcopy(registry)
+            change(data)
+            write_json(directory / "source-registry.json", data)
+            with self.subTest(valid=valid, registry=data["governing_editions"]), \
+                    patch("suite_common.standard_root", return_value=directory):
+                if valid:
+                    self.assertEqual(source_registry.__wrapped__()["governing_editions"]["5"], fifth["id"])
+                else:
+                    with self.assertRaises(ValueError):
+                        source_registry.__wrapped__()
 
     def test_platform_pins_are_complete_and_fail_closed(self):
         expected = {("win32", "AMD64"): "win-x64", ("linux", "x86_64"): "linux-x64",
@@ -691,7 +720,7 @@ class EditionChecks(unittest.TestCase):
         registry = patch("suite_editions.registered_editions", return_value=self.editions)
         registry.start()
         self.addCleanup(registry.stop)
-        unmapped = patch("suite_editions.iso_edition", return_value=None)
+        unmapped = patch("suite_editions.governing_edition", return_value=None)
         unmapped.start()
         self.addCleanup(unmapped.stop)
         self.tests = [{"suite_id": "ecma-334", "test_id": name, "authority": authority,
@@ -1123,6 +1152,14 @@ class SupersededChecks(unittest.TestCase):
 
     def setUp(self):
         self.runner = load_runner()
+        self.registry = copy.deepcopy(source_registry())
+        self.registry["editions"] = [entry for entry in self.registry["editions"]
+                                     if entry["edition"] in {"1st", "2nd", "3rd", "4th", "7th"}]
+        self.registry["governing_editions"] = {"ISO-1": "ecma-334-ed2", "ISO-2": "ecma-334-ed4"}
+        for target in ["suite_editions.source_registry", "suite_audits.source_registry"]:
+            registry = patch(target, return_value=self.registry)
+            registry.start()
+            self.addCleanup(registry.stop)
         self.editions = registered_editions("ecma-334")
         self.tests = []
         self.rows = {}
@@ -1166,6 +1203,88 @@ class SupersededChecks(unittest.TestCase):
     def bounds(self, test):
         return self.rows[test["test_id"]], "current"
 
+    def add_fifth(self):
+        fifth = {**self.editions[4], "id": "ecma-334-ed5", "edition": "5th",
+                 "authority_prefix": "ECMA-334 5th ed", "language_version": "5"}
+        self.registry["editions"].append(fifth)
+        self.registry["governing_editions"]["5"] = fifth["id"]
+        self.editions[5] = fifth
+        self.tables[5] = {"schema_version": 1, "edition": 5, "base_edition": 7,
+                          "conflicts": [self.row("fourth-own", 4, 5)]}
+        test = {**self.tests[-1], "test_id": "fifth-own", "authority": "ECMA-334 5th ed 10.1", "version": "5"}
+        self.tests.append(test)
+        self.rows["fifth-own"] = selection_bounds(self.config, "6")
+        next(test for test in self.tests if test["test_id"] == "fourth-own")["version"] = "5"
+        return test
+
+    def test_fifth_edition_explicit_header_and_earliest_share_governing_claims(self):
+        self.add_fifth()
+        self.rows["fourth-own"] = selection_bounds(self.config, "5")
+        original = copy.deepcopy(self.rows)
+        for request in [dict(edition=5), dict(language=["5"]), dict(language=["declared-per-test"]),
+                        dict(language=["earliest-per-test"])]:
+            with self.subTest(request=request):
+                _, plans, _, _, details = self.prepare(**request)
+                static = [plan for plan in plans if plan[0]["test_id"] == "fourth-own"]
+                self.assertEqual([(level["level"], mode) for _, level, mode in static], [("5", "superseded")])
+                membership = static[0][0]["edition_membership"]
+                self.assertEqual((membership["edition"], membership["level_source_id"]), (5, "ecma-334-ed5"))
+                self.assertEqual(membership["superseded"], self.tables[5]["conflicts"][0]["superseded"])
+                self.assertTrue(membership["conflict_table"]["path"].endswith("5.json"))
+                if request != dict(language=["earliest-per-test"]):
+                    own = [plan for plan in plans if plan[0]["test_id"] == "fifth-own"]
+                    self.assertEqual([(level["level"], mode) for _, level, mode in own], [("5", "test")])
+        self.assertEqual(self.rows, original)
+
+    def test_fifth_gating_needs_positive_refusal_and_is_only_explicit(self):
+        self.add_fifth()
+        self.rows["latest"] = selection_bounds(self.config, "6")
+        for request in [dict(edition=5), dict(language=["5"]), dict(language=["declared-per-test"]),
+                        dict(language=["earliest-per-test"])]:
+            with self.subTest(request=request):
+                plans = self.prepare(**request)[1]
+                gated = [test["test_id"] for test, _, mode in plans if mode == "version-gating"]
+                self.assertEqual(gated, ["latest"] if request == dict(language=["5"]) else [])
+        self.rows["latest"]["basis"] = "feature-free-rejection"
+        self.assertNotIn("latest", [test["test_id"] for test, _, _ in self.prepare(language=["5"])[1]])
+        self.rows["latest"] = selection_bounds(self.config, "6")
+        self.tables[5]["conflicts"].append({"action": "leave-out", "test_id": "latest",
+            "authority": "ECMA-334 5th ed 10.1, p. 70 (PDF p. 84)"})
+        self.assertNotIn("latest", [test["test_id"] for test, _, _ in self.prepare(language=["5"])[1]])
+        # Supersession at this level also prevents refusal checks at lower levels.
+        self.rows["fourth-own"] = selection_bounds(self.config, "6")
+        for level in ["1", "2"]:
+            self.assertNotIn("fourth-own", [test["test_id"] for test, _, mode in self.prepare(language=[level])[1]
+                                           if mode == "version-gating"])
+
+    def test_fifth_departures_cite_fifth_authority_and_other_levels_keep_the_latest(self):
+        self.add_fifth()
+        row = self.observation("first-kept", "5", "confirmed")
+        self.assertEqual(row["source_id"], "ecma-334-ed5")
+        self.assertEqual(self.ledger([row])["errors"], [])
+        row["source_id"] = "ecma-334-ed7"
+        self.assertTrue(any("must cite governing edition ecma-334-ed5" in error for error in self.ledger([row])["errors"]))
+        row["levels_json"], row["source_id"] = '["6"]', "ecma-334-ed5"
+        self.assertTrue(any("must cite governing edition ecma-334-ed7" in error for error in self.ledger([row])["errors"]))
+
+    def test_fifth_supersession_requires_older_standard_authority_and_both_citation_sides(self):
+        self.add_fifth()
+        original = copy.deepcopy(self.tables[5])
+        validate_conflicts(original, "ecma-334", self.tests)
+        for change in [lambda table: table["conflicts"][0].update(action="replace", replacement_test_id="fifth-own"),
+                       lambda table: table["conflicts"][0].update(test_id="latest"),
+                       lambda table: table["conflicts"][0].update(test_id="fifth-own"),
+                       lambda table: table["conflicts"][0]["superseded"].update(test=[]),
+                       lambda table: table["conflicts"][0]["superseded"].update(level=[]),
+                       lambda table: table["conflicts"][0]["superseded"]["test"][0].update(source_id="ecma-334-ed3"),
+                       lambda table: table["conflicts"][0]["superseded"]["level"][0].update(source_id="ecma-334-ed4"),
+                       lambda table: table["conflicts"][0]["superseded"]["level"][0].update(clause="10.2"),
+                       lambda table: table["conflicts"][0]["superseded"]["level"][0].update(pdf_pages=[85])]:
+            table = copy.deepcopy(original)
+            change(table)
+            with self.subTest(table=table), self.assertRaises(ValueError):
+                validate_conflicts(table, "ecma-334", self.tests)
+
     def prepare(self, *, edition=None, language=None, select=".*", tests=None):
         args = SimpleNamespace(edition=edition, langversion=language, select=select, origin=None, pilot_versions=None)
         return self.runner.prepare_run(self.tests if tests is None else tests, ["ecma-334"], self.config, args)
@@ -1191,7 +1310,7 @@ class SupersededChecks(unittest.TestCase):
         test = next(test for test in self.tests if test["test_id"] == name)
         own = next(number for number, entry in self.editions.items()
                    if test["authority"].startswith(entry["authority_prefix"] + " "))
-        source = self.editions[own] if status == "conforming" else iso_edition("ecma-334", level) or self.editions[own]
+        source = self.editions[own] if status == "conforming" else governing_edition("ecma-334", level) or self.editions[own]
         return dict(zip(DEPARTURE_FIELDS, [name, "compiler", "E7-1-observation", source["id"],
                     "10.1, p. 70 (PDF p. 84)", '"The older requirement applies."', test["source_sha256"],
                     "csc", self.config["commit"], "dotnet", json.dumps([level]), '{"compile_exit":1}', status, "",
@@ -1320,6 +1439,32 @@ class SupersededChecks(unittest.TestCase):
         errors = self.ledger([first, second])["errors"]
         self.assertTrue(any("observed levels contain a gap" in error for error in errors))
 
+    def test_split_departures_can_skip_another_governing_editions_levels(self):
+        self.add_fifth()
+        rows = [self.observation("first-kept", level, "confirmed") for level in ["1", "2", "5"]]
+        self.assertEqual(self.ledger(rows)["errors"], [])
+        directory = self.scratch / "observation-ledger"
+        with patch("suite_engine.standard_root", return_value=directory):
+            combined = departure_rows("ecma-334")["first-kept"]
+        self.assertEqual(json.loads(combined["levels_json"]), ["1", "2", "5"])
+        test = next(test for test in self.tests if test["test_id"] == "first-kept")
+        context, _ = self.context("separate-governing-departures", test)
+        combined["source_sha256"] = test["source_sha256"]
+        context._departures = {"ecma-334": {"first-kept": combined}}
+        for level in ["1", "2", "3", "4", "5"]:
+            record = {"suite_id": "ecma-334", "test_id": "first-kept", "mode": "test",
+                      "source_sha256": combined["source_sha256"], "level": level,
+                      "status": "unexpected-reject", "departure": False, "departure_kind": ""}
+            context.mark_departure(record)
+            self.assertEqual(record["departure"], level in ["1", "2", "5"])
+
+    def test_split_departures_keep_gaps_within_a_cited_editions_levels_invalid(self):
+        self.add_fifth()
+        rows = [self.observation("first-kept", level, "confirmed") for level in ["3", "5", "6"]]
+        rows[0]["source_id"] = rows[2]["source_id"] = "ecma-334-ed7"
+        errors = self.ledger(rows)["errors"]
+        self.assertTrue(any("observed levels contain a gap" in error for error in errors))
+
     def test_split_departures_check_the_second_quotation_at_its_source_page(self):
         from suite_audits import Sources
         first = self.observation("first-kept", "1", "confirmed")
@@ -1351,12 +1496,17 @@ class SupersededChecks(unittest.TestCase):
         row.pop("superseded")
         self.tables[4]["conflicts"] = []
         prefix = self.editions[2]["authority_prefix"]
-        with patch("suite_audits.Sources", return_value=sources):
-            row["authority"] = prefix + " 10.99, p. 70 (PDF p. 84)"
-            self.assertTrue(any("clause" in error for error in suite_editions.edition_audit(
-                "ecma-334", self.tests, source_map="unused")["errors"]))
-            row["authority"] = prefix + " 10.1, p. 70 (PDF p. 84)"
-            self.assertEqual(suite_editions.edition_audit("ecma-334", self.tests, source_map="unused")["errors"], [])
+        with tempfile.TemporaryDirectory() as temporary:
+            root = Path(temporary)
+            for number, table in self.tables.items():
+                write_json(root / "edition-conflicts" / (str(number) + ".json"), table)
+            with patch("suite_audits.Sources", return_value=sources), \
+                    patch("suite_editions.standard_root", return_value=root):
+                row["authority"] = prefix + " 10.99, p. 70 (PDF p. 84)"
+                self.assertTrue(any("clause" in error for error in suite_editions.edition_audit(
+                    "ecma-334", self.tests, source_map="unused")["errors"]))
+                row["authority"] = prefix + " 10.1, p. 70 (PDF p. 84)"
+                self.assertEqual(suite_editions.edition_audit("ecma-334", self.tests, source_map="unused")["errors"], [])
 
     def test_superseded_observation_needs_own_authority_and_a_cited_table_marker(self):
         original = self.observation("first-changed", "1")
@@ -1413,7 +1563,7 @@ class SupersededChecks(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "declared positive construct witness"):
             witness_for(test | {"version_witness": ""}, context, {}, {test["test_id"]: row})
 
-    def test_claim_and_cross_reference_use_the_governing_table_before_gating(self):
+    def test_edition_claims_overlay_governing_supersession_after_own_admission(self):
         for number, effective, changed in [(1, 2, "first-changed"), (2, 2, "first-changed"),
                                            (3, 4, "third-changed"), (4, 4, "third-changed")]:
             with self.subTest(edition=number):
@@ -1556,16 +1706,18 @@ class SupersededChecks(unittest.TestCase):
                 self.assertTrue(details["language_edition_selection"])
         self.assertEqual([test["test_id"] for test in self.prepare(language=["7.3"])[0]], ["latest"])
 
-    def test_source_table_cannot_override_the_governing_table(self):
+    def test_requested_table_excludes_without_changing_language_level_selection(self):
         for number, name in [(1, "second-own"), (3, "fourth-own")]:
             self.tables[number]["conflicts"].append({"action": "leave-out", "test_id": name,
                                                     "authority": self.editions[number]["authority_prefix"]
                                                     + " 10.1, p. 70 (PDF p. 84)"})
             with self.subTest(edition=number):
                 tests, _, _, _, details = self.prepare(edition=number)
-                self.assertIn(name, [test["test_id"] for test in tests])
+                self.assertNotIn(name, [test["test_id"] for test in tests])
                 detail = details["edition_selection"]["ecma-334"]
                 self.assertNotEqual(detail["source_conflict_table"]["sha256"], detail["conflict_table"]["sha256"])
+                level = "1" if number == 1 else "2"
+                self.assertIn(name, [test["test_id"] for test in self.prepare(language=[level])[0]])
 
     def test_header_level_aliases_keep_their_execution_resolution(self):
         self.tests[1]["version"] = "1"
@@ -1632,9 +1784,9 @@ class SupersededChecks(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "cannot be replayed"):
             verify_record(context, test, record, level)
         self.assertIsNotNone(context.saved(test, level, mode))
-        for field in ["conflict_table", "superseded"]:
+        for field in ["conflict_table", "source_conflict_table", "superseded"]:
             changed = copy.deepcopy(test)
-            if field == "conflict_table":
+            if field in {"conflict_table", "source_conflict_table"}:
                 changed["edition_membership"][field]["sha256"] = "0" * 64
             else:
                 changed["edition_membership"][field]["level"][0]["quote"] += " Different text."
@@ -1650,7 +1802,7 @@ class SupersededChecks(unittest.TestCase):
         context.execute.assert_not_called()
         context.target.run_batch.assert_not_called()
 
-    def test_governing_table_keeps_cited_older_replacements_outside_their_interval(self):
+    def test_governing_only_replacement_admission_stays_in_its_own_edition(self):
         self.tables[4]["conflicts"].append({"action": "replace", "test_id": "latest",
                                            "replacement_test_id": "first-kept",
                                            "authority": "ECMA-334 4th ed 10.1, p. 70 (PDF p. 84)"})
@@ -1659,10 +1811,57 @@ class SupersededChecks(unittest.TestCase):
         for number in [3, 4]:
             with self.subTest(edition=number):
                 _, plans, _, _, details = self.prepare(edition=number)
-                self.assertEqual([mode for test, _, mode in plans if test["test_id"] == "first-kept"], ["test"])
-                self.assertIn("first-kept", details["edition_selection"]["ecma-334"]["replacement_test_ids"])
-                self.assertNotIn("latest", [test["test_id"] for test, _, _ in plans])
+                expected = ["test"] if number == 4 else []
+                self.assertEqual([mode for test, _, mode in plans if test["test_id"] == "first-kept"], expected)
+                self.assertEqual("first-kept" in details["edition_selection"]["ecma-334"]["replacement_test_ids"], number == 4)
+                self.assertEqual("latest" in [test["test_id"] for test, _, _ in plans], number == 3)
         self.assertEqual(self.rows, original)
+
+    def test_other_editions_require_continuity_without_governing_own_admission(self):
+        for number, name, since in [(1, "second-own", "1"), (3, "fourth-own", "2")]:
+            for compatible in [False, True]:
+                self.rows[name] = selection_bounds(self.config, since if compatible else "3")
+                with self.subTest(edition=number, compatible=compatible):
+                    tests, plans, _, _, details = self.prepare(edition=number)
+                    self.assertEqual(name in [test["test_id"] for test in tests], compatible)
+                    self.assertEqual(name in details["edition_selection"]["ecma-334"]["continuity_test_ids"], compatible)
+                    self.assertNotIn("version-gating", [mode for _, _, mode in plans])
+            # A table citation excludes an added rule even when measured continuity accepts it.
+            self.rows[name] = selection_bounds(self.config, since)
+            self.tables[number]["conflicts"].append({"action": "leave-out", "test_id": name,
+                "authority": self.editions[number]["authority_prefix"] + " 10.1, p. 70 (PDF p. 84)"})
+            self.assertNotIn(name, [test["test_id"] for test in self.prepare(edition=number)[0]])
+
+    def test_governing_supersession_cannot_admit_an_unselected_claim(self):
+        self.tables[4]["conflicts"].append(self.row("first-changed", 1, 4))
+        self.assertNotIn("first-changed", [test["test_id"] for test in self.prepare(edition=3)[0]])
+        for request in [dict(edition=4), dict(language=["2"])]:
+            self.assertEqual([mode for test, _, mode in self.prepare(**request)[1]
+                              if test["test_id"] == "first-changed"], ["superseded"])
+        self.rows["first-changed"] = selection_bounds(self.config, "1")
+        self.assertEqual([mode for test, _, mode in self.prepare(edition=3)[1]
+                          if test["test_id"] == "first-changed"], ["superseded"])
+        self.tables[3]["conflicts"].append({"action": "leave-out", "test_id": "first-changed",
+            "authority": "ECMA-334 3rd ed 10.1, p. 70 (PDF p. 84)"})
+        self.assertNotIn("first-changed", [test["test_id"] for test in self.prepare(edition=3)[0]])
+
+    def test_requested_cited_replacement_can_be_a_static_governing_supersession(self):
+        self.tables[3]["conflicts"].append({"action": "replace", "test_id": "latest",
+            "replacement_test_id": "first-changed", "authority": "ECMA-334 3rd ed 10.1, p. 70 (PDF p. 84)"})
+        self.tables[4]["conflicts"].append(self.row("first-changed", 1, 4))
+        before = copy.deepcopy(self.rows)
+        _, plans, _, _, details = self.prepare(edition=3)
+        test, level, mode = next(plan for plan in plans if plan[0]["test_id"] == "first-changed")
+        self.assertEqual(mode, "superseded")
+        self.assertIn("first-changed", details["edition_selection"]["ecma-334"]["superseded_test_ids"])
+        self.assertNotIn("latest", [test["test_id"] for test, _, _ in plans])
+        membership = test["edition_membership"]
+        self.assertEqual(membership["source_conflict_table"]["sha256"], digest(self.tables[3]))
+        self.assertEqual(membership["conflict_table"]["sha256"], digest(self.tables[4]))
+        context, _ = self.context("replacement-superseded", test)
+        self.assertEqual(context.superseded(test, level)["status"], "superseded")
+        context.execute.assert_not_called()
+        self.assertEqual(self.rows, before)
 
     def test_earliest_replacement_runs_at_its_own_and_the_governing_level(self):
         self.tables[4]["conflicts"].append({"action": "replace", "test_id": "latest",

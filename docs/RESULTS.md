@@ -39,7 +39,7 @@ Every row has one of these fixed categories:
 | `compiler-error` | The compiler crashed, timed out, failed to produce an artifact or supplied no valid verdict. |
 | `infrastructure` | The invocation produced a configured command-line error, or the target could not launch the program. Such a run needs repair before its counts establish results. |
 | `not-applicable` | The test lies outside its measured interval and does not require a gating check at this level, or a required fixture library was refused below `Since`. |
-| `superseded` | The governing ISO edition changes this older edition's requirement. Both clauses, short quotation spans and printed/PDF pages are recorded. The claim has no execution and is neither a pass nor a failure. |
+| `superseded` | The governing edition changes this older edition's requirement. Both clauses, short quotation spans and printed/PDF pages are recorded. The claim has no execution and is neither a pass nor a failure. |
 
 These categories are a versioned public contract. Adding or changing one
 requires a documented version change of the
@@ -102,22 +102,23 @@ literal directive payload, not compiler-specific wording.
 Every version run names `--langversion`. It accepts one or more levels, an
 inclusive range such as `5..7.3`, `all`, or `earliest-per-test`. The last
 selector starts each eligible test at the first level of its measured range,
-then applies the ISO tables as described below. Without a selector the invocation
-stops before loading tests or creating results. A plan resolving to ISO-1 or
-ISO-2 uses the governing edition table, as described in [Edition runs](#edition-runs).
+then applies the governing tables as described below. Without a selector the invocation
+stops before loading tests or creating results. A plan resolving to ISO-1,
+ISO-2 or 5 uses the governing edition table, as described in [Edition runs](#edition-runs).
 At other levels, measured version runs exclude tests whose authority is an
 older standard edition.
 
 An explicitly requested unsupported level aborts the
-invocation. At supported explicit levels outside the governing ISO plans,
+invocation. At supported explicit levels outside the governed plans,
 the test's measured bounds, `Since` and `Until` (see
-[Bounds](CONVENTIONS.md#bounds)), decide what happens. At ISO-1 and ISO-2,
+[Bounds](CONVENTIONS.md#bounds)), decide what happens. At ISO-1, ISO-2 and 5,
 the governing table selects claims first. An unlisted test outside that selection
 gets a positive version-gating check when it is below `Since` and the reference
 measurement records a coded refusal of the measured positive source at the
 requested level. Own-authority claims and cited replacement
 admissions retain their ordinary expectations. Superseded, replaced and
-left-out tests produce no version-gating check.
+left-out tests produce no version-gating check. Supersession at any governed
+level prevents all version-gating checks of that test.
 
 | Requested level | What happens |
 | --- | --- |
@@ -141,8 +142,9 @@ passed, outside the interval that contains its `Version`.
 ## Edition runs
 
 `--edition N` runs the ECMA-334 Nth edition at its registered language level:
-the 1st and 2nd editions at ISO-1, and the 3rd and 4th editions at ISO-2. It
-cannot be combined with `--langversion`. The compiler must support that level,
+the 1st and 2nd editions at ISO-1, the 3rd and 4th editions at ISO-2, and the
+5th edition at level 5. It cannot be combined with `--langversion`.
+The compiler must support that level,
 and all candidate tests need current bounds.
 
 An edition run tests that edition and no other:
@@ -156,10 +158,14 @@ An edition run tests that edition and no other:
 - A test of a rule the edition does not have never runs in that edition's run.
 - The edition's conflict table excludes the tests it replaces or leaves out.
 
-The source registry assigns one governing edition to each ISO level: the 2nd
-edition to ISO-1 and the 4th edition to ISO-2. Where the governing edition
-changed a rule, an older edition's test of that rule is reported as
+The source registry assigns one governing edition to each governed level:
+the 2nd edition to ISO-1, the 4th edition to ISO-2 and the 5th edition to 5.
+Where the governing edition changed a rule, an admitted older claim is reported as
 `superseded`, counted separately from passes and failures.
+
+The governing table supplies supersession for claims admitted by the
+requested edition. Membership and ordinary replacement admissions come
+from the requested edition's own table.
 
 `--edition 2` and `--edition 4` are the claim runs for ISO-1 and ISO-2. An ISO
 conformance claim names both its edition claim run and its explicit-level run:
@@ -168,20 +174,20 @@ The claim run checks the edition's rules; the explicit-level run also checks
 refusal of newer constructs using their positive witnesses. Edition selection
 metadata records the edition, its level and whether it is the level's claim run.
 
-A language plan that resolves to an ISO level uses that level's governing
-table (the 2nd edition's at ISO-1, the 4th edition's at ISO-2), including
+A language plan that resolves to ISO-1, ISO-2 or 5 uses that level's governing
+table (the 2nd edition's at ISO-1, the 4th edition's at ISO-2 and the 5th edition's at 5), including
 `earliest-per-test` and header-level plans.
 
-For `earliest-per-test`, a cited replacement runs at the ISO level of the test
+For `earliest-per-test`, a cited replacement runs at the governed level of the test
 it replaces. If its own earliest plan survives the governing tables at another
 level, the run also records that plan. Both tests must belong to the candidate
 selection; each test has at most one plan per level. A test whose initial
 plan is replaced or left out can have no ordinary result row. A replacement
 can have rows at different levels when both its own earliest plan and the
-cited ISO plan survive.
+cited plan at the governing level survive.
 
-A `leave-out` row with a `superseded` object preserves the older test as a
-result row with status and mode `superseded`, even outside its measured
+For an admitted claim, a `leave-out` row with a `superseded` object preserves
+the older test as a result row with status and mode `superseded`, even outside its measured
 interval. The object contains `test` and `level` citation arrays: the older
 test's requirement and the governing edition's changed requirement. Each
 citation has the registered source, clause, a quotation of at most 30 words,
@@ -197,28 +203,29 @@ A `replace` row targets another registered edition's test. An ordinary
 authority. The cited edition's text must justify excluding the program's
 assertion or setup syntax from that level's claims. The excluded test produces
 no result row or version-gating check. Compiler acceptance alone does not
-admit an ISO claim. Supersession retains its older standard-authority requirement.
+admit a standard claim. Supersession retains its older standard-authority requirement.
 
 A replacement belongs to the requested edition or to another registered older edition.
 For a target in the candidate selection, a cited `replace` row admits its
 older replacement outside the replacement's measured interval when the
 cited text requires its expected result at the requested level. It runs as
-an ordinary test at that level, with unchanged measured bounds. It must be
-selected, must not itself be excluded, and must form no cycle. Each row cites
+an ordinary test unless governing supersession makes the admitted claim
+static. Its measured bounds stay unchanged. Within the requested table, it
+must be selected, must not itself be excluded, and must form no cycle. Each row cites
 the table edition's clause and printed/PDF pages. Table dispositions are
 data with source citations; compiler verdicts do not change them. Measured
 intervals decide continuity for tests without a table disposition and identify
 positive constructs that need refusal checks. A contradictory compiler result
 for an active edition requirement remains a confirmed departure failure citing
-the table edition, never a pass.
+the governing edition, never a pass.
 
 In an edition run, tests outside the interval without own-authority selection,
 a cited replacement admission or a superseded marker have no result rows.
 Other tests excluded by the table also have no result rows. Edition runs
-produce no version-gating checks. Explicit-level runs at 1 and 2 add the
+produce no version-gating checks. Explicit-level runs at 1, 2 and 5 add the
 unlisted below-`Since` refusal checks described above and record their IDs as
 `version_gating_test_ids`. `run.json` records the candidate inventory,
-the table's path and hash, and the test IDs included or excluded for each
+the requested and governing tables' paths and hashes, and the test IDs included or excluded for each
 reason, including outside-interval replacement admissions.
 `run.json` and both summaries name the edition and resolved level. Language
 plans also record their governing edition selections.
@@ -226,7 +233,7 @@ plans also record their governing edition selections.
 ### Header checks
 
 `--langversion declared-per-test` resolves each header `Version` and applies
-the governing ISO table without requiring current bounds. Superseded claims
+the governing table without requiring current bounds. Superseded claims
 produce static rows; other table exclusions produce no row. `check-csc.py`
 validates the cited superseded evidence without checking that claim's `Csc`
 diagnostic codes. Raw certification observes every source at every configured
@@ -274,7 +281,7 @@ compiler or the hosted runtime (see [Departures](CONVENTIONS.md#departures)).
 - Pending departure records fail the publishing gate.
 
 An older-edition expectation can disagree with the raw observation while the
-compiler conforms to the governing ISO edition. Such evidence belongs in the
+compiler conforms to the governing edition. Such evidence belongs in the
 clause's `superseded-observations.tsv`, with status `conforming`. Its source,
 quotation and raw verdict describe the older expectation; the governing
 table's `superseded` object identifies the changed rule at each listed level
@@ -298,7 +305,7 @@ gets one of these results:
 | `inconclusive-unsupported` | The original test was `unsupported`. |
 | `inconclusive-original` | The original test did not pass, or it passed only through a permitted rejection. |
 | `inconclusive-mutant` | The mutant gave no usable verdict: it was `unsupported` or hit an `infrastructure` or `compiler-error` result. A run test's mutant that was rejected without a coded error is also inconclusive; for a reject or warning test, that rejection gives `survived`. |
-| `superseded` | The governing ISO table changes the older claim. Both citation sets are recorded; neither the original nor its mutant executes, and no mutation pass or failure is claimed. |
+| `superseded` | The governing table changes the older claim. Both citation sets are recorded; neither the original nor its mutant executes, and no mutation pass or failure is claimed. |
 
 A `run-or-reject` test's mutant uses the `run` expectation: it must contain a
 valid, executable construct whose changed value fails the counted checks.

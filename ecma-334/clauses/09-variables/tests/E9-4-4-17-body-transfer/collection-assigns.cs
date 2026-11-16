@@ -5,7 +5,7 @@ Version: 7.3
 Expected: run
 Stdout: OK 3
 Mutate: Elements(empty, out cell)
-Into: Elements(empty, out _)
+Into: Elements(empty, out failures)
 */
 using System;
 class Program

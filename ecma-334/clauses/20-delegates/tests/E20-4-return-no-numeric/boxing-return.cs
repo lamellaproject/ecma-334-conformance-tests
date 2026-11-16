@@ -11,5 +11,5 @@ delegate object Read();
 class Program
 {
     static int ReadValue() { return 89; }
-    static void Main() { Read read = ReadValue; }
+    static void Main() { Read read = new Read(ReadValue); }
 }

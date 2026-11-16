@@ -10,7 +10,7 @@ Into: public private int this[int index]
 using System;
 class Grid
 {
-    private int this[int index] => index * 4;
+    private int this[int index] { get { return index * 4; } }
     public class Client { public static int Read(Grid grid) { return grid[3]; } }
 }
 class Program

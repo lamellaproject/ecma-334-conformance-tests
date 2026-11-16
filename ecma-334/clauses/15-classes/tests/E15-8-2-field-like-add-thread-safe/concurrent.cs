@@ -30,19 +30,29 @@ class Program
                 Action handler = () => counts[index]++;
                 workers[i] = new Thread(() =>
                 {
-                    try { Interlocked.Increment(ref gate.Ready); while (!gate.Start) Thread.Yield(); source.Signal += handler; }
+                    try { Interlocked.Increment(ref gate.Ready);
+                        for (int attempt = 0; attempt < 5000 && !gate.Start; attempt++) Thread.Sleep(1);
+                        if (!gate.Start) throw new InvalidOperationException("worker infrastructure"); source.Signal += handler; }
                     catch (Exception) { errors[index] = true; }
                 });
                 workers[i].IsBackground = true;
                 workers[i].Start();
             }
-            while (Volatile.Read(ref gate.Ready) != workers.Length) Thread.Yield();
+            bool ready = false;
+            for (int attempt = 0; attempt < 5000 && !ready; attempt++)
+            {
+                ready = Volatile.Read(ref gate.Ready) == workers.Length;
+                if (!ready) Thread.Sleep(1);
+            }
             gate.Start = true;
             bool joined = true;
             for (int i = 0; i < workers.Length; i++) joined &= workers[i].Join(5000);
+            if (!ready || !joined) throw new InvalidOperationException("worker infrastructure");
+            for (int i = 0; i < errors.Length; i++)
+                if (errors[i]) throw new InvalidOperationException("worker infrastructure");
             source.Notify();
-            bool ok = joined;
-            for (int i = 0; i < counts.Length; i++) ok &= counts[i] == 1 && !errors[i];
+            bool ok = true;
+            for (int i = 0; i < counts.Length; i++) ok &= counts[i] == 1;
             Check(ok, "concurrent-add-no-lost-handler");
         }
         if (failures == 0) Console.WriteLine("OK " + checks);

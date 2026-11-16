@@ -8,7 +8,7 @@ Mutate: protected int Token
 Into: private int Token
 */
 using System;
-class Base { protected int Token => 17; }
+class Base { protected int Token { get { return 17; } } }
 class Derived : Base { public int Read() { return Token; } }
 class Program
 {

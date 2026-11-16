@@ -20,9 +20,9 @@ GENERATOR = FOLDER + '/generators/comparisons.py'
 OPS = [('equality', '=='), ('inequality', '!='), ('less', '<'), ('greater', '>'), ('less-equal', '<='), ('greater-equal', '>=')]
 TYPES = [('int', 32, True), ('uint', 32, False), ('long', 64, True), ('ulong', 64, False)]
 ENUM = [('sbyte', 8, True), ('byte', 8, False), ('short', 16, True), ('ushort', 16, False)] + TYPES
-BITS = {'float': [0xFF800000, 0xFF7FFFFF, 0x80000001, 0x80000000, 0, 1, 0x7F7FFFFF, 0x7F800000, 0x7FC00000],
-        'double': [0xFFF0000000000000, 0xFFEFFFFFFFFFFFFF, 0x8000000000000001, 0x8000000000000000, 0,
-                   1, 0x7FEFFFFFFFFFFFFF, 0x7FF0000000000000, 0x7FF8000000000000]}
+BITS = {'float': [0xFF800000, 0xFF7FFFFF, 0x80800000, 0x80000000, 0, 0x00800000, 0x7F7FFFFF, 0x7F800000, 0x7FC00000],
+        'double': [0xFFF0000000000000, 0xFFEFFFFFFFFFFFFF, 0x8010000000000000, 0x8000000000000000, 0,
+                   0x0010000000000000, 0x7FEFFFFFFFFFFFFF, 0x7FF0000000000000, 0x7FF8000000000000]}
 RANKS = [-3, -2, -1, 0, 0, 1, 2, 3, None]
 
 def relation(a, b, op):

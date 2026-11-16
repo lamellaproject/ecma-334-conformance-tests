@@ -1,0 +1,9 @@
+using System;
+class Program
+{
+    static unsafe void Main()
+    {
+        void* values = stackalloc int[1];
+        Console.WriteLine("OK 0");
+    }
+}

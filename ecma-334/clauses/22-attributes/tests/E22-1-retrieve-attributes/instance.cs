@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 22.1
 Version: 7.3
 Expected: run
 Stdout: OK 4
+Fixture: {"target_requires":["reflection"]}
 Mutate: [Memo(17, Note = "ink")]
 Into: [Memo(18, Note = "ink")]
 */

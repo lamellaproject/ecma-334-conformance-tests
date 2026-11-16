@@ -4,8 +4,8 @@ Authority: ECMA-334 7th ed 23.8.2
 Version: 7.3
 Expected: run
 Stdout: OK 1
-Mutate: return Values[0];
-Into: return Values[1];
+Mutate: return pointer[0];
+Into: return pointer[1];
 */
 using System;
 unsafe struct Item
@@ -13,9 +13,12 @@ unsafe struct Item
     private fixed int Values[2];
     public int Read()
     {
-        Values[0] = 31;
-        Values[1] = 5;
-        return Values[0];
+        fixed (int* pointer = Values)
+        {
+            pointer[0] = 31;
+            pointer[1] = 5;
+            return pointer[0];
+        }
     }
 }
 class Program

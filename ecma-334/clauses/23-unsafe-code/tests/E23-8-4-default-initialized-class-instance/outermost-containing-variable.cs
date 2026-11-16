@@ -16,11 +16,12 @@ unsafe class Program
 {
     static int checks, failures;
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
-    static Owner Filled() { Owner value = new Owner(); value.Root.Data.Values[1] = 1; return value; }
+    static Owner Filled() { Owner value = new Owner(); fixed (ushort* pointer = value.Root.Data.Values) { pointer[1] = 1; } return value; }
     static void Main()
     {
         Owner owner = new Owner();
-        Check(owner.Root.Data.Values[0] == 0 && owner.Root.Data.Values[1] == 0 && owner.Root.Data.Values[2] == 0, "nested-instance-buffer-default");
+        fixed (ushort* pointer = owner.Root.Data.Values)
+            Check(pointer[0] == 0 && pointer[1] == 0 && pointer[2] == 0, "nested-instance-buffer-default");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }
 }

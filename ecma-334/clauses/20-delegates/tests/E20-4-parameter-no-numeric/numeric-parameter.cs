@@ -11,5 +11,5 @@ delegate void Notice(int value);
 class Program
 {
     static void Touch(long value) { }
-    static void Main() { Notice notice = Touch; }
+    static void Main() { Notice notice = new Notice(Touch); }
 }

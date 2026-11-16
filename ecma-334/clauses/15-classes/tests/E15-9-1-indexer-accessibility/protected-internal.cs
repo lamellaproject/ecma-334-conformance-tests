@@ -8,7 +8,7 @@ Mutate: protected internal int this[int index]
 Into: protected int this[int index]
 */
 using System;
-class Grid { protected internal int this[int index] => index + 2; }
+class Grid { protected internal int this[int index] { get { return index + 2; } } }
 class Program
 {
     static int checks, failures;

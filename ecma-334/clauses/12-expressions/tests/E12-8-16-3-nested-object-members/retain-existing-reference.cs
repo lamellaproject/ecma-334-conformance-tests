@@ -13,8 +13,9 @@ class Shell
 {
     public Leaf Node;
     public readonly Leaf Remembered;
-    public Leaf Property { get; }
-    public Shell() { Node = new Leaf(3); Remembered = Node; Property = new Leaf(5); }
+    readonly Leaf property;
+    public Leaf Property { get { return property; } }
+    public Shell() { Node = new Leaf(3); Remembered = Node; property = new Leaf(5); }
 }
 class Program
 {

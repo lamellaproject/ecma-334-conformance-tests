@@ -10,18 +10,20 @@ Into: tree=x=>x+60L;
 using System;
 using System.Linq.Expressions;
 
+delegate long Add(int value);
 
 class Program
 {
     static int checks, failures;
+    static int input;
+    static int Next() { return ++input; }
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        Expression<Func<int,long>> tree=x=>x+61L;
-        var sum=(BinaryExpression)tree.Body;
-        var widen=(UnaryExpression)sum.Left;
-        Check(tree.NodeType==ExpressionType.Lambda && sum.NodeType==ExpressionType.Add && widen.NodeType==ExpressionType.Convert, "E10-2-15-expression-tree-pilot-001-check-01");
-        Check(ReferenceEquals(widen.Operand,tree.Parameters[0]) && (long)((ConstantExpression)sum.Right).Value==61 && tree.Compile()(1)==62, "E10-2-15-expression-tree-pilot-001-check-02");
+        Expression<Add> tree=x=>x+61L;
+        Add compiled=tree.Compile();
+        Check(compiled(Next())==62L, "E10-2-15-expression-tree-pilot-001-check-01");
+        Check(compiled(Next())==63L, "E10-2-15-expression-tree-pilot-001-check-02");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }
 }

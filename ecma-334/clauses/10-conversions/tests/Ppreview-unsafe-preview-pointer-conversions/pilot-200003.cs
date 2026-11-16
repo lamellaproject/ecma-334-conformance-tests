@@ -1,6 +1,6 @@
 /*
 Rules: Ppreview-unsafe-preview-pointer-conversions
-Authority: csc 5.11.0-1.26425.128 (C# preview)
+Authority: csc 5.12.0-1.26529.118 (C# preview)
 Version: preview
 Expected: run
 Stdout: OK 1

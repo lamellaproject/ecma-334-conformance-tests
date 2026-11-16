@@ -1,6 +1,6 @@
 /*
 Rules: P11-static-method-runtime-dispatch; E12-6-2-3-argument-order; E12-6-6-1-static-arguments; E12-6-6-1-static-invoke
-Authority: csc 5.11.0-1.26425.128 (C# 11.0)
+Authority: csc 5.12.0-1.26529.118 (C# 11.0)
 Version: 11.0
 Expected: run
 Stdout: OK 5

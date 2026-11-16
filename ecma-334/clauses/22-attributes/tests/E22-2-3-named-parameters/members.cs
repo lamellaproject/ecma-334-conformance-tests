@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 22.2.3
 Version: 7.3
 Expected: run
 Stdout: OK 2
+Fixture: {"target_requires":["reflection"]}
 Mutate: [Mark(Field = 41, Property = 43)]
 Into: [Mark(Field = 42, Property = 43)]
 */

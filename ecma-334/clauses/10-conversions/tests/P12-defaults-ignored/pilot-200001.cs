@@ -1,6 +1,6 @@
 /*
 Rules: P12-defaults-ignored; P12-defaults-natural; P12-defaults-unify; P12-defaults-params-unify
-Authority: csc 5.11.0-1.26425.128 (C# 12.0)
+Authority: csc 5.12.0-1.26529.118 (C# 12.0)
 Version: 12.0
 Expected: run
 Stdout: OK 4

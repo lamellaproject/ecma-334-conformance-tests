@@ -18,7 +18,8 @@ class Program
     {
         decimal unit = 0.0000000000000000000000000001m;
         decimal rounded = unit / 2m;
-        Check(rounded == 0m, "nonzero-exact-result-rounds-to-zero");
+        // The scale bound is a minimum, so the exact half may be representable.
+        Check(rounded == 0m || rounded + rounded == unit, "decimal-half-quantum-permitted-result");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }
 }

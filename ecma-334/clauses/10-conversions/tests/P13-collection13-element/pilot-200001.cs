@@ -1,6 +1,6 @@
 /*
 Rules: P13-collection13-element; P13-collection13-nonspan; P13-collection13-readonly; P13-collection13-span-array
-Authority: csc 5.11.0-1.26425.128 (C# 13.0)
+Authority: csc 5.12.0-1.26529.118 (C# 13.0)
 Version: 13.0
 Expected: run
 Stdout: OK 4

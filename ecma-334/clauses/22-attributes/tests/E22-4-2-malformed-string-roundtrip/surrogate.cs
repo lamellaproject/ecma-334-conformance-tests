@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 22.4.2
 Version: 7.3
 Expected: run
 Stdout: OK 0
+Fixture: {"target_requires":["reflection"]}
 Mutate: [Text("\uD934")]
 Into: [Text(7)]
 */

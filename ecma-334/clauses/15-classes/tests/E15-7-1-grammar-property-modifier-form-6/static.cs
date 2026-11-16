@@ -8,7 +8,7 @@ Mutate: public static int Token
 Into: public int Token
 */
 using System;
-class Box { public static int Token => 37; }
+class Box { public static int Token { get { return 37; } } }
 class Program
 {
     static int checks, failures;

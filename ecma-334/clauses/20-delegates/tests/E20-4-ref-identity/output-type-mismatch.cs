@@ -11,5 +11,5 @@ delegate void Read(out object value);
 class Program
 {
     static void Touch(out string value) { value = "yew"; }
-    static void Main() { Read read = Touch; }
+    static void Main() { Read read = new Read(Touch); }
 }

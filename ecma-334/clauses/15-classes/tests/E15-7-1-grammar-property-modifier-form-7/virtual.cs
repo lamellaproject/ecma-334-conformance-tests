@@ -8,8 +8,8 @@ Mutate: public virtual int Token
 Into: public int Token
 */
 using System;
-class Base { public virtual int Token => 10; }
-class Derived : Base { public override int Token => 25; }
+class Base { public virtual int Token { get { return 10; } } }
+class Derived : Base { public override int Token { get { return 25; } } }
 class Program
 {
     static int checks, failures;

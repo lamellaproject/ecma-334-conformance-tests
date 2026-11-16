@@ -373,6 +373,7 @@
           "required": ["path", "sha256"],
           "additionalProperties": false
         },
+        "source_conflict_table": {"$ref": "#/properties/edition_membership/properties/conflict_table"},
         "superseded": {
           "anyOf": [
             {"type": "null"},
@@ -380,7 +381,7 @@
           ]
         }
       },
-      "required": ["edition", "level_source_id", "conflict_table", "superseded"],
+      "required": ["edition", "level_source_id", "conflict_table", "source_conflict_table", "superseded"],
       "additionalProperties": false
     }
   },

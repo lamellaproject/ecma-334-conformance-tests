@@ -4,8 +4,8 @@ Authority: ECMA-334 7th ed 23.8.3
 Version: 7.3
 Expected: run
 Stdout: OK 1
-Mutate: int first = Values[0];
-Into: int first = Values[1];
+Mutate: int first = simple[0];
+Into: int first = simple[1];
 */
 using System;
 unsafe struct Item
@@ -13,9 +13,13 @@ unsafe struct Item
     public fixed int Values[2];
     public int Read()
     {
-        int first = Values[0];
-        int second = this.Values[0];
-        return first + second;
+        fixed (int* simple = Values)
+        fixed (int* explicitThis = this.Values)
+        {
+            int first = simple[0];
+            int second = explicitThis[0];
+            return first + second;
+        }
     }
 }
 class Program

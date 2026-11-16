@@ -35,7 +35,7 @@ which contains the entries below. The only installed standard is ECMA-334, in
 | --- | --- |
 | `source-registry.json` | The registered sources: the standard's editions, the references and the compiler authority. It also lists the rules that may justify raw source. |
 | `ledger-scope.json` | The scope of each clause and its text-block inventory. |
-| `edition-conflicts/<N>.json` | Conflicts that an older registered edition replaces or leaves out; see [Edition selection](#edition-selection). |
+| `edition-conflicts/<edition>.json` | One conflict table per older registered edition, named for its number; see [Edition selection](#edition-selection). |
 | `raw-source.tsv` | Optional. The inventory of raw-source exceptions; see [Bytes and raw source](CONVENTIONS.md#bytes-and-raw-source). |
 | `reference-notes.tsv` | Optional. Reference notes, which record where the pinned csc disagrees with the rule text of a test whose authority is csc. They use the columns of departure records; see [Departures](CONVENTIONS.md#departures). |
 | `manifest.tsv` and `manifest/` | The derived manifest; see [The manifest](#the-manifest). |
@@ -281,7 +281,7 @@ A worked example:
    test needs (diagnostic `CS8059`).
 5. In an explicit-level run, the test is therefore checked as an ordinary test
    at level 7 and above. A level below 7 gets a version-gating check when its
-   own positive observation records refusal and no governing ISO table
+   own positive observation records refusal and no governing table
    disposition excludes it (see
    [Explicit language levels](RESULTS.md#explicit-language-levels)).
 
@@ -396,7 +396,7 @@ states:
 | `missing` | No row exists for the test. |
 
 `--langversion declared-per-test` resolves each test's own `Version` header
-and applies the governing ISO table where that level has one. Superseded
+and applies the governing table where that level has one. Superseded
 claims produce cited result rows without execution; other table exclusions
 produce no row. These header runs report the version-row states and may run
 before bounds exist. Other runs, including `earliest-per-test`, and publishing
@@ -434,21 +434,24 @@ external measurement evidence.
 
 ## Edition selection
 
-The source registry's `iso_editions` maps each ISO language level to one
-primary edition: ISO-1 follows the 2nd edition (ISO/IEC 23270:2003), and
-ISO-2 follows the 4th edition (ISO/IEC 23270:2006). The runner reads this map
-and records the level's source and whether the requested edition is its
-claim run. `--edition 2` is ISO-1's claim run; `--edition 4` is ISO-2's.
+The source registry maps each governed language level to one primary
+edition: ISO-1 follows the 2nd edition (ISO/IEC 23270:2003), ISO-2 follows
+the 4th edition (ISO/IEC 23270:2006), and level 5 follows the 5th edition.
+The runner reads this map and records the level's source and whether the
+requested edition is its claim run. `--edition 2` is ISO-1's claim run; `--edition 4` is ISO-2's;
+`--edition 5` is level 5's.
+
 The 1st and 3rd editions remain registered sources. `--edition 1` and
 `--edition 3` run those editions at their ISO levels, each under its own
 conflict table.
 
-A language plan that resolves to an ISO level uses that level's governing
+A language plan that resolves to ISO-1, ISO-2 or 5 uses that level's governing
 edition table. This applies to explicit levels, `earliest-per-test` and
 `declared-per-test`. At other levels, measured version runs use the latest
 registered primary edition's tests and the compiler-authority tests, excluding
 older authorities. Header runs retain their declared authorities.
-Explicit ISO groups also admit unlisted tests outside the claim selection as
+
+Explicit groups at these levels also admit unlisted tests outside the claim selection as
 version-gating checks when their measured `Since` is higher and the reference
 measurement records refusal. Own-authority claims and cited replacement
 admissions retain their ordinary expectations. Superseded, replaced and
@@ -459,8 +462,8 @@ An ISO conformance claim names both the edition claim run and the explicit-level
 run: the first checks the edition's rules, and the second also checks refusal
 of newer constructs.
 
-An `earliest-per-test` ISO group schedules a cited replacement at that group's
-level when the replaced test is in the group and both tests are candidates.
+An `earliest-per-test` group at a governed level schedules a cited replacement
+at that group's level when the replaced test is in the group and both tests are candidates.
 The replacement's own earliest plan can also produce a row at another level.
 Its measured bounds stay unchanged, and each test has at most one plan per
 level. A replacement excluded by the candidate filter is an error.
@@ -473,21 +476,25 @@ A test with another authority joins only for a rule the edition shares, as the
 edition's own conflict table admits it: by continuity when its current measured
 interval contains the level, or as an explicitly cited older replacement. A test
 of a rule the edition does not have never joins. Where the level's governing
-edition (the 2nd edition at ISO-1, the 4th at ISO-2) changed a rule, the
-requested edition's test of that rule is `superseded`. Selection records the edition's own
-table and the governing table. Every candidate
+edition changed a rule, an admitted older claim is `superseded`. The governing
+table supplies supersession for admitted claims; membership and ordinary
+replacement admissions come from the requested edition's own table.
+
+Selection records each table's path and hash. Every candidate
 requires current bounds; an external pilot is validated against the complete
 selection before edition filtering.
 
-A cited superseded claim stays in the result inventory regardless of its
-measured interval. It produces `superseded` without compiling or running the
+An admitted claim with cited supersession stays in the result inventory
+regardless of its measured interval. It produces `superseded` without compiling or running the
 source. Other tests replaced or left out by the table produce no result row.
 Neither disposition produces a version-gating check. Header plans use the
 same table decisions without requiring measured bounds.
 
-Each non-latest primary edition has `edition-conflicts/<N>.json`, including an
-empty table when it has no conflicts. The latest edition is the registered
-primary edition with the highest number. A table names its `edition` and
+Each non-latest primary edition has its own conflict table in
+`ecma-334/edition-conflicts/`, using the edition number as the file name
+with a `.json` extension. This includes an empty table when it has no
+conflicts. The latest edition is the registered primary edition with the
+highest number. A table names its `edition` and
 `base_edition`, which must be that latest edition. Its `conflicts` contain:
 
 - `replace`: a `test_id` with another registered edition's authority, its
@@ -495,15 +502,15 @@ primary edition with the highest number. A table names its `edition` and
   citation;
 - `leave-out`: a `test_id` with another registered edition's authority or
   the registry's pinned compiler authority, and the table edition's public
-  `authority` citation, without a replacement. A governing ISO table can
+  `authority` citation, without a replacement. A governing table can
   attach a `superseded` object to an older standard-edition claim.
 
 An ordinary `leave-out` can exclude a pinned compiler-authority test when the
 cited edition's text does not support its assertion or setup syntax at that
-level. Measured compiler acceptance supplies no ISO authority. A `replace`
+level. Measured compiler acceptance supplies no standard authority. A `replace`
 target and a superseded claim require registered standard-edition authority.
 
-`superseded` belongs only to a `leave-out` row in the governing ISO edition's
+`superseded` belongs only to a `leave-out` row in the governing edition's
 table. The target's authority must be an older registered edition. The object
 has nonempty `test` and `level` citation arrays. Each citation names its
 registered `source_id`, `clause`, positive distinct `printed_pages` and
@@ -520,15 +527,16 @@ older edition. For a target in the candidate selection, a `replace` row admits
 its older replacement even when the current measured interval does not
 contain the requested level. The cited requirement must require the
 replacement's expected result at that level. The replacement runs as an
-ordinary test at the requested level; its measured interval and bounds stay
-unchanged. It must be selected, must not itself be replaced or left out, and
+ordinary test unless governing supersession makes the admitted claim static.
+Its measured interval and bounds stay unchanged. Within the requested table,
+it must be selected, must not itself be replaced or left out, and
 must form no cycle. A citation names the table edition's
 clause and printed/PDF pages, including when the replacement has a different
 edition's authority. A replacement with the table edition's authority
 also agrees with its header's clause.
 
 When the pinned compiler's result contradicts an admitted replacement, the
-confirmed departure cites the table edition's requirement. Each ISO-level
+confirmed departure cites the governing requirement. Each departure at a governed level
 departure quotes its governing edition, including when the test has a
 different edition's authority. Disjoint records carry the separate citations
 for a test spanning editions; their observation and measurement basis agree.

@@ -5,7 +5,7 @@ Version: 7.3
 Expected: run
 Stdout: OK 2
 Mutate: Acquire(out cell)
-Into: Acquire(out _)
+Into: Acquire(out failures)
 */
 using System;
 class Resource : IDisposable

@@ -1,6 +1,6 @@
 /*
 Rules: P08-static-local-no-expression-tree
-Authority: csc 5.11.0-1.26425.128 (C# 8.0)
+Authority: csc 5.12.0-1.26529.118 (C# 8.0)
 Version: 8.0
 Expected: reject
 Mutate: Expression<Func<int>> probe = () => Read();

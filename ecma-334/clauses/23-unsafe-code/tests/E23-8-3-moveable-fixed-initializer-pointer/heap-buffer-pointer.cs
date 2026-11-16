@@ -17,13 +17,13 @@ class Program
     static unsafe void Main()
     {
         Item owner = new Item(), other = new Item();
-        owner.Data.Values[0] = 29;
+        fixed (short* setup = owner.Data.Values) { setup[0] = 29; }
         fixed (short* pointer = owner.Data.Values)
         {
             Check(*pointer == 29, "moveable-buffer-first-pointer");
             pointer[1] = 41;
         }
-        Check(owner.Data.Values[1] == 41, "moveable-buffer-pointer-element");
+        fixed (short* observed = owner.Data.Values) Check(observed[1] == 41, "moveable-buffer-pointer-element");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }
 }

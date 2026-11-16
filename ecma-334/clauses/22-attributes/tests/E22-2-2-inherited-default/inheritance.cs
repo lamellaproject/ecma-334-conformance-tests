@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 22.2.2
 Version: 7.3
 Expected: run
 Stdout: OK 2
+Fixture: {"target_requires":["reflection"]}
 Mutate: [AttributeUsage(AttributeTargets.Class)]
 Into: [AttributeUsage(AttributeTargets.Class, Inherited = false)]
 */

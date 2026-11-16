@@ -6,5 +6,5 @@ Expected: reject
 Mutate: public public int Item
 Into: public int Item
 */
-class Box { public public int Item => 4; }
+class Box { public public int Item { get { return 4; } } }
 class Program { static void Main() { } }

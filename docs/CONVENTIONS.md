@@ -37,17 +37,18 @@ brackets, parentheses, angle brackets and question marks. All other characters
 and word boundaries must match; the comparison does not repair words, remove
 margin numbers or restore mathematical notation.
 
-Each ISO language level follows one registered primary edition:
+Each governed language level follows one registered primary edition:
 
 | Language level | Governing edition | Claim run |
 | --- | --- | --- |
 | ISO-1 | ECMA-334 2nd edition, ISO/IEC 23270:2003 | `--edition 2` |
 | ISO-2 | ECMA-334 4th edition, ISO/IEC 23270:2006 | `--edition 4` |
+| 5 | ECMA-334 5th edition | `--edition 5` |
 
 The 1st and 3rd editions remain sources for their own tests. `--edition 1` and
 `--edition 3` run those editions at those levels, reporting `superseded` where
 the level's governing edition changed a rule.
-Versions 3 through 7.3 use the latest registered standard edition's tests;
+Versions 3, 4 and 6 through 7.3 use the latest registered standard edition's tests;
 later features use the registered compiler authority and feature text.
 
 An open reading of the standard is settled by these rules, in order; the
@@ -69,7 +70,7 @@ These rules settle readings of ECMA-334. For later features not yet covered
 by an ECMA edition, the registered pinned csc is the authority, and feature
 specifications supply the rule text.
 
-A test retains its own source authority. At an ISO level, an older edition's
+A test retains its own source authority. At a governed level, an older edition's
 test of a requirement changed by the governing edition is `superseded`.
 A cited `leave-out` row in the governing edition's conflict table records
 both requirements, with exact quotations and printed/PDF pages. The result
@@ -126,7 +127,7 @@ that record the clause's rules and how they are covered.
 | `coverage.tsv` | A map from each inventoried text block to rules, or to an explained disposition. |
 | `untested.tsv` | The reason for each rule that has no test. |
 | `retired-rules.tsv` | Optional. Retired rules: each row has the columns of `rules.tsv` plus a `retirement_reason`. |
-| `superseded-observations.tsv` | Optional. Raw verdicts against older expectations whose governing ISO requirements are satisfied; see [Departures](#departures). |
+| `superseded-observations.tsv` | Optional. Raw verdicts against older expectations whose governing requirements are satisfied; see [Departures](#departures). |
 | `version-witnesses.tsv` | Optional. It pairs later-feature rules with an existing test that serves as a positive witness, and records the language version before the rule's version (`previous_version`), a `mode` (`feature-unavailable`, `predecessor-rejection` or `accepted-predecessor`) and a `reason` that cites the source. No tool in the suite reads it. |
 
 For example, the rule `E10-1-representation` in
@@ -245,7 +246,7 @@ An `Authority` header takes one of two forms:
 | Authority | Form | Example | Its `Version` |
 | --- | --- | --- | --- |
 | A standard edition | The edition's registered prefix, followed by the primary subclause | `ECMA-334 7th ed 10.8` | The edition's registered language level (`7.3` for the 7th edition) |
-| A later feature | `csc <version> (C# <level>)`, matching the source registry and the test's `Version` | `csc 5.11.0-1.26425.128 (C# 9.0)` | `<level>` |
+| A later feature | `csc <version> (C# <level>)`, matching the source registry and the test's `Version` | `csc 5.12.0-1.26529.118 (C# 9.0)` | `<level>` |
 
 These headers record the declared level, not the earliest version in which a
 construct applies. Runs select their language levels explicitly. `Since` and
@@ -377,6 +378,11 @@ with these keys:
 Tests that need runtime reflection to observe attribute values declare
 `reflection`; a target without it reports a target capability gap.
 
+Programs whose numerical oracle depends on the finite decimal representation
+declare `decimal-96-scale-28`. This capability specifies a 96-bit coefficient,
+scales from 0 through 28, and no infinities or NaNs. Other decimal representations
+report a target capability gap for these programs.
+
 Inside `libraries` and `program`:
 
 - Units have `source: self` or a clause-relative `.cs.part`, with optional
@@ -474,7 +480,7 @@ in the clause's `departures.tsv`. Each record holds:
 
 Explain the disagreement in neutral words.
 
-- A record at an ISO level quotes that level's governing edition. A test
+- A record at ISO-1, ISO-2 or 5 quotes that level's governing edition. A test
   spanning different governing editions uses separate records with disjoint
   level lists. These records share the source, compiler, target, status and
   raw observation; each has its own clause, pages and short quotation. The
@@ -488,7 +494,7 @@ Explain the disagreement in neutral words.
 
 `superseded-observations.tsv` uses the same columns with status `conforming`.
 It records a raw verdict against the test's older-edition expectation. At
-each listed level, the governing ISO edition's changed requirement applies
+each listed level, the governing edition's changed requirement applies
 and the compiler or hosted runtime conforms to it. The older quotation stays
 with the observation; the governing table supplies both editions' citations.
 These observations support positive construct witnesses for measurement and
@@ -518,11 +524,12 @@ generated version data (see [Version data](ARCHITECTURE.md#version-data)).
   a meaning change.
 - A coded refusal of the measured positive source at a requested level below
   `Since` requires rejection of that source in an explicit-level run, including
-  ISO-1 and ISO-2 for tests without a governing table disposition. The predecessor
+  ISO-1, ISO-2 and 5 for tests without a governing table disposition. The predecessor
   does not decide other levels. A generated reject without a positive witness
   produces no gating check. The edition's own claims and cited replacement admissions
   retain their ordinary expectations. Superseded, replaced and left-out tests
-  produce no version-gating check. An ISO conformance claim names both the
+  produce no version-gating check. Supersession at any governed level prevents
+  all version-gating checks of that test. An ISO conformance claim names both the
   edition claim run, which checks the edition's rules, and the explicit-level
   run, which also checks refusal of newer constructs.
 - Keep the measurement method and independent sample evidence with the

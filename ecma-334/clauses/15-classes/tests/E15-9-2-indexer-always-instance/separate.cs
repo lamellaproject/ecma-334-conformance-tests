@@ -8,7 +8,7 @@ Mutate: public int this[int index]
 Into: public static int this[int index]
 */
 using System;
-class Grid { int offset; public Grid(int value) { offset = value; } public int this[int index] => offset + index; }
+class Grid { int offset; public Grid(int value) { offset = value; } public int this[int index] { get { return offset + index; } } }
 class Program
 {
     static int checks, failures;

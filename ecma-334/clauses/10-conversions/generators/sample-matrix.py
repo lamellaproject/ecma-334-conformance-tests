@@ -60,9 +60,9 @@ def generate(root):
         case = f"nint-long-{index:02d}"
         cases.append(case)
         lines.append(f'{{ nint input = {value}; long output = input; Check(output == {value}L, "{case}"); }}')
-    emit("P09-native-nint-long", "generated-widen", ["P09-native-nint-long"], "csc 5.11.0-1.26425.128 (C# 9.0)", "9.0", "run",
+    emit("P09-native-nint-long", "generated-widen", ["P09-native-nint-long"], "csc 5.12.0-1.26529.118 (C# 9.0)", "9.0", "run",
          lines, cases, "nint; long; implicit native numeric conversion")
-    emit("P09-native-long-nint-no-implicit", "generated-reject", ["P09-native-long-nint-no-implicit"], "csc 5.11.0-1.26425.128 (C# 9.0)", "9.0", "reject",
+    emit("P09-native-long-nint-no-implicit", "generated-reject", ["P09-native-long-nint-no-implicit"], "csc 5.12.0-1.26529.118 (C# 9.0)", "9.0", "reject",
          ["long input = 17;", "nint output = input;"], ["long-nint-no-implicit"], "long; nint; implicit native numeric conversion")
     write_tsv(root / "clauses/10-conversions/generators/sample-matrix.cases.tsv", cells, ["test_id", "case_id", "rule_ids", "prerequisites", "checks"])
 

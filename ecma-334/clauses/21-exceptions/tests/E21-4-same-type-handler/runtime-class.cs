@@ -1,5 +1,5 @@
 /*
-Rules: E21-4-same-type-handler
+Rules: E21-4-same-type-handler; E21-4-catch-order
 Authority: ECMA-334 7th ed 21.4
 Version: 7.3
 Expected: run

@@ -1,9 +1,10 @@
 /*
 Rules: P10-constant-interpolation-hole-free; E22-3-argument-compile-time-value
-Authority: csc 5.11.0-1.26425.128 (C# 10.0)
+Authority: csc 5.12.0-1.26529.118 (C# 10.0)
 Version: 10.0
 Expected: run
 Stdout: OK 2
+Fixture: {"target_requires":["reflection"]}
 Mutate: [Label($"harbor")]
 Into: [Label($"shoal")]
 */

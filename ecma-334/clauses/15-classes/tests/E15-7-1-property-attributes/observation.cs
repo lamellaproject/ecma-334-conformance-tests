@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 15.7.1
 Version: 7.3
 Expected: run
 Stdout: OK 1
+Fixture: {"target_requires":["reflection"]}
 Mutate: [Stamp(26)]
 Into: [Stamp(27)]
 */

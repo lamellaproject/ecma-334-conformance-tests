@@ -8,8 +8,8 @@ Mutate: new int Level
 Into: override int Level
 */
 using System;
-class Base { public int Level => 8; }
-class Derived : Base { public new int Level => 21; }
+class Base { public int Level { get { return 8; } } }
+class Derived : Base { public new int Level { get { return 21; } } }
 class Program
 {
     static int checks, failures;

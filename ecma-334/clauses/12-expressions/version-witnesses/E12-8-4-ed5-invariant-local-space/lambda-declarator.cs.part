@@ -1,0 +1,15 @@
+delegate int Sampler();
+class Program
+{
+    static int Readout() { return 58; }
+    static void Main()
+    {
+        Sampler sample = () =>
+        {
+            int saved = Readout();
+            { int Spare = 24; }
+            return saved;
+        };
+        int observed = sample();
+    }
+}

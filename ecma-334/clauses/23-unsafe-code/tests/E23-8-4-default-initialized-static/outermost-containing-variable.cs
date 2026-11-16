@@ -19,7 +19,8 @@ unsafe class Program
     static Wrapper Filled() { Wrapper value = new Wrapper(); value.Data.Values[1] = 1; return value; }
     static void Main()
     {
-        Check(root.Data.Values[0] == 0 && root.Data.Values[1] == 0 && root.Data.Values[2] == 0, "nested-static-buffer-default");
+        fixed (ushort* pointer = root.Data.Values)
+            Check(pointer[0] == 0 && pointer[1] == 0 && pointer[2] == 0, "nested-static-buffer-default");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }
 }

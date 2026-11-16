@@ -1,5 +1,5 @@
 /*
-Rules: E15-6-11-void-block-normal-completion; E15-6-11-effective-return-void
+Rules: E15-6-11-void-block-normal-completion; E15-6-11-effective-return-void; E15-6-11-method-body-forms; E15-6-11-implemented-body-execution; E15-6-11-effective-return-nonasync
 Authority: ECMA-334 7th ed 15.6.11
 Version: 7.3
 Expected: run

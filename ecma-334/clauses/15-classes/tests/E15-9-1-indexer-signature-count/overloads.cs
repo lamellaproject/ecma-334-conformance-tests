@@ -4,11 +4,11 @@ Authority: ECMA-334 7th ed 15.9.1
 Version: 7.3
 Expected: run
 Stdout: OK 2
-Mutate: public int this[int first, int second] => first * 10 + second;
-Into: public int this[int first] => first * 10;
+Mutate: public int this[int first, int second] { get { return first * 10 + second; } }
+Into: public int this[int first] { get { return first * 10; } }
 */
 using System;
-class Grid { public int this[int first] => first + 3; public int this[int first, int second] => first * 10 + second; }
+class Grid { public int this[int first] { get { return first + 3; } } public int this[int first, int second] { get { return first * 10 + second; } } }
 class Program
 {
     static int checks, failures;

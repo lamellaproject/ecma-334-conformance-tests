@@ -35,11 +35,11 @@ It looks in this order:
 2. `DOTNET_ROOT`;
 3. `dotnet` on `PATH`.
 
-Install SDK `11.0.100-rc.1.26425.128` for your host and set
+Install SDK `11.0.100` for your host and set
 `CONFORMANCE_DOTNET_ROOT` to its directory. Check the archive's SHA-512 against
 [Microsoft's release data](https://builds.dotnet.microsoft.com/dotnet/release-metadata/11.0/releases.json).
-The compiler is csc `5.11.0-1.26425.128`, and the runtime is
-`11.0.0-rc.1.26425.128`. No installation on the system PATH is required.
+The compiler is csc `5.12.0-1.26529.118`, and the runtime is
+`11.0.0`. No installation on the system PATH is required.
 
 The exact versions and per-platform file hashes are in
 `configs/compilers/csc.json` and `configs/targets/dotnet.json`. Asset variants

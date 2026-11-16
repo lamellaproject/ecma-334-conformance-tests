@@ -5,7 +5,7 @@ Version: 7.3
 Expected: run
 Stdout: OK 2
 Mutate: Monitor(out cell)
-Into: Monitor(out _)
+Into: Monitor(out failures)
 */
 using System;
 class Program

@@ -6,5 +6,5 @@ Expected: reject
 Mutate: sealed int Item
 Into: int Item
 */
-class Box { public sealed int Item => 7; }
+class Box { public sealed int Item { get { return 7; } } }
 class Program { static void Main() { } }

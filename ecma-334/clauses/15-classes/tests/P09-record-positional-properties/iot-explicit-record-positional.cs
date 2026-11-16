@@ -1,6 +1,6 @@
 /*
 Rules: P09-record-positional-properties; P10-record-class-spelling; P09-record-deconstruct; P09-record-equality-fields; P09-record-equality-operators
-Authority: csc 5.11.0-1.26425.128 (C# 10.0)
+Authority: csc 5.12.0-1.26529.118 (C# 10.0)
 Version: 10.0
 Expected: run
 Stdout: OK 7

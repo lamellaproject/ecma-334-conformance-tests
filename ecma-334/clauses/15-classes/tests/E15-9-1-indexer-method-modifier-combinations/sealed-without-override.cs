@@ -7,6 +7,6 @@ Mutate: public sealed int this[int index]
 Into: public sealed override int this[int index]
 Csc: CS0238
 */
-class Grid { public virtual int this[int index] => index; }
-class Derived : Grid { public sealed int this[int index] => index; }
+class Grid { public virtual int this[int index] { get { return index; } } }
+class Derived : Grid { public sealed int this[int index] { get { return index; } } }
 class Program { static void Main() { } }

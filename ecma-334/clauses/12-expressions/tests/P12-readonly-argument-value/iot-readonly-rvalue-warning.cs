@@ -1,6 +1,6 @@
 /*
 Rules: P12-readonly-argument-value; P12-readonly-argument-unannotated-warning; E12-6-2-3-argument-order
-Authority: csc 5.11.0-1.26425.128 (C# 12.0)
+Authority: csc 5.12.0-1.26529.118 (C# 12.0)
 Version: 12.0
 Expected: run
 Stdout: OK 3

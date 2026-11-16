@@ -8,7 +8,7 @@ Mutate: internal int Token
 Into: private int Token
 */
 using System;
-class Box { internal int Token => 45; }
+class Box { internal int Token { get { return 45; } } }
 class Program
 {
     static int checks, failures;

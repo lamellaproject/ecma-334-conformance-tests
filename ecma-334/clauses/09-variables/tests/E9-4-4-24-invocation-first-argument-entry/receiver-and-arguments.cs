@@ -5,7 +5,7 @@ Version: 7.3
 Expected: run
 Stdout: OK 2
 Mutate: Factory(out cell)
-Into: Factory(out _)
+Into: Factory(out failures)
 */
 using System;
 class Receiver

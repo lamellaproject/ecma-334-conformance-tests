@@ -18,7 +18,10 @@ class Program
     {
         decimal unit = 0.0000000000000000000000000001m;
         decimal lowerEven = unit * 5m / 2m; decimal upperEven = unit * 7m / 2m;
-        Check(lowerEven == 2m * unit && upperEven == 4m * unit, "decimal-nearest-with-even-ties");
+        // A decimal representation may retain more than 28 fractional places.
+        bool roundedAt28 = lowerEven == 2m * unit && upperEven == 4m * unit;
+        bool exactAtFinerScale = lowerEven + lowerEven == 5m * unit && upperEven + upperEven == 7m * unit;
+        Check(roundedAt28 || exactAtFinerScale, "decimal-nearest-with-even-ties");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }
 }

@@ -7,5 +7,5 @@ Mutate: this[int first = 2, int second]
 Into: this[int first, int second]
 Csc: CS1737
 */
-class Grid { public int this[int first = 2, int second] => first + second; }
+class Grid { public int this[int first = 2, int second] { get { return first + second; } } }
 class Program { static void Main() { } }

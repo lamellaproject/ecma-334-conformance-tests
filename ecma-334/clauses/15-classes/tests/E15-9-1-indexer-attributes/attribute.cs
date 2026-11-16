@@ -4,12 +4,13 @@ Authority: ECMA-334 7th ed 15.9.1
 Version: 7.3
 Expected: run
 Stdout: OK 1
+Fixture: {"target_requires":["reflection"]}
 Mutate: [Mark(41)]
 Into: [Mark(42)]
 */
 using System;
 class MarkAttribute : Attribute { public int Code; public MarkAttribute(int code) { Code = code; } }
-class Grid { [Mark(41)] public int this[int index] => index; }
+class Grid { [Mark(41)] public int this[int index] { get { return index; } } }
 class Program
 {
     static int checks, failures;

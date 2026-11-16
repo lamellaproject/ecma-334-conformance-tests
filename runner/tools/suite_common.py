@@ -123,9 +123,9 @@ def write_tsv(path, rows, fields):
 def source_registry(suite_id="ecma-334"):
     registry = json.loads((standard_root(suite_id) / "source-registry.json").read_text(encoding="utf-8"))
     fields = {"schema_version", "standard", "standard_version", "standard_sha256", "feature_commit", "csc_version",
-              "csc_commit", "editions", "references", "compiler_authority", "iso_editions"}
+              "csc_commit", "editions", "references", "compiler_authority", "governing_editions"}
     checked_object(registry, fields | {"raw_source_rules"}, fields)
-    if registry["schema_version"] != 1 or registry["standard"].lower() != suite_id:
+    if type(registry["schema_version"]) is not int or registry["schema_version"] != 2 or registry["standard"].lower() != suite_id:
         raise ValueError("Unsupported source registry version/standard")
     ids = set()
     for collection in ("editions", "references"):
@@ -160,12 +160,15 @@ def source_registry(suite_id="ecma-334"):
                     if asset["path"] in paths or ".." in Path(asset["path"]).parts or "\\" in asset["path"] or ":" in asset["path"] or Path(asset["path"]).is_absolute() or not re.fullmatch(r"[0-9a-f]{64}", asset["sha256"]):
                         raise ValueError("Invalid or duplicate reference asset pin")
                     paths.add(asset["path"])
-    checked_object(registry["iso_editions"], {"ISO-1", "ISO-2"}, {"ISO-1", "ISO-2"})
     primary = {entry["id"]: entry for entry in registry["editions"] if entry["role"] == "primary"}
-    for level, source_id in registry["iso_editions"].items():
+    required_levels = {"ISO-1", "ISO-2"}
+    if any(entry["edition"] == "5th" for entry in primary.values()):
+        required_levels.add("5")
+    checked_object(registry["governing_editions"], {"ISO-1", "ISO-2", "5"}, required_levels)
+    for level, source_id in registry["governing_editions"].items():
         if (not isinstance(source_id, str) or source_id not in primary
                 or public_level(primary[source_id]["language_version"]) != public_level(level)):
-            raise ValueError("ISO level must name a registered primary edition at that level: " + level)
+            raise ValueError("Governing level must name one registered primary edition at that level: " + level)
     checked_object(registry["compiler_authority"], {"id", "version", "commit"}, {"id", "version", "commit"})
     if registry["compiler_authority"] != {"id": "csc", "version": registry["csc_version"], "commit": registry["csc_commit"]}:
         raise ValueError("Compiler authority disagrees with its recorded identity")

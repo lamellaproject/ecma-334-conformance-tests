@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "id": "dotnet",
-  "description": ".NET 11.0.0-rc.1.26425.128; Windows x64, Linux x64, macOS arm64 and Linux arm64; pinned net11.0 reference subset",
+  "description": ".NET 11.0.0; Windows x64, Linux x64, macOS arm64 and Linux arm64; pinned net11.0 reference subset",
   "adapter": "dotnet",
   "platforms": [
     "win32",
@@ -23,19 +23,19 @@
       "variants": {
         "win-x64": {
           "path": "dotnet.exe",
-          "sha256": "6682d18e2d6dd860f20bc762ad8deed58487e7522a05fa61281b1f3dad8f5c9d"
+          "sha256": "56428a0bbb054f1b4a9d4fb221aa3c008b1a7579090d14a246294107f05acb66"
         },
         "linux-x64": {
           "path": "dotnet",
-          "sha256": "c491495f610b33f0b0c7d65f95a0c4ae4201f67fe18011498b505f1a8dbcadf1"
+          "sha256": "bb015c1dbaec79f69addde16893609baf880ccdc5931db354d40096769010e3e"
         },
         "osx-arm64": {
           "path": "dotnet",
-          "sha256": "e86deb33d0dacad9cc1224466df6418149cb8e13cb8afd0dc6815ea6b7807975"
+          "sha256": "747662f4b2421b718c8da43775e2ba6e9716f4c3939d201421fe6af591e832ed"
         },
         "linux-arm64": {
           "path": "dotnet",
-          "sha256": "d21f04cc6d59261e9de5be5a2048b8431d2a01b1a9a8489e768fddf0594cfd6c"
+          "sha256": "59f1dbc5a1130a8606f3aebb15367c3ae6352b051f15a2801959c7c64842211a"
         }
       }
     },
@@ -43,20 +43,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "shared/Microsoft.NETCore.App/11.0.0-rc.1.26425.128/coreclr.dll",
-          "sha256": "7931d7062e229d89e34685e295848bd4c0cf8d6b2b88058f5f18829c10f05dee"
+          "path": "shared/Microsoft.NETCore.App/11.0.0/coreclr.dll",
+          "sha256": "606465533979071e8a38855ca5a7cb581dd02c810b77879857920250b063ac7b"
         },
         "linux-x64": {
-          "path": "shared/Microsoft.NETCore.App/11.0.0-rc.1.26425.128/libcoreclr.so",
-          "sha256": "6d38a042803bed1ca3c6d98a76b0a0707a572366da0f88918fa06e4b87fdbb3d"
+          "path": "shared/Microsoft.NETCore.App/11.0.0/libcoreclr.so",
+          "sha256": "f1c71f4752aed4f8bd3e712e356260f4a4d4cbb977fc46c0e2a3207ee3ae4bf1"
         },
         "osx-arm64": {
-          "path": "shared/Microsoft.NETCore.App/11.0.0-rc.1.26425.128/libcoreclr.dylib",
-          "sha256": "06f6891dea9cb59694eca858d8206b027955347289dae49a35040c93c874e3a2"
+          "path": "shared/Microsoft.NETCore.App/11.0.0/libcoreclr.dylib",
+          "sha256": "a639c9e75bedb4b51329b15ac944504cec9a2ef9d7075aaff7b27bfac244130c"
         },
         "linux-arm64": {
-          "path": "shared/Microsoft.NETCore.App/11.0.0-rc.1.26425.128/libcoreclr.so",
-          "sha256": "9220a3e5bdedfb63f26756a8e3a86b58392e72c4dc10925809f5d8d28fcd5d77"
+          "path": "shared/Microsoft.NETCore.App/11.0.0/libcoreclr.so",
+          "sha256": "19a06416f37ba587988d99c51f403a9cac377add742a5f9ec7c132a629f8eede"
         }
       }
     },
@@ -64,20 +64,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "shared/Microsoft.NETCore.App/11.0.0-rc.1.26425.128/System.Private.CoreLib.dll",
-          "sha256": "f167553e1196cda38bfb0bf242c69739cb5f97955a5f7171587f82a89b8d5e0e"
+          "path": "shared/Microsoft.NETCore.App/11.0.0/System.Private.CoreLib.dll",
+          "sha256": "7b82f62a60e1673863813dd78af931a775be0630570a377cffa9e8cb9cb7abab"
         },
         "linux-x64": {
-          "path": "shared/Microsoft.NETCore.App/11.0.0-rc.1.26425.128/System.Private.CoreLib.dll",
-          "sha256": "9573ebabb9af0671f76f4aa958223b8a0b50c299affcb1a2f75c9ee717305fc8"
+          "path": "shared/Microsoft.NETCore.App/11.0.0/System.Private.CoreLib.dll",
+          "sha256": "44c059630500c14dff53fea4d8f9fa7b52bc4a2311787ec04d9ec631cfdf1974"
         },
         "osx-arm64": {
-          "path": "shared/Microsoft.NETCore.App/11.0.0-rc.1.26425.128/System.Private.CoreLib.dll",
-          "sha256": "666a6d29557aa5b424373796bb36b5435dc7bdc6de837667d5053543792a23d1"
+          "path": "shared/Microsoft.NETCore.App/11.0.0/System.Private.CoreLib.dll",
+          "sha256": "d451f2404d38cb248647bb1374193e50aa1e33708a26c72fbdc31bf6d136483f"
         },
         "linux-arm64": {
-          "path": "shared/Microsoft.NETCore.App/11.0.0-rc.1.26425.128/System.Private.CoreLib.dll",
-          "sha256": "a2abb965e6fb80500284a03e2bc70029f774ac8ba7d2a8fd1371f0b3b3ac3321"
+          "path": "shared/Microsoft.NETCore.App/11.0.0/System.Private.CoreLib.dll",
+          "sha256": "609e5c1693e317f6fc90e906e79574fa984f09fab8df715a052ef21c0c1e3700"
         }
       }
     },
@@ -85,20 +85,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/Microsoft.CSharp.dll",
-          "sha256": "c44cd91b9e8762866df940365f035ffb49a53ae28a3d4350c955c1003e7cdb7f"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/Microsoft.CSharp.dll",
+          "sha256": "ea86d4b5e4f9386048757c9ae1200c099b870a43a38a00f1643e231d6f4fd5ae"
         },
         "linux-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/Microsoft.CSharp.dll",
-          "sha256": "799c19a13259261641d96fdc08dc73c67aff6f0da08cf3ec6379dc70f6adaf9b"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/Microsoft.CSharp.dll",
+          "sha256": "d1eb9b2b4fc785f9dc7ef9726cf0ad0e718c6bd3e57ac1d0c326673ecbd0747a"
         },
         "osx-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/Microsoft.CSharp.dll",
-          "sha256": "e7d3da57bdc9bfc2207cdfed5be8de962ab8ddb05d5498456e59447c8c23d03b"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/Microsoft.CSharp.dll",
+          "sha256": "ebffe8e65c855b7110e02b24784b5cfccaad0d951d9e7b569de75f966011a345"
         },
         "linux-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/Microsoft.CSharp.dll",
-          "sha256": "55a56544325a0853881d301b24bd8469152653dcf4e238564ab6d8830f1a532b"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/Microsoft.CSharp.dll",
+          "sha256": "3af372c9b188051c98f0bbf008a0a98a1433c57f1b56b41c1d4e884048c1faf8"
         }
       }
     },
@@ -106,20 +106,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Collections.dll",
-          "sha256": "c56b75fc29f9b8c81668810476aa1520bcd926cb3922146018bdb8a4611497f1"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Collections.dll",
+          "sha256": "49d4fd2bb66461e129e573ab4758537d3c72973ab48c6091e3f431c5281dfed2"
         },
         "linux-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Collections.dll",
-          "sha256": "ea1b32b55b8f637f3a3800abe0e9615c8816c520cc1a982c92e353b1b8a0f3fa"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Collections.dll",
+          "sha256": "a9f70d3b48da5b715462bad6ef2057654151373a41f09f6d4ba125dd4fce7eff"
         },
         "osx-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Collections.dll",
-          "sha256": "36300be6dd837fa83d4e05be84d956f5d242d499e53c20c177b9a2721b3481d9"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Collections.dll",
+          "sha256": "72711bc8cbc626991fcb1ac77436f94d9fd377598b59795cad217e99bee403e5"
         },
         "linux-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Collections.dll",
-          "sha256": "8ce028bbdbd6cb310935d851ec678796a7063c3fc80aab2656383fc31672eb82"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Collections.dll",
+          "sha256": "b882a4fed320e13db525a8a82761a924a3dd75b37839b4a4240582a4b353d390"
         }
       }
     },
@@ -127,20 +127,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.ComponentModel.Primitives.dll",
-          "sha256": "895cdb887d7bd1ffaa14b8f9cf8aebf45e79ec36b2b3bfa4fe4ebfa36f46d455"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.ComponentModel.Primitives.dll",
+          "sha256": "ca20fdf2acb7328fdaeb0c193b38b6e0a1be284d6a193d9b751f45a748561b0f"
         },
         "linux-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.ComponentModel.Primitives.dll",
-          "sha256": "10d95c7d09d365ac2d50bb641f393f652a659a2e68535c4281d48ce73339fcdb"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.ComponentModel.Primitives.dll",
+          "sha256": "177e5e6ce4905c93a0c46af9afcad884d60895ac59ac91ffaa89c0896ab91c26"
         },
         "osx-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.ComponentModel.Primitives.dll",
-          "sha256": "c9b5a4a4aa2843ff312bfa1be564caef9e4b66a9be1fe0ed47edf5c1cd98b38b"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.ComponentModel.Primitives.dll",
+          "sha256": "0fccfc3288434463945841e837ae9dbb823889dddb16b629c858b2528ba75849"
         },
         "linux-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.ComponentModel.Primitives.dll",
-          "sha256": "9dfca0ba69c61c96a22891021b120d801ba06585038b0655d01904ea4fd89cfb"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.ComponentModel.Primitives.dll",
+          "sha256": "6ccb98028f8e611a0ea6eacb1baef794ac440d7488521390f281bb3cbb70c8d2"
         }
       }
     },
@@ -148,20 +148,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Console.dll",
-          "sha256": "7e2a951cb8727d0b680755d5f4f3e3923598708dbcff946577d2ff1007a19234"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Console.dll",
+          "sha256": "4a1b988ca5fd62baa384f0d9893ca64cfa66f5db63432375ab77ed2035439977"
         },
         "linux-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Console.dll",
-          "sha256": "03604754a11ddab3cd74a9b1e6495aa12497f306fced83a6816b42665077dcd5"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Console.dll",
+          "sha256": "2f517cf8c54e6aab46a68fc09b2ff3075dd4ec3f953adcd575c589430368eac3"
         },
         "osx-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Console.dll",
-          "sha256": "af1aef63d8aa0a5438cd22938c0062df4ab1849bfa554f04b010467bf5d21789"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Console.dll",
+          "sha256": "5a0f06703f03714504c05308684269fec6ad5d6c21d388ed2c9cc407b252d122"
         },
         "linux-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Console.dll",
-          "sha256": "6151ebddef2aebef3a807abaa450d36c4a39a728cd030376a68a00207678e492"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Console.dll",
+          "sha256": "e7308bf32b5ea9a46cef42e0dc2e525acf45861e3db00d602bb79abc57304225"
         }
       }
     },
@@ -169,20 +169,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Diagnostics.Process.dll",
-          "sha256": "009c25888dde4a084474ebcf3cfa242cd387f58b3e4810adfbba76de3ac26b9d"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Diagnostics.Process.dll",
+          "sha256": "01136cff468173fc614d13fc3676b8a739e8bf091ba722457dea7d1201b4a463"
         },
         "linux-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Diagnostics.Process.dll",
-          "sha256": "10f35d4827c9359b939a64cc2d6943544c59857ca85f996effec6cb2f2546abb"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Diagnostics.Process.dll",
+          "sha256": "3a0696ccfc33814797874470557d6583c285e8010c25c254bdedd5036477a68d"
         },
         "osx-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Diagnostics.Process.dll",
-          "sha256": "8ca6883e6db060dc6c11aa01337f7f56bfbc69079b340fefc5f4e5ae10810bf5"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Diagnostics.Process.dll",
+          "sha256": "30758b6568e33c0240691b717c415a991c7a453534354fe754a2b5d303322942"
         },
         "linux-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Diagnostics.Process.dll",
-          "sha256": "43d380b2576fa0268a1e06a5a05f1115f3ca916c51d3b1702e138ba950ce7f37"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Diagnostics.Process.dll",
+          "sha256": "c3cb561fe6308bc617e6750fd14f1ec81c4fcb738b7f704e27db714051ae1d0a"
         }
       }
     },
@@ -190,20 +190,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Dynamic.Runtime.dll",
-          "sha256": "dda14b24ce2b9851e00c3c1bd400b3c45998e995f3e27eb13a5d3bac80486078"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Dynamic.Runtime.dll",
+          "sha256": "56a47a8980e6b4d1096430a859fe0784d8802af21eddbaaf315e2a872981f64a"
         },
         "linux-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Dynamic.Runtime.dll",
-          "sha256": "0752a6abf6ef487a2ef8946b1176aa5810764c0e66e6f1f637cbd5eeedcd9a59"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Dynamic.Runtime.dll",
+          "sha256": "055523cdab84c019b9260072a3db31a1d8ccfd2a6860b78487622eb9b9af381e"
         },
         "osx-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Dynamic.Runtime.dll",
-          "sha256": "3f2cc7d005d74f01bef2bf2456960437cab5be173066f3da78493dca277d44c5"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Dynamic.Runtime.dll",
+          "sha256": "770db29fcd91d995ea65fcae9d2e15100b8fe08e46247435010d75e1c36d61e9"
         },
         "linux-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Dynamic.Runtime.dll",
-          "sha256": "eaf2b2fac36bda47d77cb38d1931e5155a17c94671b54bfd8681004fe32947e0"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Dynamic.Runtime.dll",
+          "sha256": "022a4556646c76381285a9892aa1c77a937c3ebc57879a529593e65863671b3e"
         }
       }
     },
@@ -211,20 +211,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Linq.Expressions.dll",
-          "sha256": "4e243ec75f24de4c8cfcced762bbf1ed39703098500efbe4dc7880e36dad8680"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Linq.Expressions.dll",
+          "sha256": "3791d9fe81b981f5cce2ee0433edebb03ec90629ba8d3a72c748fc9fe3457475"
         },
         "linux-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Linq.Expressions.dll",
-          "sha256": "bab947819068210fb3141b2fbca4428efc612c768965860f12b6e0f2172bd1ee"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Linq.Expressions.dll",
+          "sha256": "ec8b53c7db88666faca21d09206965cb7ed40321c4cc7c33f560e567d8eaf66d"
         },
         "osx-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Linq.Expressions.dll",
-          "sha256": "e965e571ecc28951c3af7ca52058f091324a92c25bc10a7242cb13292bed06ec"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Linq.Expressions.dll",
+          "sha256": "433fc3112b000d078fe928c03163aea5178cec22b789f8e83a7b7bf93a0a13f9"
         },
         "linux-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Linq.Expressions.dll",
-          "sha256": "b92748a5479668b9b663c59b272d08229f0cd479f48c093e29cd70f5b202ffba"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Linq.Expressions.dll",
+          "sha256": "188c62e050e23454fb8ea47ed665041ed3aabf68f82ac9a8aed93cceb2885068"
         }
       }
     },
@@ -232,20 +232,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Memory.dll",
-          "sha256": "843dfad3fde291b6128aee4310907ea5378299f6e8f1f62d686c73a9aada486d"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Memory.dll",
+          "sha256": "b7f90df6edd22166c4d3f506646b4dfa087113c6045440c4d6c4241996841285"
         },
         "linux-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Memory.dll",
-          "sha256": "163a43c98b27a64a446e2ca433d36e76034c5fd073d5c622526c9aea562a3df8"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Memory.dll",
+          "sha256": "15a7b37907f58c9e44583bb69729a733aa3d73bcb14bcb728566f61f56eb55db"
         },
         "osx-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Memory.dll",
-          "sha256": "3f240c86cfc765b7281b217fa82918223aeb182f1d209b328b38005aeab1e597"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Memory.dll",
+          "sha256": "84c45b1f00d1100bf13e450989be39404a8207341aebf6dc677cd536e0539b17"
         },
         "linux-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Memory.dll",
-          "sha256": "e288b8a737a57f7d2c34e78e43fbce4859b54e0703ce879cbb48dd1d4bef92d3"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Memory.dll",
+          "sha256": "c62859a28618fb6b069459a4bea8c174028e11ac511d2766c3a2d5da5b6e0bf7"
         }
       }
     },
@@ -253,20 +253,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Reflection.dll",
-          "sha256": "16b86c6cd260dcb4cd63a04131826a1e90857ea17cb07f1856a32b19a4c806bd"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Reflection.dll",
+          "sha256": "0be7176091316419631f5cad813d822a4f4a001a419933796953c95d6836a47a"
         },
         "linux-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Reflection.dll",
-          "sha256": "cd3681b9145517a2a72c241643255e37c002edc216dd54ed9c3fc0c8ba5d03a0"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Reflection.dll",
+          "sha256": "5e0409e8db10c07b3ee7ccd2d9435d9de3d64234c83a7a65b8b581d3822478c2"
         },
         "osx-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Reflection.dll",
-          "sha256": "a880e8853e22f7bf4a83e27f47ea974e735fb6aa7597d9f910eeec4bb9349e20"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Reflection.dll",
+          "sha256": "5f66dde263eb8d8439947bd8507062bd5e3122c9d35dfdbd7886c0ddfd40109f"
         },
         "linux-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Reflection.dll",
-          "sha256": "0a219bde16f7968bc9e9a8fe3636bdd3f11ec90a9002b45c69d834fc0f6b9a26"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Reflection.dll",
+          "sha256": "29d9810feafb1d0fe391904b73d61f1b22757559365b6376211d6c9df63882ed"
         }
       }
     },
@@ -274,20 +274,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Runtime.dll",
-          "sha256": "7c72297ba5fc4977fc0ea42cdec506571f68d7ff3d298029e0fdcad3eb3fae3a"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Runtime.dll",
+          "sha256": "bf6f2f2426dc1d43078c1aa0310264459c9d3d115f55eb7ec15027381816f46e"
         },
         "linux-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Runtime.dll",
-          "sha256": "784e82399f798df443ae3396b5cb9c1d66ef2fe0a59fb4ed0db1ce3ce41a3b16"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Runtime.dll",
+          "sha256": "4d0bd7f69338e987d460b97733327af1de61f8402c81a447d01cbdbaaa7bc8fc"
         },
         "osx-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Runtime.dll",
-          "sha256": "8438d3f719eae2415ebb73a15c2ace3fae60efa478e589d30ba007c43822e99d"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Runtime.dll",
+          "sha256": "eedab2cb8a25e503daab8542df9ea0cd91623730eaf13f601144aa3572b3d93d"
         },
         "linux-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Runtime.dll",
-          "sha256": "d16ed0099d62b05ee40a36f7a636a7f9256e5fc92de3b709af5b85a1e339a607"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Runtime.dll",
+          "sha256": "f9d0beca38ab21359edf9e30cf883b71a63b820aae71c1f7348cd0ecbaceef9c"
         }
       }
     },
@@ -295,20 +295,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Threading.Thread.dll",
-          "sha256": "a5280d27408f3e4031d59877e4fa093e7f7b85b90e010ea18a542b6c55b52772"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Threading.Thread.dll",
+          "sha256": "06bd16fdf1f21a259a668c87679987194663c5e0fe319a949b7dc615f9b7cb6b"
         },
         "linux-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Threading.Thread.dll",
-          "sha256": "f6d29e6fc29a7868cbaa42655dd8c24a2c6056f36b67228c035f4a1d50c3b6f5"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Threading.Thread.dll",
+          "sha256": "463a076fbd5085ce813630e58f2a605270c32b071b732f59cfe4c22b5a4a1999"
         },
         "osx-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Threading.Thread.dll",
-          "sha256": "51599ccf2eb16045f2446ff4dd53802781352bd21ba4a8aab4863d3f0dd25ab5"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Threading.Thread.dll",
+          "sha256": "c50dc78898cd50d5237d5b2bddddecbd88f69853f2e224b17100b17ea5e960c2"
         },
         "linux-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Threading.Thread.dll",
-          "sha256": "84f73d99ed7e7fea877c4bb4c317f72c1debb18637b79ddfdc6829a0c9a343c9"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Threading.Thread.dll",
+          "sha256": "00734133451c36fb3ab94c97c869df50b2fe612282d04d3017ef219faa180baa"
         }
       }
     },
@@ -316,20 +316,20 @@
       "root": "dotnet",
       "variants": {
         "win-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Threading.dll",
-          "sha256": "344bafce6a5ca4f5c5a74c45d84bfd8217bf73a3848a91e4114a74d1ed89c305"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Threading.dll",
+          "sha256": "a5e9c9c7e620c3f7f1de1393cdb0d40f33ac930667dac374689e30ac26c8bc27"
         },
         "linux-x64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Threading.dll",
-          "sha256": "e199af940da79632fd7138d76caf889f98bfe2edc9184e941529e7f7cd2fe6ec"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Threading.dll",
+          "sha256": "2ba82ca5c6e75f0c4c9c21c4b49ebf2f31c5f43478400e4d7ff60a8586a6c1ae"
         },
         "osx-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Threading.dll",
-          "sha256": "8df4a9c0b15bb274dcc84a07b101b68d01a35fe6b162516f2952eaebb9ea3ddf"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Threading.dll",
+          "sha256": "5bdb1b9c47aab05e47160e7a396082d6955a731a0bdc056a6a5cb66c7cc2d5ff"
         },
         "linux-arm64": {
-          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0-rc.1.26425.128/ref/net11.0/System.Threading.dll",
-          "sha256": "ef449d97d75ae33ae3dfc732a6c1f1fd60c9e3d3e14fd8c55358e0ccddaeb9a9"
+          "path": "packs/Microsoft.NETCore.App.Ref/11.0.0/ref/net11.0/System.Threading.dll",
+          "sha256": "8239de72fc559536b39dccdcc1d5dd5fbdbc28cea0b2407e9f30af3778c9c03f"
         }
       }
     }
@@ -349,6 +349,7 @@
     "System.Threading.dll": "reference-11"
   },
   "capabilities": [
+    "decimal-96-scale-28",
     "process-launch",
     "reflection"
   ],
@@ -358,7 +359,7 @@
       "library"
     ],
     "framework": "Microsoft.NETCore.App",
-    "runtime_version": "11.0.0-rc.1.26425.128",
+    "runtime_version": "11.0.0",
     "tfm": "net11.0",
     "runtimeconfig": true
   },

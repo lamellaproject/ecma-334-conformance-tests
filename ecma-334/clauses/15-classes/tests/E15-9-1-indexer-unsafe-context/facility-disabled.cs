@@ -8,5 +8,5 @@ Mutate: public unsafe int this[int index]
 Into: public int this[int index]
 Csc: CS0227
 */
-class Grid { public unsafe int this[int index] => index; }
+class Grid { public unsafe int this[int index] { get { return index; } } }
 class Program { static void Main() { } }

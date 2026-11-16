@@ -1,5 +1,5 @@
 /*
-Rules: E21-4-initialization-wrapper; E21-4-initialization-inner
+Rules: E21-4-initialization-wrapper; E21-4-initialization-inner; E21-3-inner-cause; E21-3-inner-type
 Authority: ECMA-334 7th ed 21.4
 Version: 7.3
 Expected: run
@@ -23,7 +23,7 @@ class Program
         Exception original = Original;
         bool wrapped = false, same = false;
         try { int result = Broken.Read(); }
-        catch (TypeInitializationException caught) { wrapped = true; same = caught.InnerException == original; }
+        catch (TypeInitializationException caught) { wrapped = true; Exception cause = caught.InnerException; same = cause == original; }
         catch (Exception) { }
         Check(wrapped, "constructor-failure-wrapped-at-call");
         Check(same, "constructor-wrapper-keeps-original");

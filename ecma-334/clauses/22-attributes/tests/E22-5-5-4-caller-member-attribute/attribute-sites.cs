@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 22.5.5.4
 Version: 7.3
 Expected: run
 Stdout: OK 4
+Fixture: {"target_requires":["reflection"]}
 Mutate: [Name] public int Work
 Into: [Name("explicit")] public int Work
 */

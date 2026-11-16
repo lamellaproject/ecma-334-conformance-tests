@@ -10,7 +10,7 @@ import itertools
 from pathlib import Path
 
 from matrix_support import Matrix, conversion_case, null_case, partition
-from numeric_model import TYPES, IMPLICIT, implicit, boundaries, convert, literal
+from numeric_model import TYPES, IMPLICIT, implicit, boundaries, convert, literal, decimal_profile_required
 from suite_common import SUITE
 
 
@@ -41,6 +41,7 @@ def numeric(matrix):
                     metadata = dict(family="numeric", source=source, target=target, mode=mode, context=context,
                                     constant=str(constant), source_value=literal(source, value), expected="reject",
                                     assertion_label=label, shape="plain")
+                    metadata["decimal_profile"] = decimal_profile_required(source, target, value) if available else decimal_profile_required(source, source, value)
                     matrix.emit(rules, name + f"-reject-{index:02d}", [(label, lines, metadata)],
                                 f"{source}; {target}; {mode}; {context}; const={constant}", reject=True)
                     if not available and not (constant and source in {"int", "long"}):
@@ -73,6 +74,7 @@ def nullable(matrix):
                 metadata = dict(family="nullable", source=source, target=target, mode=mode, context=context,
                                 constant="False", source_value=literal(source, values[0]), expected="reject",
                                 assertion_label=label, shape="lift")
+                metadata["decimal_profile"] = decimal_profile_required(source, source, values[0])
                 matrix.emit(["E10-2-3-only-listed", "E10-6-1-classification"], name + "-nullable-reject",
                             [(label, lines, metadata)], f"{source}?; {target}?; {mode}; {context}; lift", reject=True)
                 continue

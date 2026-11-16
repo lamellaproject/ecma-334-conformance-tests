@@ -1,0 +1,17 @@
+using System.Collections;
+class Batch : IEnumerable
+{
+    public void Add(int value) { }
+    public IEnumerator GetEnumerator() { return null; }
+}
+static class BatchOperations
+{
+    public static void Add(this Batch batch, int value) { }
+}
+class Program
+{
+    static void Main()
+    {
+        Batch batch = new Batch { 26 };
+    }
+}

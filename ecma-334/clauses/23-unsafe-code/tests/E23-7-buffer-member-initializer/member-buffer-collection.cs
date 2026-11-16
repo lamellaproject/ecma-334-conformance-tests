@@ -17,14 +17,14 @@ class Program
     static unsafe void Main()
     {
         Item owner = new Item(), other = new Item();
-        owner.Data.Values[0] = 31; owner.Data.Values[2] = 43;
+        fixed (short* setup = owner.Data.Values) { setup[0] = 31; setup[2] = 43; }
         fixed (short* pointer = owner.Data.Values)
         {
             Check(pointer[0] == 31 && pointer[2] == 43, "buffer-first-element-pointer");
             GC.Collect(2, GCCollectionMode.Forced, true, true);
             fixed (short* after = owner.Data.Values) Check(pointer == after, "buffer-address-after-collection");
             pointer[2] = 61;
-            Check(owner.Data.Values[2] == 61, "buffer-pinned-element-write");
+            fixed (short* observed = owner.Data.Values) Check(observed[2] == 61, "buffer-pinned-element-write");
         }
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

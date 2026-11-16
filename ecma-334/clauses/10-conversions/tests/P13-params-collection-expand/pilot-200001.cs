@@ -1,6 +1,6 @@
 /*
 Rules: P13-params-collection-expand; P13-params-collection-invocation; P13-params-collection-readonly; P13-params-collection-span-array
-Authority: csc 5.11.0-1.26425.128 (C# 13.0)
+Authority: csc 5.12.0-1.26529.118 (C# 13.0)
 Version: 13.0
 Expected: run
 Stdout: OK 4

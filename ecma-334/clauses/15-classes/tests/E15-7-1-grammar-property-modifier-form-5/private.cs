@@ -11,7 +11,7 @@ using System;
 public class Box
 {
     private class Secret { public int Code = 28; }
-    private Secret Token => new Secret();
+    private Secret Token { get { return new Secret(); } }
     public int Read() { return Token.Code; }
 }
 class Program

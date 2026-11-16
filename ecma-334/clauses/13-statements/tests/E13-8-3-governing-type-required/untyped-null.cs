@@ -4,6 +4,6 @@ Authority: ECMA-334 7th ed 13.8.3
 Version: 7.3
 Expected: reject
 Mutate: switch (null)
-Into: switch ((object)null)
+Into: switch ((int)0)
 */
 class Program { static void Main() { switch (null) { default: break; } } }

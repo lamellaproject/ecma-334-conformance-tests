@@ -16,9 +16,9 @@ class Program
     static unsafe void Main()
     {
         Item[] items = new Item[2];
-        items[0].Values[0] = 7; items[1].Values[0] = 53;
         fixed (Item* storage = items)
         {
+            storage[0].Values[0] = 7; storage[1].Values[0] = 53;
             // This index leaves the first buffer but stays in the allocated array and reaches the second buffer.
             // sizeof(Item) works for every permitted amount of struct padding.
             int index = sizeof(Item);

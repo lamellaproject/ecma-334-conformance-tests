@@ -3,8 +3,8 @@ Rules: E13-8-3-nonexhaustive-switch-end-reachable
 Authority: ECMA-334 7th ed 13.8.3
 Version: 7.3
 Expected: reject
-Mutate: case 3:
-Into: case int any:
+Mutate: case 3: return 4;
+Into: case 3: return 4; default: return 5;
 */
 class Program
 {

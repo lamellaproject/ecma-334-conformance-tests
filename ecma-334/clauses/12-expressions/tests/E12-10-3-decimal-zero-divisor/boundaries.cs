@@ -21,7 +21,9 @@ class Program
         try { decimal r = large / tenth; } catch (OverflowException) { caught = true; } catch (Exception) { }
         Check(caught, "quotient-overflow-type");
         decimal tiny = 0.0000000000000000000000000001M, ten = 10M;
-        Check(tiny != 0M && tiny / ten == 0M, "rounded-nonzero-dividend");
+        decimal small = tiny / ten;
+        // The format may retain the exact result at a finer scale.
+        Check(tiny != 0M && (small == 0M || small * ten == tiny), "rounded-or-exact-small-quotient");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }
 }

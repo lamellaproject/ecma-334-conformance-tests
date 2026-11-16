@@ -1,0 +1,15 @@
+delegate bool Probe();
+struct Match
+{
+    public static bool operator <(Probe probe, Match other) { return probe(); }
+    public static bool operator >(Probe probe, Match other) { return !probe(); }
+}
+class Program
+{
+    static bool Flag<T>() { return true; }
+    static bool Compare()
+    {
+        return (Flag<byte>) < new Match();
+    }
+    static void Main() { }
+}

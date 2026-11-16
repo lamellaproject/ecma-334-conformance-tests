@@ -8,5 +8,5 @@ Into: public override event
 Csc: CS0113
 */
 class Source { public virtual event System.Action Signal; }
-class Derived : Source { public new override event System.Action Signal; }
+class Derived : Source { public new override event System.Action Signal { add { } remove { } } }
 class Program { static void Main() { } }

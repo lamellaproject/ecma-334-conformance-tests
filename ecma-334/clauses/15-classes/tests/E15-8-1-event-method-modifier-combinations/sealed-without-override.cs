@@ -8,5 +8,5 @@ Into: public sealed override event
 Csc: CS0238
 */
 class Source { public virtual event System.Action Signal; }
-class Derived : Source { public sealed event System.Action Signal; }
+class Derived : Source { public sealed event System.Action Signal { add { } remove { } } }
 class Program { static void Main() { } }

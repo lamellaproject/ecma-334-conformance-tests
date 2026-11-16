@@ -1,0 +1,14 @@
+// ECMA-334 5th ed 11.8, pp. 107-108 (PDF pp. 129-130),
+// and 12.6.4.1, 12.6.4.4, pp. 133-135 (PDF pp. 155-157).
+delegate int Number(int input);
+delegate object Boxed(int input);
+class Program
+{
+    static int Read(int input) { return input + 3; }
+    static void Route(Number reader) { }
+    static void Route(Boxed reader) { }
+    static void Main()
+    {
+        Route((Number)Read);
+    }
+}

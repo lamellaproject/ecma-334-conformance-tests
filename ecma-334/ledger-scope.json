@@ -611,7 +611,9 @@
         "rule-E6-3-4-ed3-unicode-3-space-category",
         "ed4-9.3.3-predicate-unicode-4-space-category",
         "ed4-9.4.2-predicate-unicode-4-identifier-category",
-        "ed2-9.5.7-line-indicators"
+        "ed2-9.5.7-line-indicators",
+        "ed5-7.4.3-long-escaped-initial-underscore",
+        "ed5-7.2.5-unlisted-generic-following-token"
       ]
     },
     "07-basic-concepts": {
@@ -1157,7 +1159,11 @@
         "ed2-17.2-019-02",
         "ed2-17.2-020-01",
         "ed2-17.5-017-15",
-        "ed2-20.2-005-02"
+        "ed2-20.2-005-02",
+        "ed5-8.1-entry-without-async",
+        "ed5-8.1-entry-return-void-or-int",
+        "ed5-8.2-finalization-effort",
+        "ed5-8.2-finalization-conditions"
       ]
     },
     "08-types": {
@@ -2049,7 +2055,8 @@
         "ed2-12.3.2-004-01",
         "ed4-12.3.3.29-predicate-coalescing-first-exit",
         "ed3-12.3.3.24-predicate-or-second-entry",
-        "ed1-12.3.3.21-predicate-conditional-argument-assignment"
+        "ed1-12.3.3.21-predicate-conditional-argument-assignment",
+        "ed3-12.3.3-predicate-coalescing-constant-entry"
       ]
     },
     "10-conversions": {
@@ -2427,7 +2434,11 @@
         "ed3-13.4.3-predicate-both-nullable-lifted-candidates",
         "ed3-13.4.4-predicate-both-nullable-lifted-candidates",
         "ed3-13.2.1-predicate-floating-decimal-finite-overflow",
-        "ed2-14.1-method-group-context"
+        "ed2-14.1-method-group-context",
+        "ed5-11.7.1-tree-block-forbidden",
+        "ed5-11.7.1-tree-assignment-forbidden",
+        "ed5-11.7.1-tree-dynamic-forbidden",
+        "ed5-11.7.1-tree-async-forbidden"
       ]
     },
     "11-patterns": {
@@ -5399,7 +5410,14 @@
         "ed4-14.17-predicate-nonnullable-boolean-condition",
         "ed3-14.12-predicate-left-type-required",
         "library-type-base",
-        "ed2-25.7-handler-stackalloc"
+        "ed2-25.7-handler-stackalloc",
+        "ed5-12.6.4.4-no-group-return-preference",
+        "ed5-12.6.4.6-no-task-inner-preference",
+        "ed5-12.6.2.1-named-arguments-trail",
+        "ed5-12.7.3.2-invariant-local-space",
+        "ed5-12.7.11.4-instance-add",
+        "ed5-12.8.8.1-handler-await",
+        "ed5-12.11.11-method-group-result"
       ]
     },
     "13-statements": {
@@ -6517,7 +6535,9 @@
         "iot:feature-top-level-statements",
         "iot:feature-file-scoped-namespaces",
         "ed2-16.2-005-13",
-        "ed4-16.2-standard-library-name-reservation"
+        "ed4-16.2-standard-library-name-reservation",
+        "ed5-14.7-nested-access-forms",
+        "ed5-14.2-unit-source-file"
       ]
     },
     "15-classes": {
@@ -8682,7 +8702,10 @@
         "rule-E15-8-2-ed3-static-event-associated-monitor",
         "rule-E15-10-3-ed3-shift-count-int-required",
         "ed1-17.5.1.4-predicate-expanded-signature-suppression",
-        "ed1-17.10.1-predicate-direct-constructor-recursion-only"
+        "ed1-17.10.1-predicate-direct-constructor-recursion-only",
+        "ed5-15.2.5-dynamic-erasure-pointer",
+        "ed5-15.7.4-auto-property-both-accessors",
+        "ed5-15.15.1-task-types"
       ]
     },
     "16-structs": {
@@ -8937,7 +8960,8 @@
         "ed2-18.3.10-001-02",
         "ed2-18.3.10-002-01",
         "ed2-18.3.10-004-01",
-        "rule-E16-4-7-ed3-constrained-member-no-boxing"
+        "rule-E16-4-7-ed3-constrained-member-no-boxing",
+        "ed5-16.4.9-auto-property-unassigned-this"
       ]
     },
     "17-arrays": {
@@ -10663,7 +10687,9 @@
         "ed4-27.6-predicate-captured-body-read",
         "ed3-27.6-predicate-captured-fixed-statement-use",
         "ed3-15.8.4-predicate-pointer-array-foreach-forbidden",
-        "ed2-17.4-struct-field-declarators"
+        "ed2-17.4-struct-field-declarators",
+        "ed5-13.6.2-stackalloc-implicit-local",
+        "ed5-23.8.3-moveable-buffer-fixed-initializer"
       ]
     }
   }

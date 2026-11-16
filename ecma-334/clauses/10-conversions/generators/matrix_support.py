@@ -7,7 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[4] / "runner" / "tools"))
 from suite_common import source_registry, writable, write_text, write_tsv
-from numeric_model import assertion, convert, literal
+from numeric_model import assertion, convert, literal, decimal_profile_required
 
 
 class Matrix:
@@ -35,6 +35,8 @@ class Matrix:
                   "\nVersion: " + version + "\nExpected: " + ("reject" if reject else "run") + "\n")
         if not reject:
             header += f"Stdout: OK {len(cases) * checks}\n"
+        if any(case[2].get("decimal_profile", False) for case in cases):
+            header += 'Fixture: {"target_requires":["decimal-96-scale-28"]}\n'
         header += "Generated: " + self.generator + "\n*/\n"
         program = "using System;\n" + (declarations + "\n" if declarations else "") + "class Program\n{\n"
         if not reject:
@@ -114,6 +116,7 @@ def conversion_case(source, target, value, mode, context, constant, case_id, sha
         source_construct = "negative-decimal-constant"
     return (case_id, lines, dict(source=source, target=target, mode=mode, context=context, constant=str(constant),
                                 source_value=initializer, expected=kind, assertion_label=case_id, shape=shape,
+                                decimal_profile=decimal_profile_required(model_source, model_target, value),
                                 oracle=oracle, source_construct=source_construct)), kind
 
 

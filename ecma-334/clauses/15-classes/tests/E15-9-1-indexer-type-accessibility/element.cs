@@ -7,5 +7,5 @@ Mutate: public Hidden this[int index]
 Into: private Hidden this[int index]
 Csc: CS0054
 */
-public class Grid { private class Hidden { } public Hidden this[int index] => null; }
+public class Grid { private class Hidden { } public Hidden this[int index] { get { return null; } } }
 class Program { static void Main() { } }

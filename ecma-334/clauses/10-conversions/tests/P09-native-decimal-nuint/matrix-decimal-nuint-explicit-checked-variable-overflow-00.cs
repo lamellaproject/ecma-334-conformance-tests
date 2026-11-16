@@ -1,9 +1,10 @@
 /*
 Rules: P09-native-decimal-nuint
-Authority: csc 5.11.0-1.26425.128 (C# 9.0)
+Authority: csc 5.12.0-1.26529.118 (C# 9.0)
 Version: 9.0
 Expected: run
 Stdout: OK 4
+Fixture: {"target_requires":["decimal-96-scale-28"]}
 Generated: clauses/10-conversions/generators/native-matrices.py
 */
 using System;
