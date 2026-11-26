@@ -1,0 +1,40 @@
+using System;
+
+class Tag
+{
+    public string Label { get { return "inner"; } }
+}
+struct Sample
+{
+    public static int ValueCalls;
+    public string Label { get { return "outer"; } }
+    public Tag Value { get { ValueCalls++; return new Tag(); } }
+}
+
+class Program
+{
+    static int reads;
+    static Sample? Read(bool present)
+    {
+        reads++;
+        if (present) return new Sample();
+        return null;
+    }
+
+    static int checks;
+    static int failures;
+    static void Check(bool condition, string name)
+    {
+        checks++;
+        if (!condition) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Main()
+    {
+        string present = Read(true)?.ToString();
+        string absent = Read(false)?.ToString();
+        Check(present != null && absent == null, "reference-results");
+        Check(reads == 2, "receiver-count");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

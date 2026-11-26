@@ -1,16 +1,20 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "title": "Source-keyed exhaustive language bounds index, schema v3",
+  "title": "Source-keyed exhaustive language bounds index",
   "type": "object",
   "properties": {
     "schema_version": {
-      "const": 3
+      "type": "integer",
+      "const": 1
     },
     "identity": {
       "type": "object"
     },
     "provenance": {
-      "type": "object"
+      "type": "object",
+      "not": {
+        "required": ["suite_commit"]
+      }
     },
     "levels": {
       "type": "array",
@@ -25,6 +29,7 @@
       "type": "object",
       "properties": {
         "schema_version": {
+          "type": "integer",
           "const": 1
         },
         "metadata_sha256": {

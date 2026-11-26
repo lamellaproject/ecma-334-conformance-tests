@@ -1,0 +1,24 @@
+using System;
+
+
+class Program
+{
+    static int Read(int \u005Foffset)
+    {
+        return _offset;
+    }
+
+    static int checks;
+    static int failures;
+    static void Check(bool condition, string name)
+    {
+        checks++;
+        if (!condition) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Main()
+    {
+        Check(Read(13) == 13, "escaped-parameter");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

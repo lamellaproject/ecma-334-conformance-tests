@@ -38,9 +38,9 @@ depends on that member.
 - A new clause gets its own directory and an explicit scope inventory.
 - A new edition gets a primary source entry and rules that distinguish its
   text where necessary. The source registry names one matching primary
-  edition at each governed level: the 2nd edition for ISO-1, the 4th for
-  ISO-2 and the 5th for level 5. Registering the 5th edition requires its
-  governing-level entry. Add the edition's conflict table to
+  edition at each governed level. ISO-1 uses the 2nd edition and ISO-2 uses
+  the 4th. Register the 5th and 6th editions with their governing entries
+  at levels 5 and 6 respectively. Add the edition's conflict table to
   `ecma-334/edition-conflicts/`, using the edition number as the file name
   with a `.json` extension, following the
   [edition table contract](ARCHITECTURE.md#edition-selection).
@@ -78,9 +78,8 @@ depends on that member.
   tests only for shared requirements, by measured continuity or a cited older
   replacement. Exclude tests whose assertion or prerequisites require a rule
   the edition lacks. The governing table supplies supersession for admitted
-  claims. It supplies membership for language-version plans at ISO-1, ISO-2
-  and 5: the 2nd edition's table, the 4th edition's table and the 5th edition's
-  table, respectively.
+  claims. Language-version plans at ISO-1, ISO-2, 5 and 6 take their
+  membership from the 2nd, 4th, 5th and 6th editions' tables respectively.
 
   For every older requirement the governing edition changes, use a
   `leave-out` row with a `superseded` object in that governing table.
@@ -280,9 +279,9 @@ every registered source that the ledgers quote.
   levels, an inclusive range such as `5..7.3`, `all`, or `earliest-per-test`.
   The selectors cannot be combined. Edition runs use the registered level and
   the requested edition's table, with governing supersession for admitted
-  claims. Any language plan resolving to ISO-1, ISO-2 or 5 uses the level's
-  governing edition, including header plans and `earliest-per-test`;
-  [Results](RESULTS.md#edition-runs) describes their selection.
+  claims. Explicit levels, header plans and `earliest-per-test` use the
+  governing edition wherever they resolve to ISO-1, ISO-2, 5 or 6. See
+  [Edition runs](RESULTS.md#edition-runs).
 - Use a fresh result directory for changed inputs.
 - `--resume` on version computation accepts only the same measurement
   identity, selection and policy, and it replays its saved prefix.

@@ -4,6 +4,7 @@ Authority: ECMA-334 2nd ed 14.7.3
 Version: ISO-1
 Expected: run
 Stdout: OK 2
+Fixture: {"target_requires":["decimal-96-scale-28"]}
 Mutate: decimal result = amount % unit;
 Into: decimal result = 2.1m;
 */

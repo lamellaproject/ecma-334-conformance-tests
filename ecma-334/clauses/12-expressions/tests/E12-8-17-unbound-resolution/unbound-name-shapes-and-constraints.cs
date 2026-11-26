@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 12.8.17
 Version: 7.3
 Expected: run
 Stdout: OK 5
+Fixture: {"target_requires":["reflection"]}
 Mutate: Type nested = typeof(Crate::Envelope<>.Leaf<,>);
 Into: Type nested = typeof(Crate::Envelope<>);
 */

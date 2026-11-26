@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 15.5.5
 Version: 7.3
 Expected: run
 Stdout: OK 2
+Fixture: {"target_requires":["decimal-96-scale-28"]}
 Mutate: public decimal Value;
 Into: public decimal Value = 0.00m;
 */

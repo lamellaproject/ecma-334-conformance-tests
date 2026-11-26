@@ -8,7 +8,7 @@ Mutate: static unsafe int* Pointer
 Into: static int* Pointer
 */
 using System;
-class Item { public static unsafe int* Pointer = (int*)0x1000; }
+class Item { public static unsafe int* Pointer = (int*)null; }
 class Program
 {
     static int checks, failures;
@@ -17,7 +17,7 @@ class Program
     {
         unsafe
         {
-            Check((ulong)Item.Pointer == 0x1000, "unsafe-field-type-and-initializer");
+            Check(Item.Pointer == null, "unsafe-field-type-and-initializer");
         }
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

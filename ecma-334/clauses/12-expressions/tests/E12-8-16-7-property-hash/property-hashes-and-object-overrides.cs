@@ -4,8 +4,9 @@ Authority: ECMA-334 7th ed 12.8.16.7
 Version: 7.3
 Expected: run
 Stdout: OK 3
-Mutate: var same = new { Count = 7, Token = new Key(19) };
-Into: var same = new { Count = 23, Token = new Key(19) };
+Fixture: {"target_requires":["reflection"]}
+Mutate: Type type = first.GetType();
+Into: Type type = typeof(Program);
 */
 using System;
 using System.Reflection;

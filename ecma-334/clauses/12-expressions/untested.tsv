@@ -39,7 +39,12 @@ E12-20-3-8-transparent-intermediate-only	A standalone program cannot observe whe
 E12-20-3-8-alternative-grouping-mechanism	The permission to choose a different internal mechanism for grouping range variables requires no observable choice; tests accept equivalent behavior from every such mechanism.
 E12-9-8-4-continuation-once	This recommendation constrains the implementation of the program-supplied awaiter, not a compiler behavior that a standalone program can reject.
 E12-9-8-4-repeated-continuation-undefined	After repeated continuation invocation the standard explicitly makes behavior undefined, so no observed compiler result can violate a defined conformance oracle.
+E12-10-2-decimal-equivalence	Both decimal and System.Decimal name the same type and select the same multiplication operator. A standalone comparison has no independent operator result.
+E12-10-3-decimal-equivalence	Both decimal and System.Decimal name the same type and select the same division operator. A standalone comparison has no independent operator result.
+E12-10-4-decimal-equivalence	Both decimal and System.Decimal name the same type and select the same remainder operator. A standalone comparison has no independent operator result.
 E12-10-5-allocation-failure	This rule permits but does not require an out-of-memory failure, and a standalone program cannot force unavailable allocation memory or distinguish an implementation that never exercises this permission.
+E12-10-5-decimal-equivalence	Both decimal and System.Decimal name the same type and select the same addition operator. A standalone comparison has no independent operator result.
+E12-10-6-decimal-equivalence	Both decimal and System.Decimal name the same type and select the same subtraction operator. A standalone comparison has no independent operator result.
 E12-12-13-type-check-optimization	This permission concerns the number of unobservable runtime type checks, while equivalent results and operand effects do not let a standalone program count those checks.
 E12-19-3-other-execution-unspecified	The standard leaves execution through other mechanisms unspecified and supplies no required C# operation that selects such a mechanism or an observable conformance oracle for it.
 E12-19-3-synthesized-methods	This permission selects an implementation strategy without imposing a required observable result beyond the separately tested anonymous-function semantics.

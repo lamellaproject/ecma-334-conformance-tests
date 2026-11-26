@@ -125,8 +125,9 @@ def source_registry(suite_id="ecma-334"):
     fields = {"schema_version", "standard", "standard_version", "standard_sha256", "feature_commit", "csc_version",
               "csc_commit", "editions", "references", "compiler_authority", "governing_editions"}
     checked_object(registry, fields | {"raw_source_rules"}, fields)
-    if type(registry["schema_version"]) is not int or registry["schema_version"] != 2 or registry["standard"].lower() != suite_id:
-        raise ValueError("Unsupported source registry version/standard")
+    check_schema_version(registry)
+    if registry["standard"].lower() != suite_id:
+        raise ValueError("Source registry names a different standard")
     ids = set()
     for collection in ("editions", "references"):
         if not isinstance(registry[collection], list) or (collection == "editions" and not registry[collection]):
@@ -162,9 +163,10 @@ def source_registry(suite_id="ecma-334"):
                     paths.add(asset["path"])
     primary = {entry["id"]: entry for entry in registry["editions"] if entry["role"] == "primary"}
     required_levels = {"ISO-1", "ISO-2"}
-    if any(entry["edition"] == "5th" for entry in primary.values()):
-        required_levels.add("5")
-    checked_object(registry["governing_editions"], {"ISO-1", "ISO-2", "5"}, required_levels)
+    for edition, level in (("5th", "5"), ("6th", "6")):
+        if any(entry["edition"] == edition for entry in primary.values()):
+            required_levels.add(level)
+    checked_object(registry["governing_editions"], {"ISO-1", "ISO-2", "5", "6"}, required_levels)
     for level, source_id in registry["governing_editions"].items():
         if (not isinstance(source_id, str) or source_id not in primary
                 or public_level(primary[source_id]["language_version"]) != public_level(level)):
@@ -307,6 +309,11 @@ def public_level(value):
 def checked_object(value, allowed, required=()):
     if not isinstance(value, dict) or set(value) - set(allowed) or set(required) - set(value):
         raise ValueError("Invalid object fields: " + repr(value))
+
+
+def check_schema_version(record):
+    if not isinstance(record, dict) or type(record.get("schema_version")) is not int or record["schema_version"] != 1:
+        raise ValueError("schema_version must be the integer 1")
 
 
 def fixture_info(fixture, suite_id, clause, is_raw, source_diagnostics):

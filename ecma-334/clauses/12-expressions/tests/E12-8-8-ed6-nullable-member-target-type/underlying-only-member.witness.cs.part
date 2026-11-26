@@ -1,0 +1,28 @@
+using System;
+
+struct Stamp
+{
+    public readonly int Code;
+    public Stamp(int code) { Code = code; }
+}
+
+class Program
+{
+    static int? Read(Stamp? receiver) { return receiver?.GetHashCode(); }
+
+    static int checks;
+    static int failures;
+    static void Check(bool condition, string name)
+    {
+        checks++;
+        if (!condition) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Main()
+    {
+        Stamp? stamp = new Stamp(31);
+        Check(Read(stamp).HasValue, "present-result");
+        Check(!Read(null).HasValue, "absent-result");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

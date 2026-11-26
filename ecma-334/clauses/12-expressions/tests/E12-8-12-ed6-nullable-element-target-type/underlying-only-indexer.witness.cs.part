@@ -1,0 +1,35 @@
+using System;
+
+struct Rack
+{
+    readonly int start;
+    public Rack(int start) { this.start = start; }
+    public int this[int index] { get { return start + index; } }
+}
+class Shelf
+{
+    readonly Rack rack;
+    public Shelf(Rack rack) { this.rack = rack; }
+    public int this[int index] { get { return rack[index]; } }
+}
+
+class Program
+{
+    static int? Read(Shelf receiver, int index) { return receiver?[index]; }
+
+    static int checks;
+    static int failures;
+    static void Check(bool condition, string name)
+    {
+        checks++;
+        if (!condition) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Main()
+    {
+        Rack? rack = new Rack(20);
+        Check(Read(new Shelf(rack.Value), 3) == 23, "present-index");
+        Check(!Read(null, 3).HasValue, "absent-index");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

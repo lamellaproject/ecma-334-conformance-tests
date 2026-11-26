@@ -4,8 +4,8 @@ Authority: ECMA-334 7th ed 12.8.3
 Version: 7.3
 Expected: run
 Stdout: OK 1
-Mutate: $"{26,width:X}"
-Into: $"{26,-width:X}"
+Mutate: $"{number,width:X}"
+Into: $"{number,-width:X}"
 */
 using System;
 class Program
@@ -15,7 +15,8 @@ class Program
     static void Main()
     {
         const int width = 2 + 3;
-        string result = $"{26,width:X}";
+        int number = 26;
+        string result = $"{number,width:X}";
         Check(result == "   1A", "positive-width-pads-formatted-value-on-left");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

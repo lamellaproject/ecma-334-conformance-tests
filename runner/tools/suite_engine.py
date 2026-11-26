@@ -282,7 +282,7 @@ class Context:
             status, reason, missing = self.preflight(test, level, fixture, mode)
         if skip_status and mode != "superseded":
             status, reason, missing = skip_status, "outside-applicability", []
-        record = {**test, "schema_version": 2, "level": level["level"] if level else test["version"], "level_argument": level["argument"] if level else "",
+        record = {**test, "schema_version": 1, "level": level["level"] if level else test["version"], "level_argument": level["argument"] if level else "",
             "mode": mode, "status": status, "reason": reason, "unsupported_reason": reason if status == "unsupported" else "",
             "missing_capabilities": missing, "compile_exit": "", "diagnostic_codes": "", "error_diagnostic_codes": "",
             "uncoded_error_diagnostics": False, "run_exit": "", "compile_command_json": "[]", "run_command_json": "[]",

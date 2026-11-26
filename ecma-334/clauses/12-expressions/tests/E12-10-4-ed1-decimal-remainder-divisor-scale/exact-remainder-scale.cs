@@ -4,6 +4,7 @@ Authority: ECMA-334 1st ed 14.7.3
 Version: ISO-1
 Expected: run
 Stdout: OK 2
+Fixture: {"target_requires":["decimal-96-scale-28"]}
 Version-Witness: tests/E12-10-4-ed1-decimal-remainder-divisor-scale/exact-remainder-scale.witness.cs.part
 Mutate: decimal result = 9.0m % 2m;
 Into: decimal result = 9.0m / 2m;

@@ -1,0 +1,35 @@
+using System;
+
+struct Token
+{
+    public static int GetterCalls;
+    public bool HasValue { get { GetterCalls++; return false; } }
+}
+
+class Program
+{
+    static int reads;
+    static Token? Read(bool present)
+    {
+        reads++;
+        if (present) return new Token();
+        return null;
+    }
+
+    static int checks;
+    static int failures;
+    static void Check(bool condition, string name)
+    {
+        checks++;
+        if (!condition) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Main()
+    {
+        int? present = Read(true)?.GetHashCode();
+        int? absent = Read(false)?.GetHashCode();
+        Check(present.HasValue && !absent.HasValue, "lifted-results");
+        Check(reads == 2, "receiver-count");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

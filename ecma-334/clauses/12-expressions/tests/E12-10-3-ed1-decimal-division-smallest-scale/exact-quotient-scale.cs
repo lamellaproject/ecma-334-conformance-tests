@@ -4,6 +4,7 @@ Authority: ECMA-334 1st ed 14.7.2
 Version: ISO-1
 Expected: run
 Stdout: OK 4
+Fixture: {"target_requires":["decimal-96-scale-28"]}
 Version-Witness: tests/E12-10-3-ed1-decimal-division-smallest-scale/exact-quotient-scale.witness.cs.part
 Mutate: decimal first = 8.400m / 2.0m;
 Into: decimal first = 8.400m * 2.0m;

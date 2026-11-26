@@ -21,8 +21,9 @@ from suite_editions import edition_definition, edition_inventory, governing_edit
 from suite_engine import Context, DEPARTURE_FIELDS, departure_rows, load_controls
 from suite_evidence import verify_record
 from suite_measurements import Measurement, predecessor, witness_for
-from suite_version_schedule import mismatches
-from suite_versions import applicability, gating_source, measurement_identity, validate_metadata
+from suite_version_schedule import mismatches, read_measurement_state
+from suite_versions import (applicability, gating_source, json_bytes, measurement_identity, read_version_files,
+                            shard_path, validate_metadata, write_version_files)
 
 
 def load_runner():
@@ -53,6 +54,99 @@ def selection_bounds(config, since, until="7.3", behavior="refuses", other=()):
     return {"since": since, "until": until, "basis": "original", "observations": observations,
             "below_since": {"level": levels[lower - 1] if lower else "", "behavior": behavior if lower else "none"},
             "other_passing_levels": list(other)}
+
+
+def invalid_schema_versions(record):
+    yield {key: value for key, value in record.items() if key != "schema_version"}
+    for number in (0, 2, 3, True, 1.0, "1", None):
+        yield {**record, "schema_version": number}
+
+
+class VersionFileChecks(unittest.TestCase):
+    def setUp(self):
+        self.directory = self.scratch / self._testMethodName
+        self.test_id = "06-lexical-structure--token--input"
+        self.source_hash = "a" * 64
+        levels = ["1", "2"]
+        row = selection_bounds({"language": {"explicit": levels}}, "1", "2")
+        row["below_since"]["diagnostic_codes"] = []
+        row.update(method="exhaustive", measurement_target="dotnet", fixture_sha256="b" * 64,
+                   declared_witness_sha256="", witness_sha256=self.source_hash, evidence_sha256="c" * 64)
+        for observation in row["observations"].values():
+            observation.update(original_evidence_sha256="d" * 64, witness_evidence_sha256="d" * 64)
+        self.metadata = {"schema_version": 1, "identity": {"targets": {"dotnet": {}}}, "levels": levels,
+                         "provenance": {}, "sample": {}, "rows": {self.source_hash: {self.test_id: row}}}
+        write_version_files(self.directory, self.metadata)
+        self.index_path = self.directory / "index.json"
+        self.index = json.loads(self.index_path.read_bytes())
+        self.shard_path = self.directory / shard_path(self.test_id)
+
+    def install_shard(self, raw):
+        self.shard_path.write_bytes(raw)
+        self.index["row_shards"][0]["sha256"] = sha(self.shard_path)
+        write_json(self.index_path, self.index)
+
+    def test_deterministic_index_shard_round_trip(self):
+        metadata = read_version_files(self.directory)
+        self.assertEqual(metadata, self.metadata)
+        self.assertEqual(self.index["row_shards"], [{"path": shard_path(self.test_id),
+                          "sha256": sha(self.shard_path), "rows": 1}])
+        self.assertEqual(self.shard_path.read_bytes(), json_bytes({"schema_version": 1, "rows": metadata["rows"]}))
+        second = self.scratch / "round-trip"
+        write_version_files(second, metadata)
+        self.assertEqual(self.index_path.read_bytes(), (second / "index.json").read_bytes())
+        self.assertEqual(self.shard_path.read_bytes(), (second / shard_path(self.test_id)).read_bytes())
+
+    def test_metadata_index_and_shard_require_integer_schema(self):
+        for invalid in invalid_schema_versions(self.metadata):
+            with self.subTest(metadata=invalid.get("schema_version")), self.assertRaises(ValueError):
+                write_version_files(self.directory, invalid)
+        for invalid in invalid_schema_versions(self.index):
+            write_json(self.index_path, invalid)
+            with self.subTest(index=invalid.get("schema_version")), self.assertRaises(ValueError):
+                read_version_files(self.directory)
+        shard = json.loads(self.shard_path.read_bytes())
+        for invalid in invalid_schema_versions(shard):
+            self.install_shard(json_bytes(invalid))
+            with self.subTest(shard=invalid.get("schema_version")), self.assertRaises(ValueError):
+                read_version_files(self.directory)
+        for fields in ({"rate_check": {}}, {"provenance": {"suite_commit": "a" * 40}}):
+            with self.subTest(fields=fields), self.assertRaises(ValueError):
+                validate_metadata({**self.metadata, **fields})
+        del self.metadata["rows"][self.source_hash][self.test_id]["observations"]["2"]
+        with self.assertRaisesRegex(ValueError, "every configured level"):
+            validate_metadata(self.metadata)
+
+    def test_shard_descriptors_bind_the_complete_inventory(self):
+        entry = self.index["row_shards"][0]
+        for descriptors in ([], [entry, entry], [{"path": entry["path"], "rows": 1}],
+                            [dict(entry, path="../outside.json")], [dict(entry, rows=True)],
+                            [dict(entry, rows=2)], [dict(entry, sha256="0" * 64)]):
+            write_json(self.index_path, dict(self.index, row_shards=descriptors))
+            with self.subTest(descriptors=descriptors), self.assertRaises(ValueError):
+                read_version_files(self.directory)
+        write_json(self.index_path, self.index)
+        write_json(self.directory / "extra.json", {})
+        with self.assertRaisesRegex(ValueError, "inventory"):
+            read_version_files(self.directory)
+        self.shard_path.unlink()
+        with self.assertRaises(FileNotFoundError):
+            read_version_files(self.directory)
+
+    def test_duplicate_keys_and_misplaced_or_duplicate_programs_are_refused(self):
+        duplicate = b'"schema_version": 1, "schema_version": 1'
+        self.index_path.write_bytes(self.index_path.read_bytes().replace(b'"schema_version": 1', duplicate, 1))
+        with self.assertRaisesRegex(ValueError, "Duplicate JSON key"):
+            read_version_files(self.directory)
+        self.install_shard(self.shard_path.read_bytes().replace(b'"schema_version": 1', duplicate, 1))
+        with self.assertRaisesRegex(ValueError, "Duplicate JSON key"):
+            read_version_files(self.directory)
+        tests = self.metadata["rows"][self.source_hash]
+        for rows in ({self.source_hash: tests, "e" * 64: tests},
+                     {self.source_hash: {"08-types--rule--input": tests[self.test_id]}}):
+            self.install_shard(json_bytes({"schema_version": 1, "rows": rows}))
+            with self.assertRaisesRegex(ValueError, "Duplicate or misplaced"):
+                read_version_files(self.directory)
 
 
 def edition_page_fixture(quote):
@@ -172,6 +266,37 @@ class RunnerChecks(unittest.TestCase):
         with patch("suite_editions.source_registry", return_value=registry):
             self.assertEqual(governing_edition("ecma-334", "1")["id"], "ecma-334-ed1")
 
+    def test_registry_requires_an_integer_schema(self):
+        registry = source_registry()
+        self.assertIs(type(registry["schema_version"]), int)
+        self.assertEqual(registry["schema_version"], 1)
+        directory = self.scratch / "registry-format"
+        for invalid in invalid_schema_versions(registry):
+            write_json(directory / "source-registry.json", invalid)
+            with self.subTest(schema=invalid.get("schema_version")), patch("suite_common.standard_root", return_value=directory):
+                with self.assertRaises(ValueError):
+                    source_registry.__wrapped__()
+
+    def test_measurement_state_requires_its_complete_shape_and_bound_inputs(self):
+        inputs = {"identity": {"target": "dotnet"}, "selection": "a" * 64, "levels": ["1", "2"],
+                  "policy": {"select": None, "sample": 1, "seed": 1009, "method": "exhaustive"}}
+        state = {"schema_version": 1, **inputs, "provenance": {}, "controls": {}, "tests": 0, "complete": False,
+                 "errors": [], "sample": {}, "sample_rows": [], "sample_controls": {}, "started_utc": "",
+                 "elapsed_seconds": 0, "batches": [], "rows": [], "observation_contexts": [], "invocation": {}}
+        path = self.scratch / "state.json"
+        write_json(path, state)
+        self.assertEqual(read_measurement_state(path, inputs), state)
+        for invalid in (*invalid_schema_versions(state), {}, dict(state, rate_check={}),
+                        {key: value for key, value in state.items() if key != "rows"}):
+            write_json(path, invalid)
+            with self.assertRaises(ValueError):
+                read_measurement_state(path, inputs)
+        write_json(path, state)
+        for change in ({"identity": {}}, {"selection": "b" * 64}, {"levels": ["2", "1"]},
+                       {"policy": dict(inputs["policy"], seed=101)}, {"policy": dict(inputs["policy"], sample=True)}):
+            with self.subTest(change=change), self.assertRaisesRegex(ValueError, "requested inputs"):
+                read_measurement_state(path, {**inputs, **change})
+
     def test_governing_level_authority_requires_one_primary_source_at_the_same_level(self):
         original = copy.deepcopy(source_registry())
         directory = self.scratch / "iso-registry"
@@ -199,31 +324,30 @@ class RunnerChecks(unittest.TestCase):
                 definition = edition_definition("ecma-334", number, self.config, [])
                 self.assertEqual((definition["level_source_id"], definition["claim_run"]), (source_id, number in {2, 4}))
 
-    def test_fifth_registration_requires_a_matching_governing_source(self):
-        registry = copy.deepcopy(source_registry())
-        registry["editions"] = [entry for entry in registry["editions"] if entry["edition"] != "5th"]
-        fifth = {**registry["editions"][0], "id": "ecma-334-ed5", "edition": "5th",
-                 "authority_prefix": "ECMA-334 5th ed", "language_version": "5"}
-        registry["editions"].append(fifth)
-        registry["governing_editions"]["5"] = fifth["id"]
-        directory = self.scratch / "fifth-registry"
-        directory.mkdir()
-        for change, valid in [(lambda data: None, True),
-                              (lambda data: data["governing_editions"].pop("5"), False),
-                              (lambda data: data["governing_editions"].update({"5": "missing"}), False),
-                              (lambda data: data["governing_editions"].update({"5": "ecma-334-ed7"}), False),
-                              (lambda data: data["governing_editions"].update({"5": [fifth["id"]]}), False),
-                              (lambda data: data["editions"][-1].update(role="secondary"), False),
-                              (lambda data: data["governing_editions"].update({"6": fifth["id"]}), False)]:
-            data = copy.deepcopy(registry)
-            change(data)
-            write_json(directory / "source-registry.json", data)
-            with self.subTest(valid=valid, registry=data["governing_editions"]), \
-                    patch("suite_common.standard_root", return_value=directory):
-                if valid:
-                    self.assertEqual(source_registry.__wrapped__()["governing_editions"]["5"], fifth["id"])
-                else:
-                    with self.assertRaises(ValueError):
+    def test_fifth_and_sixth_registration_require_one_matching_governing_source(self):
+        directory = self.scratch / "governing-registry"
+        for level, other in [("5", "6"), ("6", "5")]:
+            registry = copy.deepcopy(source_registry())
+            ordinal = level + "th"
+            registry["editions"] = [entry for entry in registry["editions"] if entry["edition"] != ordinal]
+            entry = {**registry["editions"][0], "id": "ecma-334-ed" + level, "edition": ordinal,
+                     "authority_prefix": f"ECMA-334 {ordinal} ed", "language_version": level}
+            registry["editions"].append(entry)
+            registry["governing_editions"][level] = entry["id"]
+            with self.subTest(level=level), patch("suite_common.standard_root", return_value=directory):
+                write_json(directory / "source-registry.json", registry)
+                self.assertEqual(source_registry.__wrapped__()["governing_editions"], registry["governing_editions"])
+                for change in [lambda data: data["governing_editions"].pop(level),
+                               lambda data: data["governing_editions"].update({level: "missing"}),
+                               lambda data: data["governing_editions"].update({level: "ecma-334-ed7"}),
+                               lambda data: data["governing_editions"].update({level: [entry["id"], "ecma-334-ed7"]}),
+                               lambda data: data["editions"][-1].update(role="secondary"),
+                               lambda data: data["governing_editions"].update({other: entry["id"]}),
+                               lambda data: data["governing_editions"].update({"7.3": "ecma-334-ed7"})]:
+                    data = copy.deepcopy(registry)
+                    change(data)
+                    write_json(directory / "source-registry.json", data)
+                    with self.subTest(governing=data["governing_editions"]), self.assertRaises(ValueError):
                         source_registry.__wrapped__()
 
     def test_platform_pins_are_complete_and_fail_closed(self):
@@ -283,7 +407,7 @@ class RunnerChecks(unittest.TestCase):
         result = measurement.build(test, "original", b"source", "", "exhaustive", {"1": observation}, {})
         row = result["row"]
         self.assertEqual(row["measurement_runtime"]["assets"]["clr.dll"], {"sha256": "1" * 64, "version": "4.8.1"})
-        metadata = {"schema_version": 3, "identity": {"targets": {"net481": {}}}, "levels": ["1"],
+        metadata = {"schema_version": 1, "identity": {"targets": {"net481": {}}}, "levels": ["1"],
                     "rows": {test["source_sha256"]: {test["test_id"]: row}}, "sample": {}, "provenance": {}}
         validate_metadata(metadata)
         row.pop("measurement_runtime")
@@ -365,7 +489,7 @@ class RunnerChecks(unittest.TestCase):
         self.assertEqual(sorted(calls), levels)
         self.assertEqual((row["since"], row["until"], row["other_passing_levels"]), ("3", "4", ["1"]))
         self.assertEqual(set(row["observations"]), set(levels))
-        metadata = {"schema_version": 3, "identity": {"targets": {"dotnet": {}}}, "levels": levels,
+        metadata = {"schema_version": 1, "identity": {"targets": {"dotnet": {}}}, "levels": levels,
                     "rows": {sha(source): {"check": copy.deepcopy(row)}}, "sample": {}, "provenance": {}}
         validate_metadata(metadata)
         metadata["rows"][sha(source)]["check"]["method"] = "monotonic-search"
@@ -486,7 +610,7 @@ class RunnerChecks(unittest.TestCase):
                 self.assertIsNone(pending["request"])
                 record = context.finish(pending)
                 self.assertEqual((record["schema_version"], record["status"], record["reason"]),
-                                 (2, expected, "fixture-prerequisite:Later" if library_rejected else
+                                 (1, expected, "fixture-prerequisite:Later" if library_rejected else
                                   "compile-only" if mode == "compile-only" else ""))
                 self.assertEqual([stage["name"] for stage in record["stages"]],
                                  ["Later"] if library_rejected else ["Later", "program"])
@@ -1203,19 +1327,95 @@ class SupersededChecks(unittest.TestCase):
     def bounds(self, test):
         return self.rows[test["test_id"]], "current"
 
-    def add_fifth(self):
-        fifth = {**self.editions[4], "id": "ecma-334-ed5", "edition": "5th",
-                 "authority_prefix": "ECMA-334 5th ed", "language_version": "5"}
-        self.registry["editions"].append(fifth)
-        self.registry["governing_editions"]["5"] = fifth["id"]
-        self.editions[5] = fifth
-        self.tables[5] = {"schema_version": 1, "edition": 5, "base_edition": 7,
-                          "conflicts": [self.row("fourth-own", 4, 5)]}
-        test = {**self.tests[-1], "test_id": "fifth-own", "authority": "ECMA-334 5th ed 10.1", "version": "5"}
+    def add_governing_claims(self, number, changed_id, own_id):
+        level = str(number)
+        entry = {**self.editions[number - 1], "id": "ecma-334-ed" + level, "edition": level + "th",
+                 "authority_prefix": f"ECMA-334 {number}th ed", "language_version": level}
+        self.registry["editions"].append(entry)
+        self.registry["governing_editions"][level] = entry["id"]
+        self.editions[number] = entry
+        self.tables[number] = {"schema_version": 1, "edition": number, "base_edition": 7,
+                               "conflicts": [self.row(changed_id, number - 1, number)]}
+        test = {**self.tests[-1], "test_id": own_id, "authority": entry["authority_prefix"] + " 10.1", "version": level}
         self.tests.append(test)
-        self.rows["fifth-own"] = selection_bounds(self.config, "6")
-        next(test for test in self.tests if test["test_id"] == "fourth-own")["version"] = "5"
+        self.rows[own_id] = selection_bounds(self.config, str(number + 1))
+        next(test for test in self.tests if test["test_id"] == changed_id)["version"] = level
         return test
+
+    def add_fifth(self):
+        return self.add_governing_claims(5, "fourth-own", "fifth-own")
+
+    def add_sixth(self):
+        self.add_fifth()
+        return self.add_governing_claims(6, "fifth-own", "sixth-own")
+
+    def test_sixth_own_shared_static_and_refusal_plans(self):
+        self.add_sixth()
+        self.rows["latest"] = selection_bounds(self.config, "7")
+        original = copy.deepcopy(self.rows)
+        for request in [dict(edition=6), dict(language=["6"]), dict(language=["declared-per-test"]),
+                        dict(language=["earliest-per-test"])]:
+            with self.subTest(request=request):
+                plans = self.prepare(**request)[1]
+                sixth = {test["test_id"]: (mode, test["edition_membership"])
+                         for test, level, mode in plans if level["level"] == "6"}
+                mode, decision = sixth["fifth-own"]
+                self.assertEqual((mode, decision["edition"], decision["level_source_id"]), ("superseded", 6, "ecma-334-ed6"))
+                self.assertEqual(decision["superseded"], self.tables[6]["conflicts"][0]["superseded"])
+                self.assertEqual(decision["conflict_table"]["sha256"], digest(self.tables[6]))
+                if request != dict(language=["earliest-per-test"]):
+                    self.assertEqual(sixth["sixth-own"][0], "test")
+                if request in [dict(edition=6), dict(language=["6"])]:
+                    self.assertEqual(sixth["third-kept"][0], "test")
+                self.assertEqual([test["test_id"] for test, _, mode in plans if mode == "version-gating"],
+                                 ["latest"] if request == dict(language=["6"]) else [])
+        self.assertEqual(self.rows, original)
+        for level in ["1", "2", "5"]:
+            self.assertNotIn("fifth-own", [test["test_id"] for test, _, mode in self.prepare(language=[level])[1]
+                                            if mode == "version-gating"])
+        for basis, behavior in [("feature-free-rejection", "refuses"), ("original", "meaning-change")]:
+            self.rows["latest"] = dict(selection_bounds(self.config, "7", behavior=behavior), basis=basis)
+            self.assertNotIn("latest", [test["test_id"] for test, _, _ in self.prepare(language=["6"])[1]])
+
+    def test_sixth_replacement_keeps_earlier_claims_and_earliest_levels(self):
+        self.add_sixth()
+        self.rows["latest"] = selection_bounds(self.config, "6")
+        second = {**next(t for t in self.tests if t["test_id"] == "latest"), "test_id": "latest-two"}
+        self.tests.append(second)
+        self.rows["latest-two"] = selection_bounds(self.config, "6")
+        self.rows["first-kept"] = selection_bounds(self.config, "1", until="1")
+        for name in ["latest", "latest-two"]:
+            self.tables[6]["conflicts"].append({"action": "replace", "test_id": name, "replacement_test_id": "first-kept",
+                                                "authority": "ECMA-334 6th ed 10.1, p. 70 (PDF p. 84)"})
+        rows = copy.deepcopy(self.rows)
+        selection = "^(first-kept|latest|latest-two)$"
+        for request in [dict(edition=6), dict(language=["6"]), dict(language=["earliest-per-test"])]:
+            plans = self.prepare(select=selection, **request)[1]
+            expected = [("first-kept", "6", "test")]
+            if request == dict(language=["earliest-per-test"]):
+                expected.insert(0, ("first-kept", "1", "test"))
+            self.assertEqual([(test["test_id"], level["level"], mode) for test, level, mode in plans], expected)
+            with self.subTest(request=request), self.assertRaisesRegex(ValueError, "Replacement is not selected"):
+                self.prepare(select="^latest$", **request)
+        self.assertNotIn("first-kept", [test["test_id"] for test, _, _ in self.prepare(edition=5)[1]])
+        self.assertIn("latest", [test["test_id"] for test, _, _ in self.prepare(language=["7.3"])[1]])
+        self.assertEqual(self.rows, rows)
+
+    def test_sixth_departures_bind_each_governing_source(self):
+        self.add_sixth()
+        levels = ["1", "2", "5", "6"]
+        rows = [self.observation("first-kept", level, "confirmed") for level in levels]
+        self.assertEqual([row["source_id"] for row in rows],
+                         ["ecma-334-ed2", "ecma-334-ed4", "ecma-334-ed5", "ecma-334-ed6"])
+        audit = self.ledger(rows)
+        self.assertEqual((audit["errors"], audit["departures"], audit["departure_citations"]), ([], 1, 4))
+        for index, wrong in enumerate(["ecma-334-ed1", "ecma-334-ed3", "ecma-334-ed6", "ecma-334-ed5"]):
+            changed = copy.deepcopy(rows)
+            changed[index]["source_id"] = wrong
+            with self.subTest(level=levels[index]):
+                self.assertTrue(any("must cite governing edition" in error for error in self.ledger(changed)["errors"]))
+        static = self.observation("fifth-own", "6", "confirmed")
+        self.assertIn("fifth-own: departure level 6 is superseded by the governing edition", self.ledger([static])["errors"])
 
     def test_fifth_edition_explicit_header_and_earliest_share_governing_claims(self):
         self.add_fifth()
@@ -1267,23 +1467,42 @@ class SupersededChecks(unittest.TestCase):
         row["levels_json"], row["source_id"] = '["6"]', "ecma-334-ed5"
         self.assertTrue(any("must cite governing edition ecma-334-ed7" in error for error in self.ledger([row])["errors"]))
 
-    def test_fifth_supersession_requires_older_standard_authority_and_both_citation_sides(self):
-        self.add_fifth()
-        original = copy.deepcopy(self.tables[5])
+    def test_numeric_governing_editions_require_older_authority_and_both_citation_sides(self):
+        self.add_sixth()
+        for number, current in [(5, "fifth-own"), (6, "sixth-own")]:
+            with self.subTest(edition=number):
+                self.check_invalid_supersessions(number, current)
+
+    def check_invalid_supersessions(self, number, current):
+        original = self.tables[number]
         validate_conflicts(original, "ecma-334", self.tests)
-        for change in [lambda table: table["conflicts"][0].update(action="replace", replacement_test_id="fifth-own"),
+        for change in [lambda table: table["conflicts"][0].update(action="replace", replacement_test_id=current),
                        lambda table: table["conflicts"][0].update(test_id="latest"),
-                       lambda table: table["conflicts"][0].update(test_id="fifth-own"),
+                       lambda table: table["conflicts"][0].update(test_id=current),
                        lambda table: table["conflicts"][0]["superseded"].update(test=[]),
                        lambda table: table["conflicts"][0]["superseded"].update(level=[]),
                        lambda table: table["conflicts"][0]["superseded"]["test"][0].update(source_id="ecma-334-ed3"),
-                       lambda table: table["conflicts"][0]["superseded"]["level"][0].update(source_id="ecma-334-ed4"),
+                       lambda table: table["conflicts"][0]["superseded"]["level"][0].update(source_id=self.editions[number - 1]["id"]),
                        lambda table: table["conflicts"][0]["superseded"]["level"][0].update(clause="10.2"),
                        lambda table: table["conflicts"][0]["superseded"]["level"][0].update(pdf_pages=[85])]:
             table = copy.deepcopy(original)
             change(table)
             with self.subTest(table=table), self.assertRaises(ValueError):
                 validate_conflicts(table, "ecma-334", self.tests)
+
+    def test_sixth_measured_requests_require_current_bounds_and_a_configured_level(self):
+        self.add_sixth()
+        incomplete = copy.deepcopy(self.config)
+        del incomplete["language"]["explicit"]["6"]
+        with self.assertRaisesRegex(ValueError, "Compiler does not support edition 6 at 6"):
+            edition_definition("ecma-334", 6, incomplete, self.tests)
+        for status in ("stale", "missing"):
+            tests = [dict(test, version_status=status) if test["test_id"] == "fifth-own" else test for test in self.tests]
+            for request, message in [(dict(edition=6), "current version metadata"),
+                                     (dict(language=["6"]), "Current bounds required for fifth-own"),
+                                     (dict(language=["earliest-per-test"]), "Current bounds required for fifth-own")]:
+                with self.subTest(status=status, request=request), self.assertRaisesRegex(ValueError, message):
+                    self.prepare(tests=tests, **request)
 
     def prepare(self, *, edition=None, language=None, select=".*", tests=None):
         args = SimpleNamespace(edition=edition, langversion=language, select=select, origin=None, pilot_versions=None)
@@ -1779,6 +1998,9 @@ class SupersededChecks(unittest.TestCase):
         self.assertEqual(record["compile_command_json"], "[]")
         self.assertEqual(record["run_command_json"], "[]")
         verify_record(context, test, record, level, mode)
+        for invalid in invalid_schema_versions(record):
+            with self.subTest(schema=invalid.get("schema_version")), self.assertRaisesRegex(ValueError, "schema_version"):
+                verify_record(context, test, invalid, level, mode)
         with self.assertRaisesRegex(ValueError, "cannot execute"):
             context.compile(test, level)
         with self.assertRaisesRegex(ValueError, "cannot be replayed"):
@@ -1958,16 +2180,24 @@ class SupersededChecks(unittest.TestCase):
             with self.subTest(printed=printed, changed=changed):
                 self.assertNotEqual(normalized(printed), normalized(changed))
 
+    def superseded_header_context(self, label):
+        self.add_sixth()
+        first = next(test for test in self.tests if test["test_id"] == "first-changed")
+        fifth = next(test for test in self.tests if test["test_id"] == "fifth-own")
+        context, source = self.context(label, first)
+        fifth["source_sha256"] = sha(source)
+        first["csc_codes"] = fifth["csc_codes"] = "CS9000"
+        citations = {test["test_id"]: self.tables[number]["conflicts"][0]["superseded"]
+                     for test, number in [(first, 2), (fifth, 6)]}
+        return context, "^(first-changed|fifth-own)$", citations
+
     def test_mutation_check_records_superseded_without_an_original_or_mutant_execution(self):
-        spec = importlib.util.spec_from_file_location("mutation_check_subject", ROOT / "runner/tools/check-mutations.py")
-        mutation = importlib.util.module_from_spec(spec)
-        spec.loader.exec_module(mutation)
-        test = self.tests[0]
-        context, _ = self.context("superseded-mutation", test)
+        mutation = load_mutations()
+        context, select, citations = self.superseded_header_context("superseded-mutation")
         context.provenance = lambda: {}
         context.run = Mock(side_effect=AssertionError("No superseded original or mutant"))
         argv = ["check-mutations.py", "--compiler", "unused.json", "--results", str(context.output),
-                "--select", "^first-changed$", "--suite", "ecma-334"]
+                "--select", select, "--suite", "ecma-334"]
         with patch.object(sys, "argv", argv), patch.object(mutation, "load_config", return_value=(self.config, {}, {})), \
                 patch.object(mutation, "load_manifest", return_value=self.tests), \
                 patch.object(mutation, "Context", return_value=context), \
@@ -1977,20 +2207,19 @@ class SupersededChecks(unittest.TestCase):
             self.assertEqual(mutation.main(), 0)
         summary = json.loads((context.output / "summary.json").read_bytes())
         self.assertTrue(summary["complete"])
-        self.assertEqual(summary["status_counts"], {"superseded": 1})
-        self.assertEqual(summary["rows"][0]["mutant_status"], "")
-        self.assertEqual(json.loads(summary["rows"][0]["edition_membership_json"])["superseded"],
-                         self.tables[2]["conflicts"][0]["superseded"])
+        self.assertEqual(summary["status_counts"], {"superseded": 2})
+        self.assertEqual({row["test_id"] for row in summary["rows"]}, set(citations))
+        for row in summary["rows"]:
+            self.assertEqual((row["original_status"], row["mutant_status"]), ("superseded", ""))
+            self.assertEqual(json.loads(row["edition_membership_json"])["superseded"], citations[row["test_id"]])
         context.run.assert_not_called()
 
     def test_header_audit_replays_superseded_as_a_cited_nonfailure(self):
         from suite_audits import csc_audit
-        test = self.tests[0]
-        test["csc_codes"] = "CS9000"
-        context, _ = self.context("superseded-header", test)
+        context, select, citations = self.superseded_header_context("superseded-header")
         context.provenance = lambda: {"identity_sha256": context.identity_sha256}
         argv = ["run-suite.py", "--compiler", "unused.json", "--results", str(context.output),
-                "--langversion", "declared-per-test", "--select", "^first-changed$", "--suite", "ecma-334"]
+                "--langversion", "declared-per-test", "--select", select, "--suite", "ecma-334"]
         with patch.object(sys, "argv", argv), patch.object(self.runner, "load_config", return_value=(self.config, {}, {})), \
                 patch.object(self.runner, "load_manifest", return_value=self.tests), \
                 patch.object(self.runner, "Context", return_value=context), \
@@ -2001,10 +2230,13 @@ class SupersededChecks(unittest.TestCase):
                 patch("suite_measurements.ObservationRegistry") as registry, \
                 patch("suite_audits.load_manifest", return_value=self.tests), patch("suite_audits.load_controls", return_value=[]):
             registry.return_value.header.return_value = context
-            audit = csc_audit(["ecma-334"], Path("unused.json"), Path("unused.json"), context.output, "^first-changed$")
+            audit = csc_audit(["ecma-334"], Path("unused.json"), Path("unused.json"), context.output, select)
         self.assertEqual(audit["errors"], [])
-        self.assertEqual(audit["status_counts"], {"superseded": 1})
+        self.assertEqual(audit["status_counts"], {"superseded": 2})
         self.assertEqual(audit["csc_headers_checked"], 0)
+        run = json.loads((context.output / "run.json").read_bytes())
+        self.assertEqual((run["new_executions"], run["passes"], run["departures"]), (0, 0, 0))
+        self.assertEqual({row["test_id"]: row["superseded"] for row in run["superseded_tests"]}, citations)
 
     def test_static_rows_both_summaries_exit_status_and_failed_controls(self):
         for number, changed in [(1, "first-changed"), (2, "first-changed"), (3, "third-changed"), (4, "third-changed")]:
@@ -2077,6 +2309,37 @@ class PublishingChecks(unittest.TestCase):
                     subject.write_bytes((value + "\n").encode("ascii"))
                     errors = self.publishing.text_audit(["ecma-334"])["errors"]
                     self.assertEqual(errors, ["paths.txt: absolute machine path"] if value in absolute else [])
+
+            subject = directory / "paths.json"
+            grammar = "\n".join(["production", ":", "item"])
+            for value in [*absolute, *portable, grammar]:
+                for document in ([{"quote": value}], [{value: None}]):
+                    with self.subTest(document=document):
+                        subject.write_bytes((json.dumps(document) + "\n").encode("ascii"))
+                        errors = self.publishing.text_audit(["ecma-334"])["errors"]
+                        self.assertEqual(errors, ["paths.json: absolute machine path"] if value in absolute else [])
+            repeated_key = '{"entry": ' + json.dumps(absolute[0]) + ', "entry": "item"}'
+            for value in (repeated_key, absolute[0]):
+                subject.write_bytes((value + "\n").encode("ascii"))
+                self.assertEqual(self.publishing.text_audit(["ecma-334"])["errors"], ["paths.json: absolute machine path"])
+
+            subject.unlink()
+            subject = directory / "paths.tsv"
+            fields = ["notes", "quote_json", "observation_json"]
+            escaped_path = json.dumps(absolute[2]).replace("/", r"\/")
+            escaped_drive = json.dumps(absolute[1]).replace("Q", r"\u0051")
+            tsv_cases = [
+                ("quoted\tfield", escaped_path, "{}", True),
+                ("two\nlines", "", '{"entry": ' + escaped_drive + ', "entry": null}', True),
+                ("key", "null", '[{' + escaped_path + ': 1}]', True),
+                (absolute[0], "", "[]", True),
+                ("portable", json.dumps(grammar), json.dumps({"source": portable[0]}), False),
+            ]
+            for notes, quote, observation, forbidden in tsv_cases:
+                with self.subTest(notes=notes):
+                    write_tsv(subject, [dict(notes=notes, quote_json=quote, observation_json=observation)], fields)
+                    errors = self.publishing.text_audit(["ecma-334"])["errors"]
+                    self.assertEqual(errors, ["paths.tsv: absolute machine path"] if forbidden else [])
 
     def test_external_pattern_parsing_preserves_regex_and_fails_closed(self):
         path = self.scratch / "patterns.txt"
@@ -2156,12 +2419,13 @@ def main():
     args.report.parent.mkdir(parents=True, exist_ok=True)
     with tempfile.TemporaryDirectory(prefix="runner-check-", dir=args.report.parent.resolve()) as scratch:
         RunnerChecks.scratch = Path(scratch)
+        VersionFileChecks.scratch = Path(scratch)
         EditionChecks.scratch = Path(scratch)
         SupersededChecks.scratch = Path(scratch)
         PublishingChecks.scratch = Path(scratch)
         output = io.StringIO()
         checks = unittest.TestSuite(unittest.defaultTestLoader.loadTestsFromTestCase(case)
-                                   for case in [RunnerChecks, EditionChecks, SupersededChecks, PublishingChecks,
+                                   for case in [RunnerChecks, VersionFileChecks, EditionChecks, SupersededChecks, PublishingChecks,
                                                 SourceLocatorChecks])
         result = unittest.TextTestRunner(stream=output, verbosity=2).run(checks)
     errors = [detail for _, detail in [*result.errors, *result.failures]]

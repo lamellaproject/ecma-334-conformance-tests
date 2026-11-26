@@ -7,14 +7,10 @@ import re
 from functools import lru_cache
 from pathlib import Path
 
-from suite_common import ROOT, checked_object, digest, inside, mutated_source, scan_tests, sha, standard_root
+from suite_common import ROOT, check_schema_version, checked_object, digest, inside, mutated_source, scan_tests, sha, standard_root
 from suite_config import level_tuple, public_level, read_config
 
 BASES = {"original", "repair", "feature-free-rejection", "departure-witness"}
-METHODS = {"exhaustive"}
-# Read historical shards so their rows can be reported as stale. New metadata
-# and measurement replay never accept the retired search method.
-LEGACY_METHODS = METHODS | {"monotonic-search"}
 FILE_LIMIT = 20 * 1024 * 1024
 _PILOT_VERSIONS = {}
 
@@ -47,7 +43,8 @@ def read_version_files(directory):
     index = json.loads((directory / "index.json").read_bytes(), object_pairs_hook=unique_object)
     fields = {"schema_version", "identity", "provenance", "levels", "sample", "row_shards", "implementation_revalidation"}
     checked_object(index, fields, fields - {"implementation_revalidation"})
-    if index["schema_version"] not in {2, 3} or not isinstance(index["row_shards"], list):
+    check_schema_version(index)
+    if not isinstance(index["row_shards"], list):
         raise ValueError("Unsupported version index")
     rows, paths, test_ids = {}, [], set()
     for entry in index.pop("row_shards"):
@@ -63,7 +60,8 @@ def read_version_files(directory):
             raise ValueError("Version shard hash differs: " + relative)
         shard = json.loads(path.read_bytes(), object_pairs_hook=unique_object)
         checked_object(shard, {"schema_version", "rows"}, {"schema_version", "rows"})
-        if shard["schema_version"] != index["schema_version"] or not isinstance(shard["rows"], dict):
+        check_schema_version(shard)
+        if not isinstance(shard["rows"], dict):
             raise ValueError("Invalid version shard: " + relative)
         count = 0
         for source_hash, tests in shard["rows"].items():
@@ -88,8 +86,6 @@ def read_version_files(directory):
 def write_version_files(directory, metadata):
     """Generate fixed-format LF JSON; update the index after its shards."""
     validate_metadata(metadata)
-    if metadata["schema_version"] != 3:
-        raise ValueError("Only current metadata may be published")
     directory = Path(directory)
     shards = {}
     for source_hash, tests in metadata["rows"].items():
@@ -99,7 +95,7 @@ def write_version_files(directory, metadata):
     index["row_shards"] = []
     outputs = {}
     for relative, rows in sorted(shards.items()):
-        data = json_bytes({"schema_version": 3, "rows": rows})
+        data = json_bytes({"schema_version": metadata["schema_version"], "rows": rows})
         outputs[relative] = data
         index["row_shards"].append({"path": relative, "sha256": hashlib.sha256(data).hexdigest(),
                                     "rows": sum(map(len, rows.values()))})
@@ -125,7 +121,8 @@ def revalidated_files(metadata):
         return files
     fields = {"schema_version", "metadata_sha256", "suite_files", "audit_sha256", "evidence_sha256", "reconstructed_rows_sha256"}
     checked_object(certificate, fields, fields)
-    if certificate["schema_version"] != 1 or not isinstance(certificate["suite_files"], dict) or not certificate["suite_files"]:
+    check_schema_version(certificate)
+    if not isinstance(certificate["suite_files"], dict) or not certificate["suite_files"]:
         raise ValueError("Invalid implementation revalidation")
     for field in fields - {"schema_version", "suite_files"}:
         if not isinstance(certificate[field], str) or not re.fullmatch(r"[0-9a-f]{64}", certificate[field]):
@@ -177,12 +174,11 @@ def measurement_identity(context, suite_id, framework_target=None):
 
 def validate_metadata(metadata):
     required = {"schema_version", "identity", "provenance", "levels", "rows", "sample"}
-    if metadata.get("schema_version") == 1:
-        required.add("rate_check")
     checked_object(metadata, required | {"implementation_revalidation"}, required)
-    if metadata["schema_version"] not in {1, 2, 3} or not isinstance(metadata["rows"], dict):
+    check_schema_version(metadata)
+    if not all(isinstance(metadata[key], dict) for key in ("rows", "identity", "sample", "provenance")):
         raise ValueError("Unsupported version metadata")
-    if metadata["schema_version"] >= 2 and "suite_commit" in metadata["provenance"]:
+    if "suite_commit" in metadata["provenance"]:
         raise ValueError("Version provenance identifies implementation by content hashes")
     levels = metadata["levels"]
     if not isinstance(levels, list) or not levels or len(levels) != len(set(levels)):
@@ -200,13 +196,12 @@ def validate_metadata(metadata):
                                  "method", "measurement_target", "measurement_runtime", "below_since", "other_passing_levels", "observations", "evidence_sha256"},
                            {"since", "fixture_sha256", "declared_witness_sha256", "witness_sha256", "basis", "method",
                             "measurement_target", "below_since", "other_passing_levels", "observations", "evidence_sha256"})
-            methods = METHODS if metadata["schema_version"] >= 3 else LEGACY_METHODS
-            if row["since"] not in levels or row["basis"] not in BASES or row["method"] not in methods:
+            if row["since"] not in levels or row["basis"] not in BASES or row["method"] != "exhaustive":
                 raise ValueError("Invalid bounds/basis/method: " + test_id)
             if row["measurement_target"] not in metadata["identity"].get("targets", {}):
                 raise ValueError("Version row has no recorded measurement target: " + test_id)
-            if metadata["schema_version"] >= 3 and row["measurement_target"] == "net481":
-                if row["basis"] != "original" or row["method"] != "exhaustive":
+            if row["measurement_target"] == "net481":
+                if row["basis"] != "original":
                     raise ValueError("Framework bounds require exhaustive original runtime observations: " + test_id)
                 runtime = row.get("measurement_runtime", {})
                 fields = {"kind", "architecture", "release", "version", "assets"}
@@ -238,8 +233,8 @@ def validate_metadata(metadata):
                 raise ValueError("Invalid disconnected passing levels: " + test_id)
             if any(level_tuple(row["since"]) <= level_tuple(v) <= level_tuple(row.get("until") or levels[-1]) for v in other):
                 raise ValueError("Disconnected levels overlap the selected interval: " + test_id)
-            if not isinstance(row["observations"], dict) or not row["observations"] or set(row["observations"]) - set(levels):
-                raise ValueError("Version row needs level observations: " + test_id)
+            if not isinstance(row["observations"], dict) or set(row["observations"]) != set(levels):
+                raise ValueError("Exhaustive version row requires every configured level: " + test_id)
             for level, observation in row["observations"].items():
                 checked_object(observation, {"applicable", "witness_status", "original_status", "diagnostic_codes", "witness_diagnostic_codes",
                                              "witness_evidence_sha256", "original_evidence_sha256"},
@@ -247,8 +242,6 @@ def validate_metadata(metadata):
                                 "witness_evidence_sha256", "original_evidence_sha256"})
                 if type(observation["applicable"]) is not bool:
                     raise ValueError("Invalid applicability observation: " + test_id)
-            if row["method"] == "exhaustive" and set(row["observations"]) != set(levels):
-                raise ValueError("Exhaustive version row omits a level: " + test_id)
             if row["since"] not in row["observations"] or not row["observations"][row["since"]]["applicable"]:
                 raise ValueError("Lower bound lacks passing evidence: " + test_id)
     revalidated_files(metadata)

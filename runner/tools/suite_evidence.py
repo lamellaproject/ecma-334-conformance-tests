@@ -6,7 +6,7 @@ import json
 import re
 from pathlib import Path
 
-from suite_common import canonical, fixture_info, inside, raw_sources, sha
+from suite_common import canonical, check_schema_version, fixture_info, inside, raw_sources, sha
 from suite_diagnostics import compilation_verdict, parse_diagnostics, runtime_verdict, source_checks
 
 CONTRACT_EXCLUSIONS = {"since", "until", "version_status", "versions_row_sha256"}
@@ -14,6 +14,7 @@ CONTRACT_EXCLUSIONS = {"since", "until", "version_status", "versions_row_sha256"
 
 def verify_record(context, test, record, level, mode="test", executed_bytes=None, skip_status=None):
     """Raise on changed evidence, an invalid command, or a verdict unsupported by its observations."""
+    check_schema_version(record)
     if mode != "superseded" and test.get("edition_membership", {}).get("superseded"):
         raise ValueError("A superseded claim cannot be replayed as an execution")
     source = context.source_path(test)

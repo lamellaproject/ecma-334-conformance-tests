@@ -4,9 +4,9 @@ An unofficial conformance suite for C# (ECMA-334).
 This suite is not affiliated with or endorsed by Ecma International.
 
 Small, standalone programs check rules of the C# language against a compiler and
-runtime. Rule ledgers quote the standard and connect each predicate to its tests
-or an explicit reason it remains untested. Passing the suite establishes the
-recorded observations, not complete language conformance.
+runtime. Rule ledgers connect each predicate to its tests or an explicit reason
+it remains untested. Passing the suite establishes the recorded observations,
+not complete language conformance.
 
 The standard under test is [ECMA-334](https://ecma-international.org/publications-and-standards/standards/ecma-334/). Tests for C# features newer than the latest
 published ECMA-334 edition take their rules from the C# feature specifications,
@@ -59,27 +59,28 @@ reference compiler passes it.
 
 At a version inside that range, the test runs
 normally. Below the range, where the reference compiler refuses the feature, the
-explicit-level run checks refusal of its positive construct. At ISO-1 and ISO-2,
-the governing table (the 2nd edition's at ISO-1, the 4th's at ISO-2) decides
-claims first: superseded, replaced and left-out tests
-produce no refusal check. An unlisted test below `Since` gets the check when the
-reference measurement records refusal of its positive source at the requested
-level.
+explicit-level run checks refusal of its positive construct. At ISO-1, ISO-2,
+5 and 6, the governing edition's table decides claims first. Superseded,
+replaced and left-out tests produce no refusal check. An unlisted test below
+`Since` gets the check when the reference measurement records refusal of its
+positive source at the requested level.
 
-Other outside-range tests are reported as
-`not-applicable` or omitted by the governing ISO selection. `--langversion 5..7.3` selects an inclusive range, in the
-compiler configuration's level order. `--langversion all` selects every version
-the configuration lists, including its supported preview mode.
-`--langversion earliest-per-test` starts with the first level of each
-eligible test's measured range, then applies the governing ISO tables. A table
+Other outside-range tests are reported as `not-applicable` or omitted by the
+governing edition's selection. `--langversion 5..7.3` selects an inclusive
+range in the compiler configuration's level order. `--langversion all` selects
+every version the configuration lists, including its supported preview mode.
+
+`--langversion earliest-per-test` starts with the first level of each eligible
+test's measured range. At a governed level it then applies that edition's table. A table
 can omit that plan or add a cited replacement at another level, so a test can
 have no row or rows at more than one level. These runs require current measured
 ranges. If you name a version the compiler does not support, the run stops.
 
-At ISO-1 and ISO-2, version plans use the governing edition's table and retain
-the older requirements it keeps. At other levels, version runs use the latest
-standard edition's answers and compiler-authority tests, excluding older standard
-authorities.
+At ISO-1 and ISO-2, version plans follow the 2nd and 4th editions respectively.
+At levels 5 and 6 they follow the 5th and 6th editions. These plans retain the
+older requirements their governing edition keeps. At other levels, version runs
+use the latest standard edition's answers and compiler-authority tests, excluding
+older standard authorities.
 
 ### Run an older edition
 
@@ -87,16 +88,18 @@ authorities.
 python runner/run-suite.py --compiler configs/compilers/csc.json --target configs/targets/dotnet.json --results ../results/csc-edition-1 --edition 1 --jobs 12
 ```
 
-`--edition N` runs the ECMA-334 Nth edition at its language level: the 1st and
-2nd editions at ISO-1 (C# 1), and the 3rd and 4th at ISO-2 (C# 2).
+`--edition N` runs the ECMA-334 Nth edition at its language level. The 1st and
+2nd editions run at ISO-1 (C# 1), the 3rd and 4th at ISO-2 (C# 2), the 5th
+at C# 5 and the 6th at C# 6.
 
 It runs that edition's tests, and tests of other authorities only for rules the
-edition shares. Where the edition that governs the level (the 2nd at ISO-1, the
-4th at ISO-2) changed a rule, the older edition's test is reported as
-`superseded`, never as a pass or a failure.
+edition shares. Where the edition that governs the level changed a rule,
+the older edition's test is reported as `superseded`, never as a pass or a
+failure.
 
 `--edition 2` and `--edition 4` are the conformance claim runs for ISO-1 and
-ISO-2. `--edition` and `--langversion` cannot be combined. See
+ISO-2. `--edition 5` and `--edition 6` are the claim runs for C# 5 and C# 6.
+`--edition` and `--langversion` cannot be combined. See
 [Edition runs](docs/RESULTS.md#edition-runs).
 
 ### Running part of the suite
@@ -139,9 +142,9 @@ assistant to review your change against those requirements; it's a quick way to 
 problems early. We also ask that you review the change yourself and submit it in your own
 name, as an individual contributor rather than from a bot account.
 
-The ledgers contain short, unchanged quotations from the standard. Its notice and
-license are included in [NOTICE](NOTICE). Full standards and extracted texts are
-external audit inputs and are not distributed with the suite.
+The standards' notices and licenses are included in [NOTICE](NOTICE). Full
+standards and extracted texts are external audit inputs and are not distributed
+with the suite.
 
 ## How this repo is managed
 

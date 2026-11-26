@@ -9,7 +9,7 @@ Into: () => receiver.Touch(Argument())
 */
 using System;
 delegate void Invoke();
-class Receiver { public int Touch(int value) { Program.Trace += "M"; return value; } }
+class Receiver { public void Touch(int value) { Program.Trace += "M"; } }
 class Program
 {
     public static string Trace = "";
@@ -24,7 +24,7 @@ class Program
         Check(Trace == "", "null-body-skips-argument-and-invocation");
         receiver = new Receiver();
         function();
-        Check(Trace == "AM", "null-conditional-invocation-body-discards-result");
+        Check(Trace == "AM", "null-conditional-invocation-body-void-call");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }
 }

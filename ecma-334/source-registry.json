@@ -1,5 +1,5 @@
 {
-  "schema_version": 2,
+  "schema_version": 1,
   "standard": "ECMA-334",
   "standard_version": "7.3",
   "standard_sha256": "7797c1d995dd7791683cb4f2dfd758cc1bfd22150b5234487fffe43e9b3e3ab0",
@@ -9,7 +9,8 @@
   "governing_editions": {
     "ISO-1": "ecma-334-ed2",
     "ISO-2": "ecma-334-ed4",
-    "5": "ecma-334-ed5"
+    "5": "ecma-334-ed5",
+    "6": "ecma-334-ed6"
   },
   "editions": [
     {
@@ -132,6 +133,25 @@
           "Caller-info attributes",
           "Dynamic binding"
         ],
+        "numeric_label_in_foreword_or_scope": false
+      }
+    },
+    {
+      "id": "ecma-334-ed6",
+      "standard": "ECMA-334",
+      "edition": "6th",
+      "role": "primary",
+      "authority_prefix": "ECMA-334 6th ed",
+      "language_version": "6",
+      "asset": "ECMA-334_6th_edition_june_2022.pdf",
+      "sha256": "4b859dfce21f9935f234b48af55c6a9de36e2eda1eb58d3b565e5aab2b44922f",
+      "text": {
+        "asset": "ed6-raw.txt",
+        "sha256": "edbe517c4eefb9b91031a100fbac4f0cac4b925a8aeb684e2c4f1d9d3b911329"
+      },
+      "version_proof": {
+        "locator": "Foreword, printed p. xix (PDF p. 23)",
+        "method": "Register the sixth-edition dialect at explicit level 6 from its foreword's feature inventory, including nameof, null-conditional operators, interpolated strings and using static.",
         "numeric_label_in_foreword_or_scope": false
       }
     }

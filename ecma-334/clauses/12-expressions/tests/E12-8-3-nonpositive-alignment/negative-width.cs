@@ -4,8 +4,8 @@ Authority: ECMA-334 7th ed 12.8.3
 Version: 7.3
 Expected: run
 Stdout: OK 1
-Mutate: $@"{26,-5:X}"
-Into: $@"{26,5:X}"
+Mutate: $@"{number,-5:X}"
+Into: $@"{number,5:X}"
 */
 using System;
 class Program
@@ -14,7 +14,8 @@ class Program
     static void Check(bool ok, string id) { checks++; if (!ok) { failures++; Console.WriteLine("FAIL " + id); } }
     static void Main()
     {
-        string result = $@"{26,-5:X}";
+        int number = 26;
+        string result = $@"{number,-5:X}";
         Check(result == "1A   ", "negative-width-pads-formatted-value-on-right");
         if (failures == 0) Console.WriteLine("OK " + checks);
     }

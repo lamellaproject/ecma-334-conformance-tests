@@ -104,14 +104,14 @@ inclusive range such as `5..7.3`, `all`, or `earliest-per-test`. The last
 selector starts each eligible test at the first level of its measured range,
 then applies the governing tables as described below. Without a selector the invocation
 stops before loading tests or creating results. A plan resolving to ISO-1,
-ISO-2 or 5 uses the governing edition table, as described in [Edition runs](#edition-runs).
+ISO-2, 5 or 6 uses the governing edition's table. See [Edition runs](#edition-runs).
 At other levels, measured version runs exclude tests whose authority is an
 older standard edition.
 
 An explicitly requested unsupported level aborts the
 invocation. At supported explicit levels outside the governed plans,
 the test's measured bounds, `Since` and `Until` (see
-[Bounds](CONVENTIONS.md#bounds)), decide what happens. At ISO-1, ISO-2 and 5,
+[Bounds](CONVENTIONS.md#bounds)), decide what happens. At ISO-1, ISO-2, 5 and 6,
 the governing table selects claims first. An unlisted test outside that selection
 gets a positive version-gating check when it is below `Since` and the reference
 measurement records a coded refusal of the measured positive source at the
@@ -141,9 +141,9 @@ passed, outside the interval that contains its `Version`.
 
 ## Edition runs
 
-`--edition N` runs the ECMA-334 Nth edition at its registered language level:
-the 1st and 2nd editions at ISO-1, the 3rd and 4th editions at ISO-2, and the
-5th edition at level 5. It cannot be combined with `--langversion`.
+`--edition N` runs the ECMA-334 Nth edition at its registered language level.
+The 1st and 2nd editions run at ISO-1, the 3rd and 4th at ISO-2, the 5th
+at level 5 and the 6th at level 6. It cannot be combined with `--langversion`.
 The compiler must support that level,
 and all candidate tests need current bounds.
 
@@ -158,8 +158,8 @@ An edition run tests that edition and no other:
 - A test of a rule the edition does not have never runs in that edition's run.
 - The edition's conflict table excludes the tests it replaces or leaves out.
 
-The source registry assigns one governing edition to each governed level:
-the 2nd edition to ISO-1, the 4th edition to ISO-2 and the 5th edition to 5.
+The source registry assigns the 2nd edition to ISO-1, the 4th edition to ISO-2,
+the 5th edition to level 5 and the 6th edition to level 6.
 Where the governing edition changed a rule, an admitted older claim is reported as
 `superseded`, counted separately from passes and failures.
 
@@ -167,16 +167,18 @@ The governing table supplies supersession for claims admitted by the
 requested edition. Membership and ordinary replacement admissions come
 from the requested edition's own table.
 
-`--edition 2` and `--edition 4` are the claim runs for ISO-1 and ISO-2. An ISO
-conformance claim names both its edition claim run and its explicit-level run:
-`--edition 2` and `--langversion 1`, or `--edition 4` and `--langversion 2`.
-The claim run checks the edition's rules; the explicit-level run also checks
+`--edition 2` and `--edition 4` are the claim runs for ISO-1 and ISO-2.
+`--edition 5` and `--edition 6` are the claim runs for levels 5 and 6.
+An ISO conformance claim names both runs. Use `--edition 2` and `--langversion 1`
+for ISO-1, or `--edition 4` and `--langversion 2` for ISO-2.
+The claim run checks the edition's rules. The explicit-level run also checks
 refusal of newer constructs using their positive witnesses. Edition selection
 metadata records the edition, its level and whether it is the level's claim run.
 
-A language plan that resolves to ISO-1, ISO-2 or 5 uses that level's governing
-table (the 2nd edition's at ISO-1, the 4th edition's at ISO-2 and the 5th edition's at 5), including
-`earliest-per-test` and header-level plans.
+Explicit levels, `earliest-per-test` and header-level plans use the governing
+edition's table wherever they resolve to ISO-1, ISO-2, 5 or 6. Use
+`--langversion 7.3` for the 7th edition's level. This explicit selection
+admits 7th-edition and compiler-authority tests.
 
 For `earliest-per-test`, a cited replacement runs at the governed level of the test
 it replaces. If its own earliest plan survives the governing tables at another
@@ -222,7 +224,7 @@ the governing edition, never a pass.
 In an edition run, tests outside the interval without own-authority selection,
 a cited replacement admission or a superseded marker have no result rows.
 Other tests excluded by the table also have no result rows. Edition runs
-produce no version-gating checks. Explicit-level runs at 1, 2 and 5 add the
+produce no version-gating checks. Explicit-level runs at 1, 2, 5 and 6 add the
 unlisted below-`Since` refusal checks described above and record their IDs as
 `version_gating_test_ids`. `run.json` records the candidate inventory,
 the requested and governing tables' paths and hashes, and the test IDs included or excluded for each

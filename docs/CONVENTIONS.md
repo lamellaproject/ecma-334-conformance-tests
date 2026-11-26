@@ -44,12 +44,14 @@ Each governed language level follows one registered primary edition:
 | ISO-1 | ECMA-334 2nd edition, ISO/IEC 23270:2003 | `--edition 2` |
 | ISO-2 | ECMA-334 4th edition, ISO/IEC 23270:2006 | `--edition 4` |
 | 5 | ECMA-334 5th edition | `--edition 5` |
+| 6 | ECMA-334 6th edition | `--edition 6` |
 
 The 1st and 3rd editions remain sources for their own tests. `--edition 1` and
 `--edition 3` run those editions at those levels, reporting `superseded` where
 the level's governing edition changed a rule.
-Versions 3, 4 and 6 through 7.3 use the latest registered standard edition's tests;
-later features use the registered compiler authority and feature text.
+Measured version runs at 3, 4 and 7 through 7.3 use the 7th edition's tests
+and eligible compiler-authority tests. Later features use the registered
+compiler authority and feature text.
 
 An open reading of the standard is settled by these rules, in order; the
 first that decides, decides.
@@ -373,7 +375,7 @@ with these keys:
 | `libraries` | Libraries with distinct names. They compile before the program. |
 | `program` | The main program. It may specify `entry_point`. |
 | `arguments` | Literal strings passed to the program. |
-| `target_requires` | Required target capabilities, which include `framework-runtime`, `process-launch` and `reflection`. |
+| `target_requires` | Required target capabilities, which include `decimal-96-scale-28`, `framework-runtime`, `process-launch` and `reflection`. |
 
 Tests that need runtime reflection to observe attribute values declare
 `reflection`; a target without it reports a target capability gap.
@@ -480,7 +482,7 @@ in the clause's `departures.tsv`. Each record holds:
 
 Explain the disagreement in neutral words.
 
-- A record at ISO-1, ISO-2 or 5 quotes that level's governing edition. A test
+- A record at ISO-1, ISO-2, 5 or 6 quotes that level's governing edition. A test
   spanning different governing editions uses separate records with disjoint
   level lists. These records share the source, compiler, target, status and
   raw observation; each has its own clause, pages and short quotation. The
@@ -524,7 +526,7 @@ generated version data (see [Version data](ARCHITECTURE.md#version-data)).
   a meaning change.
 - A coded refusal of the measured positive source at a requested level below
   `Since` requires rejection of that source in an explicit-level run, including
-  ISO-1, ISO-2 and 5 for tests without a governing table disposition. The predecessor
+  ISO-1, ISO-2, 5 and 6 for tests without a governing table disposition. The predecessor
   does not decide other levels. A generated reject without a positive witness
   produces no gating check. The edition's own claims and cited replacement admissions
   retain their ordinary expectations. Superseded, replaced and left-out tests

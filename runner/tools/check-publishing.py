@@ -1,7 +1,10 @@
 """Check portable public text, current manifests/bounds, sources and pinned csc evidence before publishing."""
 import argparse
+import csv
 import hashlib
 import importlib.util
+import io
+import json
 import os
 import re
 import sys
@@ -11,7 +14,54 @@ from suite_audits import csc_audit, ledger_audit, raw_audit
 from suite_common import ROOT, emit_audit, installed_suites, main_guard, raw_sources, scan_tests, sha
 from suite_editions import edition_audit
 
-NOTICE_BLOCK_SHA256 = "44d669633f3502e5d57ce1c32d5f6a8772e8b617ebf024a0ac50526aaad63a2b"
+NOTICE_BLOCK_SHA256 = "6225af7b7e467ab0c7b88b026bab9813dcb0d4f34007610edb20b764bee56a8e"
+MACHINE_PATH = re.compile(r"(?<![A-Za-z0-9_])[A-Za-z]:[/\\]|"
+                          r"(?<![\w:])/(?:home|Users|tmp|usr|opt|mnt|private|root|Volumes)/|"
+                          r"(?<![\w\\])\\\\wsl(?:\$|\.localhost)[/\\]", re.IGNORECASE)
+
+
+def contains_machine_path(value):
+    if isinstance(value, str):
+        return bool(MACHINE_PATH.search(value))
+    if isinstance(value, (list, tuple)):
+        return any(contains_machine_path(item) for item in value)
+    return False
+
+
+def decoded_json(text):
+    try:
+        # Keep every key and value, including entries with repeated keys.
+        return json.loads(text, object_pairs_hook=list)
+    except json.JSONDecodeError:
+        return text
+
+
+def text_contains_machine_path(path, text):
+    if path.suffix == ".json":
+        return contains_machine_path(decoded_json(text))
+    if path.suffix != ".tsv":
+        return contains_machine_path(text)
+
+    # A single quoted field may occupy most of a ledger or manifest.
+    limit = csv.field_size_limit()
+    try:
+        csv.field_size_limit(max(limit, len(text)))
+        rows = csv.reader(io.StringIO(text, newline=""), delimiter="\t")
+        header = next(rows, [])
+        json_columns = {i for i, name in enumerate(header) if name.endswith("_json")}
+        if not json_columns:
+            return contains_machine_path(text)
+        if contains_machine_path(header):
+            return True
+        for row in rows:
+            for i, value in enumerate(row):
+                if i in json_columns and value:
+                    value = decoded_json(value)
+                if contains_machine_path(value):
+                    return True
+        return False
+    finally:
+        csv.field_size_limit(limit)
 
 
 def forbidden_patterns(path):
@@ -54,9 +104,7 @@ def text_audit(suite_ids, extra_patterns=()):
                 errors.append(relative + ": public text must be ASCII with LF line ends")
                 continue
             text = data.decode("ascii")
-            if re.search(r"(?<![A-Za-z0-9_])[A-Za-z]:[/\\]|"
-                         r"(?<![\w:])/(?:home|Users|tmp|usr|opt|mnt|private|root|Volumes)/|"
-                         r"(?<![\w\\])\\\\wsl(?:\$|\.localhost)[/\\]", text, re.IGNORECASE):
+            if text_contains_machine_path(path, text):
                 errors.append(relative + ": absolute machine path")
             if re.search(r"Copyright[^\n]*\b[12][0-9]{3}\b[^\n]*Lamella|Copyright[^\n]*Lamella[^\n]*\b[12][0-9]{3}\b", text):
                 errors.append(relative + ": suite copyright line states a year")

@@ -1,9 +1,10 @@
 /*
-Rules: E12-10-4-decimal-scale; E12-10-4-decimal-sign; E12-10-4-decimal-predefined; E12-10-4-decimal-equivalence; E12-10-4-decimal-no-exception
+Rules: E12-10-4-decimal-scale; E12-10-4-decimal-sign; E12-10-4-decimal-predefined; E12-10-4-decimal-no-exception
 Authority: ECMA-334 7th ed 12.10.4
 Version: 7.3
 Expected: run
-Stdout: OK 5
+Stdout: OK 4
+Fixture: {"target_requires":["decimal-96-scale-28"]}
 Mutate: System.Decimal r = x % y;
 Into: System.Decimal r = x / y;
 */
@@ -17,7 +18,6 @@ class Program
     {
         decimal x = 12.30M, y = 5.0M; decimal quotient = x / y; System.Decimal r = x % y;
         Check(quotient == 2.46M && r == 2.30M && Scale(r) == 2, "dividend-larger-scale");
-        Check(r == Decimal.Remainder(x, y), "decimal-operation-equivalence");
         x = -12.30M; r = x % y; Check(r == -2.30M && Scale(r) == 2, "negative-dividend");
         y = -5.0M; r = x % y; Check(r == -2.30M, "divisor-does-not-set-sign");
         x = 1.2M; y = 0.007M; quotient = x / y; r = x % y;

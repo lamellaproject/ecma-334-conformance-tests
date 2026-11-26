@@ -35,7 +35,7 @@ which contains the entries below. The only installed standard is ECMA-334, in
 | --- | --- |
 | `source-registry.json` | The registered sources: the standard's editions, the references and the compiler authority. It also lists the rules that may justify raw source. |
 | `ledger-scope.json` | The scope of each clause and its text-block inventory. |
-| `edition-conflicts/<edition>.json` | One conflict table per older registered edition, named for its number; see [Edition selection](#edition-selection). |
+| `edition-conflicts/` | One conflict table per older registered edition, named for its number; see [Edition selection](#edition-selection). |
 | `raw-source.tsv` | Optional. The inventory of raw-source exceptions; see [Bytes and raw source](CONVENTIONS.md#bytes-and-raw-source). |
 | `reference-notes.tsv` | Optional. Reference notes, which record where the pinned csc disagrees with the rule text of a test whose authority is csc. They use the columns of departure records; see [Departures](CONVENTIONS.md#departures). |
 | `manifest.tsv` and `manifest/` | The derived manifest; see [The manifest](#the-manifest). |
@@ -292,8 +292,8 @@ A worked example:
 `versions/index.json` and its indexed shards are committed generated data.
 Rows are keyed by source hash and test ID.
 
-- Each shard contains `schema_version: 3` and `rows`, keeping the
-  source-hash/test-ID nesting.
+- The index and every shard carry integer `schema_version` 1. Each shard's
+  `rows` are keyed first by source hash and then by test ID.
 - The index carries shared metadata and a sorted `row_shards` list. Each
   entry holds a shard's relative path, the SHA-256 of its exact bytes and its
   row count.
@@ -435,17 +435,17 @@ external measurement evidence.
 ## Edition selection
 
 The source registry maps each governed language level to one primary
-edition: ISO-1 follows the 2nd edition (ISO/IEC 23270:2003), ISO-2 follows
-the 4th edition (ISO/IEC 23270:2006), and level 5 follows the 5th edition.
-The runner reads this map and records the level's source and whether the
-requested edition is its claim run. `--edition 2` is ISO-1's claim run; `--edition 4` is ISO-2's;
-`--edition 5` is level 5's.
+edition. ISO-1 follows the 2nd edition (ISO/IEC 23270:2003) and ISO-2 follows
+the 4th edition (ISO/IEC 23270:2006). Levels 5 and 6 follow the 5th and 6th
+editions respectively. The corresponding claim runs are `--edition 2`,
+`--edition 4`, `--edition 5` and `--edition 6`. The runner records the level's
+source and whether the requested edition is its claim run.
 
 The 1st and 3rd editions remain registered sources. `--edition 1` and
 `--edition 3` run those editions at their ISO levels, each under its own
 conflict table.
 
-A language plan that resolves to ISO-1, ISO-2 or 5 uses that level's governing
+A language plan that resolves to ISO-1, ISO-2, 5 or 6 uses that level's governing
 edition table. This applies to explicit levels, `earliest-per-test` and
 `declared-per-test`. At other levels, measured version runs use the latest
 registered primary edition's tests and the compiler-authority tests, excluding
@@ -536,8 +536,8 @@ edition's authority. A replacement with the table edition's authority
 also agrees with its header's clause.
 
 When the pinned compiler's result contradicts an admitted replacement, the
-confirmed departure cites the governing requirement. Each departure at a governed level
-departure quotes its governing edition, including when the test has a
+confirmed departure cites the governing requirement. Each departure at a
+governed level quotes its governing edition, including when the test has a
 different edition's authority. Disjoint records carry the separate citations
 for a test spanning editions; their observation and measurement basis agree.
 The ledger check rejects a citation from the wrong governing edition. The

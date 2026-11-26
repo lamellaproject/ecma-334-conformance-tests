@@ -22,7 +22,7 @@ compiler profile is a compiler configuration, such as
 | Configuration | `configs/targets/dotnet.json` | `configs/targets/net481.json` |
 | Hosts | Windows x64, Linux x64, macOS arm64 and Linux arm64 | Windows x64 |
 | How programs run | One process per program, in parallel up to `--jobs` | Compiled to `.exe` files and launched directly, one process per program, in parallel up to `--jobs` |
-| Capabilities | `process-launch` and `reflection`, but not `framework-runtime` | `framework-runtime`, `process-launch` and `reflection` |
+| Capabilities | `decimal-96-scale-28`, `process-launch` and `reflection` | `decimal-96-scale-28`, `framework-runtime`, `process-launch` and `reflection` |
 
 ## The dotnet target
 
@@ -84,7 +84,7 @@ target, and it requires a separate configuration.
 
 Framework programs are compiled to `.exe` files and launched directly, one
 process per program, in parallel up to `--jobs`. The target provides
-`framework-runtime`, `process-launch` and `reflection`.
+`decimal-96-scale-28`, `framework-runtime`, `process-launch` and `reflection`.
 
 ### Runtime identity
 
@@ -149,9 +149,10 @@ output on the Framework target. Mono libraries are dependencies of the mcs
 compiler process; they are not references of the compiled test programs.
 
 Run each explicit level's selection, including positive refusal checks for
-newer constructs. At ISO-1 and ISO-2, the governing table decides claims first;
-an unlisted test below `Since` gets a refusal check when the reference measurement
-records refusal. Superseded, replaced and left-out tests get none. An ISO
+newer constructs. The governing edition's table decides claims first at ISO-1,
+ISO-2 and level 5 for both compilers, and at level 6 for `mcs`. An unlisted
+test below `Since` gets a refusal check when the reference measurement records
+refusal. Superseded, replaced and left-out tests get none. An ISO
 conformance claim names both the edition claim run and this explicit-level run:
 `--edition 2` with `--langversion 1`, or `--edition 4` with `--langversion 2`.
 

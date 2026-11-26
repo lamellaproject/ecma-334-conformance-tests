@@ -10,11 +10,11 @@ import uuid
 from concurrent.futures import ThreadPoolExecutor
 from pathlib import Path
 
-from suite_common import ROOT, digest, load_manifest, sha, standard_root, utc, write_json
+from suite_common import ROOT, check_schema_version, digest, load_manifest, sha, standard_root, utc, write_json
 from suite_config import level_tuple, resolve_level
 from suite_engine import Context, run_controls
 from suite_measurements import Measurement, ObservationRegistry
-from suite_versions import measurement_identity, validate_metadata, write_version_files
+from suite_versions import measurement_identity, unique_object, validate_metadata, write_version_files
 
 
 def framework_test(test):
@@ -39,6 +39,19 @@ def mismatches(results, sampled, sample_rows):
             differences.append({"test_id": test["test_id"], "field": "observations",
                                 "measured": measured, "independent": independent})
     return differences
+
+
+def read_measurement_state(path, expected_inputs):
+    state = json.loads(path.read_bytes(), object_pairs_hook=unique_object)
+    check_schema_version(state)
+    fields = expected_inputs.keys() | {"schema_version", "provenance", "controls", "tests", "complete", "errors",
+                                      "sample", "sample_rows", "sample_controls", "started_utc", "elapsed_seconds",
+                                      "batches", "rows", "observation_contexts", "invocation"}
+    if state.keys() != fields:
+        raise ValueError("Invalid measurement state fields")
+    if digest({key: state[key] for key in expected_inputs}) != digest(expected_inputs):
+        raise ValueError("Measurement state differs from the requested inputs")
+    return state
 
 
 def replay_prefix(tests, prefix, measurement_of, jobs):
@@ -92,9 +105,9 @@ def main():
         parser.error("The independent sample exceeds the selected inventory")
     output = args.results.resolve()
     state_path = output / "state.json"
-    if state_path.exists() and not args.resume:
+    has_state = state_path.exists()
+    if has_state and not args.resume:
         raise ValueError("An existing measurement state requires --resume or a fresh directory")
-    previous = json.loads(state_path.read_text()) if state_path.exists() else {}
     target_paths = {"dotnet": args.target}
     if any(framework_test(test) for test in tests):
         target_paths["net481"] = args.framework_target
@@ -113,9 +126,8 @@ def main():
     identity = measurement_identity(contexts["dotnet"], args.suite, args.framework_target)
     selection = digest([[t["source_sha256"], t["test_id"]] for t in tests])
     policy = {"select": args.select, "sample": args.sample, "seed": args.seed, "method": "exhaustive"}
-    if previous and (previous.get("schema_version") != 3 or previous["identity"] != identity
-                     or previous["selection"] != selection or previous["levels"] != levels or previous["policy"] != policy):
-        raise ValueError("Measurement state is stale; use a fresh result directory")
+    inputs = {"identity": identity, "selection": selection, "levels": levels, "policy": policy}
+    previous = read_measurement_state(state_path, inputs) if has_state else {}
     registry = ObservationRegistry(args.compiler, {"dotnet": args.target, "net481": args.framework_target})
     registry.restore(previous.get("observation_contexts", []))
     for context in contexts.values():
@@ -204,8 +216,7 @@ def main():
                 "method": result["row"]["method"], "measurement_target": target_of(test)}
 
     def publish(complete=False):
-        data = {"schema_version": 3, "provenance": contexts["dotnet"].provenance(), "identity": identity,
-                "selection": selection, "policy": policy, "levels": levels, "controls": controls,
+        data = {"schema_version": 1, **inputs, "provenance": contexts["dotnet"].provenance(), "controls": controls,
                 "tests": len(results), "complete": complete, "errors": errors,
                 "sample": sample, "sample_rows": sample_bindings, "sample_controls": sample_controls,
                 "started_utc": started, "elapsed_seconds": time.perf_counter() - start, "batches": batches,
@@ -302,7 +313,7 @@ def main():
     state = publish(sample["complete"])
     if not sample["complete"]:
         return 1
-    metadata = {"schema_version": 3, "identity": identity, "levels": levels, "rows": {},
+    metadata = {"schema_version": 1, "identity": identity, "levels": levels, "rows": {},
                 "sample": sample, "provenance": {"tool": "runner/tools/compute-versions.py",
                     "compiler_commit": contexts["dotnet"].config["commit"],
                     "targets": {key: c.target_config["description"] for key, c in contexts.items()},

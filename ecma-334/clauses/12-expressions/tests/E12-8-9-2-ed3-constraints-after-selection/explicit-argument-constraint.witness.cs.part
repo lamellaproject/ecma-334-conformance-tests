@@ -1,0 +1,18 @@
+class Program
+{
+    static int Route<T>(T item) where T : class { return 17; }
+    static int Route<T>(object item) { return 29; }
+    static int Main()
+    {
+        int checks = 0;
+        int failures = 0;
+        checks++;
+        if (!(Route<string>("fern") == 17))
+        {
+            failures++;
+            System.Console.WriteLine("FAIL selected-generic-overload");
+        }
+        if (failures == 0) System.Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

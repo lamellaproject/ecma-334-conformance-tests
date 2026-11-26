@@ -4,6 +4,7 @@ Authority: ECMA-334 7th ed 12.8.17
 Version: 7.3
 Expected: run
 Stdout: OK 7
+Fixture: {"target_requires":["reflection"]}
 Mutate: static Type Definition() { return typeof(Family<>); }
 Into: static Type Definition() { return typeof(Family<T>); }
 */

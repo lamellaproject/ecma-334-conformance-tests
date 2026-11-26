@@ -1,9 +1,10 @@
 /*
-Rules: E12-10-3-decimal-result-scale; E12-10-3-decimal-preferred-scale; E12-10-3-decimal-predefined; E12-10-3-decimal-equivalence
+Rules: E12-10-3-decimal-result-scale; E12-10-3-decimal-preferred-scale; E12-10-3-decimal-predefined
 Authority: ECMA-334 7th ed 12.10.3
 Version: 7.3
 Expected: run
-Stdout: OK 5
+Stdout: OK 4
+Fixture: {"target_requires":["decimal-96-scale-28"]}
 Mutate: System.Decimal r = x / y;
 Into: System.Decimal r = x * y;
 */
@@ -19,7 +20,6 @@ class Program
         Check(r == 3.0M && Scale(r) == 1, "preferred-scale-is-difference");
         x = 1.0M; y = 8.00M; r = x / y;
         Check(r == 0.125M && Scale(r) == 3, "closest-exact-scale");
-        Check(r == Decimal.Divide(x, y), "decimal-operation-equivalence");
         x = 100M; y = 2.00M; r = x / y;
         Check(r == 50M && Scale(r) == 0, "negative-preferred-scale");
         x = -6.00M; y = 4.0M; r = x / y;

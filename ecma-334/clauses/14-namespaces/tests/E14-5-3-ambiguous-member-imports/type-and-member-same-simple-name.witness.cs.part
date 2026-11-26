@@ -1,0 +1,38 @@
+using System;
+
+using static Catalog;
+using static Signals;
+
+class Catalog
+{
+    public class Tag
+    {
+        public readonly int Code;
+        public Tag(int code) { Code = code; }
+    }
+}
+class Signals
+{
+    public static int Tag = 19;
+}
+
+class Program
+{
+
+    static int checks;
+    static int failures;
+    static void Check(bool condition, string name)
+    {
+        checks++;
+        if (!condition) { failures++; Console.WriteLine("FAIL " + name); }
+    }
+    static int Main()
+    {
+        Tag marker = new Tag(7);
+        int value = Signals.Tag;
+        Check(marker.Code == 7, "imported-type");
+        Check(value == 19, "imported-field");
+        if (failures == 0) Console.WriteLine("OK " + checks);
+        return failures == 0 ? 0 : 1;
+    }
+}

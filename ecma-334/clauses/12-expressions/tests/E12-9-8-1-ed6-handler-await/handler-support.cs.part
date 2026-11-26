@@ -1,0 +1,28 @@
+using System;
+using System.Runtime.CompilerServices;
+
+sealed class Gate : INotifyCompletion
+{
+    readonly int value;
+    Action continuation;
+    bool completed;
+    public string Trace = "";
+
+    public Gate(int value) { this.value = value; }
+    public void Mark(string name) { Trace += (Trace.Length == 0 ? "" : " ") + name; }
+    public Gate GetAwaiter() { Mark("awaiter"); return this; }
+    public bool IsCompleted { get { Mark(completed ? "complete" : "incomplete"); return completed; } }
+    public void OnCompleted(Action resume) { Mark("register"); continuation = resume; }
+    public int GetResult() { Mark("result"); return value; }
+    public bool HasContinuation { get { return continuation != null; } }
+
+    public bool Resume()
+    {
+        Action resume = continuation;
+        if (resume == null) return false;
+        continuation = null;
+        completed = true;
+        resume();
+        return true;
+    }
+}
